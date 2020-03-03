@@ -2,9 +2,11 @@
 
 This boilerplate is designed to quickly spin a fully functional admin dashboard with Firebase including Authentication, Authorization, Built-in CI/CD, File Upload and more, using up to date industry standars and next-gen technologies like React (With Hooks 🔥), Redux, Bulma, SASS, Webpack, Routing and a Serverless Arquitecture.
 
-![Boilerplate - Users page](https://i.imgur.com/T1YAEbr.png)
+![Boilerplate - Users page](https://i.imgur.com/Z2TgfHp.png)
 
 ---
+
+## Table of Contents
 
 <!-- To update this table of contents, ensure you have run `npm install` then `npm run doctoc` -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -52,7 +54,7 @@ This project is using a customized version ported into React of the [Admin Dashb
 
 ## What is this?
 
-React Firebase Admin is our in house admin dashboard boilerplate that we use in many of our software projects here at [Create Thrive](https://createthrive.com/). After months of hard work and refinement we decided to make it public to give back the open source community that helped us so much along the years.
+React Firebase Admin is our in house admin dashboard boilerplate that we use in many of our software projects here at [CreateThrive](https://createthrive.com/). After months of hard work and refinement we decided to make it public to give back the open source community that helped us so much along the years.
 
 ## Why should I use it?
 
@@ -71,10 +73,12 @@ React Firebase Admin is our in house admin dashboard boilerplate that we use in 
 - Create/modify/delete users
 - Automatic email invitation to new users
 - Image uploading
-- Change/Forgot Password built into the dasbhoard
+- Change/Forgot Password built into the dasbhoard.
 - User filtering and search
 - Built-in CI (Continous integration)
 - Built-in CD (Continous deployment)
+- PWA ready thanks to CRA and Firebase.
+- Multi-tenancy already in place, with minimal changes it is possible to implement it.
 
 ## Tech Stack
 
@@ -108,6 +112,22 @@ React Firebase Admin is our in house admin dashboard boilerplate that we use in 
 - [ESLint](https://eslint.org/) (★ 15.9k) configured to follow the coding style of [Airbnb](https://github.com/airbnb/javascript).
 - [Prettier](https://prettier.io/) (★ 35.5k) as code formatter.
 - [Lint-staged](https://github.com/okonet/lint-staged) (★ 6.5k) run linters on git staged files.
+
+### Cloud functions
+
+- [Express](https://github.com/expressjs/express) (★ 47.5k) fast, unopinionated, minimalist web framework for node.
+- [Cors](https://github.com/expressjs/cors) (★ 4.4k) Node.js CORS middleware.
+- [Nodemailer](https://github.com/nodemailer/nodemailer) (★ 12.2k) send e-mails with Node.js.
+- [Firebase-admin](https://github.com/firebase/firebase-admin-node) (★ 790) Firebase Admin Node.js SDK.
+- [Firebase-functions](https://github.com/firebase/firebase-functions) (★ 658) Firebase SDK for Cloud Functions.
+- [@google-cloud/storage](https://github.com/googleapis/nodejs-storage) (★ 421) node.js client for Google Cloud Storage.
+- [Firebase-function-tools](https://github.com/TarikHuber/react-most-wanted) (★ 780) a tool for naming and loading our Cloud Funnctions.
+- [Cookie-parser](https://github.com/expressjs/cookie-parser) (★ 1.4k) parse HTTP request cookies.
+- [Uuid](https://github.com/uuidjs/uuid) (★ 8.7k) Generate RFC-compliant UUIDs in JavaScript.
+- [Busboy](https://github.com/mscdex/busboy) (★ 1.8k) a streaming parser for HTML form data for node.js.
+- [Sharp](https://github.com/lovell/sharp) (★ 15.8k) high performance Node.js image processing.
+- [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for node.js.
+- [Fs-extra](https://github.com/jprichardson/node-fs-extra) (★ 6.6k) Node.js: extra methods for the fs object like copy(), remove(), mkdirs().
 
 Also you will need to be familiar with [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML), [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS), [SASS](https://sass-lang.com/), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) ([ES2015](http://babeljs.io/learn-es2015/)) and [React](https://reactjs.org/) with [React Hooks](https://reactjs.org/docs/hooks-intro.html).
 
