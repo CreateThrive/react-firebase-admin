@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  word-break: normal;
+}
+
+.section,
+.hero-body {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.column {
+  flex-basis: unset;
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  margin-top: auto;
+}
+
+.redux-toastr .toastr .close-toastr {
+  opacity: 1;
+  color: #fff;
+}
+
+.redux-toastr .toastr .rrt-left-container {
+  width: 75px;
+}
+
+.redux-toastr .toastr .rrt-left-container .toastr-icon {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+
+.redux-toastr .toastr .rrt-middle-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 75px;
+  min-height: 70px;
+}

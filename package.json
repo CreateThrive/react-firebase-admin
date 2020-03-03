@@ -1,0 +1,100 @@
+{
+  "name": "live-stock-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bulma": "^0.8.0",
+    "classnames": "^2.2.6",
+    "firebase": "^7.9.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.0",
+    "react-datepicker": "^2.13.0",
+    "react-dom": "^16.13.0",
+    "react-redux": "^7.2.0",
+    "react-redux-toastr": "^7.6.4",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.0",
+    "react-spinners": "^0.8.0",
+    "react-table": "^7.0.0-rc.16",
+    "redux": "^4.0.5",
+    "redux-act": "^1.7.7",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "uuid": "^7.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "setup-admin-dashboard": "npm install && npm build && firebase deploy",
+    "deploy": "npm run build && firebase deploy --only hosting"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "babel-eslint": "10.0.3",
+    "babel-loader": "^8.0.6",
+    "deep-freeze": "^0.0.1",
+    "dotenv": "^8.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.8.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.18.3",
+    "husky": "^4.2.3",
+    "jest": "^24.9.0",
+    "lint-staged": "^10.0.8",
+    "node-sass": "^4.13.1",
+    "prettier": "^1.19.1",
+    "redux-mock-store": "^1.5.4",
+    "sass-loader": "^8.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "CI=true yarn test && lint-staged"
+    }
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "coverageReporters": [
+      "text",
+      "html"
+    ],
+    "resetMocks": true
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

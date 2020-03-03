@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ConfirmationModal /> rendering should render without crashing 1`] = `
+<div
+  className="modal is-active"
+>
+  <div
+    className="modal-background"
+    onClick={[MockFunction]}
+  />
+  <div
+    className="modal-card"
+  >
+    <header
+      className="modal-card-head"
+    >
+      <p
+        className="modal-card-title"
+      >
+        test title
+      </p>
+    </header>
+    <section
+      className="modal-card-body"
+    >
+      test body
+    </section>
+    <footer
+      className="modal-card-foot"
+    >
+      <button
+        className="button is-danger undefined"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        test message
+      </button>
+      <button
+        className="button"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        test message
+      </button>
+    </footer>
+  </div>
+</div>
+`;

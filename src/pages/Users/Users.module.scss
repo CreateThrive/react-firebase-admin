@@ -1,0 +1,22 @@
+.establishments {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 0 1rem 0;
+
+  @media (min-width: 560px) {
+    justify-content: space-between;
+  }
+}
+
+.tableHeader {
+  input {
+    max-width: 250px;
+    margin-left: 15px;
+  }
+}

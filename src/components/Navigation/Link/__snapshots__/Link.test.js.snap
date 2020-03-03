@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Link /> rendering should render without crashing 1`] = `
+<NavLink
+  activeClassName="is-active"
+  className="navbar-item"
+  exact={true}
+  to="/url"
+>
+  Test
+</NavLink>
+`;

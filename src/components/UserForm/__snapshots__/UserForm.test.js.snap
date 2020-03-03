@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserForm /> rendering should render without crashing 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <Provider
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+  >
+    <UserForm
+      action={[Function]}
+      userData={
+        Object {
+          "createdAt": "11/21/2020",
+          "email": "mkrukuy@gmail.com",
+          "file": null,
+          "id": "test id",
+          "isAdmin": false,
+          "location": "Montevideo, Uruguay",
+          "logoUrl": "some logoUrl",
+          "name": "Mateo",
+          "tenant": "some tenantId",
+        }
+      }
+    />
+  </Provider>
+</Router>
+`;

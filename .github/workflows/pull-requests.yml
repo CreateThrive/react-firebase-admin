@@ -1,0 +1,53 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    branches:
+      - master
+      - development
+      - feature/*
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Installing dependencies
+        run: npm ci
+      - name: Building project
+        run: npm run build
+  tests:
+    name: Testing
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Installing dependencies
+        run: npm ci
+      - name: Running project tests
+        run: CI=true npm test
+        env:
+          REACT_APP_FIRE_BASE_KEY: ${{ secrets.FIREBASE_TOKEN }}
+          REACT_APP_FIRE_BASE_AUTH_DOMAIN: ${{ secrets.FIRE_BASE_AUTH_DOMAIN_STAGING }}
+          REACT_APP_FIRE_BASE_DB_URL: ${{ secrets.FIRE_BASE_DB_URL_STAGING }}
+          REACT_APP_FIRE_BASE_PROJECT_ID: ${{ secrets.FIRE_BASE_PROJECT_ID_STAGING }}
+          REACT_APP_FIRE_BASE_STORAGE_BUCKET: ${{ secrets.FIRE_BASE_STORAGE_BUCKET_STAGING }}
+          REACT_APP_FIRE_BASE_MESSAGING_SENDER_ID: ${{ secrets.FIRE_BASE_MESSAGING_SENDER_ID_STAGING }}
+          REACT_APP_FIRE_BASE_APP_ID: ${{ secrets.FIRE_BASE_APP_ID_STAGING }}
+          REACT_APP_FIRE_BASE_MEASURMENT_ID: ${{ secrets.FIRE_BASE_MEASURMENT_ID_STAGING }}
+          REACT_APP_CLOUD_FUNCTIONS_REST_API: ${{ secrets.CLOUD_FUNCTIONS_REST_API_STAGING }}
+          REACT_APP_LOGIN_PAGE_URL: ${{ secrets.LOGIN_PAGE_URL_STAGING }}

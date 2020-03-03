@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DatePickerStyled /> rendering should render without crashing 1`] = `
+<t
+  allowSameDay={false}
+  customTimeInput={null}
+  dateFormat="MM/dd/yyyy"
+  dateFormatCalendar="LLLL yyyy"
+  disabled={false}
+  disabledKeyboardNavigation={false}
+  dropdownMode="scroll"
+  enableTabLoop={true}
+  excludeScrollbar={true}
+  inlineFocusSelectedMonth={false}
+  monthsShown={1}
+  nextMonthButtonLabel="Next Month"
+  nextYearButtonLabel="Next Year"
+  onBlur={[Function]}
+  onCalendarClose={[Function]}
+  onCalendarOpen={[Function]}
+  onChange={[MockFunction]}
+  onClickOutside={[Function]}
+  onFocus={[Function]}
+  onInputClick={[Function]}
+  onInputError={[Function]}
+  onKeyDown={[Function]}
+  onMonthChange={[Function]}
+  onSelect={[Function]}
+  onYearChange={[Function]}
+  preventOpenOnFocus={false}
+  previousMonthButtonLabel="Previous Month"
+  previousYearButtonLabel="Previous Year"
+  readOnly={false}
+  renderDayContents={[Function]}
+  selected={2020-11-12T00:00:00.000Z}
+  shouldCloseOnSelect={true}
+  showMonthYearPicker={false}
+  showPopperArrow={true}
+  showPreviousMonths={false}
+  showQuarterYearPicker={false}
+  showTimeInput={false}
+  showTimeSelect={false}
+  strictParsing={false}
+  timeCaption="Time"
+  timeInputLabel="Time"
+  timeIntervals={30}
+  withPortal={false}
+/>
+`;

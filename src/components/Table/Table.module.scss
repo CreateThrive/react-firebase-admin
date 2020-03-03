@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+}
+
+.isSortable:hover, .isCurrentSort {
+  border-color: #7a7a7a !important;
+}
+
+.tableIcon {
+  margin-left: .5rem;
+}
+
+.currentPage {
+  color: #2e323a !important;
+  border-color: #4a4a4a !important;
+  background-color: #fff;
+}
+
+.level {
+  padding: 20px;
+}

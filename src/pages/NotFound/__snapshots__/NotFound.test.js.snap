@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NotFound /> rendering should render without crashing 1`] = `
+<BrowserRouter
+  keyLength={0}
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Provider
+      store={
+        Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        }
+      }
+    >
+      <NotFound
+        location={
+          Object {
+            "pathname": "/",
+          }
+        }
+      >
+        <section
+          className="hero is-fullheight"
+        >
+          <div
+            className="hero-body"
+          >
+            <section
+              className="section section"
+            >
+              <div
+                className="container"
+              >
+                <div
+                  className="columns is-vcentered is-desktop"
+                >
+                  <div
+                    className="column has-text-centered"
+                  >
+                    <h1
+                      className="title"
+                    >
+                      Error 404: page not found
+                    </h1>
+                    <p
+                      className="subtitle"
+                    >
+                      The requested URL 
+                      /
+                       was not found
+                    </p>
+                    <Link
+                      className="button is-info is-normal"
+                      to="/login"
+                    >
+                      <LinkAnchor
+                        className="button is-info is-normal"
+                        href="/login"
+                        navigate={[Function]}
+                      >
+                        <a
+                          className="button is-info is-normal"
+                          href="/login"
+                          onClick={[Function]}
+                        >
+                          Go Back
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                  <div
+                    className="column has-text-centered"
+                  >
+                    <img
+                      alt="404 error"
+                      src="404.gif"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </NotFound>
+    </Provider>
+  </Router>
+</BrowserRouter>
+`;

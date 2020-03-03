@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> rendering should render without crashing 1`] = `
+<BrowserRouter
+  keyLength={0}
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Provider
+      store={
+        Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        }
+      }
+    >
+      <Login>
+        <section
+          className="section hero is-fullheight is-error-section"
+        >
+          <div
+            className="hero-body"
+          >
+            <div
+              className="container"
+            >
+              <div
+                className="columns is-centered"
+              >
+                <div
+                  className="column is-two-fifths"
+                >
+                  <div
+                    className="card has-card-header-background"
+                  >
+                    <header
+                      className="card-header"
+                    >
+                      <p
+                        className="card-header-title"
+                      >
+                        <span
+                          className="icon"
+                        >
+                          <i
+                            className="mdi mdi-lock default"
+                          />
+                        </span>
+                        <span>
+                          Login
+                        </span>
+                      </p>
+                    </header>
+                    <div
+                      className="card-content"
+                    >
+                      <form
+                        onSubmit={[Function]}
+                      >
+                        <div
+                          className="field"
+                        >
+                          <p
+                            className="label"
+                          >
+                            E-mail Address
+                          </p>
+                          <div
+                            className="control is-clearfix"
+                          >
+                            <input
+                              className="input null"
+                              name="email"
+                              onChange={[Function]}
+                              required={true}
+                              type="email"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          className="field"
+                        >
+                          <p
+                            className="label"
+                          >
+                            Password
+                          </p>
+                          <div
+                            className="control is-clearfix"
+                          >
+                            <input
+                              className="input null"
+                              name="password"
+                              onChange={[Function]}
+                              required={true}
+                              type="password"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <hr />
+                        <div
+                          className="field is-grouped"
+                        >
+                          <div
+                            className="control"
+                          >
+                            <button
+                              className="button is-black undefined"
+                              disabled={false}
+                              type="submit"
+                            >
+                              Login
+                            </button>
+                          </div>
+                          <div
+                            className="control"
+                          >
+                            <Link
+                              className="button is-outlined"
+                              to="/recover-password"
+                            >
+                              <LinkAnchor
+                                className="button is-outlined"
+                                href="/recover-password"
+                                navigate={[Function]}
+                              >
+                                <a
+                                  className="button is-outlined"
+                                  href="/recover-password"
+                                  onClick={[Function]}
+                                >
+                                  Forgot Password?
+                                </a>
+                              </LinkAnchor>
+                            </Link>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Login>
+    </Provider>
+  </Router>
+</BrowserRouter>
+`;
