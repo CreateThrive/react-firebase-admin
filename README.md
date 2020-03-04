@@ -453,3 +453,16 @@ You can refere to this on the [GitHub Actions documentations](https://help.githu
 ## Environment Variables
 
 Refere to the .env.example file in the root folder of the project to see what variables are currently in use.
+
+## Contributors
+We'd like to thank these awesome people who made this whole thing happen:
+<ul>
+  <li><a href="https://github.com/MateoKruk">Mateo Kruk</a></li>
+    <li><a href="https://github.com/tpiaggio">Tomas Piaggio</a></li>
+    <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
+</ul>
+
+
+## License
+
+This project is licensed under the MIT license, Copyright (c) 2020 <a href="https://createthrive.com">CreateThrive</a>. For more information see LICENSE.md.
