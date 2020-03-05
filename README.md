@@ -1,6 +1,6 @@
 # React Firebase Admin ⚛️ 🚀
 
-This boilerplate is designed to quickly spin a fully functional admin dashboard with Firebase including Authentication, Authorization, Built-in CI/CD, File Upload and more, using up to date industry standars and next-gen technologies like React (With Hooks 🔥), Redux, Bulma, SASS, Webpack, Routing and a Serverless Arquitecture.
+This boilerplate is designed to quickly spin a fully functional admin dashboard with Firebase including Authentication, Authorization, Built-in CI/CD, File Upload and more, using up to date industry standars and next-gen technologies like React (With Hooks 🔥), Redux, Bulma, SASS, Webpack, Routing and a Serverless Architecture.
 
 ![Boilerplate - Users page](https://i.imgur.com/Z2TgfHp.png)
 
@@ -133,6 +133,7 @@ Also you will need to be familiar with [HTML](https://developer.mozilla.org/en-U
 
 ## Prerequisites
 
+- [Firebase](https://firebase.google.com/) account in order to set up the serverless BaaS for the project.
 - [Node.js](https://nodejs.org/) v12.15.0 or higher (React frontend) and v8.17.0 (Cloud Functions) (You can install them using [NVM](https://github.com/nvm-sh/nvm)).
 - [VSCode](https://code.visualstudio.com/) editor (preferred) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [Babel JavaScript ](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel) plug-ins.
 
