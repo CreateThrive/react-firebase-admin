@@ -29,12 +29,6 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
   const onChangeHandler = useChangeHandler(setUser);
 
-  const onDateChangedHandler = createdAt =>
-    setUser(prevState => ({
-      ...prevState,
-      createdAt: createdAt.toDateString()
-    }));
-
   const onFileChangedHandler = event => {
     const file = event.target.files[0];
     setUser(prevState => ({ ...prevState, file, logoUrl: null }));
@@ -207,8 +201,9 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                   <div className="field-body">
                     <div className="field">
                       <DatePicker
+                        name="createdAt"
                         date={new Date(user.createdAt)}
-                        onChange={onDateChangedHandler}
+                        setState={setUser}
                       />
                     </div>
                   </div>
