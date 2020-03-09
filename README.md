@@ -1,5 +1,8 @@
 # React Firebase Admin ⚛️ 🚀
 
+![ci](https://github.com/CreateThrive/react-firebase-admin/workflows/ci/badge.svg?branch=master)
+[![license: MIT](https://badgen.net/github/license/micromatch/micromatch)](https://github.com/CreateThrive/react-firebase-admin/blob/feature/badges-rename-workflows/LICENSE.md)
+
 This boilerplate is designed to quickly spin a fully functional admin dashboard with Firebase including Authentication, Authorization, Built-in CI/CD, File Upload and more, using up to date industry standars and next-gen technologies like React (With Hooks 🔥), Redux, Bulma, SASS, Webpack, Routing and a Serverless Architecture.
 
 ![Boilerplate - Users page](https://i.imgur.com/Z2TgfHp.png)
@@ -19,6 +22,7 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
   - [Core](#core)
   - [Unit Testing](#unit-testing)
   - [Linting](#linting)
+  - [Cloud functions](#cloud-functions)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
   - [Setting up the Firebase project locally](#setting-up-the-firebase-project-locally)
@@ -29,7 +33,7 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
   - [Development server](#development-server)
   - [Running tests](#running-tests)
   - [How to deploy](#how-to-deploy)
-- [Cloud functions](#cloud-functions)
+- [Cloud functions](#cloud-functions-1)
   - [Folder structure](#folder-structure-1)
   - [Installing dependencies](#installing-dependencies-1)
   - [Authenticate to your Firebase account](#authenticate-to-your-firebase-account)
@@ -45,6 +49,9 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
   - [Setting up GitHub Actions in your repo](#setting-up-github-actions-in-your-repo)
   - [Writing new workflows](#writing-new-workflows)
 - [Environment Variables](#environment-variables)
+- [Demo](#demo)
+- [Contributors](#contributors)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -455,14 +462,19 @@ You can refere to this on the [GitHub Actions documentations](https://help.githu
 
 Refere to the .env.example file in the root folder of the project to see what variables are currently in use.
 
+## Demo
+
+For requesting access to [demo](https://react-firebase-admin-eeac2.firebaseapp.com/) site please [contact us](https://createthrive.com/contact).
+
 ## Contributors
+
 We'd like to thank these awesome people who made this whole thing happen:
+
 <ul>
   <li><a href="https://github.com/MateoKruk">Mateo Kruk</a></li>
     <li><a href="https://github.com/tpiaggio">Tomas Piaggio</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
 </ul>
-
 
 ## License
 
