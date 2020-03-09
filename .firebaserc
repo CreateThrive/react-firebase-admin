@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "react-firebase-admin-eeac2"
+    "production": "react-firebase-admin-eeac2",
+    "staging": "react-firebase-admin-eeac2"
   }
 }
