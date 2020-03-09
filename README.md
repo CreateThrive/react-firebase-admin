@@ -1,5 +1,8 @@
 # React Firebase Admin ⚛️ 🚀
 
+![Production CI](https://github.com/CreateThrive/react-firebase-admin/workflows/Production%20CI/badge.svg?branch=master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 This boilerplate is designed to quickly spin a fully functional admin dashboard with Firebase including Authentication, Authorization, Built-in CI/CD, File Upload and more, using up to date industry standars and next-gen technologies like React (With Hooks 🔥), Redux, Bulma, SASS, Webpack, Routing and a Serverless Architecture.
 
 ![Boilerplate - Users page](https://i.imgur.com/Z2TgfHp.png)
@@ -456,13 +459,14 @@ You can refere to this on the [GitHub Actions documentations](https://help.githu
 Refere to the .env.example file in the root folder of the project to see what variables are currently in use.
 
 ## Contributors
+
 We'd like to thank these awesome people who made this whole thing happen:
+
 <ul>
   <li><a href="https://github.com/MateoKruk">Mateo Kruk</a></li>
     <li><a href="https://github.com/tpiaggio">Tomas Piaggio</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
 </ul>
-
 
 ## License
 
