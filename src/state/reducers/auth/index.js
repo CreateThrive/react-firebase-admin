@@ -135,6 +135,7 @@ export const authReducer = createReducer(
       ...state,
       userData: {
         id: payload.id,
+        email: state.userData.email,
         isAdmin: payload.isAdmin,
         name: payload.name,
         location: payload.location,
