@@ -15,6 +15,7 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
 - [Features](#features)
@@ -22,6 +23,7 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
   - [Core](#core)
   - [Unit Testing](#unit-testing)
   - [Linting](#linting)
+  - [Cloud functions](#cloud-functions)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
   - [Setting up the Firebase project locally](#setting-up-the-firebase-project-locally)
@@ -32,7 +34,7 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
   - [Development server](#development-server)
   - [Running tests](#running-tests)
   - [How to deploy](#how-to-deploy)
-- [Cloud functions](#cloud-functions)
+- [Cloud functions](#cloud-functions-1)
   - [Folder structure](#folder-structure-1)
   - [Installing dependencies](#installing-dependencies-1)
   - [Authenticate to your Firebase account](#authenticate-to-your-firebase-account)
@@ -48,6 +50,9 @@ This boilerplate is designed to quickly spin a fully functional admin dashboard 
   - [Setting up GitHub Actions in your repo](#setting-up-github-actions-in-your-repo)
   - [Writing new workflows](#writing-new-workflows)
 - [Environment Variables](#environment-variables)
+- [Demo](#demo)
+- [Contributors](#contributors)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -457,6 +462,10 @@ You can refere to this on the [GitHub Actions documentations](https://help.githu
 ## Environment Variables
 
 Refere to the .env.example file in the root folder of the project to see what variables are currently in use.
+
+## Demo
+
+For requesting access to [demo](https://react-firebase-admin-eeac2.firebaseapp.com/) site please [contact us](https://createthrive.com/contact).
 
 ## Contributors
 
