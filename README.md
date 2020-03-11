@@ -451,7 +451,7 @@ Also, you'll need to set up your `FIREBASE_TOKEN` secret. You get this token by 
 
 After setting up all your github secrets, they should look like this:
 
-![Boilerplate - GitHub Secrets](https://imgur.com/wjNw4fC)
+![Boilerplate - GitHub Secrets](https://i.imgur.com/wjNw4fC.png)
 
 
 ### Writing new workflows
