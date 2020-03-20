@@ -1,7 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Section /> rendering should render without crashing 1`] = `
-<h1>
-  Section page
-</h1>
+<Fragment>
+  <section
+    className="hero is-hero-bar"
+  >
+    <div
+      className="hero-body"
+    >
+      <h1
+        className="title"
+      >
+        Section
+      </h1>
+    </div>
+  </section>
+  <section
+    className="section is-main-section"
+  >
+    Section content
+  </section>
+</Fragment>
 `;

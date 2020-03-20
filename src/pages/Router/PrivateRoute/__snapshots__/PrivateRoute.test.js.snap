@@ -291,120 +291,141 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                       </NavLink>
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      className="has-icon"
-                      onClick={[Function]}
-                      to="/section"
+                  <SubMenu
+                    label="Dropdown Menu"
+                  >
+                    <li
+                      className=""
                     >
-                      <NavLink
-                        activeClassName="is-active"
-                        className="has-icon"
-                        exact={true}
+                      <a
+                        className="has-icon has-dropdown-icon"
+                        exact-active-class="is-active"
                         onClick={[Function]}
-                        to="/section"
                       >
-                        <Link
-                          aria-current={null}
-                          className="has-icon"
-                          onClick={[Function]}
-                          to={
-                            Object {
-                              "hash": "",
-                              "pathname": "/section",
-                              "search": "",
-                              "state": null,
-                            }
-                          }
+                        <span
+                          className="icon"
                         >
-                          <LinkAnchor
-                            aria-current={null}
-                            className="has-icon"
-                            href="/section"
-                            navigate={[Function]}
-                            onClick={[Function]}
-                          >
-                            <a
-                              aria-current={null}
-                              className="has-icon"
-                              href="/section"
-                              onClick={[Function]}
-                            >
-                              <span
-                                className="icon"
-                              >
-                                <i
-                                  className="mdi mdi-table"
-                                />
-                              </span>
-                              <span
-                                className="menu-item-label"
-                              >
-                                Section
-                              </span>
-                            </a>
-                          </LinkAnchor>
-                        </Link>
-                      </NavLink>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="has-icon"
-                      onClick={[Function]}
-                      to="/section"
-                    >
-                      <NavLink
-                        activeClassName="is-active"
-                        className="has-icon"
-                        exact={true}
-                        onClick={[Function]}
-                        to="/section"
-                      >
-                        <Link
-                          aria-current={null}
-                          className="has-icon"
-                          onClick={[Function]}
-                          to={
-                            Object {
-                              "hash": "",
-                              "pathname": "/section",
-                              "search": "",
-                              "state": null,
-                            }
-                          }
+                          <i
+                            className="mdi mdi-view-list"
+                          />
+                        </span>
+                        <span
+                          className="menu-item-label"
                         >
-                          <LinkAnchor
-                            aria-current={null}
-                            className="has-icon"
-                            href="/section"
-                            navigate={[Function]}
-                            onClick={[Function]}
+                          Dropdown Menu
+                        </span>
+                        <div
+                          className="dropdown-icon"
+                        >
+                          <span
+                            className="icon"
                           >
-                            <a
-                              aria-current={null}
-                              className="has-icon"
-                              href="/section"
+                            <i
+                              className="mdi mdi-plus"
+                            />
+                          </span>
+                        </div>
+                      </a>
+                      <ul>
+                        <li>
+                          <Link
+                            className="submenuLink"
+                            onClick={[Function]}
+                            to="/submenu1"
+                          >
+                            <NavLink
+                              activeClassName="is-active"
+                              className="submenuLink"
+                              exact={true}
                               onClick={[Function]}
+                              to="/submenu1"
                             >
-                              <span
-                                className="icon"
+                              <Link
+                                aria-current={null}
+                                className="submenuLink"
+                                onClick={[Function]}
+                                to={
+                                  Object {
+                                    "hash": "",
+                                    "pathname": "/submenu1",
+                                    "search": "",
+                                    "state": null,
+                                  }
+                                }
                               >
-                                <i
-                                  className="mdi mdi-square-edit-outline"
-                                />
-                              </span>
-                              <span
-                                className="menu-item-label"
+                                <LinkAnchor
+                                  aria-current={null}
+                                  className="submenuLink"
+                                  href="/submenu1"
+                                  navigate={[Function]}
+                                  onClick={[Function]}
+                                >
+                                  <a
+                                    aria-current={null}
+                                    className="submenuLink"
+                                    href="/submenu1"
+                                    onClick={[Function]}
+                                  >
+                                    <span>
+                                      Submenu 1
+                                    </span>
+                                  </a>
+                                </LinkAnchor>
+                              </Link>
+                            </NavLink>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            className="submenuLink"
+                            onClick={[Function]}
+                            to="/submenu2"
+                          >
+                            <NavLink
+                              activeClassName="is-active"
+                              className="submenuLink"
+                              exact={true}
+                              onClick={[Function]}
+                              to="/submenu2"
+                            >
+                              <Link
+                                aria-current={null}
+                                className="submenuLink"
+                                onClick={[Function]}
+                                to={
+                                  Object {
+                                    "hash": "",
+                                    "pathname": "/submenu2",
+                                    "search": "",
+                                    "state": null,
+                                  }
+                                }
                               >
-                                Section
-                              </span>
-                            </a>
-                          </LinkAnchor>
-                        </Link>
-                      </NavLink>
-                    </Link>
-                  </li>
+                                <LinkAnchor
+                                  aria-current={null}
+                                  className="submenuLink"
+                                  href="/submenu2"
+                                  navigate={[Function]}
+                                  onClick={[Function]}
+                                >
+                                  <a
+                                    aria-current={null}
+                                    className="submenuLink"
+                                    href="/submenu2"
+                                    onClick={[Function]}
+                                  >
+                                    <span>
+                                      Submenu 2
+                                    </span>
+                                  </a>
+                                </LinkAnchor>
+                              </Link>
+                            </NavLink>
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </SubMenu>
                 </ul>
               </div>
             </aside>

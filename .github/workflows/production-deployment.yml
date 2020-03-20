@@ -1,4 +1,4 @@
-name: Production CI
+name: ci
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,21 +18,24 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm ci
+          cd functions
+          npm ci
+          cd ..
           npm run build
         env:
-          REACT_APP_FIRE_BASE_KEY: ${{ secrets.FIRE_BASE_KEY_PRODUCTION }}
-          REACT_APP_FIRE_BASE_AUTH_DOMAIN: ${{ secrets.FIRE_BASE_AUTH_DOMAIN_PRODUCTION }}
-          REACT_APP_FIRE_BASE_DB_URL: ${{ secrets.FIRE_BASE_DB_URL_PRODUCTION }}
-          REACT_APP_FIRE_BASE_PROJECT_ID: ${{ secrets.FIRE_BASE_PROJECT_ID_PRODUCTION }}
-          REACT_APP_FIRE_BASE_STORAGE_BUCKET: ${{ secrets.FIRE_BASE_STORAGE_BUCKET_PRODUCTION }}
-          REACT_APP_FIRE_BASE_MESSAGING_SENDER_ID: ${{ secrets.FIRE_BASE_MESSAGING_SENDER_ID_PRODUCTION }}
-          REACT_APP_FIRE_BASE_APP_ID: ${{ secrets.FIRE_BASE_APP_ID_PRODUCTION }}
-          REACT_APP_FIRE_BASE_MEASURMENT_ID: ${{ secrets.FIRE_BASE_MEASURMENT_ID_PRODUCTION }}
-          REACT_APP_CLOUD_FUNCTIONS_REST_API: ${{ secrets.CLOUD_FUNCTIONS_REST_API_PRODUCTION }}
-          REACT_APP_LOGIN_PAGE_URL: ${{ secrets.LOGIN_PAGE_URL_PRODUCTION }}
-     # - name: Firebase deployment
-     #   run: |
-     #     npm install -g firebase-tools
-     #     firebase deploy -P production --token $FIREBASE_TOKEN
-     #   env:
-     #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          REACT_APP_FIRE_BASE_KEY: ${{ secrets.FIRE_BASE_KEY_STAGING }}
+          REACT_APP_FIRE_BASE_AUTH_DOMAIN: ${{ secrets.FIRE_BASE_AUTH_DOMAIN_STAGING }}
+          REACT_APP_FIRE_BASE_DB_URL: ${{ secrets.FIRE_BASE_DB_URL_STAGING }}
+          REACT_APP_FIRE_BASE_PROJECT_ID: ${{ secrets.FIRE_BASE_PROJECT_ID_STAGING }}
+          REACT_APP_FIRE_BASE_STORAGE_BUCKET: ${{ secrets.FIRE_BASE_STORAGE_BUCKET_STAGING }}
+          REACT_APP_FIRE_BASE_MESSAGING_SENDER_ID: ${{ secrets.FIRE_BASE_MESSAGING_SENDER_ID_STAGING }}
+          REACT_APP_FIRE_BASE_APP_ID: ${{ secrets.FIRE_BASE_APP_ID_STAGING }}
+          REACT_APP_FIRE_BASE_MEASURMENT_ID: ${{ secrets.FIRE_BASE_MEASURMENT_ID_STAGING }}
+          REACT_APP_CLOUD_FUNCTIONS_REST_API: ${{ secrets.CLOUD_FUNCTIONS_REST_API_STAGING }}
+          REACT_APP_LOGIN_PAGE_URL: ${{ secrets.LOGIN_PAGE_URL_STAGING }}
+      - name: Firebase deployment
+        run: |
+          npm install -g firebase-tools
+          firebase deploy -P staging --token $FIREBASE_TOKEN
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

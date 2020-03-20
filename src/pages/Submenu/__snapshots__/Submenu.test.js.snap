@@ -1,7 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Submenu /> rendering should render without crashing 1`] = `
-<h1>
-  Submenu
-</h1>
+<Fragment>
+  <section
+    className="hero is-hero-bar"
+  >
+    <div
+      className="hero-body"
+    >
+      <h1
+        className="title"
+      >
+        Submenu
+      </h1>
+    </div>
+  </section>
+  <section
+    className="section is-main-section"
+  >
+    Submenu content
+  </section>
+</Fragment>
 `;

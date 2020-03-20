@@ -108,7 +108,7 @@ describe('<Aside /> rendering', () => {
     expect(component.exists(SubMenu)).toBeTruthy();
   });
 
-  it('should not render the <SubMenu /> component if the user is not an admin', () => {
+  it('should render the <SubMenu /> component if the user is not an admin', () => {
     const { component } = mountWithProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
@@ -119,6 +119,6 @@ describe('<Aside /> rendering', () => {
       }
     });
 
-    expect(component.exists(SubMenu)).toBeFalsy();
+    expect(component.exists(SubMenu)).toBeTruthy();
   });
 });

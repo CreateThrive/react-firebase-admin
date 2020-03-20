@@ -5,13 +5,20 @@ import PropTypes from 'prop-types';
 
 import './DatePicker.scss';
 
-const DatePickerStyled = ({ date, onChange }) => {
-  return <DatePicker selected={date} onChange={onChange} />;
+const DatePickerStyled = ({ name, date, setState }) => {
+  const onDateChangedHandler = value =>
+    setState(prevState => ({
+      ...prevState,
+      [name]: value.toDateString()
+    }));
+  
+  return <DatePicker selected={date} onChange={onDateChangedHandler} />;
 };
 
 DatePickerStyled.propTypes = {
+  name: PropTypes.string.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
-  onChange: PropTypes.func.isRequired
+  setState: PropTypes.func.isRequired
 };
 
 export default DatePickerStyled;
