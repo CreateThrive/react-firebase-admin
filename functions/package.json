@@ -26,7 +26,7 @@
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "nodemailer": "^6.4.2",
-    "sharp": "^0.24.0",
+    "sharp": "^0.25.1",
     "uuid": "^7.0.1"
   },
   "devDependencies": {

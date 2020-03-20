@@ -89,53 +89,26 @@ const Aside = ({ handleMobileToggle }) => {
               </NavLink>
             </li>
           )}
-          <li>
-            <NavLink
-              to={paths.SECTION}
-              className="has-icon"
-              onClick={handleMobileToggle}
-            >
-              <span className="icon">
-                <i className="mdi mdi-table" />
-              </span>
-              <span className="menu-item-label">Section</span>
-            </NavLink>
-          </li>
-          {isAdmin ? (
-            <SubMenu label="Dropdown Menu">
-              <li>
-                <NavLink
-                  className={classes.submenuLink}
-                  to={paths.SUBMENU_1}
-                  onClick={handleMobileToggle}
-                >
-                  <span>Submenu 1</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className={classes.submenuLink}
-                  to={paths.SUBMENU_2}
-                  onClick={handleMobileToggle}
-                >
-                  <span>Submenu 2</span>
-                </NavLink>
-              </li>
-            </SubMenu>
-          ) : (
+          <SubMenu label="Dropdown Menu">
             <li>
               <NavLink
-                to={paths.SECTION}
-                className="has-icon"
+                className={classes.submenuLink}
+                to={paths.SUBMENU_1}
                 onClick={handleMobileToggle}
               >
-                <span className="icon">
-                  <i className="mdi mdi-square-edit-outline" />
-                </span>
-                <span className="menu-item-label">Section</span>
+                <span>Submenu 1</span>
               </NavLink>
             </li>
-          )}
+            <li>
+              <NavLink
+                className={classes.submenuLink}
+                to={paths.SUBMENU_2}
+                onClick={handleMobileToggle}
+              >
+                <span>Submenu 2</span>
+              </NavLink>
+            </li>
+          </SubMenu>
         </ul>
       </div>
     </aside>
