@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -123,26 +123,30 @@ const Users = () => {
       id: 'actions',
       accessor: 'actions',
       Cell: ({ row }) => (
-        <div className="buttons is-right">
-          <Link
-            to={`/users/${row.original.id}`}
-            className="button is-small is-primary"
-          >
-            <span className="icon is-small">
-              <i className="mdi mdi-account-edit" />
-            </span>
-          </Link>
+        <>
+          {!row.original.isAdmin && (
+            <div className="buttons is-right">
+              <Link
+                to={`/users/${row.original.id}`}
+                className="button is-small is-primary"
+              >
+                <span className="icon is-small">
+                  <i className="mdi mdi-account-edit" />
+                </span>
+              </Link>
 
-          <button
-            type="button"
-            className="button is-small is-danger"
-            onClick={() => onRemoveButtonClickHandler(row.original.id)}
-          >
-            <span className="icon is-small">
-              <i className="mdi mdi-trash-can" />
-            </span>
-          </button>
-        </div>
+              <button
+                type="button"
+                className="button is-small is-danger"
+                onClick={() => onRemoveButtonClickHandler(row.original.id)}
+              >
+                <span className="icon is-small">
+                  <i className="mdi mdi-trash-can" />
+                </span>
+              </button>
+            </div>
+          )}
+        </>
       ),
       disableSortBy: true
     }

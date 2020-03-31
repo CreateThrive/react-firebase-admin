@@ -245,17 +245,7 @@ Table.propTypes = {
       id: PropTypes.string,
       disableSortBy: PropTypes.bool
     })
-  ),
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      tenant: PropTypes.string,
-      email: PropTypes.string.isRequired,
-      isAdmin: PropTypes.bool.isRequired,
-      location: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
-    })
-  )
+  ).isRequired
 };
 
 export default Table;
