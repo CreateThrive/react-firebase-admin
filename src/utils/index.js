@@ -75,7 +75,7 @@ export const inputValidations = (email, password) => {
   if (email && !isValidEmail) {
     setInputs('email', {
       modifier: 'is-danger',
-      message: 'Email inválido'
+      message: 'Invalid email'
     });
   }
 
@@ -84,12 +84,12 @@ export const inputValidations = (email, password) => {
   if (isValidPassword) {
     setInputs('password', {
       modifier: 'is-success',
-      message: 'Contraseña segura'
+      message: 'Safe password'
     });
   } else if (password) {
     setInputs('password', {
       modifier: 'is-danger',
-      message: 'Contraseña insegura'
+      message: 'Unsafe password'
     });
   }
 
