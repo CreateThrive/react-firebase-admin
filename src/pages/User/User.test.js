@@ -1,8 +1,8 @@
 import React from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
+import UserForm from 'components/UserForm';
 import User from '.';
-import UserForm from '../../components/UserForm';
 
 describe('<User /> rendering', () => {
   it('should render without crashing', () => {

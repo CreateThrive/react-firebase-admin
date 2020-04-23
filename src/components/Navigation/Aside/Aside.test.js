@@ -1,8 +1,8 @@
 import React from 'react';
 
+import paths from 'pages/Router/paths';
 import Aside, { SubMenu } from '.';
 import NavLink from '../Link';
-import paths from '../../../pages/Router/paths';
 
 describe('<Aside /> rendering', () => {
   const onHandler = jest.fn();

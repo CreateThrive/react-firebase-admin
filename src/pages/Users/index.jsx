@@ -1,18 +1,14 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-import Table from '../../components/Table';
-import {
-  fetchUsers,
-  deleteUser,
-  clearUsersData
-} from '../../state/actions/users';
+import Table from 'components/Table';
+import { fetchUsers, deleteUser, clearUsersData } from 'state/actions/users';
+import paths from 'pages/Router/paths';
+import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Users.module.scss';
-import paths from '../Router/paths';
-import ConfirmationModal from '../../components/ConfirmationModal';
 
 const Users = () => {
   const { usersList, isAdmin, error, loading, deleted } = useSelector(

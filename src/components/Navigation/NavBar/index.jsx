@@ -3,10 +3,10 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import { logout } from 'state/actions/auth';
+import paths from 'pages/Router/paths';
+import defaultLogo from 'assets/user-default-log.svg';
 import Link from '../Link';
-import { logout } from '../../../state/actions/auth';
-import paths from '../../../pages/Router/paths';
-import defaultLogo from '../../../assets/user-default-log.svg';
 
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);

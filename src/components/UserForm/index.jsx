@@ -4,12 +4,12 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import DatePicker from '../DatePicker';
-import { useChangeHandler } from '../../utils/hooks';
-import { validateEmail } from '../../utils';
+import paths from 'pages/Router/paths';
+import { usersCleanUp } from 'state/actions/users';
+import { useChangeHandler } from 'utils/hooks';
+import { validateEmail } from 'utils';
 import './UserForm.scss';
-import { usersCleanUp } from '../../state/actions/users';
-import paths from '../../pages/Router/paths';
+import DatePicker from '../DatePicker';
 
 const UserForm = ({ isEditing, isProfile, userData, action }) => {
   const { loading } = useSelector(
@@ -80,26 +80,25 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
             </header>
             <div className="card-content">
               <form onSubmit={onSubmitHandler}>
-
-              {isEditing ? (
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <label className="label">E-mail</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <input
-                          type="text"
-                          readOnly="readOnly"
-                          className="input is-static"
-                          value={user.email}
-                        />
+                {isEditing ? (
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal">
+                      <label className="label">E-mail</label>
+                    </div>
+                    <div className="field-body">
+                      <div className="field">
+                        <div className="control">
+                          <input
+                            type="text"
+                            readOnly="readOnly"
+                            className="input is-static"
+                            value={user.email}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>  
-              ) : (
+                ) : (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
                       <label className="label">E-mail</label>
@@ -258,7 +257,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                             <span>Submit</span>
                           </button>
                         </div>
-                        { !isProfile && (
+                        {!isProfile && (
                           <Link to={paths.USERS} className="button">
                             Go Back
                           </Link>

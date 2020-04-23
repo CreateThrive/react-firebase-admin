@@ -1,9 +1,9 @@
 import { createAction } from 'redux-act';
 import { toastr } from 'react-redux-toastr';
 
-import { firebaseError, FIREBASE_RESPONSE } from '../../utils';
+import { firebaseError, FIREBASE_RESPONSE } from 'utils';
+import firebase from 'firebase.js';
 import { clearUsersData } from './users';
-import firebase from '../../firebase';
 
 export const AUTH_SIGN_IN_INIT = createAction('AUTH_SIGN_IN_INIT');
 export const AUTH_SIGN_IN_FAIL = createAction('AUTH_SIGN_IN_FAIL');
@@ -74,6 +74,7 @@ export const logout = () => {
 
 export const verifyAuth = () => {
   return dispatch => {
+    debugger;
     firebase.auth().onAuthStateChanged(user => {
       dispatch(AUTH_RESTORE_SESSION_INIT());
 

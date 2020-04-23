@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 
-import firebase from '../../firebase';
-import { auth, setPassword, authCleanUp } from '../../state/actions/auth';
+import firebase from 'firebase';
+import { auth, setPassword, authCleanUp } from 'state/actions/auth';
+import { useChangeHandler } from 'utils/hooks';
+import { inputValidations } from 'utils';
 import paths from '../Router/paths';
-import { useChangeHandler } from '../../utils/hooks';
-import { inputValidations } from '../../utils';
 import classes from './Login.module.scss';
 
 const Login = () => {

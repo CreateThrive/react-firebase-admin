@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
-
 import ClipLoader from 'react-spinners/ClipLoader';
-import UserForm from '../../components/UserForm';
-import firebase from '../../firebase';
-import { createUser, modifyUser } from '../../state/actions/users';
-import paths from '../Router/paths';
+
+import UserForm from 'components/UserForm';
+import { createUser, modifyUser } from 'state/actions/users';
+import paths from 'pages/Router/paths';
+import firebase from 'firebase.js';
 
 const User = () => {
   const { id } = useParams();

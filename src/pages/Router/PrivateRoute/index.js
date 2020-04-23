@@ -3,8 +3,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Layout from 'components/Layout';
 import paths from '../paths';
-import Layout from '../../../components/Layout';
 
 const PrivateRoute = ({ path, component: Component }) => {
   const { id } = useSelector(
@@ -19,7 +19,7 @@ const PrivateRoute = ({ path, component: Component }) => {
       <Route
         exact
         path={path}
-        render={() => id ? <Component /> : <Redirect to={paths.LOGIN} />}
+        render={() => (id ? <Component /> : <Redirect to={paths.LOGIN} />)}
       />
     </Layout>
   );

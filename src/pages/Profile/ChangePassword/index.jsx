@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import { changeUserPassword, authCleanUp } from '../../../state/actions/auth';
-import { useChangeHandler } from '../../../utils/hooks';
+import { changeUserPassword, authCleanUp } from 'state/actions/auth';
+import { useChangeHandler } from 'utils/hooks';
 
 const ChangePasswordCard = () => {
   const [passwords, setPasswords] = useState({
