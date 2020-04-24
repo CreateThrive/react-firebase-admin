@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 
-import firebase from 'firebase';
+import firebase from 'firebase.js';
 import { auth, setPassword, authCleanUp } from 'state/actions/auth';
 import { useChangeHandler } from 'utils/hooks';
 import { inputValidations } from 'utils';
