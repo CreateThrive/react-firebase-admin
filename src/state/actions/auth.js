@@ -74,7 +74,6 @@ export const logout = () => {
 
 export const verifyAuth = () => {
   return dispatch => {
-    debugger;
     firebase.auth().onAuthStateChanged(user => {
       dispatch(AUTH_RESTORE_SESSION_INIT());
 
