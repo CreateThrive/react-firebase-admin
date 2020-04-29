@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import * as actions from '../../state/actions/auth';
+import * as actions from 'state/actions/auth';
 import ResetPassword from '.';
 
 describe('<ResetPassword /> rendering', () => {

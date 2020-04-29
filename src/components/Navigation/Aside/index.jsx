@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import paths from 'pages/Router/paths';
 import NavLink from '../Link';
-import paths from '../../../pages/Router/paths';
 import classes from './Aside.module.scss';
 
 export const SubMenu = ({ label, children }) => {

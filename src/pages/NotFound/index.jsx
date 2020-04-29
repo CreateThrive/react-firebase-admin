@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import path from '../Router/paths';
-import NotFoudImage from '../../assets/404.gif';
+import path from 'pages/Router/paths';
+import NotFoudImage from 'assets/404.gif';
 import classes from './NotFound.module.scss';
 
 const NotFound = () => {

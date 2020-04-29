@@ -2,7 +2,7 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import * as actions from '../../../state/actions/auth';
+import * as actions from 'state/actions/auth';
 import NavBar from '.';
 
 const onHandleMobile = jest.fn();

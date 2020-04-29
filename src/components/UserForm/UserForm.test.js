@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import * as actions from '../../state/actions/users';
+import * as actions from 'state/actions/users';
 import UserForm from '.';
 
 describe('<UserForm /> rendering', () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
+import UserForm from 'components/UserForm';
+import { modifyUser } from 'state/actions/users';
 import ChangePassword from './ChangePassword';
-import UserForm from '../../components/UserForm';
-import { modifyUser } from '../../state/actions/users';
 
 const Profile = () => {
   const { userData } = useSelector(

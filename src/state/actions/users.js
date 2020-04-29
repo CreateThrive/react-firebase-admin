@@ -2,9 +2,9 @@ import { createAction } from 'redux-act';
 import uuid from 'uuid/v4';
 import { toastr } from 'react-redux-toastr';
 
-import axios from '../../utils/axios';
-import firebase from '../../firebase';
-import { firebaseError } from '../../utils';
+import axios from 'utils/axios';
+import { firebaseError } from 'utils';
+import firebase from 'firebase.js';
 import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
+import Login from 'pages/Login';
+import Home from 'pages/Home';
+import Users from 'pages/Users';
+import Profile from 'pages/Profile';
+import ResetPassword from 'pages/ResetPassword';
+import NotFound from 'pages/NotFound';
+import User from 'pages/User';
+import Section from 'pages/Section';
+import Submenu from 'pages/Submenu';
 import paths from './paths';
 import PrivateRoute from './PrivateRoute';
-import Login from '../Login';
-import Home from '../Home';
-import Users from '../Users';
-import Profile from '../Profile';
-import ResetPassword from '../ResetPassword';
-import NotFound from '../NotFound';
-import User from '../User';
-import Section from '../Section';
-import Submenu from '../Submenu';
 
 const RouterComponent = () => {
   return (

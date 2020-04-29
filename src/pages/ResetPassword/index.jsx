@@ -3,9 +3,9 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 
 import classes from './ResetPassword.module.scss';
-import { useChangeHandler } from '../../utils/hooks';
-import { resetPassword, authCleanUp } from '../../state/actions/auth';
-import paths from '../Router/paths';
+import { useChangeHandler } from 'utils/hooks';
+import { resetPassword, authCleanUp } from 'state/actions/auth';
+import paths from 'pages/Router/paths';
 
 const ResetPassword = () => {
   const { loading, error, restoredPassword, isAuth } = useSelector(

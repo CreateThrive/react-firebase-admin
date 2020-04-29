@@ -2,7 +2,7 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import * as actions from '../../../state/actions/auth';
+import * as actions from 'state/actions/auth';
 import PrivateRoute from '.';
 import paths from '../paths';
 
