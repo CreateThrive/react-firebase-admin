@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { logout } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
@@ -89,7 +90,12 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-account" />
                 </span>
-                <span>Profile</span>
+                <span>
+                  <FormattedMessage
+                    id="NavBar.profile"
+                    defaultMessage="Profile"
+                  />
+                </span>
               </Link>
               <hr className="navbar-divider" />
               <a
@@ -100,7 +106,12 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-logout" />
                 </span>
-                <span>Log Out</span>
+                <span>
+                  <FormattedMessage
+                    id="NavBar.logOut"
+                    defaultMessage="Log Out"
+                  />
+                </span>
               </a>
             </div>
           </div>

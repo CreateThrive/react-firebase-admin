@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { FormattedMessage } from 'react-intl';
 
 import UserForm from 'components/UserForm';
 import { createUser, modifyUser } from 'state/actions/users';
@@ -74,7 +75,13 @@ const User = () => {
       {redirect}
       <section className="hero is-hero-bar">
         <div className="hero-body">
-          <h1 className="title">{isEditing ? 'Edit User' : 'New User'}</h1>
+          <h1 className="title">
+            {isEditing ? (
+              <FormattedMessage id="User.editUser" defaultMessage="Edit User" />
+            ) : (
+              <FormattedMessage id="User.newUser" defaultMessage="New User" />
+            )}
+          </h1>
         </div>
       </section>
       <section className="section is-main-section">{userForm}</section>

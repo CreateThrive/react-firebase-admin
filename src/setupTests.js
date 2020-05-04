@@ -6,6 +6,8 @@ import { configure, mount, shallow } from 'enzyme';
 import { BrowserRouter, MemoryRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { IntlProvider } from 'react-intl';
+import english from 'languages/en';
 
 configure({ adapter: new Adapter() });
 
@@ -64,5 +66,45 @@ global.mountWithRouter = children => (path, entries) => {
         <Route path={path}>{children}</Route>
       </MemoryRouter>
     )
+  };
+};
+
+global.mountWithIntl = children => {
+  return {
+    component: mount(<IntlProvider locale="en">{children}</IntlProvider>)
+  };
+};
+
+global.shallowWithIntl = children => {
+  return {
+    component: shallow(<IntlProvider locale="en">{children}</IntlProvider>)
+  };
+};
+
+global.mountWithIntlProvider = children => initialState => {
+  const store = mockedStore(initialState);
+  return {
+    component: mount(
+      <IntlProvider locale="en" messages={english}>
+        <BrowserRouter keyLength={0}>
+          <Provider store={store}>{children}</Provider>
+        </BrowserRouter>
+      </IntlProvider>
+    ),
+    store
+  };
+};
+
+global.shallowWithIntlProvider = children => initialState => {
+  const store = mockedStore(initialState);
+  return {
+    component: shallow(
+      <IntlProvider locale="en" messages={english}>
+        <BrowserRouter keyLength={0}>
+          <Provider store={store}>{children}</Provider>
+        </BrowserRouter>
+      </IntlProvider>
+    ),
+    store
   };
 };

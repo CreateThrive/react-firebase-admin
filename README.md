@@ -453,7 +453,6 @@ After setting up all your github secrets, they should look like this:
 
 ![Boilerplate - GitHub Secrets](https://i.imgur.com/wjNw4fC.png)
 
-
 ### Writing new workflows
 
 You can refer to this on the [GitHub Actions documentations](https://help.github.com/en/actions).
@@ -475,6 +474,7 @@ We'd like to thank these awesome people who made this whole thing happen:
     <li><a href="https://github.com/tpiaggio">Tomas Piaggio</a></li>
     <li><a href="https://github.com/jbheber">Juan Heber</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
+    <li><a href="https://github.com/TOPOFGR">Franco Galeao</a></li>
 </ul>
 
 ## License

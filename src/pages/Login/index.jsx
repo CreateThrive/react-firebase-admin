@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import firebase from 'firebase.js';
 import { auth, setPassword, authCleanUp } from 'state/actions/auth';
@@ -90,14 +91,29 @@ const Login = () => {
                       <i className="mdi mdi-lock default" />
                     </span>
                     <span>
-                      {isEmailLink ? 'Set your new password' : 'Login'}
+                      {isEmailLink ? (
+                        <FormattedMessage
+                          id="Login.setNewPassword"
+                          defaultMessage="Set your new password"
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id="Login.login"
+                          defaultMessage="Login"
+                        />
+                      )}
                     </span>
                   </p>
                 </header>
                 <div className="card-content">
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
-                      <p className="label">E-mail Address</p>
+                      <p className="label">
+                        <FormattedMessage
+                          id="Login.email"
+                          defaultMessage="E-mail Address"
+                        />
+                      </p>
                       <div className="control is-clearfix">
                         <input
                           className={`input ${inputs.email.modifier}`}
@@ -115,7 +131,12 @@ const Login = () => {
                       )}
                     </div>
                     <div className="field">
-                      <p className="label">Password</p>
+                      <p className="label">
+                        <FormattedMessage
+                          id="Login.password"
+                          defaultMessage="Password"
+                        />
+                      </p>
                       <div className="control is-clearfix">
                         <input
                           className={`input ${inputs.password.modifier}`}
@@ -140,7 +161,17 @@ const Login = () => {
                           className={`button is-black ${modifierLoading}`}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
-                          {isEmailLink ? 'Set Password' : 'Login'}
+                          {isEmailLink ? (
+                            <FormattedMessage
+                              id="Login.setPassword"
+                              defaultMessage="Set Password"
+                            />
+                          ) : (
+                            <FormattedMessage
+                              id="Login.login"
+                              defaultMessage="Login"
+                            />
+                          )}
                         </button>
                       </div>
                       {!isEmailLink && (
@@ -149,7 +180,10 @@ const Login = () => {
                             to={paths.RESET_PASSWORD}
                             className="button is-outlined"
                           >
-                            Forgot Password?
+                            <FormattedMessage
+                              id="Login.forgotPassword"
+                              defaultMessage="Forgot Password?"
+                            />
                           </Link>
                         </div>
                       )}

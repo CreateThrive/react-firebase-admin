@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import UserForm from 'components/UserForm';
 import { modifyUser } from 'state/actions/users';
@@ -17,7 +18,9 @@ const Profile = () => {
     <>
       <section className="hero is-hero-bar">
         <div className="hero-body">
-          <h1 className="title">Profile</h1>
+          <h1 className="title">
+            <FormattedMessage id="Profile.profile" defaultMessage="Profile" />
+          </h1>
         </div>
       </section>
       <section className="section is-main-section">

@@ -3,6 +3,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import paths from 'pages/Router/paths';
 import NavLink from '../Link';
@@ -72,7 +73,9 @@ const Aside = ({ handleMobileToggle }) => {
               <span className="icon">
                 <i className="mdi mdi-home" />
               </span>
-              <span className="menu-item-label">Home</span>
+              <span className="menu-item-label">
+                <FormattedMessage id="Aside.home" defaultMessage="Home" />
+              </span>
             </NavLink>
           </li>
           {isAdmin && (
@@ -85,18 +88,32 @@ const Aside = ({ handleMobileToggle }) => {
                 <span className="icon">
                   <i className="mdi mdi-account-supervisor" />
                 </span>
-                <span className="menu-item-label">Users</span>
+                <span className="menu-item-label">
+                  <FormattedMessage id="Aside.users" defaultMessage="Users" />
+                </span>
               </NavLink>
             </li>
           )}
-          <SubMenu label="Dropdown Menu">
+          <SubMenu
+            label={
+              <FormattedMessage
+                id="Aside.dropdownMenu"
+                defaultMessage="Dropdown Menu"
+              />
+            }
+          >
             <li>
               <NavLink
                 className={classes.submenuLink}
                 to={paths.SUBMENU_1}
                 onClick={handleMobileToggle}
               >
-                <span>Submenu 1</span>
+                <span>
+                  <FormattedMessage
+                    id="Aside.submenu1"
+                    defaultMessage="Submenu 1"
+                  />
+                </span>
               </NavLink>
             </li>
             <li>
@@ -105,7 +122,12 @@ const Aside = ({ handleMobileToggle }) => {
                 to={paths.SUBMENU_2}
                 onClick={handleMobileToggle}
               >
-                <span>Submenu 2</span>
+                <span>
+                  <FormattedMessage
+                    id="Aside.submenu2"
+                    defaultMessage="Submenu 2"
+                  />
+                </span>
               </NavLink>
             </li>
           </SubMenu>

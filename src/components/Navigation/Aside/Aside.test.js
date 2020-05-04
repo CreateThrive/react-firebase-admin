@@ -8,7 +8,7 @@ describe('<Aside /> rendering', () => {
   const onHandler = jest.fn();
 
   it('should render without crashing', () => {
-    const component = shallowWithProvider(
+    const component = shallowWithIntlProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
@@ -22,7 +22,7 @@ describe('<Aside /> rendering', () => {
   });
 
   it('should set the handleMobileToggle prop correctly', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithIntlProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
@@ -55,7 +55,7 @@ describe('<Aside /> rendering', () => {
   });
 
   it('should not render the /users link if it the user is not an admin', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithIntlProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
@@ -75,7 +75,7 @@ describe('<Aside /> rendering', () => {
   });
 
   it('should render the /users link if it the user is an admin', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithIntlProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
@@ -95,7 +95,7 @@ describe('<Aside /> rendering', () => {
   });
 
   it('should render the <SubMenu /> component if the user is an admin', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithIntlProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
@@ -109,7 +109,7 @@ describe('<Aside /> rendering', () => {
   });
 
   it('should render the <SubMenu /> component if the user is not an admin', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithIntlProvider(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {

@@ -4,7 +4,7 @@ exports[`<DatePickerStyled /> rendering should render without crashing 1`] = `
 <t
   allowSameDay={false}
   customTimeInput={null}
-  dateFormat="MM/dd/yyyy"
+  dateFormat="dd-MM-yy"
   dateFormatCalendar="LLLL yyyy"
   disabled={false}
   disabledKeyboardNavigation={false}
@@ -12,6 +12,7 @@ exports[`<DatePickerStyled /> rendering should render without crashing 1`] = `
   enableTabLoop={true}
   excludeScrollbar={true}
   inlineFocusSelectedMonth={false}
+  locale="en"
   monthsShown={1}
   nextMonthButtonLabel="Next Month"
   nextYearButtonLabel="Next Year"

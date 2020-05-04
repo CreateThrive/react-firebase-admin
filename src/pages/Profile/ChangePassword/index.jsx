@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import { changeUserPassword, authCleanUp } from 'state/actions/auth';
 import { useChangeHandler } from 'utils/hooks';
@@ -60,7 +61,12 @@ const ChangePasswordCard = () => {
       modifier: 'is-success',
       message: {
         modifier: 'is-success',
-        content: 'Safe password'
+        content: (
+          <FormattedMessage
+            id="ChangePassword.safePassword"
+            defaultMessage="Safe password"
+          />
+        )
       }
     });
   } else if (passwords.new) {
@@ -68,7 +74,12 @@ const ChangePasswordCard = () => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: 'Insecure password'
+        content: (
+          <FormattedMessage
+            id="ChangePassword.insecurePassword"
+            defaultMessage="Insecure password"
+          />
+        )
       }
     });
   }
@@ -83,7 +94,12 @@ const ChangePasswordCard = () => {
       modifier: 'is-success',
       message: {
         modifier: 'is-success',
-        content: 'Passwords match'
+        content: (
+          <FormattedMessage
+            id="ChangePassword.matchPassword"
+            defaultMessage="Passwords match"
+          />
+        )
       }
     });
   } else if (passwords.confirmation) {
@@ -91,7 +107,12 @@ const ChangePasswordCard = () => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: 'Passwords do not match'
+        content: (
+          <FormattedMessage
+            id="ChangePassword.notMatchPassword"
+            defaultMessage="Passwords do not match"
+          />
+        )
       }
     });
   }
@@ -99,10 +120,12 @@ const ChangePasswordCard = () => {
   const currentAndNewPasswordsEqual =
     passwords.new && passwords.current === passwords.new;
 
-  const errorMessage =
-    currentAndNewPasswordsEqual &&
-    'The new password and the current one cannot be the same';
-
+  const errorMessage = currentAndNewPasswordsEqual && (
+    <FormattedMessage
+      id="ChangePassword.samePassword"
+      defaultMessage="The new password and the current one cannot be the same"
+    />
+  );
   const canSubmit =
     isNewPasswordSecure && newPasswordsAreEqual && !currentAndNewPasswordsEqual;
 
@@ -118,14 +141,22 @@ const ChangePasswordCard = () => {
           <span className="icon">
             <i className="fa fa-lock" />
           </span>
-          Change password
+          <FormattedMessage
+            id="ChangePassword.changePassword"
+            defaultMessage="Change password"
+          />
         </p>
       </header>
       <div className="card-content">
         <form onSubmit={onSubmitHandler}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Current Password</label>
+              <label className="label">
+                <FormattedMessage
+                  id="ChangePassword.currentPassword"
+                  defaultMessage="Current Password"
+                />
+              </label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -145,7 +176,12 @@ const ChangePasswordCard = () => {
           <hr />
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">New Password</label>
+              <label className="label">
+                <FormattedMessage
+                  id="ChangePassword.newPassword"
+                  defaultMessage="New Password"
+                />
+              </label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -170,7 +206,12 @@ const ChangePasswordCard = () => {
 
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Confirm Password</label>
+              <label className="label">
+                <FormattedMessage
+                  id="ChangePassword.confirmPassword"
+                  defaultMessage="Confirm Password"
+                />
+              </label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -204,7 +245,10 @@ const ChangePasswordCard = () => {
                     className={`button is-primary ${loading && 'is-loading'}`}
                     disabled={!canSubmit}
                   >
-                    Submit
+                    <FormattedMessage
+                      id="ChangePassword.submits"
+                      defaultMessage="Submit"
+                    />
                   </button>
                 </div>
                 {errorMessage && (

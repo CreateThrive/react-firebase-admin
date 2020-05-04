@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
-import classes from './ResetPassword.module.scss';
 import { useChangeHandler } from 'utils/hooks';
 import { resetPassword, authCleanUp } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
+import classes from './ResetPassword.module.scss';
 
 const ResetPassword = () => {
   const { loading, error, restoredPassword, isAuth } = useSelector(
@@ -60,19 +61,33 @@ const ResetPassword = () => {
                     <span className="icon">
                       <i className="mdi mdi-lock-open default" />
                     </span>
-                    <span>Password Recovery</span>
+                    <span>
+                      <FormattedMessage
+                        id="ResetPassword.recovery"
+                        defaultMessage="Password Recovery"
+                      />
+                    </span>
                   </p>
                 </header>
                 <div className="card-content">
                   {restoredPassword ? (
                     <p className={classes['sub-title']}>
-                      We have sent you an email to {resetPasswordData.email} so
-                      you can recover your account.
+                      <FormattedMessage
+                        id="ResetPassword.recoverEmail"
+                        defaultMessage="We have sent you an email to {mail} so
+                        you can recover your account."
+                        values={{ mail: resetPasswordData.email }}
+                      />
                     </p>
                   ) : (
                     <form onSubmit={onSubmitHandler}>
                       <div className="field">
-                        <p className="label">E-mail Address</p>
+                        <p className="label">
+                          <FormattedMessage
+                            id="ResetPassword.email"
+                            defaultMessage="E-mail Address"
+                          />
+                        </p>
                         <div className="control">
                           <input
                             type="email"
@@ -83,7 +98,12 @@ const ResetPassword = () => {
                             onChange={onChangeHandler}
                           />
                         </div>
-                        <p className="help">E-mail used for registration</p>
+                        <p className="help">
+                          <FormattedMessage
+                            id="ResetPassword.emailRegistration"
+                            defaultMessage="E-mail used for registration"
+                          />
+                        </p>
                       </div>
                       <hr />
                       <div className="field is-grouped">
@@ -92,12 +112,18 @@ const ResetPassword = () => {
                             className={`button is-black ${modifierLoading}`}
                             type="submit"
                           >
-                            Send Reset Link
+                            <FormattedMessage
+                              id="ResetPassword.resetLink"
+                              defaultMessage="Send Reset Link"
+                            />
                           </button>
                         </div>
                         <div className="control">
                           <Link to={paths.LOGIN} className="button is-outlined">
-                            Back
+                            <FormattedMessage
+                              id="ResetPassword.back"
+                              defaultMessage="Back"
+                            />
                           </Link>
                         </div>
                       </div>
