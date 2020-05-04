@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
@@ -53,7 +54,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: 'Invalid E-mail'
+        content: (
+          <FormattedMessage
+            id="UserForm.invalidEmail"
+            defaultMessage="Invalid E-mail"
+          />
+        )
       }
     };
   }
@@ -75,7 +81,10 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <span className="icon">
                   <i className="mdi mdi-account-edit default" />
                 </span>
-                User Information
+                <FormattedMessage
+                  id="UserForm.userInfo"
+                  defaultMessage="User Information"
+                />
               </p>
             </header>
             <div className="card-content">
@@ -83,7 +92,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 {isEditing ? (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
-                      <label className="label">E-mail</label>
+                      <label className="label">
+                        <FormattedMessage
+                          id="UserForm.email"
+                          defaultMessage="E-mail"
+                        />
+                      </label>
                     </div>
                     <div className="field-body">
                       <div className="field">
@@ -101,7 +115,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 ) : (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
-                      <label className="label">E-mail</label>
+                      <label className="label">
+                        <FormattedMessage
+                          id="UserForm.email"
+                          defaultMessage="E-mail"
+                        />
+                      </label>
                     </div>
                     <div className="field-body">
                       <div className="field">
@@ -129,7 +148,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
-                    <label className="label">Name</label>
+                    <label className="label">
+                      <FormattedMessage
+                        id="UserForm.name"
+                        defaultMessage="Name"
+                      />
+                    </label>
                   </div>
                   <div className="field-body">
                     <div className="field">
@@ -150,7 +174,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
-                    <label className="label">Location</label>
+                    <label className="label">
+                      <FormattedMessage
+                        id="UserForm.location"
+                        defaultMessage="Location"
+                      />
+                    </label>
                   </div>
                   <div className="field-body">
                     <div className="field">
@@ -171,7 +200,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 {!isProfile && (
                   <div className="field has-check is-horizontal">
                     <div className="field-label">
-                      <label className="label">Admin</label>
+                      <label className="label">
+                        <FormattedMessage
+                          id="UserForm.admin"
+                          defaultMessage="Admin"
+                        />
+                      </label>
                     </div>
                     <div className="field-body">
                       <div className="field">
@@ -195,7 +229,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
-                    <label className="label">Created</label>
+                    <label className="label">
+                      <FormattedMessage
+                        id="UserForm.created"
+                        defaultMessage="Created"
+                      />
+                    </label>
                   </div>
                   <div className="field-body">
                     <div className="field">
@@ -212,7 +251,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
-                    <label className="label">Logo</label>
+                    <label className="label">
+                      <FormattedMessage
+                        id="UserForm.logo"
+                        defaultMessage="Logo"
+                      />
+                    </label>
                   </div>
                   <div className="field-body">
                     <div className="field">
@@ -229,7 +273,17 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                               <i className="fas fa-upload" />
                             </span>
                             <span className="file-label">
-                              {user.file ? 'Pick another file' : 'Pick a file'}
+                              {user.file ? (
+                                <FormattedMessage
+                                  id="UserForm.pickAnotherFile"
+                                  defaultMessage="Pick another file"
+                                />
+                              ) : (
+                                <FormattedMessage
+                                  id="UserForm.pickFile"
+                                  defaultMessage="Pick a file"
+                                />
+                              )}
                             </span>
                           </span>
                           <span className="file-name">
@@ -254,12 +308,20 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                               'is-loading'}`}
                             disabled={!canSubmit}
                           >
-                            <span>Submit</span>
+                            <span>
+                              <FormattedMessage
+                                id="UserForm.submit"
+                                defaultMessage="Submit"
+                              />
+                            </span>
                           </button>
                         </div>
                         {!isProfile && (
                           <Link to={paths.USERS} className="button">
-                            Go Back
+                            <FormattedMessage
+                              id="UserForm.goBack"
+                              defaultMessage="Go Back"
+                            />
                           </Link>
                         )}
                       </div>
@@ -277,7 +339,10 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <span className="icon">
                   <i className="mdi mdi-account default" />
                 </span>
-                User Preview
+                <FormattedMessage
+                  id="UserForm.userPreview"
+                  defaultMessage="User Preview"
+                />
               </p>
             </header>
             <div className="card-content">
@@ -296,7 +361,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               {!isEditing && (
                 <div className="field">
-                  <label className="label">E-mail</label>
+                  <label className="label">
+                    <FormattedMessage
+                      id="UserForm.email"
+                      defaultMessage="E-mail"
+                    />
+                  </label>
                   <div className="control is-clearfix">
                     <input
                       type="text"
@@ -309,7 +379,9 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
               )}
 
               <div className="field">
-                <label className="label">Name</label>
+                <label className="label">
+                  <FormattedMessage id="UserForm.name" defaultMessage="Name" />
+                </label>
                 <div className="control is-clearfix">
                   <input
                     type="text"
@@ -321,7 +393,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
               </div>
 
               <div className="field">
-                <label className="label">Location</label>
+                <label className="label">
+                  <FormattedMessage
+                    id="UserForm.location"
+                    defaultMessage="Location"
+                  />
+                </label>
                 <div className="control is-clearfix">
                   <input
                     type="text"
@@ -334,7 +411,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               {!isProfile && (
                 <div className="field">
-                  <label className="label">Admin</label>
+                  <label className="label">
+                    <FormattedMessage
+                      id="UserForm.admin"
+                      defaultMessage="Admin"
+                    />
+                  </label>
                   <div className="control is-clearfix">
                     {user.isAdmin ? (
                       <span className="icon">
@@ -350,13 +432,19 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
               )}
 
               <div className="field">
-                <label className="label">Created</label>
+                <label className="label">
+                  <FormattedMessage
+                    id="UserForm.created"
+                    defaultMessage="Created"
+                  />
+                </label>
                 <div className="control is-clearfix">
-                  <input
-                    type="text"
-                    readOnly="readOnly"
-                    className="input is-static"
+                  <FormattedDate
                     value={user.createdAt}
+                    weekday="short"
+                    year="numeric"
+                    month="short"
+                    day="numeric"
                   />
                 </div>
               </div>

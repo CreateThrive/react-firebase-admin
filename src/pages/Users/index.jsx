@@ -3,6 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import Table from 'components/Table';
 import { fetchUsers, deleteUser, clearUsersData } from 'state/actions/users';
@@ -77,19 +78,21 @@ const Users = () => {
       disableSortBy: true
     },
     {
-      Header: 'Name',
+      Header: <FormattedMessage id="Users.name" defaultMessage="Name" />,
       accessor: 'name'
     },
     {
-      Header: 'Email',
+      Header: <FormattedMessage id="Users.email" defaultMessage="Email" />,
       accessor: 'email'
     },
     {
-      Header: 'Location',
+      Header: (
+        <FormattedMessage id="Users.location" defaultMessage="Location" />
+      ),
       accessor: 'location'
     },
     {
-      Header: 'Admin',
+      Header: <FormattedMessage id="Users.admin" defaultMessage="Admin" />,
       accessor: 'isAdmin',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -106,11 +109,17 @@ const Users = () => {
       )
     },
     {
-      Header: 'Created',
+      Header: <FormattedMessage id="Users.created" defaultMessage="Created" />,
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {row.original.createdAt}
+          <FormattedDate
+            value={row.original.createdAt}
+            weekday="short"
+            year="numeric"
+            month="short"
+            day="numeric"
+          />
         </small>
       )
     },
@@ -168,10 +177,24 @@ const Users = () => {
         <ConfirmationModal
           isActive={deleteModal.isOpen}
           isLoading={loading}
-          confirmButtonMessage="Delete"
-          title="Confirm action"
-          body="This will permanently delete the user. Action can not be undone."
-          cancelButtonMessage="Cancel"
+          confirmButtonMessage={
+            <FormattedMessage id="Users.delete" defaultMessage="Delete" />
+          }
+          title={
+            <FormattedMessage
+              id="Users.confirm"
+              defaultMessage="Confirm action"
+            />
+          }
+          body={
+            <FormattedMessage
+              id="Users.permDelete"
+              defaultMessage="This will permanently delete the user. Action can not be undone."
+            />
+          }
+          cancelButtonMessage={
+            <FormattedMessage id="Users.cancel" defaultMessage="Cancel" />
+          }
           onConfirmation={onDeleteUserHandler}
           onCancel={onCloseModalHandler}
         />
@@ -181,13 +204,18 @@ const Users = () => {
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">Users</h1>
+                <h1 className="title">
+                  <FormattedMessage id="Users.users" defaultMessage="Users" />
+                </h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_USER} className="button">
-                  New User
+                  <FormattedMessage
+                    id="Users.newUser"
+                    defaultMessage="New User"
+                  />
                 </Link>
               </div>
             </div>
@@ -198,7 +226,9 @@ const Users = () => {
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>Search:</span>
+              <span>
+                <FormattedMessage id="Users.search" defaultMessage="Search:" />
+              </span>
               <input
                 type="text"
                 className="input"

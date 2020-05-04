@@ -163,7 +163,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                                   />
                                 </span>
                                 <span>
-                                  Profile
+                                  <FormattedMessage
+                                    defaultMessage="Profile"
+                                    id="NavBar.profile"
+                                    values={Object {}}
+                                  >
+                                    Profile
+                                  </FormattedMessage>
                                 </span>
                               </a>
                             </LinkAnchor>
@@ -186,7 +192,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                           />
                         </span>
                         <span>
-                          Log Out
+                          <FormattedMessage
+                            defaultMessage="Log Out"
+                            id="NavBar.logOut"
+                            values={Object {}}
+                          >
+                            Log Out
+                          </FormattedMessage>
                         </span>
                       </a>
                     </div>
@@ -283,7 +295,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                               <span
                                 className="menu-item-label"
                               >
-                                Home
+                                <FormattedMessage
+                                  defaultMessage="Home"
+                                  id="Aside.home"
+                                  values={Object {}}
+                                >
+                                  Home
+                                </FormattedMessage>
                               </span>
                             </a>
                           </LinkAnchor>
@@ -292,7 +310,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                     </Link>
                   </li>
                   <SubMenu
-                    label="Dropdown Menu"
+                    label={
+                      <FormattedMessage
+                        defaultMessage="Dropdown Menu"
+                        id="Aside.dropdownMenu"
+                        values={Object {}}
+                      />
+                    }
                   >
                     <li
                       className=""
@@ -312,7 +336,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                         <span
                           className="menu-item-label"
                         >
-                          Dropdown Menu
+                          <FormattedMessage
+                            defaultMessage="Dropdown Menu"
+                            id="Aside.dropdownMenu"
+                            values={Object {}}
+                          >
+                            Dropdown Menu
+                          </FormattedMessage>
                         </span>
                         <div
                           className="dropdown-icon"
@@ -367,7 +397,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                                     onClick={[Function]}
                                   >
                                     <span>
-                                      Submenu 1
+                                      <FormattedMessage
+                                        defaultMessage="Submenu 1"
+                                        id="Aside.submenu1"
+                                        values={Object {}}
+                                      >
+                                        Submenu 1
+                                      </FormattedMessage>
                                     </span>
                                   </a>
                                 </LinkAnchor>
@@ -415,7 +451,13 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                                     onClick={[Function]}
                                   >
                                     <span>
-                                      Submenu 2
+                                      <FormattedMessage
+                                        defaultMessage="Submenu 2"
+                                        id="Aside.submenu2"
+                                        values={Object {}}
+                                      >
+                                        Submenu 2
+                                      </FormattedMessage>
                                     </span>
                                   </a>
                                 </LinkAnchor>

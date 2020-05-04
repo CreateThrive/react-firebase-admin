@@ -9,7 +9,9 @@ describe('<NotFound /> rendering', () => {
   };
 
   it('should render without crashing', () => {
-    const { component } = mountWithProvider(<NotFound location={location} />)({
+    const { component } = mountWithIntlProvider(
+      <NotFound location={location} />
+    )({
       auth: {
         userData: {}
       }
@@ -19,7 +21,9 @@ describe('<NotFound /> rendering', () => {
   });
 
   it('should display the button with the login path if user is not authenticate', () => {
-    const { component } = mountWithProvider(<NotFound location={location} />)({
+    const { component } = mountWithIntlProvider(
+      <NotFound location={location} />
+    )({
       auth: {
         userData: {
           id: null
@@ -31,7 +35,9 @@ describe('<NotFound /> rendering', () => {
   });
 
   it('should display the button with the home path if user is authenticate', () => {
-    const { component } = mountWithProvider(<NotFound location={location} />)({
+    const { component } = mountWithIntlProvider(
+      <NotFound location={location} />
+    )({
       auth: {
         userData: {
           id: 'some userId'

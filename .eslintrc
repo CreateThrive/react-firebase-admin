@@ -42,7 +42,11 @@
     "mountWithProvider": true,
     "shallowWithProvider": true,
     "shallowWithRouter": true,
-    "mountWithRouter": true
+    "mountWithRouter": true,
+    "mountWithIntl": true,
+    "shallowWithIntl": true,
+    "mountWithIntlProvider": true,
+    "shallowWithIntlProvider": true
   },
   "parser": "babel-eslint",
   "settings": {
