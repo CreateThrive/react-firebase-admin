@@ -1,6 +1,5 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { FormattedDate } from 'react-intl';
 
 import * as actions from 'state/actions/users';
 import UserForm from '.';
@@ -95,13 +94,7 @@ describe('<UserForm /> rendering', () => {
     )({
       users: {}
     });
-
-    expect(
-      component
-        .find(FormattedDate)
-        .last()
-        .props().value
-    ).toEqual(new Date().toDateString());
+    expect(component.find('p.date')).toBeTruthy();
   });
 });
 

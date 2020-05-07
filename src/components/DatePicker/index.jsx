@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
 import es from 'date-fns/locale/es';
 import en from 'date-fns/locale/en-US';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import './DatePicker.scss';
 
@@ -17,13 +18,18 @@ const DatePickerStyled = ({ name, date, setState }) => {
   registerLocale('en', en);
   registerLocale('es', es);
 
-  const local = navigator.language.split(/[-_]/)[0];
+  const { locale } = useSelector(
+    state => ({
+      locale: state.auth.locale
+    }),
+    shallowEqual
+  );
 
-  const dateFormat = navigator.language === 'es-US' ? 'MM-dd-yy' : 'dd-MM-yy';
+  const dateFormat = locale === 'en' ? 'MM-dd-yy' : 'dd-MM-yy';
 
   return (
     <DatePicker
-      locale={local}
+      locale={locale}
       dateFormat={dateFormat}
       selected={date}
       onChange={onDateChangedHandler}

@@ -1,17 +1,18 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+
+import { useFormatMessage } from 'hooks';
 
 const Section = () => (
   <>
     <section className="hero is-hero-bar">
       <div className="hero-body">
         <h1 className="title">
-          <FormattedMessage id="Section.section" defaultMessage="Section" />
+          {useFormatMessage('Section.section', 'Section')}
         </h1>
       </div>
     </section>
     <section className="section is-main-section">
-      <FormattedMessage id="Section.content" defaultMessage="Section content" />
+      {useFormatMessage('Section.content', 'Section content')}
     </section>
   </>
 );

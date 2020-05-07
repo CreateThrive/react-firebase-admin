@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
-import { useChangeHandler } from 'utils/hooks';
+import { useChangeHandler, useFormatMessage } from 'hooks';
 import { resetPassword, authCleanUp } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
 import classes from './ResetPassword.module.scss';
@@ -48,6 +47,25 @@ const ResetPassword = () => {
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
+  const recoverEmailMessage = useFormatMessage(
+    'ResetPassword.recoverEmail',
+    'We have sent you an email to {mail} so you can recover your account.',
+    { mail: resetPasswordData.email }
+  );
+  const emailMessage = useFormatMessage(
+    'ResetPassword.email',
+    'E-mail Address'
+  );
+  const emailRegistrationMessage = useFormatMessage(
+    'ResetPassword.emailRegistration',
+    'E-mail used for registration'
+  );
+  const resetLinkMessage = useFormatMessage(
+    'ResetPassword.resetLink',
+    'Send Reset Link'
+  );
+  const backMessage = useFormatMessage('ResetPassword.back', 'Back');
+
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -62,32 +80,22 @@ const ResetPassword = () => {
                       <i className="mdi mdi-lock-open default" />
                     </span>
                     <span>
-                      <FormattedMessage
-                        id="ResetPassword.recovery"
-                        defaultMessage="Password Recovery"
-                      />
+                      {useFormatMessage(
+                        'ResetPassword.recovery',
+                        'Password Recovery'
+                      )}
                     </span>
                   </p>
                 </header>
                 <div className="card-content">
                   {restoredPassword ? (
                     <p className={classes['sub-title']}>
-                      <FormattedMessage
-                        id="ResetPassword.recoverEmail"
-                        defaultMessage="We have sent you an email to {mail} so
-                        you can recover your account."
-                        values={{ mail: resetPasswordData.email }}
-                      />
+                      {recoverEmailMessage}
                     </p>
                   ) : (
                     <form onSubmit={onSubmitHandler}>
                       <div className="field">
-                        <p className="label">
-                          <FormattedMessage
-                            id="ResetPassword.email"
-                            defaultMessage="E-mail Address"
-                          />
-                        </p>
+                        <p className="label">{emailMessage}</p>
                         <div className="control">
                           <input
                             type="email"
@@ -98,12 +106,7 @@ const ResetPassword = () => {
                             onChange={onChangeHandler}
                           />
                         </div>
-                        <p className="help">
-                          <FormattedMessage
-                            id="ResetPassword.emailRegistration"
-                            defaultMessage="E-mail used for registration"
-                          />
-                        </p>
+                        <p className="help">{emailRegistrationMessage}</p>
                       </div>
                       <hr />
                       <div className="field is-grouped">
@@ -112,18 +115,12 @@ const ResetPassword = () => {
                             className={`button is-black ${modifierLoading}`}
                             type="submit"
                           >
-                            <FormattedMessage
-                              id="ResetPassword.resetLink"
-                              defaultMessage="Send Reset Link"
-                            />
+                            {resetLinkMessage}
                           </button>
                         </div>
                         <div className="control">
                           <Link to={paths.LOGIN} className="button is-outlined">
-                            <FormattedMessage
-                              id="ResetPassword.back"
-                              defaultMessage="Back"
-                            />
+                            {backMessage}
                           </Link>
                         </div>
                       </div>

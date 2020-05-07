@@ -2,8 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
+import { langSetLocale } from 'state/actions/lang';
+import { useFormatMessage } from 'hooks';
+import en from 'assets/en.png';
+import es from 'assets/es.png';
 import { logout } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
 import defaultLogo from 'assets/user-default-log.svg';
@@ -29,6 +32,14 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const onMobileToggleHandler = useCallback(() => {
     setNavMobileActive(!navMobileActive);
   }, [setNavMobileActive, navMobileActive]);
+
+  const changeToEnglishHandler = () => {
+    dispatch(langSetLocale('en'));
+  };
+
+  const changeToSpanishHandler = () => {
+    dispatch(langSetLocale('es'));
+  };
 
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">
@@ -75,6 +86,27 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
         <div className="navbar-end">
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
             <a className="navbar-link is-arrowless">
+              <div className="is-language">
+                <span>{useFormatMessage('NavBar.Language', 'Language')}</span>
+              </div>
+              <span className="icon">
+                <i className="mdi mdi-chevron-down" />
+              </span>
+            </a>
+            <div className="navbar-dropdown">
+              <a onClick={changeToEnglishHandler} className="dropdown-item">
+                <img src={en} alt="English icon" />
+                {useFormatMessage('NavBar.en', 'ENGLISH')}
+              </a>
+              <hr className="navbar-divider" />
+              <a onClick={changeToSpanishHandler} className="dropdown-item">
+                <img src={es} alt="Spanish icon" />
+                {useFormatMessage('NavBar.es', 'SPANISH')}
+              </a>
+            </div>
+          </div>
+          <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+            <a className="navbar-link is-arrowless">
               <div className="is-user-avatar">
                 <img src={logoUrl || defaultLogo} alt="User profile" />
               </div>
@@ -90,12 +122,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-account" />
                 </span>
-                <span>
-                  <FormattedMessage
-                    id="NavBar.profile"
-                    defaultMessage="Profile"
-                  />
-                </span>
+                <span>{useFormatMessage('NavBar.profile', 'Profile')}</span>
               </Link>
               <hr className="navbar-divider" />
               <a
@@ -106,12 +133,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-logout" />
                 </span>
-                <span>
-                  <FormattedMessage
-                    id="NavBar.logOut"
-                    defaultMessage="Log Out"
-                  />
-                </span>
+                <span>{useFormatMessage('NavBar.logOut', 'Log Out')}</span>
               </a>
             </div>
           </div>

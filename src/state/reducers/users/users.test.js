@@ -13,7 +13,7 @@ import {
   USERS_MODIFY_USER_SUCCESS,
   USERS_MODIFY_USER_FAIL,
   USERS_CLEAN_UP
-} from '../../actions/users';
+} from 'state/actions/users';
 
 import { usersReducer } from '.';
 

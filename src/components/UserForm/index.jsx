@@ -3,11 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
-import { useChangeHandler } from 'utils/hooks';
+import { useChangeHandler, useFormatDate, useFormatMessage } from 'hooks';
 import { validateEmail } from 'utils';
 import './UserForm.scss';
 import DatePicker from '../DatePicker';
@@ -49,17 +48,17 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
   const invalidEmail = user.email && !validateEmail(user.email);
 
+  const invalidEmailMessage = useFormatMessage(
+    'UserForm.invalidEmail',
+    'Invalid E-mail'
+  );
+
   if (invalidEmail) {
     emailInput = {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: (
-          <FormattedMessage
-            id="UserForm.invalidEmail"
-            defaultMessage="Invalid E-mail"
-          />
-        )
+        content: invalidEmailMessage
       }
     };
   }
@@ -71,6 +70,17 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
     ? user.file && URL.createObjectURL(user.file)
     : user.logoUrl;
 
+  const goBackMessage = useFormatMessage('UserForm.goBack', 'Go Back');
+
+  const pickAnotherFileMessage = useFormatMessage(
+    'UserForm.pickAnotherFile',
+    'Pick another file'
+  );
+  const pickFileMessage = useFormatMessage('UserForm.pickFile', 'Pick a file');
+
+  const emailMessage = useFormatMessage('UserForm.email', 'E-mail');
+
+  const adminMessage = useFormatMessage('UserForm.admin', 'Admin');
   return (
     <>
       <div className="tile is-ancestor">
@@ -81,10 +91,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <span className="icon">
                   <i className="mdi mdi-account-edit default" />
                 </span>
-                <FormattedMessage
-                  id="UserForm.userInfo"
-                  defaultMessage="User Information"
-                />
+                {useFormatMessage('UserForm.userInfo', 'User Information')}
               </p>
             </header>
             <div className="card-content">
@@ -92,12 +99,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 {isEditing ? (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
-                      <label className="label">
-                        <FormattedMessage
-                          id="UserForm.email"
-                          defaultMessage="E-mail"
-                        />
-                      </label>
+                      <label className="label">{emailMessage}</label>
                     </div>
                     <div className="field-body">
                       <div className="field">
@@ -115,12 +117,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 ) : (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
-                      <label className="label">
-                        <FormattedMessage
-                          id="UserForm.email"
-                          defaultMessage="E-mail"
-                        />
-                      </label>
+                      <label className="label">{emailMessage}</label>
                     </div>
                     <div className="field-body">
                       <div className="field">
@@ -149,10 +146,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
-                      <FormattedMessage
-                        id="UserForm.name"
-                        defaultMessage="Name"
-                      />
+                      {useFormatMessage('UserForm.name', 'Name')}
                     </label>
                   </div>
                   <div className="field-body">
@@ -175,10 +169,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
-                      <FormattedMessage
-                        id="UserForm.location"
-                        defaultMessage="Location"
-                      />
+                      {useFormatMessage('UserForm.location', 'Location')}
                     </label>
                   </div>
                   <div className="field-body">
@@ -200,12 +191,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 {!isProfile && (
                   <div className="field has-check is-horizontal">
                     <div className="field-label">
-                      <label className="label">
-                        <FormattedMessage
-                          id="UserForm.admin"
-                          defaultMessage="Admin"
-                        />
-                      </label>
+                      <label className="label">{adminMessage}</label>
                     </div>
                     <div className="field-body">
                       <div className="field">
@@ -230,10 +216,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
-                      <FormattedMessage
-                        id="UserForm.created"
-                        defaultMessage="Created"
-                      />
+                      {useFormatMessage('UserForm.created', 'Created')}
                     </label>
                   </div>
                   <div className="field-body">
@@ -252,10 +235,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
-                      <FormattedMessage
-                        id="UserForm.logo"
-                        defaultMessage="Logo"
-                      />
+                      {useFormatMessage('UserForm.logo', 'Logo')}
                     </label>
                   </div>
                   <div className="field-body">
@@ -273,17 +253,9 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                               <i className="fas fa-upload" />
                             </span>
                             <span className="file-label">
-                              {user.file ? (
-                                <FormattedMessage
-                                  id="UserForm.pickAnotherFile"
-                                  defaultMessage="Pick another file"
-                                />
-                              ) : (
-                                <FormattedMessage
-                                  id="UserForm.pickFile"
-                                  defaultMessage="Pick a file"
-                                />
-                              )}
+                              {user.file
+                                ? pickAnotherFileMessage
+                                : pickFileMessage}
                             </span>
                           </span>
                           <span className="file-name">
@@ -309,19 +281,13 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                             disabled={!canSubmit}
                           >
                             <span>
-                              <FormattedMessage
-                                id="UserForm.submit"
-                                defaultMessage="Submit"
-                              />
+                              {useFormatMessage('UserForm.submit', 'Submit')}
                             </span>
                           </button>
                         </div>
                         {!isProfile && (
                           <Link to={paths.USERS} className="button">
-                            <FormattedMessage
-                              id="UserForm.goBack"
-                              defaultMessage="Go Back"
-                            />
+                            {goBackMessage}
                           </Link>
                         )}
                       </div>
@@ -339,10 +305,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 <span className="icon">
                   <i className="mdi mdi-account default" />
                 </span>
-                <FormattedMessage
-                  id="UserForm.userPreview"
-                  defaultMessage="User Preview"
-                />
+                {useFormatMessage('UserForm.userPreview', 'User Preview')}
               </p>
             </header>
             <div className="card-content">
@@ -361,12 +324,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               {!isEditing && (
                 <div className="field">
-                  <label className="label">
-                    <FormattedMessage
-                      id="UserForm.email"
-                      defaultMessage="E-mail"
-                    />
-                  </label>
+                  <label className="label">{emailMessage}</label>
                   <div className="control is-clearfix">
                     <input
                       type="text"
@@ -380,7 +338,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               <div className="field">
                 <label className="label">
-                  <FormattedMessage id="UserForm.name" defaultMessage="Name" />
+                  {useFormatMessage('UserForm.name', 'Name')}
                 </label>
                 <div className="control is-clearfix">
                   <input
@@ -394,10 +352,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               <div className="field">
                 <label className="label">
-                  <FormattedMessage
-                    id="UserForm.location"
-                    defaultMessage="Location"
-                  />
+                  {useFormatMessage('UserForm.location', 'Location')}
                 </label>
                 <div className="control is-clearfix">
                   <input
@@ -411,12 +366,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               {!isProfile && (
                 <div className="field">
-                  <label className="label">
-                    <FormattedMessage
-                      id="UserForm.admin"
-                      defaultMessage="Admin"
-                    />
-                  </label>
+                  <label className="label">{adminMessage}</label>
                   <div className="control is-clearfix">
                     {user.isAdmin ? (
                       <span className="icon">
@@ -433,19 +383,18 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
               <div className="field">
                 <label className="label">
-                  <FormattedMessage
-                    id="UserForm.created"
-                    defaultMessage="Created"
-                  />
+                  {useFormatMessage('UserForm.created', 'Created')}
                 </label>
                 <div className="control is-clearfix">
-                  <FormattedDate
-                    value={user.createdAt}
-                    weekday="short"
-                    year="numeric"
-                    month="short"
-                    day="numeric"
-                  />
+                  <p className="date">
+                    {useFormatDate(
+                      user.createdAt,
+                      'short',
+                      'numeric',
+                      'short',
+                      'numeric'
+                    )}
+                  </p>
                 </div>
               </div>
             </div>

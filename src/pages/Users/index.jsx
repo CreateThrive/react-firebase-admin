@@ -3,8 +3,8 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { FormattedMessage, FormattedDate } from 'react-intl';
 
+import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
 import { fetchUsers, deleteUser, clearUsersData } from 'state/actions/users';
 import paths from 'pages/Router/paths';
@@ -78,21 +78,19 @@ const Users = () => {
       disableSortBy: true
     },
     {
-      Header: <FormattedMessage id="Users.name" defaultMessage="Name" />,
+      Header: useFormatMessage('Users.name', 'Name'),
       accessor: 'name'
     },
     {
-      Header: <FormattedMessage id="Users.email" defaultMessage="Email" />,
+      Header: useFormatMessage('Users.email', 'Email'),
       accessor: 'email'
     },
     {
-      Header: (
-        <FormattedMessage id="Users.location" defaultMessage="Location" />
-      ),
+      Header: useFormatMessage('Users.location', 'Location'),
       accessor: 'location'
     },
     {
-      Header: <FormattedMessage id="Users.admin" defaultMessage="Admin" />,
+      Header: useFormatMessage('Users.admin', 'Admin'),
       accessor: 'isAdmin',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -109,17 +107,17 @@ const Users = () => {
       )
     },
     {
-      Header: <FormattedMessage id="Users.created" defaultMessage="Created" />,
+      Header: useFormatMessage('Users.created', 'Created'),
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          <FormattedDate
-            value={row.original.createdAt}
-            weekday="short"
-            year="numeric"
-            month="short"
-            day="numeric"
-          />
+          {useFormatDate(
+            row.original.createdAt,
+            'short',
+            'numeric',
+            'short',
+            'numeric'
+          )}
         </small>
       )
     },
@@ -170,6 +168,17 @@ const Users = () => {
       })
     : usersList;
 
+  const deleteMessage = useFormatMessage('Users.delete', 'Delete');
+
+  const confirmMessage = useFormatMessage('Users.confirm', 'Confirm action');
+
+  const permDeleteMessage = useFormatMessage(
+    'Users.permDelete',
+    'This will permanently delete the user. Action can not be undone.'
+  );
+
+  const cancelMessage = useFormatMessage('Users.cancel', 'Cancel');
+
   return (
     <>
       {redirect}
@@ -177,24 +186,10 @@ const Users = () => {
         <ConfirmationModal
           isActive={deleteModal.isOpen}
           isLoading={loading}
-          confirmButtonMessage={
-            <FormattedMessage id="Users.delete" defaultMessage="Delete" />
-          }
-          title={
-            <FormattedMessage
-              id="Users.confirm"
-              defaultMessage="Confirm action"
-            />
-          }
-          body={
-            <FormattedMessage
-              id="Users.permDelete"
-              defaultMessage="This will permanently delete the user. Action can not be undone."
-            />
-          }
-          cancelButtonMessage={
-            <FormattedMessage id="Users.cancel" defaultMessage="Cancel" />
-          }
+          confirmButtonMessage={deleteMessage}
+          title={confirmMessage}
+          body={permDeleteMessage}
+          cancelButtonMessage={cancelMessage}
           onConfirmation={onDeleteUserHandler}
           onCancel={onCloseModalHandler}
         />
@@ -205,17 +200,14 @@ const Users = () => {
             <div className="level-left">
               <div className="level-item">
                 <h1 className="title">
-                  <FormattedMessage id="Users.users" defaultMessage="Users" />
+                  {useFormatMessage('Users.users', 'Users')}
                 </h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_USER} className="button">
-                  <FormattedMessage
-                    id="Users.newUser"
-                    defaultMessage="New User"
-                  />
+                  {useFormatMessage('Users.newUser', 'New User')}
                 </Link>
               </div>
             </div>
@@ -226,9 +218,7 @@ const Users = () => {
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>
-                <FormattedMessage id="Users.search" defaultMessage="Search:" />
-              </span>
+              <span>{useFormatMessage('Users.search', 'Search:')}</span>
               <input
                 type="text"
                 className="input"

@@ -3,8 +3,8 @@ import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
+import { useFormatMessage } from 'hooks';
 import paths from 'pages/Router/paths';
 import NavLink from '../Link';
 import classes from './Aside.module.scss';
@@ -53,6 +53,8 @@ const Aside = ({ handleMobileToggle }) => {
     shallowEqual
   );
 
+  const usersMessage = useFormatMessage('Aside.users', 'Users');
+
   return (
     <aside className="aside is-placed-left is-expanded">
       <Link to={paths.ROOT} className="aside-tools">
@@ -74,7 +76,7 @@ const Aside = ({ handleMobileToggle }) => {
                 <i className="mdi mdi-home" />
               </span>
               <span className="menu-item-label">
-                <FormattedMessage id="Aside.home" defaultMessage="Home" />
+                {useFormatMessage('Aside.home', 'Home')}
               </span>
             </NavLink>
           </li>
@@ -88,19 +90,12 @@ const Aside = ({ handleMobileToggle }) => {
                 <span className="icon">
                   <i className="mdi mdi-account-supervisor" />
                 </span>
-                <span className="menu-item-label">
-                  <FormattedMessage id="Aside.users" defaultMessage="Users" />
-                </span>
+                <span className="menu-item-label">{usersMessage}</span>
               </NavLink>
             </li>
           )}
           <SubMenu
-            label={
-              <FormattedMessage
-                id="Aside.dropdownMenu"
-                defaultMessage="Dropdown Menu"
-              />
-            }
+            label={useFormatMessage('Aside.dropdownMenu', 'Dropdown Menu')}
           >
             <li>
               <NavLink
@@ -108,12 +103,7 @@ const Aside = ({ handleMobileToggle }) => {
                 to={paths.SUBMENU_1}
                 onClick={handleMobileToggle}
               >
-                <span>
-                  <FormattedMessage
-                    id="Aside.submenu1"
-                    defaultMessage="Submenu 1"
-                  />
-                </span>
+                <span>{useFormatMessage('Aside.submenu1', 'Submenu 1')}</span>
               </NavLink>
             </li>
             <li>
@@ -122,12 +112,7 @@ const Aside = ({ handleMobileToggle }) => {
                 to={paths.SUBMENU_2}
                 onClick={handleMobileToggle}
               >
-                <span>
-                  <FormattedMessage
-                    id="Aside.submenu2"
-                    defaultMessage="Submenu 2"
-                  />
-                </span>
+                <span>{useFormatMessage('Aside.submenu2', 'Submenu 2')}</span>
               </NavLink>
             </li>
           </SubMenu>
