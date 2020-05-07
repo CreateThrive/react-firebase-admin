@@ -31,6 +31,9 @@ exports[`<NotFound /> rendering should render without crashing 1`] = `
       "Login.password": "Password",
       "Login.setNewPassword": "Set your new password",
       "Login.setPassword": "Set Password",
+      "NavBar.Language": "Language",
+      "NavBar.en": "ENGLISH",
+      "NavBar.es": "SPANISH",
       "NavBar.logOut": "Log Out",
       "NavBar.profile": "Profile",
       "NotFound.404": "Error 404: page not found",
@@ -145,28 +148,12 @@ exports[`<NotFound /> rendering should render without crashing 1`] = `
                       <h1
                         className="title"
                       >
-                        <FormattedMessage
-                          defaultMessage="Error 404: page not found"
-                          id="NotFound.404"
-                          values={Object {}}
-                        >
-                          Error 404: page not found
-                        </FormattedMessage>
+                        Error 404: page not found
                       </h1>
                       <p
                         className="subtitle"
                       >
-                        <FormattedMessage
-                          defaultMessage="The requested URL {url} was not found"
-                          id="NotFound.url"
-                          values={
-                            Object {
-                              "url": "/",
-                            }
-                          }
-                        >
-                          The requested URL / was not found
-                        </FormattedMessage>
+                        The requested URL / was not found
                       </p>
                       <Link
                         className="button is-info is-normal"
@@ -182,13 +169,7 @@ exports[`<NotFound /> rendering should render without crashing 1`] = `
                             href="/login"
                             onClick={[Function]}
                           >
-                            <FormattedMessage
-                              defaultMessage="Go Back"
-                              id="NotFound.back"
-                              values={Object {}}
-                            >
-                              Go Back
-                            </FormattedMessage>
+                            Go Back
                           </a>
                         </LinkAnchor>
                       </Link>

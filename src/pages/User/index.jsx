@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { FormattedMessage } from 'react-intl';
 
 import UserForm from 'components/UserForm';
 import { createUser, modifyUser } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import firebase from 'firebase.js';
+import { useFormatMessage } from 'hooks';
 
 const User = () => {
   const { id } = useParams();
@@ -70,17 +70,17 @@ const User = () => {
 
   const redirect = (user.error || success) && <Redirect to={paths.USERS} />;
 
+  const editUserMessage = useFormatMessage('User.editUser', 'Edit User');
+
+  const newUserMessage = useFormatMessage('User.editUser', 'New User');
+
   return (
     <>
       {redirect}
       <section className="hero is-hero-bar">
         <div className="hero-body">
           <h1 className="title">
-            {isEditing ? (
-              <FormattedMessage id="User.editUser" defaultMessage="Edit User" />
-            ) : (
-              <FormattedMessage id="User.newUser" defaultMessage="New User" />
-            )}
+            {isEditing ? editUserMessage : newUserMessage}
           </h1>
         </div>
       </section>

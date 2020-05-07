@@ -3,30 +3,21 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import ReduxToastr from 'react-redux-toastr';
-import { IntlProvider } from 'react-intl';
 
+import LanguageWrapper from 'components/LanguageWrapper';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { configureStore } from './state/store';
 import './index.scss';
 import Router from './pages/Router';
 import * as serviceWorker from './serviceWorker';
-import spanish from './languages/es.json';
-import english from './languages/en.json';
 
 import './assets/css/main.css';
-
-const local = navigator.language.split(/[-_]/)[0];
-
-const messages = {
-  es: spanish,
-  en: english
-};
 
 const { store, persistor } = configureStore({});
 
 const app = (
-  <IntlProvider locale={local} messages={messages[local]}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <LanguageWrapper>
       <PersistGate persistor={persistor}>
         <ReduxToastr
           newestOnTop={false}
@@ -40,8 +31,8 @@ const app = (
         />
         <Router />
       </PersistGate>
-    </Provider>
-  </IntlProvider>
+    </LanguageWrapper>
+  </Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

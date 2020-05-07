@@ -20,7 +20,7 @@ describe('<PrivateRoute /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = mountWithProvider(<PrivateRoute />)({
+    const { component } = mountWithIntlProvider(<PrivateRoute />)({
       user: {}
     });
 
@@ -28,7 +28,7 @@ describe('<PrivateRoute /> rendering', () => {
   });
 
   it('should redirect to /login when the user is not authenticated', () => {
-    const { component } = mountWithProvider(<PrivateRoute />)({
+    const { component } = mountWithIntlProvider(<PrivateRoute />)({
       user: {}
     });
     expect(component.contains(<Redirect to={paths.LOGIN} />)).toEqual(true);

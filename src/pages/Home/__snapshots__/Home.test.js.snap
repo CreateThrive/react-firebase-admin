@@ -31,6 +31,9 @@ exports[`<Home /> rendering should render without crashing 1`] = `
       "Login.password": "Password",
       "Login.setNewPassword": "Set your new password",
       "Login.setPassword": "Set Password",
+      "NavBar.Language": "Language",
+      "NavBar.en": "ENGLISH",
+      "NavBar.es": "SPANISH",
       "NavBar.logOut": "Log Out",
       "NavBar.profile": "Profile",
       "NotFound.404": "Error 404: page not found",
@@ -127,26 +130,14 @@ exports[`<Home /> rendering should render without crashing 1`] = `
               <h1
                 className="title"
               >
-                <FormattedMessage
-                  defaultMessage="Home"
-                  id="Home.home"
-                  values={Object {}}
-                >
-                  Home
-                </FormattedMessage>
+                Home
               </h1>
             </div>
           </section>
           <section
             className="section is-main-section"
           >
-            <FormattedMessage
-              defaultMessage="Home content"
-              id="Home.content"
-              values={Object {}}
-            >
-              Home content
-            </FormattedMessage>
+            Home content
           </section>
         </Home>
       </Provider>

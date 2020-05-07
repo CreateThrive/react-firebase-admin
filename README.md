@@ -86,6 +86,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - Built-in CD (Continous deployment)
 - PWA ready thanks to CRA and Firebase
 - Multi-tenancy
+- Internationalization (English/Spanish)
 
 ## Tech Stack
 
@@ -107,6 +108,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [React-table](https://github.com/tannerlinsley/react-table) (★ 9.6k) hooks for building fast and extendable tables and datagrids for React.
 - [React-spinners](https://github.com/davidhu2000/react-spinners) (★ 1.2k) a collection of loading spinner components for React.
 - [Firebase](https://firebase.google.com/) for serverless architecture - CDN Hosting, Realtime Database, Authentication, Storage and Cloud Functions (see [docs](https://firebase.google.com/docs/web)).
+- [Format.js](https://formatjs.io/) (★ 11.7k) libraries for internationalization (see [docs](https://formatjs.io/docs/basic-internationalization-principles)).
 
 ### Unit Testing
 
@@ -474,7 +476,7 @@ We'd like to thank these awesome people who made this whole thing happen:
     <li><a href="https://github.com/tpiaggio">Tomas Piaggio</a></li>
     <li><a href="https://github.com/jbheber">Juan Heber</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
-    <li><a href="https://github.com/TOPOFGR">Franco Galeao</a></li>
+    <li><a href="https://github.com/TOPOFGR">Franco Galeano</a></li>
 </ul>
 
 ## License

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
 import firebase from 'firebase.js';
 import { auth, setPassword, authCleanUp } from 'state/actions/auth';
-import { useChangeHandler } from 'utils/hooks';
+import { useChangeHandler, useFormatMessage } from 'hooks';
 import { inputValidations } from 'utils';
 import paths from '../Router/paths';
 import classes from './Login.module.scss';
@@ -77,6 +76,21 @@ const Login = () => {
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
+  const setNewPasswordMessage = useFormatMessage(
+    'Login.setNewPassword',
+    'Set your new password'
+  );
+  const loginMessage = useFormatMessage('Login.login', 'Login');
+
+  const setPasswordMessage = useFormatMessage(
+    'Login.setPassword',
+    'Set Password'
+  );
+
+  const forgotPasswordMessage = useFormatMessage(
+    'Login.forgotPassword',
+    'Forgot Password?'
+  );
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -91,17 +105,7 @@ const Login = () => {
                       <i className="mdi mdi-lock default" />
                     </span>
                     <span>
-                      {isEmailLink ? (
-                        <FormattedMessage
-                          id="Login.setNewPassword"
-                          defaultMessage="Set your new password"
-                        />
-                      ) : (
-                        <FormattedMessage
-                          id="Login.login"
-                          defaultMessage="Login"
-                        />
-                      )}
+                      {isEmailLink ? setNewPasswordMessage : loginMessage}
                     </span>
                   </p>
                 </header>
@@ -109,10 +113,7 @@ const Login = () => {
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
                       <p className="label">
-                        <FormattedMessage
-                          id="Login.email"
-                          defaultMessage="E-mail Address"
-                        />
+                        {useFormatMessage('Login.email', 'E-mail Address')}
                       </p>
                       <div className="control is-clearfix">
                         <input
@@ -132,10 +133,7 @@ const Login = () => {
                     </div>
                     <div className="field">
                       <p className="label">
-                        <FormattedMessage
-                          id="Login.password"
-                          defaultMessage="Password"
-                        />
+                        {useFormatMessage('Login.password', 'Password')}
                       </p>
                       <div className="control is-clearfix">
                         <input
@@ -161,17 +159,7 @@ const Login = () => {
                           className={`button is-black ${modifierLoading}`}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
-                          {isEmailLink ? (
-                            <FormattedMessage
-                              id="Login.setPassword"
-                              defaultMessage="Set Password"
-                            />
-                          ) : (
-                            <FormattedMessage
-                              id="Login.login"
-                              defaultMessage="Login"
-                            />
-                          )}
+                          {isEmailLink ? setPasswordMessage : loginMessage}
                         </button>
                       </div>
                       {!isEmailLink && (
@@ -180,10 +168,7 @@ const Login = () => {
                             to={paths.RESET_PASSWORD}
                             className="button is-outlined"
                           >
-                            <FormattedMessage
-                              id="Login.forgotPassword"
-                              defaultMessage="Forgot Password?"
-                            />
+                            {forgotPasswordMessage}
                           </Link>
                         </div>
                       )}

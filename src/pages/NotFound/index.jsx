@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 
+import { useFormatMessage } from 'hooks';
 import path from 'pages/Router/paths';
 import NotFoudImage from 'assets/404.gif';
 import classes from './NotFound.module.scss';
@@ -27,23 +27,20 @@ const NotFound = () => {
             <div className="columns is-vcentered is-desktop">
               <div className="column has-text-centered">
                 <h1 className="title">
-                  <FormattedMessage
-                    id="NotFound.404"
-                    defaultMessage="Error 404: page not found"
-                  />
+                  {useFormatMessage(
+                    'NotFound.404',
+                    'Error 404: page not found'
+                  )}
                 </h1>
                 <p className="subtitle">
-                  <FormattedMessage
-                    id="NotFound.url"
-                    defaultMessage="The requested URL {url} was not found"
-                    values={{ url: location.pathname }}
-                  />
+                  {useFormatMessage(
+                    'NotFound.url',
+                    'Error 404: page not found',
+                    { url: location.pathname }
+                  )}
                 </p>
                 <Link className="button is-info is-normal" to={userPath}>
-                  <FormattedMessage
-                    id="NotFound.back"
-                    defaultMessage="Go Back"
-                  />
+                  {useFormatMessage('NotFound.back', 'Go Back')}
                 </Link>
               </div>
               <div className="column has-text-centered">

@@ -62,7 +62,7 @@ describe('<ChangePassword /> rendering', () => {
     newPass.instance().value = 'oldpassword';
     newPass.simulate('change');
 
-    expect(component.find('[id="ChangePassword.samePassword"]').length).toBe(1);
+    expect(component.exists('p.help.is-danger')).toBeTruthy();
   });
 
   it('should display a message informing the user that the new password is secure', () => {
@@ -76,7 +76,7 @@ describe('<ChangePassword /> rendering', () => {
     newPass.instance().value = 'newSecurePassword!';
     newPass.simulate('change');
 
-    expect(component.find('[id="ChangePassword.safePassword"]').length).toBe(1);
+    expect(component.exists('p.help.is-is-success')).toBeTruthy();
   });
 
   it('should display a message informing the user that the new and confirmation passwords match', () => {
@@ -94,9 +94,7 @@ describe('<ChangePassword /> rendering', () => {
     confirmation.instance().value = 'newSecurePassword!';
     confirmation.simulate('change');
 
-    expect(component.find('[id="ChangePassword.matchPassword"]').length).toBe(
-      1
-    );
+    expect(component.exists('p.help.is-is-success')).toBeTruthy();
   });
 
   it('should display the button loading when loading', () => {

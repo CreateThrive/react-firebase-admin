@@ -20,7 +20,7 @@ import {
   AUTH_CHANGE_PASSWORD_SUCCESS,
   AUTH_CHANGE_PASSWORD_FAIL,
   AUTH_UPDATE_USER_DATA
-} from '../../actions/auth';
+} from 'state/actions/auth';
 
 import { authReducer } from '.';
 

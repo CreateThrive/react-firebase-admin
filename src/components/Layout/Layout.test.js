@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import Layout from '.';
 import NavBar from '../Navigation/NavBar';
@@ -8,13 +7,13 @@ import Footer from '../Navigation/Footer';
 
 describe('<Layout /> rendering', () => {
   it('should render without crashing', () => {
-    const component = shallow(<Layout>Test</Layout>);
+    const { component } = shallowWithIntl(<Layout>Test</Layout>);
 
     expect(component).toMatchSnapshot();
   });
 
   it('should render <NavBar /> component correctly', () => {
-    const { component } = mountWithProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
       auth: {
         userData: {}
       }
@@ -24,9 +23,10 @@ describe('<Layout /> rendering', () => {
   });
 
   it('should render <Aside /> component correctly', () => {
-    const { component } = mountWithProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
       auth: {
-        userData: {}
+        userData: {},
+        locale: 'en'
       }
     });
 
@@ -34,7 +34,7 @@ describe('<Layout /> rendering', () => {
   });
 
   it('should render <Footer /> component correctly', () => {
-    const { component } = mountWithProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
       auth: {
         userData: {}
       }
@@ -44,7 +44,7 @@ describe('<Layout /> rendering', () => {
   });
 
   it('should render a div with the children', () => {
-    const { component } = mountWithProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
       auth: {
         userData: {}
       }

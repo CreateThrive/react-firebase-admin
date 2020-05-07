@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 
 import { changeUserPassword, authCleanUp } from 'state/actions/auth';
-import { useChangeHandler } from 'utils/hooks';
+import { useChangeHandler, useFormatMessage } from 'hooks';
 
 const ChangePasswordCard = () => {
   const [passwords, setPasswords] = useState({
@@ -56,17 +55,22 @@ const ChangePasswordCard = () => {
 
   const isNewPasswordSecure = passwords.new && passwords.new.length >= 6;
 
+  const safePasswordMessage = useFormatMessage(
+    `ChangePassword.safePassword`,
+    'Safe password'
+  );
+
+  const insecurePasswordMessage = useFormatMessage(
+    `ChangePassword.insecurePassword`,
+    'Insecure password'
+  );
+
   if (isNewPasswordSecure) {
     setInputs('new', {
       modifier: 'is-success',
       message: {
         modifier: 'is-success',
-        content: (
-          <FormattedMessage
-            id="ChangePassword.safePassword"
-            defaultMessage="Safe password"
-          />
-        )
+        content: safePasswordMessage
       }
     });
   } else if (passwords.new) {
@@ -74,12 +78,7 @@ const ChangePasswordCard = () => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: (
-          <FormattedMessage
-            id="ChangePassword.insecurePassword"
-            defaultMessage="Insecure password"
-          />
-        )
+        content: insecurePasswordMessage
       }
     });
   }
@@ -89,17 +88,22 @@ const ChangePasswordCard = () => {
     passwords.confirmation &&
     passwords.new === passwords.confirmation;
 
+  const passwordsMatchMessagge = useFormatMessage(
+    `ChangePassword.matchPassword`,
+    'Passwords match'
+  );
+
+  const notMatchPasswordMessage = useFormatMessage(
+    `ChangePassword.notMatchPassword`,
+    'Passwords do not match'
+  );
+
   if (newPasswordsAreEqual) {
     setInputs('confirmation', {
       modifier: 'is-success',
       message: {
         modifier: 'is-success',
-        content: (
-          <FormattedMessage
-            id="ChangePassword.matchPassword"
-            defaultMessage="Passwords match"
-          />
-        )
+        content: passwordsMatchMessagge
       }
     });
   } else if (passwords.confirmation) {
@@ -107,12 +111,7 @@ const ChangePasswordCard = () => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: (
-          <FormattedMessage
-            id="ChangePassword.notMatchPassword"
-            defaultMessage="Passwords do not match"
-          />
-        )
+        content: notMatchPasswordMessage
       }
     });
   }
@@ -120,12 +119,13 @@ const ChangePasswordCard = () => {
   const currentAndNewPasswordsEqual =
     passwords.new && passwords.current === passwords.new;
 
-  const errorMessage = currentAndNewPasswordsEqual && (
-    <FormattedMessage
-      id="ChangePassword.samePassword"
-      defaultMessage="The new password and the current one cannot be the same"
-    />
+  const samePasswordMessage = useFormatMessage(
+    `ChangePassword.samePassword`,
+    'The new password and the current one cannot be the same'
   );
+
+  const errorMessage = currentAndNewPasswordsEqual && samePasswordMessage;
+
   const canSubmit =
     isNewPasswordSecure && newPasswordsAreEqual && !currentAndNewPasswordsEqual;
 
@@ -141,10 +141,7 @@ const ChangePasswordCard = () => {
           <span className="icon">
             <i className="fa fa-lock" />
           </span>
-          <FormattedMessage
-            id="ChangePassword.changePassword"
-            defaultMessage="Change password"
-          />
+          {useFormatMessage(`ChangePassword.changePassword`, 'Change Password')}
         </p>
       </header>
       <div className="card-content">
@@ -152,10 +149,10 @@ const ChangePasswordCard = () => {
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
-                <FormattedMessage
-                  id="ChangePassword.currentPassword"
-                  defaultMessage="Current Password"
-                />
+                {useFormatMessage(
+                  `ChangePassword.currentPassword`,
+                  'Current Password'
+                )}
               </label>
             </div>
             <div className="field-body">
@@ -177,10 +174,7 @@ const ChangePasswordCard = () => {
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
-                <FormattedMessage
-                  id="ChangePassword.newPassword"
-                  defaultMessage="New Password"
-                />
+                {useFormatMessage(`ChangePassword.newPassword`, 'New Password')}
               </label>
             </div>
             <div className="field-body">
@@ -207,10 +201,10 @@ const ChangePasswordCard = () => {
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
-                <FormattedMessage
-                  id="ChangePassword.confirmPassword"
-                  defaultMessage="Confirm Password"
-                />
+                {useFormatMessage(
+                  `ChangePassword.confirmPassword`,
+                  'Confirm Password'
+                )}
               </label>
             </div>
             <div className="field-body">
@@ -245,10 +239,7 @@ const ChangePasswordCard = () => {
                     className={`button is-primary ${loading && 'is-loading'}`}
                     disabled={!canSubmit}
                   >
-                    <FormattedMessage
-                      id="ChangePassword.submits"
-                      defaultMessage="Submit"
-                    />
+                    {useFormatMessage(`ChangePassword.submits`, 'Submit')}
                   </button>
                 </div>
                 {errorMessage && (

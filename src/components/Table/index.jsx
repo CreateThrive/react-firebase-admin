@@ -3,8 +3,8 @@ import React from 'react';
 import classNames from 'classnames';
 import { useTable, useSortBy, usePagination } from 'react-table';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
+import { useFormatMessage } from 'hooks';
 import classes from './Table.module.scss';
 import './TableMobile.css';
 
@@ -32,12 +32,10 @@ const Table = ({ columns, data }) => {
     usePagination
   );
 
-  const perPage = (
-    <FormattedMessage id="Table.perPage" defaultMessage=" per page" />
-  );
+  const perPage = useFormatMessage('Table.perPage', ' per page');
+
   return (
     <>
-      {perPage}
       <div className="table-wrapper">
         <table
           className="table is-striped has-mobile-cards is-hoverable"

@@ -82,7 +82,10 @@ global.shallowWithIntl = children => {
 };
 
 global.mountWithIntlProvider = children => initialState => {
-  const store = mockedStore(initialState);
+  const store = mockedStore({
+    ...initialState,
+    auth: { ...initialState.auth, locale: 'en' }
+  });
   return {
     component: mount(
       <IntlProvider locale="en" messages={english}>
@@ -96,7 +99,10 @@ global.mountWithIntlProvider = children => initialState => {
 };
 
 global.shallowWithIntlProvider = children => initialState => {
-  const store = mockedStore(initialState);
+  const store = mockedStore({
+    ...initialState,
+    auth: { ...initialState.auth, locale: 'en' }
+  });
   return {
     component: shallow(
       <IntlProvider locale="en" messages={english}>
