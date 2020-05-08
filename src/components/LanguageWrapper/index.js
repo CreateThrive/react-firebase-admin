@@ -6,7 +6,7 @@ import { langSetLocale } from 'state/actions/lang';
 import english from 'languages/en';
 import spanish from 'languages/es';
 
-const local = navigator.language.split(/[-_]/)[0];
+const browserLocale = navigator.language.split(/[-_]/)[0];
 
 const messages = {
   en: english,
@@ -24,8 +24,8 @@ const LanguageWrapper = ({ children }) => {
   );
 
   if (locale === null) {
-    locale = local;
-    dispatch(langSetLocale(local));
+    locale = ['en', 'es'].includes(browserLocale) ? browserLocale : 'en';
+    dispatch(langSetLocale(browserLocale));
   }
 
   return (

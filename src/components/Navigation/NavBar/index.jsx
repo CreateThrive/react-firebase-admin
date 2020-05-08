@@ -33,12 +33,8 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
     setNavMobileActive(!navMobileActive);
   }, [setNavMobileActive, navMobileActive]);
 
-  const changeToEnglishHandler = () => {
-    dispatch(langSetLocale('en'));
-  };
-
-  const changeToSpanishHandler = () => {
-    dispatch(langSetLocale('es'));
+  const changeLocaleHandler = locale => {
+    dispatch(langSetLocale(locale));
   };
 
   return (
@@ -94,14 +90,20 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
               </span>
             </a>
             <div className="navbar-dropdown">
-              <a onClick={changeToEnglishHandler} className="dropdown-item">
+              <a
+                onClick={() => changeLocaleHandler('en')}
+                className="dropdown-item"
+              >
                 <img src={en} alt="English icon" />
-                {useFormatMessage('NavBar.en', 'ENGLISH')}
+                English
               </a>
               <hr className="navbar-divider" />
-              <a onClick={changeToSpanishHandler} className="dropdown-item">
+              <a
+                onClick={() => changeLocaleHandler('es')}
+                className="dropdown-item"
+              >
                 <img src={es} alt="Spanish icon" />
-                {useFormatMessage('NavBar.es', 'SPANISH')}
+                Español
               </a>
             </div>
           </div>

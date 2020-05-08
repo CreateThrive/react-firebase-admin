@@ -53,8 +53,6 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
         "Login.setNewPassword": "Set your new password",
         "Login.setPassword": "Set Password",
         "NavBar.Language": "Language",
-        "NavBar.en": "ENGLISH",
-        "NavBar.es": "SPANISH",
         "NavBar.logOut": "Log Out",
         "NavBar.profile": "Profile",
         "NotFound.404": "Error 404: page not found",
@@ -103,6 +101,7 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
       "onError": [Function],
       "textComponent": Symbol(react.fragment),
       "timeZone": undefined,
+      "wrapRichTextChunksInFragment": undefined,
     }
   }
 >
