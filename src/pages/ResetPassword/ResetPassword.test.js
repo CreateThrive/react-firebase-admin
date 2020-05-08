@@ -6,7 +6,7 @@ import ResetPassword from '.';
 
 describe('<ResetPassword /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = mountWithIntlProvider(<ResetPassword />)({
+    const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {}
       }
@@ -16,7 +16,7 @@ describe('<ResetPassword /> rendering', () => {
   });
 
   it('should display an error message correctly', () => {
-    const { component } = mountWithIntlProvider(<ResetPassword />)({
+    const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {},
         error: 'some error'
@@ -27,7 +27,7 @@ describe('<ResetPassword /> rendering', () => {
   });
 
   it('should display a confirmation message correctly', () => {
-    const { component } = mountWithIntlProvider(<ResetPassword />)({
+    const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {},
         restoredPassword: true
@@ -38,7 +38,7 @@ describe('<ResetPassword /> rendering', () => {
   });
 
   it('should display the button loading correctly', () => {
-    const { component } = mountWithIntlProvider(<ResetPassword />)({
+    const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {},
         loading: true
@@ -61,7 +61,7 @@ describe('<ResetPassword /> actions', () => {
   });
 
   it('should dispatch resetPassword action when the form is submitted', () => {
-    const { component } = mountWithIntlProvider(<ResetPassword />)({
+    const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {}
       }
@@ -73,7 +73,7 @@ describe('<ResetPassword /> actions', () => {
   });
 
   it('should dispatch resetPasswordCleanUp action when the component is unmounted', () => {
-    const { component } = mountWithIntlProvider(<ResetPassword />)({
+    const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {}
       }

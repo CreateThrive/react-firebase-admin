@@ -78,19 +78,19 @@ const Users = () => {
       disableSortBy: true
     },
     {
-      Header: useFormatMessage('Users.name', 'Name'),
+      Header: useFormatMessage('Users.name'),
       accessor: 'name'
     },
     {
-      Header: useFormatMessage('Users.email', 'Email'),
+      Header: useFormatMessage('Users.email'),
       accessor: 'email'
     },
     {
-      Header: useFormatMessage('Users.location', 'Location'),
+      Header: useFormatMessage('Users.location'),
       accessor: 'location'
     },
     {
-      Header: useFormatMessage('Users.admin', 'Admin'),
+      Header: useFormatMessage('Users.admin'),
       accessor: 'isAdmin',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -107,7 +107,7 @@ const Users = () => {
       )
     },
     {
-      Header: useFormatMessage('Users.created', 'Created'),
+      Header: useFormatMessage('Users.created'),
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -168,16 +168,13 @@ const Users = () => {
       })
     : usersList;
 
-  const deleteMessage = useFormatMessage('Users.delete', 'Delete');
+  const deleteMessage = useFormatMessage('Users.delete');
 
-  const confirmMessage = useFormatMessage('Users.confirm', 'Confirm action');
+  const confirmMessage = useFormatMessage('Users.confirm');
 
-  const permDeleteMessage = useFormatMessage(
-    'Users.permDelete',
-    'This will permanently delete the user. Action can not be undone.'
-  );
+  const permDeleteMessage = useFormatMessage('Users.permDelete');
 
-  const cancelMessage = useFormatMessage('Users.cancel', 'Cancel');
+  const cancelMessage = useFormatMessage('Users.cancel');
 
   return (
     <>
@@ -199,15 +196,13 @@ const Users = () => {
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">
-                  {useFormatMessage('Users.users', 'Users')}
-                </h1>
+                <h1 className="title">{useFormatMessage('Users.users')}</h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_USER} className="button">
-                  {useFormatMessage('Users.newUser', 'New User')}
+                  {useFormatMessage('Users.newUser')}
                 </Link>
               </div>
             </div>
@@ -218,7 +213,7 @@ const Users = () => {
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>{useFormatMessage('Users.search', 'Search:')}</span>
+              <span>{useFormatMessage('Users.search')}</span>
               <input
                 type="text"
                 className="input"

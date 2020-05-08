@@ -53,7 +53,7 @@ const Aside = ({ handleMobileToggle }) => {
     shallowEqual
   );
 
-  const usersMessage = useFormatMessage('Aside.users', 'Users');
+  const usersMessage = useFormatMessage('Aside.users');
 
   return (
     <aside className="aside is-placed-left is-expanded">
@@ -76,7 +76,7 @@ const Aside = ({ handleMobileToggle }) => {
                 <i className="mdi mdi-home" />
               </span>
               <span className="menu-item-label">
-                {useFormatMessage('Aside.home', 'Home')}
+                {useFormatMessage('Aside.home')}
               </span>
             </NavLink>
           </li>
@@ -94,16 +94,14 @@ const Aside = ({ handleMobileToggle }) => {
               </NavLink>
             </li>
           )}
-          <SubMenu
-            label={useFormatMessage('Aside.dropdownMenu', 'Dropdown Menu')}
-          >
+          <SubMenu label={useFormatMessage('Aside.dropdownMenu')}>
             <li>
               <NavLink
                 className={classes.submenuLink}
                 to={paths.SUBMENU_1}
                 onClick={handleMobileToggle}
               >
-                <span>{useFormatMessage('Aside.submenu1', 'Submenu 1')}</span>
+                <span>{useFormatMessage('Aside.submenu1')}</span>
               </NavLink>
             </li>
             <li>
@@ -112,7 +110,7 @@ const Aside = ({ handleMobileToggle }) => {
                 to={paths.SUBMENU_2}
                 onClick={handleMobileToggle}
               >
-                <span>{useFormatMessage('Aside.submenu2', 'Submenu 2')}</span>
+                <span>{useFormatMessage('Aside.submenu2')}</span>
               </NavLink>
             </li>
           </SubMenu>

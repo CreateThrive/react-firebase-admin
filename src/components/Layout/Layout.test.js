@@ -7,13 +7,13 @@ import Footer from '../Navigation/Footer';
 
 describe('<Layout /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithIntl(<Layout>Test</Layout>);
+    const { component } = shallowWithProviders(<Layout>Test</Layout>)({});
 
     expect(component).toMatchSnapshot();
   });
 
   it('should render <NavBar /> component correctly', () => {
-    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithProviders(<Layout>Test</Layout>)({
       auth: {
         userData: {}
       }
@@ -23,7 +23,7 @@ describe('<Layout /> rendering', () => {
   });
 
   it('should render <Aside /> component correctly', () => {
-    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithProviders(<Layout>Test</Layout>)({
       auth: {
         userData: {},
         locale: 'en'
@@ -34,7 +34,7 @@ describe('<Layout /> rendering', () => {
   });
 
   it('should render <Footer /> component correctly', () => {
-    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithProviders(<Layout>Test</Layout>)({
       auth: {
         userData: {}
       }
@@ -44,7 +44,7 @@ describe('<Layout /> rendering', () => {
   });
 
   it('should render a div with the children', () => {
-    const { component } = mountWithIntlProvider(<Layout>Test</Layout>)({
+    const { component } = mountWithProviders(<Layout>Test</Layout>)({
       auth: {
         userData: {}
       }

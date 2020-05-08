@@ -4,7 +4,7 @@ import Users from '.';
 
 describe('<Users /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithIntlProvider(<Users />)({
+    const { component } = shallowWithProviders(<Users />)({
       users: {},
       auth: {
         userData: {}

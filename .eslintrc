@@ -39,14 +39,8 @@
     "Request": true,
     "fetch": true,
     "reducerTester": true,
-    "mountWithProvider": true,
-    "shallowWithProvider": true,
-    "shallowWithRouter": true,
-    "mountWithRouter": true,
-    "mountWithIntl": true,
-    "shallowWithIntl": true,
-    "mountWithIntlProvider": true,
-    "shallowWithIntlProvider": true
+    "mountWithProviders": true,
+    "shallowWithProviders": true
   },
   "parser": "babel-eslint",
   "settings": {

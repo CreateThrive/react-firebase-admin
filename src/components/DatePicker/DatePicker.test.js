@@ -7,40 +7,40 @@ describe('<DatePickerStyled /> rendering', () => {
   const setState = jest.fn();
 
   it('should render without crashing', () => {
-    const { component } = shallowWithProvider(
+    const { component } = shallowWithProviders(
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
         date={new Date('Thu Nov 12 2020 00:00:00 GMT-0000')}
         setState={setState}
       />
-    )({ auth: { locale: 'en' } });
+    )({ preferences: { locale: 'en' } });
 
     expect(component).toMatchSnapshot();
   });
 
   it('should render <DatePicker /> component correctly', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
         date={new Date('11/12/2020')}
         setState={setState}
       />
-    )({ auth: { locale: 'en' } });
+    )({ preferences: { locale: 'en' } });
 
     expect(component.exists(DatePicker)).toBeTruthy();
   });
 
   it('should pass the date prop to <DatePicker selected={date} /> correctly', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
         date={new Date('11/12/2020')}
         setState={setState}
       />
-    )({ auth: { locale: 'en' } });
+    )({ preferences: { locale: 'en' } });
 
     expect(component.find(DatePicker).prop('selected')).toEqual(
       new Date('11/12/2020')

@@ -76,21 +76,14 @@ const Login = () => {
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
-  const setNewPasswordMessage = useFormatMessage(
-    'Login.setNewPassword',
-    'Set your new password'
-  );
-  const loginMessage = useFormatMessage('Login.login', 'Login');
+  const setNewPasswordMessage = useFormatMessage('Login.setNewPassword');
 
-  const setPasswordMessage = useFormatMessage(
-    'Login.setPassword',
-    'Set Password'
-  );
+  const loginMessage = useFormatMessage('Login.login');
 
-  const forgotPasswordMessage = useFormatMessage(
-    'Login.forgotPassword',
-    'Forgot Password?'
-  );
+  const setPasswordMessage = useFormatMessage('Login.setPassword');
+
+  const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
+
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -112,9 +105,7 @@ const Login = () => {
                 <div className="card-content">
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
-                      <p className="label">
-                        {useFormatMessage('Login.email', 'E-mail Address')}
-                      </p>
+                      <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
                           className={`input ${inputs.email.modifier}`}
@@ -133,7 +124,7 @@ const Login = () => {
                     </div>
                     <div className="field">
                       <p className="label">
-                        {useFormatMessage('Login.password', 'Password')}
+                        {useFormatMessage('Login.password')}
                       </p>
                       <div className="control is-clearfix">
                         <input

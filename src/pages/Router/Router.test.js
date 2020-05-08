@@ -15,7 +15,7 @@ describe('<Router /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = shallowWithProvider(<Router />)({
+    const { component } = shallowWithProviders(<Router />)({
       auth: {}
     });
 

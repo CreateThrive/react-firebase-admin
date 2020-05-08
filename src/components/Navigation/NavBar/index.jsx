@@ -3,7 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { langSetLocale } from 'state/actions/lang';
+import { preferencesSetLocale } from 'state/actions/preferences';
 import { useFormatMessage } from 'hooks';
 import en from 'assets/en.png';
 import es from 'assets/es.png';
@@ -15,10 +15,11 @@ import Link from '../Link';
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);
 
-  const { userName, logoUrl } = useSelector(
+  const { userName, logoUrl, locale } = useSelector(
     state => ({
       userName: state.auth.userData.name,
-      logoUrl: state.auth.userData.logoUrl
+      logoUrl: state.auth.userData.logoUrl,
+      locale: state.preferences.locale
     }),
     shallowEqual
   );
@@ -33,13 +34,12 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
     setNavMobileActive(!navMobileActive);
   }, [setNavMobileActive, navMobileActive]);
 
-  const changeToEnglishHandler = () => {
-    dispatch(langSetLocale('en'));
+  const changeLocaleHandler = local => {
+    dispatch(preferencesSetLocale(local));
   };
 
-  const changeToSpanishHandler = () => {
-    dispatch(langSetLocale('es'));
-  };
+  const usFlag = <img src={en} alt="English icon" />;
+  const spainFlag = <img src={es} alt="Spanish icon" />;
 
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">
@@ -86,23 +86,31 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
         <div className="navbar-end">
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
             <a className="navbar-link is-arrowless">
-              <div className="is-language">
-                <span>{useFormatMessage('NavBar.Language', 'Language')}</span>
+              <div className="is-user-avatar">
+                <span>{locale === 'en' ? usFlag : spainFlag}</span>
               </div>
               <span className="icon">
                 <i className="mdi mdi-chevron-down" />
               </span>
             </a>
             <div className="navbar-dropdown">
-              <a onClick={changeToEnglishHandler} className="dropdown-item">
-                <img src={en} alt="English icon" />
-                {useFormatMessage('NavBar.en', 'ENGLISH')}
-              </a>
-              <hr className="navbar-divider" />
-              <a onClick={changeToSpanishHandler} className="dropdown-item">
-                <img src={es} alt="Spanish icon" />
-                {useFormatMessage('NavBar.es', 'SPANISH')}
-              </a>
+              {locale !== 'en' ? (
+                <a
+                  onClick={() => changeLocaleHandler('en')}
+                  className="navbar-item"
+                  id="en"
+                >
+                  <span className="icon">{usFlag}</span>
+                </a>
+              ) : (
+                <a
+                  onClick={() => changeLocaleHandler('es')}
+                  className="navbar-item"
+                  id="es"
+                >
+                  <span className="icon">{spainFlag}</span>
+                </a>
+              )}
             </div>
           </div>
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
@@ -122,7 +130,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-account" />
                 </span>
-                <span>{useFormatMessage('NavBar.profile', 'Profile')}</span>
+                <span>{useFormatMessage('NavBar.profile')}</span>
               </Link>
               <hr className="navbar-divider" />
               <a
@@ -133,7 +141,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-logout" />
                 </span>
-                <span>{useFormatMessage('NavBar.logOut', 'Log Out')}</span>
+                <span>{useFormatMessage('NavBar.logOut')}</span>
               </a>
             </div>
           </div>

@@ -55,14 +55,10 @@ const ChangePasswordCard = () => {
 
   const isNewPasswordSecure = passwords.new && passwords.new.length >= 6;
 
-  const safePasswordMessage = useFormatMessage(
-    `ChangePassword.safePassword`,
-    'Safe password'
-  );
+  const safePasswordMessage = useFormatMessage(`ChangePassword.safePassword`);
 
   const insecurePasswordMessage = useFormatMessage(
-    `ChangePassword.insecurePassword`,
-    'Insecure password'
+    `ChangePassword.insecurePassword`
   );
 
   if (isNewPasswordSecure) {
@@ -89,13 +85,11 @@ const ChangePasswordCard = () => {
     passwords.new === passwords.confirmation;
 
   const passwordsMatchMessagge = useFormatMessage(
-    `ChangePassword.matchPassword`,
-    'Passwords match'
+    `ChangePassword.matchPassword`
   );
 
   const notMatchPasswordMessage = useFormatMessage(
-    `ChangePassword.notMatchPassword`,
-    'Passwords do not match'
+    `ChangePassword.notMatchPassword`
   );
 
   if (newPasswordsAreEqual) {
@@ -119,10 +113,7 @@ const ChangePasswordCard = () => {
   const currentAndNewPasswordsEqual =
     passwords.new && passwords.current === passwords.new;
 
-  const samePasswordMessage = useFormatMessage(
-    `ChangePassword.samePassword`,
-    'The new password and the current one cannot be the same'
-  );
+  const samePasswordMessage = useFormatMessage(`ChangePassword.samePassword`);
 
   const errorMessage = currentAndNewPasswordsEqual && samePasswordMessage;
 
@@ -141,7 +132,7 @@ const ChangePasswordCard = () => {
           <span className="icon">
             <i className="fa fa-lock" />
           </span>
-          {useFormatMessage(`ChangePassword.changePassword`, 'Change Password')}
+          {useFormatMessage(`ChangePassword.changePassword`)}
         </p>
       </header>
       <div className="card-content">
@@ -149,10 +140,7 @@ const ChangePasswordCard = () => {
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
-                {useFormatMessage(
-                  `ChangePassword.currentPassword`,
-                  'Current Password'
-                )}
+                {useFormatMessage(`ChangePassword.currentPassword`)}
               </label>
             </div>
             <div className="field-body">
@@ -174,7 +162,7 @@ const ChangePasswordCard = () => {
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
-                {useFormatMessage(`ChangePassword.newPassword`, 'New Password')}
+                {useFormatMessage(`ChangePassword.newPassword`)}
               </label>
             </div>
             <div className="field-body">
@@ -201,10 +189,7 @@ const ChangePasswordCard = () => {
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
-                {useFormatMessage(
-                  `ChangePassword.confirmPassword`,
-                  'Confirm Password'
-                )}
+                {useFormatMessage(`ChangePassword.confirmPassword`)}
               </label>
             </div>
             <div className="field-body">
@@ -239,7 +224,7 @@ const ChangePasswordCard = () => {
                     className={`button is-primary ${loading && 'is-loading'}`}
                     disabled={!canSubmit}
                   >
-                    {useFormatMessage(`ChangePassword.submits`, 'Submit')}
+                    {useFormatMessage(`ChangePassword.submits`)}
                   </button>
                 </div>
                 {errorMessage && (

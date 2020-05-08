@@ -47,24 +47,15 @@ const ResetPassword = () => {
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
-  const recoverEmailMessage = useFormatMessage(
-    'ResetPassword.recoverEmail',
-    'We have sent you an email to {mail} so you can recover your account.',
-    { mail: resetPasswordData.email }
-  );
-  const emailMessage = useFormatMessage(
-    'ResetPassword.email',
-    'E-mail Address'
-  );
+  const recoverEmailMessage = useFormatMessage('ResetPassword.recoverEmail', {
+    mail: resetPasswordData.email
+  });
+  const emailMessage = useFormatMessage('ResetPassword.email');
   const emailRegistrationMessage = useFormatMessage(
-    'ResetPassword.emailRegistration',
-    'E-mail used for registration'
+    'ResetPassword.emailRegistration'
   );
-  const resetLinkMessage = useFormatMessage(
-    'ResetPassword.resetLink',
-    'Send Reset Link'
-  );
-  const backMessage = useFormatMessage('ResetPassword.back', 'Back');
+  const resetLinkMessage = useFormatMessage('ResetPassword.resetLink');
+  const backMessage = useFormatMessage('ResetPassword.back');
 
   return (
     <section className="section hero is-fullheight is-error-section">
@@ -79,12 +70,7 @@ const ResetPassword = () => {
                     <span className="icon">
                       <i className="mdi mdi-lock-open default" />
                     </span>
-                    <span>
-                      {useFormatMessage(
-                        'ResetPassword.recovery',
-                        'Password Recovery'
-                      )}
-                    </span>
+                    <span>{useFormatMessage('ResetPassword.recovery')}</span>
                   </p>
                 </header>
                 <div className="card-content">

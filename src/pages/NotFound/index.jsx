@@ -26,21 +26,12 @@ const NotFound = () => {
           <div className="container">
             <div className="columns is-vcentered is-desktop">
               <div className="column has-text-centered">
-                <h1 className="title">
-                  {useFormatMessage(
-                    'NotFound.404',
-                    'Error 404: page not found'
-                  )}
-                </h1>
+                <h1 className="title">{useFormatMessage('NotFound.404')}</h1>
                 <p className="subtitle">
-                  {useFormatMessage(
-                    'NotFound.url',
-                    'Error 404: page not found',
-                    { url: location.pathname }
-                  )}
+                  {useFormatMessage('NotFound.url', { url: location.pathname })}
                 </p>
                 <Link className="button is-info is-normal" to={userPath}>
-                  {useFormatMessage('NotFound.back', 'Go Back')}
+                  {useFormatMessage('NotFound.back')}
                 </Link>
               </div>
               <div className="column has-text-centered">

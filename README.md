@@ -250,6 +250,9 @@ src/
 │   ├── index.js
 │   ├── hook_1.js
 |   └── hook_2.js
+├── languages/                             # All the JSON files for each language
+|   ├── language_1.json
+|   └── language_2.json
 ├── index.js
 ├── index.scss
 ├── serviceWorker.js
@@ -466,6 +469,10 @@ Refer to the .env.example file in the root folder of the project to see what var
 ## Demo
 
 For requesting access to the [demo](https://react-firebase-admin-eeac2.firebaseapp.com/) site please [contact us](https://createthrive.com/contact).
+
+## Internatioalization
+
+For the internationalization we decided to use [Format.js](https://formatjs.io/).
 
 ## Contributors
 

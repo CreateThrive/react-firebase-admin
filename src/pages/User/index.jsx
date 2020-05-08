@@ -70,9 +70,9 @@ const User = () => {
 
   const redirect = (user.error || success) && <Redirect to={paths.USERS} />;
 
-  const editUserMessage = useFormatMessage('User.editUser', 'Edit User');
+  const editUserMessage = useFormatMessage('User.editUser');
 
-  const newUserMessage = useFormatMessage('User.editUser', 'New User');
+  const newUserMessage = useFormatMessage('User.editUser');
 
   return (
     <>

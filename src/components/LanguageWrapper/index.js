@@ -2,11 +2,11 @@ import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
-import { langSetLocale } from 'state/actions/lang';
+import { preferencesSetLocale } from 'state/actions/preferences';
 import english from 'languages/en';
 import spanish from 'languages/es';
 
-const local = navigator.language.split(/[-_]/)[0];
+const browserLocale = navigator.language.split(/[-_]/)[0];
 
 const messages = {
   en: english,
@@ -18,14 +18,14 @@ const LanguageWrapper = ({ children }) => {
 
   let { locale } = useSelector(
     state => ({
-      locale: state.lang.locale
+      locale: state.preferences.locale
     }),
     shallowEqual
   );
 
   if (locale === null) {
-    locale = local;
-    dispatch(langSetLocale(local));
+    locale = ['en', 'es'].includes(browserLocale) ? browserLocale : 'en';
+    dispatch(preferencesSetLocale(browserLocale));
   }
 
   return (

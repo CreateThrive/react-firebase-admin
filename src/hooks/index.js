@@ -13,8 +13,8 @@ const useChangeHandler = setState => {
 
 const useFormatMessage = (
   id,
-  defaultMessage,
   values = {},
+  defaultMessage = '',
   description = ''
 ) => {
   const intl = useIntl();

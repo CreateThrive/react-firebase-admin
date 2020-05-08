@@ -9,7 +9,7 @@ const onHandleMobile = jest.fn();
 
 describe('<NavBar /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithIntlProvider(
+    const { component } = shallowWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
@@ -21,7 +21,7 @@ describe('<NavBar /> rendering', () => {
   });
 
   it('should render the links correctly', () => {
-    const { component } = mountWithIntlProvider(
+    const { component } = mountWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
@@ -44,7 +44,7 @@ describe('<Bar /> actions', () => {
   });
 
   it('should dispatch logout action when the user tries to logout', () => {
-    const { component } = mountWithIntlProvider(
+    const { component } = mountWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {

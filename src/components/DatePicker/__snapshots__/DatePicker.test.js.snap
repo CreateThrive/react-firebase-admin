@@ -1,46 +1,131 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<DatePickerStyled /> rendering should render without crashing 1`] = `
-<Router
-  history={
+<ContextProvider
+  value={
     Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
+      "defaultFormats": Object {},
+      "defaultLocale": "en",
+      "formatDate": [Function],
+      "formatDateToParts": [Function],
+      "formatDisplayName": [Function],
+      "formatList": [Function],
+      "formatMessage": [Function],
+      "formatNumber": [Function],
+      "formatNumberToParts": [Function],
+      "formatPlural": [Function],
+      "formatRelativeTime": [Function],
+      "formatTime": [Function],
+      "formatTimeToParts": [Function],
+      "formats": Object {},
+      "formatters": Object {
+        "getDateTimeFormat": [Function],
+        "getDisplayNames": [Function],
+        "getListFormat": [Function],
+        "getMessageFormat": [Function],
+        "getNumberFormat": [Function],
+        "getPluralRules": [Function],
+        "getRelativeTimeFormat": [Function],
       },
-      "push": [Function],
-      "replace": [Function],
+      "locale": "en",
+      "messages": Object {
+        "Aside.dropdownMenu": "Dropdown Menu",
+        "Aside.home": "Home",
+        "Aside.submenu1": "Submenu 1",
+        "Aside.submenu2": "Submenu 2",
+        "Aside.users": "Users",
+        "ChangePassword.changePassword": "Change Password",
+        "ChangePassword.confirmPassword": "Confirm Password",
+        "ChangePassword.currentPassword": "Current Password",
+        "ChangePassword.insecurePassword": "Insecure password",
+        "ChangePassword.matchPassword": "Passwords match",
+        "ChangePassword.newPassword": "New Password",
+        "ChangePassword.notMatchPassword": "Passwords do not match",
+        "ChangePassword.safePassword": "Safe password",
+        "ChangePassword.samePassword": "The new password and the current one cannot be the same",
+        "ChangePassword.submits": "Submit",
+        "Home.content": "Home content",
+        "Home.home": "Home",
+        "Login.email": "E-mail Address",
+        "Login.forgotPassword": "Forgot Password?",
+        "Login.login": "Login",
+        "Login.password": "Password",
+        "Login.setNewPassword": "Set your new password",
+        "Login.setPassword": "Set Password",
+        "NavBar.Language": "English",
+        "NavBar.logOut": "Log Out",
+        "NavBar.profile": "Profile",
+        "NotFound.404": "Error 404: page not found",
+        "NotFound.back": "Go Back",
+        "NotFound.url": "The requested URL {url} was not found",
+        "Profile.profile": "Profile",
+        "ResetPassword.back": "Back",
+        "ResetPassword.email": "E-mail Address",
+        "ResetPassword.emailRegistration": "E-mail used for registration",
+        "ResetPassword.recoverEmail": "We have sent you an email to {mail} so you can recover your account.",
+        "ResetPassword.recovery": "Password Recovery",
+        "ResetPassword.resetLink": "Send Reset Link",
+        "Section.content": "Section content",
+        "Section.section": "Section",
+        "Submenu.content": "Submenu content",
+        "Submenu.submenu": "Submenu",
+        "Table.perPage": " per page",
+        "User.editUser": "Edit User",
+        "User.newUser": "New User",
+        "UserForm.admin": "Admin",
+        "UserForm.created": "Created",
+        "UserForm.email": "E-mail",
+        "UserForm.goBack": "Go Back",
+        "UserForm.invalidEmail": "Invalid E-mail",
+        "UserForm.location": "Location",
+        "UserForm.logo": "Logo",
+        "UserForm.name": "Name",
+        "UserForm.pickAnotherFile": "Pick another file",
+        "UserForm.pickFile": "Pick a file",
+        "UserForm.submit": "Submit",
+        "UserForm.userInfo": "User Information",
+        "UserForm.userPreview": "User Preview",
+        "Users.admin": "Admin",
+        "Users.cancel": "Cancel",
+        "Users.confirm": "Confirm action",
+        "Users.created": "Created",
+        "Users.delete": "Delete",
+        "Users.email": "Email",
+        "Users.location": "Location",
+        "Users.name": "Name",
+        "Users.newUser": "New User",
+        "Users.permDelete": "This will permanently delete the user. Action can not be undone.",
+        "Users.search": "Search:",
+        "Users.users": "Users",
+      },
+      "onError": [Function],
+      "textComponent": Symbol(react.fragment),
+      "timeZone": undefined,
     }
   }
 >
-  <Provider
-    store={
-      Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      }
-    }
+  <BrowserRouter
+    keyLength={0}
   >
-    <DatePickerStyled
-      date={2020-11-12T00:00:00.000Z}
-      dateFormat="en-US"
-      name="test"
-      setState={[MockFunction]}
-    />
-  </Provider>
-</Router>
+    <Provider
+      store={
+        Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        }
+      }
+    >
+      <DatePickerStyled
+        date={2020-11-12T00:00:00.000Z}
+        dateFormat="en-US"
+        name="test"
+        setState={[MockFunction]}
+      />
+    </Provider>
+  </BrowserRouter>
+</ContextProvider>
 `;

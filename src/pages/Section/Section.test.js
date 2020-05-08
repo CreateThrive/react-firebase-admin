@@ -4,7 +4,7 @@ import Section from '.';
 
 describe('<Section /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithIntl(<Section />);
+    const { component } = shallowWithProviders(<Section />)({});
 
     expect(component).toMatchSnapshot();
   });

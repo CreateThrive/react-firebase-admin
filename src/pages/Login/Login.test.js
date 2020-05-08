@@ -6,7 +6,7 @@ import Login from '.';
 
 describe('<Login /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = mountWithIntlProvider(<Login />)({
+    const { component } = mountWithProviders(<Login />)({
       auth: {
         userData: {}
       }
@@ -16,7 +16,7 @@ describe('<Login /> rendering', () => {
   });
 
   it('should display an error message when there is an error', () => {
-    const { component } = mountWithIntlProvider(<Login />)({
+    const { component } = mountWithProviders(<Login />)({
       auth: {
         userData: {},
         error: 'sample error'
@@ -27,7 +27,7 @@ describe('<Login /> rendering', () => {
   });
 
   it('should redirect to /home when the user is authenticated', () => {
-    const { component } = mountWithIntlProvider(<Login />)({
+    const { component } = mountWithProviders(<Login />)({
       auth: {
         userData: {
           id: 'some userId'

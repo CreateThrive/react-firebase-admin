@@ -7,7 +7,7 @@ import Cookies from 'cookies-js';
 
 import { authReducer } from './auth';
 import { usersReducer } from './users';
-import { langReducer } from './lang';
+import { preferencesReducer } from './preferences';
 
 export default combineReducers({
   auth: persistReducer(
@@ -18,9 +18,9 @@ export default combineReducers({
     },
     authReducer
   ),
-  lang: persistReducer(
-    { key: 'lang', storage: new CookieStorage(Cookies, 'locale') },
-    langReducer
+  preferences: persistReducer(
+    { key: 'preferences', storage: new CookieStorage(Cookies) },
+    preferencesReducer
   ),
   users: persistReducer(
     {

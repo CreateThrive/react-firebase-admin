@@ -15,7 +15,7 @@ describe('<Home /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = mountWithIntlProvider(<Home />)({
+    const { component } = mountWithProviders(<Home />)({
       auth: {}
     });
 
