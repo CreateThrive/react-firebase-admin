@@ -15,6 +15,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
 - [Features](#features)
@@ -50,6 +51,11 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Writing new workflows](#writing-new-workflows)
 - [Environment Variables](#environment-variables)
 - [Demo](#demo)
+- [Internationalization](#internationalization)
+  - [Adding another Language](#adding-another-language)
+  - [Creating your translation file](#creating-your-translation-file)
+  - [How to translate a Text](#how-to-translate-a-text)
+  - [How to translate a Text with a variable](#how-to-translate-a-text-with-a-variable)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -470,9 +476,69 @@ Refer to the .env.example file in the root folder of the project to see what var
 
 For requesting access to the [demo](https://react-firebase-admin-eeac2.firebaseapp.com/) site please [contact us](https://createthrive.com/contact).
 
-## Internatioalization
+## Internationalization
 
-For the internationalization we decided to use [Format.js](https://formatjs.io/).
+For the internationalization we decided to use [Format.js](https://formatjs.io/). We made **languageWrapper** for `index.js` instead of using the IntlProvider as a wrapper and to place most of the translation logic. Besides, we save the language locally via cookies with the [redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage) package and on the redux store. Furthermore, the user can change between languages, as the NavBar has a dropdown to change the language dinamically.
+
+### Adding another Language
+
+- Create a `.json` file on `src/languages` for each language that you want to add.
+- Replace every text you want to translate on your project with the **useFormatMessage** hook.
+- Fill each `.json` with every `id` for all text translation used on every **useFormatMessage** and the text that you want to be seen.
+- Import your `.json` file/s on the `src/components/LanguageWrapper` and add them to `messages`.
+- Add icon/s for your language/s on `src/assets`.
+- Import your icon/s and add it/them to `flags`.
+
+### Creating your translation file
+
+The `.json` file must be filled with each text that wants to be translated. Each translation is made by an **_id_** and the **_text_** for that language.
+The id should be the file name where it is located + an **id** for the text.
+
+```javascript
+{
+  "App.title":"Title"
+}
+```
+
+### How to translate a Text
+
+**Before Replacing**
+
+```javascript
+<h1>Title</h1>
+```
+
+**After Replacing**
+
+`useFormatMessage` is receiving just the text id, but this hook can also recieve a default message, a description and a value (in case your texts receives a variable).
+
+```javascript
+<h1>useFormatMessage({'App.Title'})</h1>
+```
+
+### How to translate a Text with a variable
+
+**Before Replacing**
+
+```javascript
+const example = 'World';
+<p>Hello {example}!</p>;
+```
+
+**After Replacing**
+
+```javascript
+const example = 'World';
+<p>useFormatMessage('App.helloWorld', { world: example })</p>;
+```
+
+**On the `.json` file**
+
+```javascript
+{
+  "App.helloWorld":"Hello {world}!"
+}
+```
 
 ## Contributors
 

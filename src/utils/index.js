@@ -99,3 +99,5 @@ export const inputValidations = (email, password) => {
 
   return inputs;
 };
+
+export const availableLocales = props => Object.keys(props);

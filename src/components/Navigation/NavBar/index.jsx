@@ -3,6 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import { languages } from 'components/LanguageWrapper';
 import { preferencesSetLocale } from 'state/actions/preferences';
 import { useFormatMessage } from 'hooks';
 import en from 'assets/en.png';
@@ -11,6 +12,11 @@ import { logout } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
 import defaultLogo from 'assets/user-default-log.svg';
 import Link from '../Link';
+
+const flags = {
+  en,
+  es
+};
 
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);
@@ -38,8 +44,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
     dispatch(preferencesSetLocale(local));
   };
 
-  const usFlag = <img src={en} alt="English icon" />;
-  const spainFlag = <img src={es} alt="Spanish icon" />;
+  const locales = languages.filter(local => local !== locale);
 
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">
@@ -87,30 +92,29 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
             <a className="navbar-link is-arrowless">
               <div className="is-user-avatar">
-                <span>{locale === 'en' ? usFlag : spainFlag}</span>
+                <span>
+                  <img id={locale} src={flags[locale]} alt={`${locale} flag`} />
+                </span>
               </div>
               <span className="icon">
                 <i className="mdi mdi-chevron-down" />
               </span>
             </a>
             <div className="navbar-dropdown">
-              {locale !== 'en' ? (
+              {locales.map(local => (
                 <a
-                  onClick={() => changeLocaleHandler('en')}
+                  onClick={() => changeLocaleHandler(local)}
                   className="navbar-item"
-                  id="en"
+                  id={local}
+                  key={local}
                 >
-                  <span className="icon">{usFlag}</span>
+                  <div className="is-user-avatar">
+                    <span>
+                      <img src={flags[local]} alt={`${local} flag`} />
+                    </span>
+                  </div>
                 </a>
-              ) : (
-                <a
-                  onClick={() => changeLocaleHandler('es')}
-                  className="navbar-item"
-                  id="es"
-                >
-                  <span className="icon">{spainFlag}</span>
-                </a>
-              )}
+              ))}
             </div>
           </div>
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">

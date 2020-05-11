@@ -102,6 +102,7 @@ Object {
         "onError": [Function],
         "textComponent": Symbol(react.fragment),
         "timeZone": undefined,
+        "wrapRichTextChunksInFragment": undefined,
       }
     }
   >

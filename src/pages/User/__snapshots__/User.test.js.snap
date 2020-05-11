@@ -101,6 +101,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
       "onError": [Function],
       "textComponent": Symbol(react.fragment),
       "timeZone": undefined,
+      "wrapRichTextChunksInFragment": undefined,
     }
   }
 >

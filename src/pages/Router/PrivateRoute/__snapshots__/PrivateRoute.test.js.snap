@@ -175,12 +175,11 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                         className="navbar-link is-arrowless"
                       >
                         <div
-                          className="is-language"
+                          className="is-user-avatar"
                         >
                           <span>
                             <img
-                              alt="Spanish icon"
-                              src="es.png"
+                              alt="undefined flag"
                             />
                           </span>
                         </div>
@@ -198,19 +197,36 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                         <a
                           className="navbar-item"
                           id="en"
+                          key="en"
                           onClick={[Function]}
                         >
-                          <span
-                            className="icon"
+                          <div
+                            className="is-user-avatar"
                           >
-                            <img
-                              alt="English icon"
-                              src="en.png"
-                            />
-                          </span>
-                          <span>
-                            English
-                          </span>
+                            <span>
+                              <img
+                                alt="en flag"
+                                src="en.png"
+                              />
+                            </span>
+                          </div>
+                        </a>
+                        <a
+                          className="navbar-item"
+                          id="es"
+                          key="es"
+                          onClick={[Function]}
+                        >
+                          <div
+                            className="is-user-avatar"
+                          >
+                            <span>
+                              <img
+                                alt="es flag"
+                                src="es.png"
+                              />
+                            </span>
+                          </div>
                         </a>
                       </div>
                     </div>
