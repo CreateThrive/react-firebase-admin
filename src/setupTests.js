@@ -24,12 +24,15 @@ const mockedStore = (initial = {}) =>
     /* place middlewares here */
   ])(initial);
 
-// Use this to test mounted components w/ store connection
-global.mountWithProviders = children => initialState => {
-  const store = mockedStore({
+const initStore = initialState =>
+  mockedStore({
     ...initialState,
     preferences: { locale: 'en' }
   });
+
+// Use this to test mounted components w/ store connection
+global.mountWithProviders = children => initialState => {
+  const store = initStore(initialState);
   return {
     component: mount(
       <IntlProvider locale="en" messages={english}>
@@ -43,10 +46,7 @@ global.mountWithProviders = children => initialState => {
 };
 
 global.shallowWithProviders = children => initialState => {
-  const store = mockedStore({
-    ...initialState,
-    preferences: { locale: 'en' }
-  });
+  const store = initStore(initialState);
   return {
     component: shallow(
       <IntlProvider locale="en" messages={english}>

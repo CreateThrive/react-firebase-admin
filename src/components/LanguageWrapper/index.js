@@ -2,19 +2,8 @@ import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
-import { preferencesSetLocale } from 'state/actions/preferences';
-import english from 'languages/en';
-import spanish from 'languages/es';
-import { availableLocales } from 'utils/index';
-
-const browserLocale = navigator.language.split(/[-_]/)[0];
-
-const messages = {
-  en: english,
-  es: spanish
-};
-
-export const languages = availableLocales(messages);
+import { setUserLocale } from 'state/actions/preferences';
+import { availableLocales, browserLocale, messages } from 'utils/index';
 
 const LanguageWrapper = ({ children }) => {
   const dispatch = useDispatch();
@@ -26,9 +15,9 @@ const LanguageWrapper = ({ children }) => {
     shallowEqual
   );
 
-  if (locale === null) {
-    locale = languages.includes(browserLocale) ? browserLocale : 'en';
-    dispatch(preferencesSetLocale(browserLocale));
+  if (!locale) {
+    locale = availableLocales.includes(browserLocale) ? browserLocale : 'en';
+    dispatch(setUserLocale(locale));
   }
 
   return (

@@ -379,13 +379,12 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                 </label>
                 <div className="control is-clearfix">
                   <p className="date">
-                    {useFormatDate(
-                      user.createdAt,
-                      'short',
-                      'numeric',
-                      'short',
-                      'numeric'
-                    )}
+                    {useFormatDate(user.createdAt, {
+                      weekday: 'short',
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
                   </p>
                 </div>
               </div>

@@ -3,20 +3,13 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { languages } from 'components/LanguageWrapper';
-import { preferencesSetLocale } from 'state/actions/preferences';
+import { availableLocales, flags } from 'utils';
+import { setUserLocale } from 'state/actions/preferences';
 import { useFormatMessage } from 'hooks';
-import en from 'assets/en.png';
-import es from 'assets/es.png';
 import { logout } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
 import defaultLogo from 'assets/user-default-log.svg';
 import Link from '../Link';
-
-const flags = {
-  en,
-  es
-};
 
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);
@@ -41,10 +34,10 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   }, [setNavMobileActive, navMobileActive]);
 
   const changeLocaleHandler = local => {
-    dispatch(preferencesSetLocale(local));
+    dispatch(setUserLocale(local));
   };
 
-  const locales = languages.filter(local => local !== locale);
+  const locales = availableLocales.filter(local => local !== locale);
 
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">

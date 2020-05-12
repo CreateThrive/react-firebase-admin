@@ -3,8 +3,8 @@ import * as reactRedux from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import en from 'assets/en.png';
-import * as actions from 'state/actions/auth';
-import * as action from 'state/actions/preferences';
+import * as authActions from 'state/actions/auth';
+import * as preferencesActions from 'state/actions/preferences';
 import NavBar from '.';
 
 const onHandleMobile = jest.fn();
@@ -42,8 +42,8 @@ describe('<Bar /> actions', () => {
     jest
       .spyOn(reactRedux, 'useDispatch')
       .mockImplementation(() => dispatchMock);
-    jest.spyOn(actions, 'logout').mockImplementation(jest.fn);
-    jest.spyOn(action, 'preferencesSetLocale').mockImplementation(jest.fn);
+    jest.spyOn(authActions, 'logout').mockImplementation(jest.fn);
+    jest.spyOn(preferencesActions, 'setUserLocale').mockImplementation(jest.fn);
   });
 
   it('should dispatch logout action when the user tries to logout', () => {
@@ -57,10 +57,10 @@ describe('<Bar /> actions', () => {
 
     component.find('#logout').simulate('click');
 
-    expect(actions.logout).toHaveBeenCalled();
+    expect(authActions.logout).toHaveBeenCalled();
   });
 
-  it('should dispatch preferencesSetLocale action when the user tries to change language', () => {
+  it('should dispatch setUserLocale action when the user tries to change language', () => {
     const { component } = mountWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
@@ -71,7 +71,7 @@ describe('<Bar /> actions', () => {
 
     component.find('#es').simulate('click');
 
-    expect(action.preferencesSetLocale).toHaveBeenCalledWith('es');
+    expect(preferencesActions.setUserLocale).toHaveBeenCalledWith('es');
   });
 
   it('should display US flag when locale is set to english', () => {

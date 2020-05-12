@@ -5,7 +5,7 @@
 
 Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a fully functional admin dashboard with authentication, authorization, realtime database, built-in CI/CD, file upload and more. We're using up to date industry standards and next-gen technologies like React (with hooks), redux, bulma, sass, webpack, routing and a serverless architecture.
 
-![Boilerplate - Users page](https://i.imgur.com/Z2TgfHp.png)
+![Boilerplate - Users page](https://imgur.com/7jIt6jh.png)
 
 ---
 
@@ -14,7 +14,6 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 <!-- To update this table of contents, ensure you have run `npm install` then `npm run doctoc` -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
@@ -115,6 +114,9 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [React-spinners](https://github.com/davidhu2000/react-spinners) (★ 1.2k) a collection of loading spinner components for React.
 - [Firebase](https://firebase.google.com/) for serverless architecture - CDN Hosting, Realtime Database, Authentication, Storage and Cloud Functions (see [docs](https://firebase.google.com/docs/web)).
 - [Format.js](https://formatjs.io/) (★ 11.7k) libraries for internationalization (see [docs](https://formatjs.io/docs/basic-internationalization-principles)).
+- [date-fns](https://formatjs.io/) (★ 22.3k) date utility library (see [docs]https://date-fns.org/docs/Getting-Started)).
+- [redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage) (★ 70) **Redux Persist** storage adapter for cookies.
+- [cookies-js](https://github.com/js-cookie/js-cookie) (★ 15.5k) API for handling browser cookies.
 
 ### Unit Testing
 
@@ -478,16 +480,18 @@ For requesting access to the [demo](https://react-firebase-admin-eeac2.firebasea
 
 ## Internationalization
 
-For the internationalization we decided to use [Format.js](https://formatjs.io/). We made **languageWrapper** for `index.js` instead of using the IntlProvider as a wrapper and to place most of the translation logic. Besides, we save the language locally via cookies with the [redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage) package and on the redux store. Furthermore, the user can change between languages, as the NavBar has a dropdown to change the language dinamically.
+For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **languageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using cookies ([redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage)). The user has the option to change their language preferences.
+![Boilerplate - Dinamical Internationalization](https://media.giphy.com/media/YrHykOdy6BNqigLYLl/giphy.gif)
 
 ### Adding another Language
 
-- Create a `.json` file on `src/languages` for each language that you want to add.
+- Create a `.json` file on `src/languages` for each language that you want to add, the `.json` name should be the languages.
 - Replace every text you want to translate on your project with the **useFormatMessage** hook.
 - Fill each `.json` with every `id` for all text translation used on every **useFormatMessage** and the text that you want to be seen.
-- Import your `.json` file/s on the `src/components/LanguageWrapper` and add them to `messages`.
+- Import your `.json` file/s on the `src/utils/index.js` and add them to `messages`.
 - Add icon/s for your language/s on `src/assets`.
-- Import your icon/s and add it/them to `flags`.
+- Import your icon/s and add it/them to `flags` on `src/utils/index.js`.
+- Import your language/s from the `date-fns` library and then
 
 ### Creating your translation file
 
@@ -513,7 +517,7 @@ The id should be the file name where it is located + an **id** for the text.
 `useFormatMessage` is receiving just the text id, but this hook can also recieve a default message, a description and a value (in case your texts receives a variable).
 
 ```javascript
-<h1>useFormatMessage({'App.Title'})</h1>
+<h1>useFormatMessage('App.Title')</h1>
 ```
 
 ### How to translate a Text with a variable
@@ -539,6 +543,27 @@ const example = 'World';
   "App.helloWorld":"Hello {world}!"
 }
 ```
+
+### How to internationalize a Date
+
+**Before Replacing**
+
+```javascript
+const date = Date.now();
+<p>{date}</p>;
+```
+
+**After Replacing**
+
+```javascript
+const date = Date.now();
+<p>{useFormatDate(date)}</p>;
+```
+
+### How to add your language on DatePicker
+
+- Import your language from `date-fns/locale/[yourlanguage]`
+- Add another **registerLocale** with your language as the first parameter and the import from `date-fns` as second parameter.
 
 ## Contributors
 

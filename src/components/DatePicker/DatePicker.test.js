@@ -14,7 +14,7 @@ describe('<DatePickerStyled /> rendering', () => {
         date={new Date('Thu Nov 12 2020 00:00:00 GMT-0000')}
         setState={setState}
       />
-    )({ preferences: { locale: 'en' } });
+    )({});
 
     expect(component).toMatchSnapshot();
   });
@@ -27,7 +27,7 @@ describe('<DatePickerStyled /> rendering', () => {
         date={new Date('11/12/2020')}
         setState={setState}
       />
-    )({ preferences: { locale: 'en' } });
+    )({});
 
     expect(component.exists(DatePicker)).toBeTruthy();
   });
@@ -40,7 +40,7 @@ describe('<DatePickerStyled /> rendering', () => {
         date={new Date('11/12/2020')}
         setState={setState}
       />
-    )({ preferences: { locale: 'en' } });
+    )({});
 
     expect(component.find(DatePicker).prop('selected')).toEqual(
       new Date('11/12/2020')

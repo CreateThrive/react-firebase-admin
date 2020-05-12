@@ -25,8 +25,7 @@ describe('<Layout /> rendering', () => {
   it('should render <Aside /> component correctly', () => {
     const { component } = mountWithProviders(<Layout>Test</Layout>)({
       auth: {
-        userData: {},
-        locale: 'en'
+        userData: {}
       }
     });
 

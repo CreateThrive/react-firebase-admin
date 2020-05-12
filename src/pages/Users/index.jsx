@@ -111,13 +111,12 @@ const Users = () => {
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {useFormatDate(
-            row.original.createdAt,
-            'short',
-            'numeric',
-            'short',
-            'numeric'
-          )}
+          {useFormatDate(row.original.createdAt, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })}
         </small>
       )
     },

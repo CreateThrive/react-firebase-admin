@@ -21,9 +21,9 @@ const useFormatMessage = (
   return intl.formatMessage({ id, defaultMessage, description }, values);
 };
 
-const useFormatDate = (value, weekday, year, month, day) => {
+const useFormatDate = (value, options = {}) => {
   const intl = useIntl();
-  return intl.formatDate(value, { weekday, year, month, day });
+  return intl.formatDate(value, options);
 };
 
 export { useChangeHandler, useFormatMessage, useFormatDate };
