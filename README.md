@@ -55,6 +55,8 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Creating your translation file](#creating-your-translation-file)
   - [How to translate a Text](#how-to-translate-a-text)
   - [How to translate a Text with a variable](#how-to-translate-a-text-with-a-variable)
+  - [How to internationalize a Date](#how-to-internationalize-a-date)
+  - [How to add your language on DatePicker](#how-to-add-your-language-on-datepicker)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -480,8 +482,9 @@ For requesting access to the [demo](https://react-firebase-admin-eeac2.firebasea
 
 ## Internationalization
 
-For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **languageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using cookies ([redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage)). The user has the option to change their language preferences.
-![Boilerplate - Dinamical Internationalization](https://media.giphy.com/media/YrHykOdy6BNqigLYLl/giphy.gif)
+For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **LanguageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using cookies ([redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage)). The user has the option to change their language preferences.
+
+![Boilerplate - Dinamical Internationalization](https://media.giphy.com/media/St3bw0rjlBQmKzf6fC/source.gif)
 
 ### Adding another Language
 
@@ -489,7 +492,7 @@ For the internationalization we decided to choose the library [Format.js](https:
 - Replace every text you want to translate on your project with the **useFormatMessage** hook.
 - Fill each `.json` with every `id` for all text translation used on every **useFormatMessage** and the text that you want to be seen.
 - Import your `.json` file/s on the `src/utils/index.js` and add them to `messages`.
-- Add icon/s for your language/s on `src/assets`.
+- Place your icon/s for your language/s on `src/assets`.
 - Import your icon/s and add it/them to `flags` on `src/utils/index.js`.
 - Import your language/s from the `date-fns` library and then call **registerLocale** and pass your import to make sure **DatePicker** can use your language.
 
