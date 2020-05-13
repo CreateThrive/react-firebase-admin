@@ -481,6 +481,7 @@ For requesting access to the [demo](https://react-firebase-admin-eeac2.firebasea
 ## Internationalization
 
 For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **languageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using cookies ([redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage)). The user has the option to change their language preferences.
+
 ![Boilerplate - Dinamical Internationalization](https://media.giphy.com/media/YrHykOdy6BNqigLYLl/giphy.gif)
 
 ### Adding another Language
