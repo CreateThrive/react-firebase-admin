@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useTable, useSortBy, usePagination } from 'react-table';
 import PropTypes from 'prop-types';
 
+import { useFormatMessage } from 'hooks';
 import classes from './Table.module.scss';
 import './TableMobile.css';
 
@@ -30,6 +31,8 @@ const Table = ({ columns, data }) => {
     useSortBy,
     usePagination
   );
+
+  const perPage = useFormatMessage('Table.perPage');
 
   return (
     <div className="table-wrapper">
@@ -107,7 +110,7 @@ const Table = ({ columns, data }) => {
               >
                 {[5, 10, 15, 20, 50].map(size => (
                   <option key={size} value={size}>
-                    {size} per page
+                    {size} {perPage}
                   </option>
                 ))}
               </select>

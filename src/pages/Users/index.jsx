@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
+import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
 import { fetchUsers, deleteUser, clearUsersData } from 'state/actions/users';
 import paths from 'pages/Router/paths';
@@ -77,19 +78,19 @@ const Users = () => {
       disableSortBy: true
     },
     {
-      Header: 'Name',
+      Header: useFormatMessage('Users.name'),
       accessor: 'name'
     },
     {
-      Header: 'Email',
+      Header: useFormatMessage('Users.email'),
       accessor: 'email'
     },
     {
-      Header: 'Location',
+      Header: useFormatMessage('Users.location'),
       accessor: 'location'
     },
     {
-      Header: 'Admin',
+      Header: useFormatMessage('Users.admin'),
       accessor: 'isAdmin',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
@@ -106,11 +107,16 @@ const Users = () => {
       )
     },
     {
-      Header: 'Created',
+      Header: useFormatMessage('Users.created'),
       accessor: 'created',
       Cell: ({ row }) => (
         <small className="has-text-grey is-abbr-like">
-          {row.original.createdAt}
+          {useFormatDate(row.original.createdAt, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })}
         </small>
       )
     },
@@ -161,6 +167,14 @@ const Users = () => {
       })
     : usersList;
 
+  const deleteMessage = useFormatMessage('Users.delete');
+
+  const confirmMessage = useFormatMessage('Users.confirm');
+
+  const permDeleteMessage = useFormatMessage('Users.permDelete');
+
+  const cancelMessage = useFormatMessage('Users.cancel');
+
   return (
     <>
       {redirect}
@@ -168,10 +182,10 @@ const Users = () => {
         <ConfirmationModal
           isActive={deleteModal.isOpen}
           isLoading={loading}
-          confirmButtonMessage="Delete"
-          title="Confirm action"
-          body="This will permanently delete the user. Action can not be undone."
-          cancelButtonMessage="Cancel"
+          confirmButtonMessage={deleteMessage}
+          title={confirmMessage}
+          body={permDeleteMessage}
+          cancelButtonMessage={cancelMessage}
           onConfirmation={onDeleteUserHandler}
           onCancel={onCloseModalHandler}
         />
@@ -181,13 +195,13 @@ const Users = () => {
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <h1 className="title">Users</h1>
+                <h1 className="title">{useFormatMessage('Users.users')}</h1>
               </div>
             </div>
             <div className="level-right">
               <div className="level-item">
                 <Link to={paths.ADD_USER} className="button">
-                  New User
+                  {useFormatMessage('Users.newUser')}
                 </Link>
               </div>
             </div>
@@ -198,7 +212,7 @@ const Users = () => {
         <div className="card has-table has-mobile-sort-spaced">
           <header className="card-header">
             <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>Search:</span>
+              <span>{useFormatMessage('Users.search')}</span>
               <input
                 type="text"
                 className="input"

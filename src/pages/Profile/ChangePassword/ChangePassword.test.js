@@ -6,7 +6,7 @@ import ChangePassword from '.';
 
 describe('<ChangePassword /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithProvider(<ChangePassword />)({
+    const { component } = shallowWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }
@@ -16,7 +16,7 @@ describe('<ChangePassword /> rendering', () => {
   });
 
   it('should display the submit button disabled when rendering for the first time', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }
@@ -26,7 +26,7 @@ describe('<ChangePassword /> rendering', () => {
   });
 
   it('should display the submit button correctly when the user enter the passwords correctly', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }
@@ -48,7 +48,7 @@ describe('<ChangePassword /> rendering', () => {
   });
 
   it('should display an error message when the current and new password are equal', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }
@@ -62,15 +62,11 @@ describe('<ChangePassword /> rendering', () => {
     newPass.instance().value = 'oldpassword';
     newPass.simulate('change');
 
-    expect(
-      component.exists(
-        'p[children="The new password and the current one cannot be the same"]'
-      )
-    ).toBeTruthy();
+    expect(component.exists('p.help.is-danger')).toBeTruthy();
   });
 
   it('should display a message informing the user that the new password is secure', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }
@@ -80,11 +76,11 @@ describe('<ChangePassword /> rendering', () => {
     newPass.instance().value = 'newSecurePassword!';
     newPass.simulate('change');
 
-    expect(component.exists('p[children="Safe password"]')).toBeTruthy();
+    expect(component.exists('p.help.is-is-success')).toBeTruthy();
   });
 
   it('should display a message informing the user that the new and confirmation passwords match', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }
@@ -98,11 +94,11 @@ describe('<ChangePassword /> rendering', () => {
     confirmation.instance().value = 'newSecurePassword!';
     confirmation.simulate('change');
 
-    expect(component.exists('p[children="Passwords match"]')).toBeTruthy();
+    expect(component.exists('p.help.is-is-success')).toBeTruthy();
   });
 
   it('should display the button loading when loading', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {},
         loading: true
@@ -123,7 +119,7 @@ describe('<ChangePassword /> actions', () => {
   });
 
   it('should dispatch changeUserPassword actioon when the form is submited', () => {
-    const { component } = mountWithProvider(<ChangePassword />)({
+    const { component } = mountWithProviders(<ChangePassword />)({
       auth: {
         userData: {}
       }

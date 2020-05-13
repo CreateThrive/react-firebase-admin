@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
+import { useFormatMessage } from 'hooks';
 import UserForm from 'components/UserForm';
 import { modifyUser } from 'state/actions/users';
 import ChangePassword from './ChangePassword';
@@ -17,7 +18,7 @@ const Profile = () => {
     <>
       <section className="hero is-hero-bar">
         <div className="hero-body">
-          <h1 className="title">Profile</h1>
+          <h1 className="title">{useFormatMessage('Profile.profile')}</h1>
         </div>
       </section>
       <section className="section is-main-section">

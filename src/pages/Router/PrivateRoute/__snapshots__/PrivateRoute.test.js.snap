@@ -1,142 +1,402 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
-<BrowserRouter
-  keyLength={0}
->
-  <Router
-    history={
-      Object {
-        "action": "REPLACE",
-        "block": [Function],
-        "createHref": [Function],
-        "go": [Function],
-        "goBack": [Function],
-        "goForward": [Function],
-        "length": 1,
-        "listen": [Function],
-        "location": Object {
-          "hash": "",
-          "pathname": "/login",
-          "search": "",
-          "state": undefined,
-        },
-        "push": [Function],
-        "replace": [Function],
-      }
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  formats={Object {}}
+  locale="en"
+  messages={
+    Object {
+      "Aside.dropdownMenu": "Dropdown Menu",
+      "Aside.home": "Home",
+      "Aside.submenu1": "Submenu 1",
+      "Aside.submenu2": "Submenu 2",
+      "Aside.users": "Users",
+      "ChangePassword.changePassword": "Change Password",
+      "ChangePassword.confirmPassword": "Confirm Password",
+      "ChangePassword.currentPassword": "Current Password",
+      "ChangePassword.insecurePassword": "Insecure password",
+      "ChangePassword.matchPassword": "Passwords match",
+      "ChangePassword.newPassword": "New Password",
+      "ChangePassword.notMatchPassword": "Passwords do not match",
+      "ChangePassword.safePassword": "Safe password",
+      "ChangePassword.samePassword": "The new password and the current one cannot be the same",
+      "ChangePassword.submits": "Submit",
+      "Home.content": "Home content",
+      "Home.home": "Home",
+      "Login.email": "E-mail Address",
+      "Login.forgotPassword": "Forgot Password?",
+      "Login.login": "Login",
+      "Login.password": "Password",
+      "Login.setNewPassword": "Set your new password",
+      "Login.setPassword": "Set Password",
+      "NavBar.Language": "English",
+      "NavBar.logOut": "Log Out",
+      "NavBar.profile": "Profile",
+      "NotFound.404": "Error 404: page not found",
+      "NotFound.back": "Go Back",
+      "NotFound.url": "The requested URL {url} was not found",
+      "Profile.profile": "Profile",
+      "ResetPassword.back": "Back",
+      "ResetPassword.email": "E-mail Address",
+      "ResetPassword.emailRegistration": "E-mail used for registration",
+      "ResetPassword.recoverEmail": "We have sent you an email to {mail} so you can recover your account.",
+      "ResetPassword.recovery": "Password Recovery",
+      "ResetPassword.resetLink": "Send Reset Link",
+      "Section.content": "Section content",
+      "Section.section": "Section",
+      "Submenu.content": "Submenu content",
+      "Submenu.submenu": "Submenu",
+      "Table.perPage": " per page",
+      "User.editUser": "Edit User",
+      "User.newUser": "New User",
+      "UserForm.admin": "Admin",
+      "UserForm.created": "Created",
+      "UserForm.email": "E-mail",
+      "UserForm.goBack": "Go Back",
+      "UserForm.invalidEmail": "Invalid E-mail",
+      "UserForm.location": "Location",
+      "UserForm.logo": "Logo",
+      "UserForm.name": "Name",
+      "UserForm.pickAnotherFile": "Pick another file",
+      "UserForm.pickFile": "Pick a file",
+      "UserForm.submit": "Submit",
+      "UserForm.userInfo": "User Information",
+      "UserForm.userPreview": "User Preview",
+      "Users.admin": "Admin",
+      "Users.cancel": "Cancel",
+      "Users.confirm": "Confirm action",
+      "Users.created": "Created",
+      "Users.delete": "Delete",
+      "Users.email": "Email",
+      "Users.location": "Location",
+      "Users.name": "Name",
+      "Users.newUser": "New User",
+      "Users.permDelete": "This will permanently delete the user. Action can not be undone.",
+      "Users.search": "Search:",
+      "Users.users": "Users",
     }
+  }
+  onError={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <BrowserRouter
+    keyLength={0}
   >
-    <Provider
-      store={
+    <Router
+      history={
         Object {
-          "clearActions": [Function],
-          "dispatch": [Function],
-          "getActions": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
+          "action": "REPLACE",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/login",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
         }
       }
     >
-      <PrivateRoute>
-        <Layout>
-          <NavBar
-            asideMobileActive={false}
-            handleMobileToggle={[Function]}
-          >
-            <nav
-              className="navbar is-fixed-top"
-              id="navbar-main"
+      <Provider
+        store={
+          Object {
+            "clearActions": [Function],
+            "dispatch": [Function],
+            "getActions": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+          }
+        }
+      >
+        <PrivateRoute>
+          <Layout>
+            <NavBar
+              asideMobileActive={false}
+              handleMobileToggle={[Function]}
             >
-              <div
-                className="navbar-brand"
-              >
-                <a
-                  className="navbar-item is-hidden-desktop jb-aside-mobile-toggle"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="icon"
-                  >
-                    <i
-                      className="mdi mdi-24px mdi-forwardburger"
-                    />
-                  </span>
-                </a>
-              </div>
-              <div
-                className="navbar-brand is-right"
-              >
-                <a
-                  className="navbar-item is-hidden-desktop jb-navbar-menu-toggle"
-                  data-target="navbar-menu"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="icon"
-                  >
-                    <i
-                      className="mdi mdi-dots-vertical"
-                    />
-                  </span>
-                </a>
-              </div>
-              <div
-                className="navbar-menu fadeIn animated faster"
-                id="navbar-menu"
+              <nav
+                className="navbar is-fixed-top"
+                id="navbar-main"
               >
                 <div
-                  className="navbar-end"
+                  className="navbar-brand"
+                >
+                  <a
+                    className="navbar-item is-hidden-desktop jb-aside-mobile-toggle"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="icon"
+                    >
+                      <i
+                        className="mdi mdi-24px mdi-forwardburger"
+                      />
+                    </span>
+                  </a>
+                </div>
+                <div
+                  className="navbar-brand is-right"
+                >
+                  <a
+                    className="navbar-item is-hidden-desktop jb-navbar-menu-toggle"
+                    data-target="navbar-menu"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="icon"
+                    >
+                      <i
+                        className="mdi mdi-dots-vertical"
+                      />
+                    </span>
+                  </a>
+                </div>
+                <div
+                  className="navbar-menu fadeIn animated faster"
+                  id="navbar-menu"
                 >
                   <div
-                    className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable"
+                    className="navbar-end"
                   >
-                    <a
-                      className="navbar-link is-arrowless"
-                    >
-                      <div
-                        className="is-user-avatar"
-                      >
-                        <img
-                          alt="User profile"
-                          src="user-default-log.svg"
-                        />
-                      </div>
-                      <div
-                        className="is-user-name"
-                      >
-                        <span />
-                      </div>
-                      <span
-                        className="icon"
-                      >
-                        <i
-                          className="mdi mdi-chevron-down"
-                        />
-                      </span>
-                    </a>
                     <div
-                      className="navbar-dropdown"
+                      className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable"
                     >
-                      <Link
-                        onClick={[Function]}
-                        to="/profile"
+                      <a
+                        className="navbar-link is-arrowless"
                       >
-                        <NavLink
-                          activeClassName="is-active"
+                        <div
+                          className="is-user-avatar"
+                        >
+                          <span>
+                            <img
+                              alt="undefined flag"
+                            />
+                          </span>
+                        </div>
+                        <span
+                          className="icon"
+                        >
+                          <i
+                            className="mdi mdi-chevron-down"
+                          />
+                        </span>
+                      </a>
+                      <div
+                        className="navbar-dropdown"
+                      >
+                        <a
                           className="navbar-item"
-                          exact={true}
+                          id="en"
+                          key="en"
+                          onClick={[Function]}
+                        >
+                          <div
+                            className="is-user-avatar"
+                          >
+                            <span>
+                              <img
+                                alt="en flag"
+                                src="en.png"
+                              />
+                            </span>
+                          </div>
+                        </a>
+                        <a
+                          className="navbar-item"
+                          id="es"
+                          key="es"
+                          onClick={[Function]}
+                        >
+                          <div
+                            className="is-user-avatar"
+                          >
+                            <span>
+                              <img
+                                alt="es flag"
+                                src="es.png"
+                              />
+                            </span>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div
+                      className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable"
+                    >
+                      <a
+                        className="navbar-link is-arrowless"
+                      >
+                        <div
+                          className="is-user-avatar"
+                        >
+                          <img
+                            alt="User profile"
+                            src="user-default-log.svg"
+                          />
+                        </div>
+                        <div
+                          className="is-user-name"
+                        >
+                          <span />
+                        </div>
+                        <span
+                          className="icon"
+                        >
+                          <i
+                            className="mdi mdi-chevron-down"
+                          />
+                        </span>
+                      </a>
+                      <div
+                        className="navbar-dropdown"
+                      >
+                        <Link
                           onClick={[Function]}
                           to="/profile"
                         >
+                          <NavLink
+                            activeClassName="is-active"
+                            className="navbar-item"
+                            exact={true}
+                            onClick={[Function]}
+                            to="/profile"
+                          >
+                            <Link
+                              aria-current={null}
+                              className="navbar-item"
+                              onClick={[Function]}
+                              to={
+                                Object {
+                                  "hash": "",
+                                  "pathname": "/profile",
+                                  "search": "",
+                                  "state": null,
+                                }
+                              }
+                            >
+                              <LinkAnchor
+                                aria-current={null}
+                                className="navbar-item"
+                                href="/profile"
+                                navigate={[Function]}
+                                onClick={[Function]}
+                              >
+                                <a
+                                  aria-current={null}
+                                  className="navbar-item"
+                                  href="/profile"
+                                  onClick={[Function]}
+                                >
+                                  <span
+                                    className="icon"
+                                  >
+                                    <i
+                                      className="mdi mdi-account"
+                                    />
+                                  </span>
+                                  <span>
+                                    Profile
+                                  </span>
+                                </a>
+                              </LinkAnchor>
+                            </Link>
+                          </NavLink>
+                        </Link>
+                        <hr
+                          className="navbar-divider"
+                        />
+                        <a
+                          className="navbar-item"
+                          id="logout"
+                          onClick={[Function]}
+                        >
+                          <span
+                            className="icon"
+                          >
+                            <i
+                              className="mdi mdi-logout"
+                            />
+                          </span>
+                          <span>
+                            Log Out
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </NavBar>
+            <Aside
+              handleMobileToggle={[Function]}
+            >
+              <aside
+                className="aside is-placed-left is-expanded"
+              >
+                <Link
+                  className="aside-tools"
+                  to="/"
+                >
+                  <LinkAnchor
+                    className="aside-tools"
+                    href="/"
+                    navigate={[Function]}
+                  >
+                    <a
+                      className="aside-tools"
+                      href="/"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="aside-tools-label"
+                      >
+                        <span>
+                          <b>
+                            React
+                          </b>
+                           Firebase
+                        </span>
+                      </div>
+                    </a>
+                  </LinkAnchor>
+                </Link>
+                <div
+                  className="menu is-menu-main"
+                >
+                  <ul
+                    className="menu-list"
+                  >
+                    <li>
+                      <Link
+                        className="has-icon"
+                        onClick={[Function]}
+                        to="/"
+                      >
+                        <NavLink
+                          activeClassName="is-active"
+                          className="has-icon"
+                          exact={true}
+                          onClick={[Function]}
+                          to="/"
+                        >
                           <Link
                             aria-current={null}
-                            className="navbar-item"
+                            className="has-icon"
                             onClick={[Function]}
                             to={
                               Object {
                                 "hash": "",
-                                "pathname": "/profile",
+                                "pathname": "/",
                                 "search": "",
                                 "state": null,
                               }
@@ -144,359 +404,242 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                           >
                             <LinkAnchor
                               aria-current={null}
-                              className="navbar-item"
-                              href="/profile"
+                              className="has-icon"
+                              href="/"
                               navigate={[Function]}
                               onClick={[Function]}
                             >
                               <a
                                 aria-current={null}
-                                className="navbar-item"
-                                href="/profile"
+                                className="has-icon"
+                                href="/"
                                 onClick={[Function]}
                               >
                                 <span
                                   className="icon"
                                 >
                                   <i
-                                    className="mdi mdi-account"
+                                    className="mdi mdi-home"
                                   />
                                 </span>
-                                <span>
-                                  Profile
+                                <span
+                                  className="menu-item-label"
+                                >
+                                  Home
                                 </span>
                               </a>
                             </LinkAnchor>
                           </Link>
                         </NavLink>
                       </Link>
-                      <hr
-                        className="navbar-divider"
-                      />
-                      <a
-                        className="navbar-item"
-                        id="logout"
-                        onClick={[Function]}
-                      >
-                        <span
-                          className="icon"
-                        >
-                          <i
-                            className="mdi mdi-logout"
-                          />
-                        </span>
-                        <span>
-                          Log Out
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </nav>
-          </NavBar>
-          <Aside
-            handleMobileToggle={[Function]}
-          >
-            <aside
-              className="aside is-placed-left is-expanded"
-            >
-              <Link
-                className="aside-tools"
-                to="/"
-              >
-                <LinkAnchor
-                  className="aside-tools"
-                  href="/"
-                  navigate={[Function]}
-                >
-                  <a
-                    className="aside-tools"
-                    href="/"
-                    onClick={[Function]}
-                  >
-                    <div
-                      className="aside-tools-label"
+                    </li>
+                    <SubMenu
+                      label="Dropdown Menu"
                     >
-                      <span>
-                        <b>
-                          React
-                        </b>
-                         Firebase
-                      </span>
-                    </div>
-                  </a>
-                </LinkAnchor>
-              </Link>
-              <div
-                className="menu is-menu-main"
-              >
-                <ul
-                  className="menu-list"
-                >
-                  <li>
-                    <Link
-                      className="has-icon"
-                      onClick={[Function]}
-                      to="/"
-                    >
-                      <NavLink
-                        activeClassName="is-active"
-                        className="has-icon"
-                        exact={true}
-                        onClick={[Function]}
-                        to="/"
+                      <li
+                        className=""
                       >
-                        <Link
-                          aria-current={null}
-                          className="has-icon"
+                        <a
+                          className="has-icon has-dropdown-icon"
+                          exact-active-class="is-active"
                           onClick={[Function]}
-                          to={
-                            Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "",
-                              "state": null,
-                            }
-                          }
-                        >
-                          <LinkAnchor
-                            aria-current={null}
-                            className="has-icon"
-                            href="/"
-                            navigate={[Function]}
-                            onClick={[Function]}
-                          >
-                            <a
-                              aria-current={null}
-                              className="has-icon"
-                              href="/"
-                              onClick={[Function]}
-                            >
-                              <span
-                                className="icon"
-                              >
-                                <i
-                                  className="mdi mdi-home"
-                                />
-                              </span>
-                              <span
-                                className="menu-item-label"
-                              >
-                                Home
-                              </span>
-                            </a>
-                          </LinkAnchor>
-                        </Link>
-                      </NavLink>
-                    </Link>
-                  </li>
-                  <SubMenu
-                    label="Dropdown Menu"
-                  >
-                    <li
-                      className=""
-                    >
-                      <a
-                        className="has-icon has-dropdown-icon"
-                        exact-active-class="is-active"
-                        onClick={[Function]}
-                      >
-                        <span
-                          className="icon"
-                        >
-                          <i
-                            className="mdi mdi-view-list"
-                          />
-                        </span>
-                        <span
-                          className="menu-item-label"
-                        >
-                          Dropdown Menu
-                        </span>
-                        <div
-                          className="dropdown-icon"
                         >
                           <span
                             className="icon"
                           >
                             <i
-                              className="mdi mdi-plus"
+                              className="mdi mdi-view-list"
                             />
                           </span>
-                        </div>
-                      </a>
-                      <ul>
-                        <li>
-                          <Link
-                            className="submenuLink"
-                            onClick={[Function]}
-                            to="/submenu1"
+                          <span
+                            className="menu-item-label"
                           >
-                            <NavLink
-                              activeClassName="is-active"
+                            Dropdown Menu
+                          </span>
+                          <div
+                            className="dropdown-icon"
+                          >
+                            <span
+                              className="icon"
+                            >
+                              <i
+                                className="mdi mdi-plus"
+                              />
+                            </span>
+                          </div>
+                        </a>
+                        <ul>
+                          <li>
+                            <Link
                               className="submenuLink"
-                              exact={true}
                               onClick={[Function]}
                               to="/submenu1"
                             >
-                              <Link
-                                aria-current={null}
+                              <NavLink
+                                activeClassName="is-active"
                                 className="submenuLink"
+                                exact={true}
                                 onClick={[Function]}
-                                to={
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/submenu1",
-                                    "search": "",
-                                    "state": null,
-                                  }
-                                }
+                                to="/submenu1"
                               >
-                                <LinkAnchor
+                                <Link
                                   aria-current={null}
                                   className="submenuLink"
-                                  href="/submenu1"
-                                  navigate={[Function]}
                                   onClick={[Function]}
+                                  to={
+                                    Object {
+                                      "hash": "",
+                                      "pathname": "/submenu1",
+                                      "search": "",
+                                      "state": null,
+                                    }
+                                  }
                                 >
-                                  <a
+                                  <LinkAnchor
                                     aria-current={null}
                                     className="submenuLink"
                                     href="/submenu1"
+                                    navigate={[Function]}
                                     onClick={[Function]}
                                   >
-                                    <span>
-                                      Submenu 1
-                                    </span>
-                                  </a>
-                                </LinkAnchor>
-                              </Link>
-                            </NavLink>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="submenuLink"
-                            onClick={[Function]}
-                            to="/submenu2"
-                          >
-                            <NavLink
-                              activeClassName="is-active"
+                                    <a
+                                      aria-current={null}
+                                      className="submenuLink"
+                                      href="/submenu1"
+                                      onClick={[Function]}
+                                    >
+                                      <span>
+                                        Submenu 1
+                                      </span>
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </NavLink>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
                               className="submenuLink"
-                              exact={true}
                               onClick={[Function]}
                               to="/submenu2"
                             >
-                              <Link
-                                aria-current={null}
+                              <NavLink
+                                activeClassName="is-active"
                                 className="submenuLink"
+                                exact={true}
                                 onClick={[Function]}
-                                to={
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/submenu2",
-                                    "search": "",
-                                    "state": null,
-                                  }
-                                }
+                                to="/submenu2"
                               >
-                                <LinkAnchor
+                                <Link
                                   aria-current={null}
                                   className="submenuLink"
-                                  href="/submenu2"
-                                  navigate={[Function]}
                                   onClick={[Function]}
+                                  to={
+                                    Object {
+                                      "hash": "",
+                                      "pathname": "/submenu2",
+                                      "search": "",
+                                      "state": null,
+                                    }
+                                  }
                                 >
-                                  <a
+                                  <LinkAnchor
                                     aria-current={null}
                                     className="submenuLink"
                                     href="/submenu2"
+                                    navigate={[Function]}
                                     onClick={[Function]}
                                   >
-                                    <span>
-                                      Submenu 2
-                                    </span>
-                                  </a>
-                                </LinkAnchor>
-                              </Link>
-                            </NavLink>
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
-                  </SubMenu>
-                </ul>
-              </div>
-            </aside>
-          </Aside>
-          <div
-            className="layout"
-          >
-            <Route
-              exact={true}
-              render={[Function]}
+                                    <a
+                                      aria-current={null}
+                                      className="submenuLink"
+                                      href="/submenu2"
+                                      onClick={[Function]}
+                                    >
+                                      <span>
+                                        Submenu 2
+                                      </span>
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </NavLink>
+                            </Link>
+                          </li>
+                        </ul>
+                      </li>
+                    </SubMenu>
+                  </ul>
+                </div>
+              </aside>
+            </Aside>
+            <div
+              className="layout"
             >
-              <Redirect
-                to="/login"
+              <Route
+                exact={true}
+                render={[Function]}
               >
-                <Lifecycle
-                  onMount={[Function]}
-                  onUpdate={[Function]}
+                <Redirect
                   to="/login"
-                />
-              </Redirect>
-            </Route>
-          </div>
-          <Footer>
-            <footer
-              className="footer"
-            >
-              <div
-                className="container-fluid"
+                >
+                  <Lifecycle
+                    onMount={[Function]}
+                    onUpdate={[Function]}
+                    to="/login"
+                  />
+                </Redirect>
+              </Route>
+            </div>
+            <Footer>
+              <footer
+                className="footer"
               >
                 <div
-                  className="level level"
+                  className="container-fluid"
                 >
                   <div
-                    className="level-left"
+                    className="level level"
                   >
                     <div
-                      className="level-item"
-                    >
-                      © 2020 
-                      <span>
-                          CreateThrive
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className="level-right levelRight"
-                  >
-                    <div
-                      className="level-item"
+                      className="level-left"
                     >
                       <div
-                        className="logo"
+                        className="level-item"
                       >
-                        <a
-                          href="https://createthrive.com"
+                        © 2020 
+                        <span>
+                            CreateThrive
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      className="level-right levelRight"
+                    >
+                      <div
+                        className="level-item"
+                      >
+                        <div
+                          className="logo"
                         >
-                          <img
-                            alt="CreateThrive.com"
-                            src="https://createthrive.com/assets/logos/Logo-CT.svg"
-                          />
-                        </a>
+                          <a
+                            href="https://createthrive.com"
+                          >
+                            <img
+                              alt="CreateThrive.com"
+                              src="https://createthrive.com/assets/logos/Logo-CT.svg"
+                            />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </footer>
-          </Footer>
-        </Layout>
-      </PrivateRoute>
-    </Provider>
-  </Router>
-</BrowserRouter>
+              </footer>
+            </Footer>
+          </Layout>
+        </PrivateRoute>
+      </Provider>
+    </Router>
+  </BrowserRouter>
+</IntlProvider>
 `;

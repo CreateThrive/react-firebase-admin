@@ -5,7 +5,7 @@
 
 Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a fully functional admin dashboard with authentication, authorization, realtime database, built-in CI/CD, file upload and more. We're using up to date industry standards and next-gen technologies like React (with hooks), redux, bulma, sass, webpack, routing and a serverless architecture.
 
-![Boilerplate - Users page](https://i.imgur.com/Z2TgfHp.png)
+![Boilerplate - Users page](https://imgur.com/7jIt6jh.png)
 
 ---
 
@@ -50,6 +50,13 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Writing new workflows](#writing-new-workflows)
 - [Environment Variables](#environment-variables)
 - [Demo](#demo)
+- [Internationalization](#internationalization)
+  - [Adding another Language](#adding-another-language)
+  - [Creating your translation file](#creating-your-translation-file)
+  - [How to translate a Text](#how-to-translate-a-text)
+  - [How to translate a Text with a variable](#how-to-translate-a-text-with-a-variable)
+  - [How to internationalize a Date](#how-to-internationalize-a-date)
+  - [How to add your language on DatePicker](#how-to-add-your-language-on-datepicker)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -86,6 +93,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - Built-in CD (Continous deployment)
 - PWA ready thanks to CRA and Firebase
 - Multi-tenancy
+- Internationalization (English/Spanish)
 
 ## Tech Stack
 
@@ -107,6 +115,10 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [React-table](https://github.com/tannerlinsley/react-table) (★ 9.6k) hooks for building fast and extendable tables and datagrids for React.
 - [React-spinners](https://github.com/davidhu2000/react-spinners) (★ 1.2k) a collection of loading spinner components for React.
 - [Firebase](https://firebase.google.com/) for serverless architecture - CDN Hosting, Realtime Database, Authentication, Storage and Cloud Functions (see [docs](https://firebase.google.com/docs/web)).
+- [Format.js](https://formatjs.io/) (★ 11.7k) libraries for internationalization (see [docs](https://formatjs.io/docs/basic-internationalization-principles)).
+- [date-fns](https://formatjs.io/) (★ 22.3k) date utility library (see [docs]https://date-fns.org/docs/Getting-Started)).
+- [redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage) (★ 70) **Redux Persist** storage adapter for cookies.
+- [cookies-js](https://github.com/js-cookie/js-cookie) (★ 15.5k) API for handling browser cookies.
 
 ### Unit Testing
 
@@ -248,6 +260,9 @@ src/
 │   ├── index.js
 │   ├── hook_1.js
 |   └── hook_2.js
+├── languages/                             # All the JSON files for each language
+|   ├── language_1.json
+|   └── language_2.json
 ├── index.js
 ├── index.scss
 ├── serviceWorker.js
@@ -453,7 +468,6 @@ After setting up all your github secrets, they should look like this:
 
 ![Boilerplate - GitHub Secrets](https://i.imgur.com/wjNw4fC.png)
 
-
 ### Writing new workflows
 
 You can refer to this on the [GitHub Actions documentations](https://help.github.com/en/actions).
@@ -466,6 +480,95 @@ Refer to the .env.example file in the root folder of the project to see what var
 
 For requesting access to the [demo](https://react-firebase-admin-eeac2.firebaseapp.com/) site please [contact us](https://createthrive.com/contact).
 
+## Internationalization
+
+For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **LanguageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using cookies ([redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage)). The user has the option to change their language preferences.
+
+![Boilerplate - Dinamical Internationalization](https://media.giphy.com/media/St3bw0rjlBQmKzf6fC/source.gif)
+
+### Adding another Language
+
+- Create a `.json` file on `src/languages` for each language that you want to add, the `.json` name should be the languages.
+- Replace every text you want to translate on your project with the **useFormatMessage** hook.
+- Fill each `.json` with every `id` for all text translation used on every **useFormatMessage** and the text that you want to be seen.
+- Import your `.json` file/s on the `src/utils/index.js` and add them to `messages`.
+- Place your icon/s for your language/s on `src/assets`.
+- Import your icon/s and add it/them to `flags` on `src/utils/index.js`.
+- Import your language/s from the `date-fns` library and then call **registerLocale** and pass your import to make sure **DatePicker** can use your language. Then put your language format on **dateFormat** for the **DatePicker**.
+
+### Creating your translation file
+
+The `.json` file must be filled with each text that wants to be translated. Each translation is made by an **_id_** and the **_text_** for that language.
+The id should be the file name where it is located + an **id** for the text.
+
+```javascript
+{
+  "App.title":"Title"
+}
+```
+
+### How to translate a Text
+
+**Before Replacing**
+
+```javascript
+<h1>Title</h1>
+```
+
+**After Replacing**
+
+`useFormatMessage` is receiving just the text id, but this hook can also recieve a default message, a description and a value (in case your texts receives a variable).
+
+```javascript
+<h1>useFormatMessage('App.Title')</h1>
+```
+
+### How to translate a Text with a variable
+
+**Before Replacing**
+
+```javascript
+const example = 'World';
+<p>Hello {example}!</p>;
+```
+
+**After Replacing**
+
+```javascript
+const example = 'World';
+<p>useFormatMessage('App.helloWorld', { world: example })</p>;
+```
+
+**On the `.json` file**
+
+```javascript
+{
+  "App.helloWorld":"Hello {world}!"
+}
+```
+
+### How to internationalize a Date
+
+**Before Replacing**
+
+```javascript
+const date = Date.now();
+<p>{date}</p>;
+```
+
+**After Replacing**
+
+```javascript
+const date = Date.now();
+<p>{useFormatDate(date)}</p>;
+```
+
+### How to add your language on DatePicker
+
+- Import your language from `date-fns/locale/[yourlanguage]`
+- Add another **registerLocale** with your language as the first parameter and the import from `date-fns` as second parameter.
+- Place your language with its date format on **dateFormat**.
+
 ## Contributors
 
 We'd like to thank these awesome people who made this whole thing happen:
@@ -475,6 +578,7 @@ We'd like to thank these awesome people who made this whole thing happen:
     <li><a href="https://github.com/tpiaggio">Tomas Piaggio</a></li>
     <li><a href="https://github.com/jbheber">Juan Heber</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
+    <li><a href="https://github.com/TOPOFGR">Franco Galeano</a></li>
 </ul>
 
 ## License

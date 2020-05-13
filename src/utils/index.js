@@ -1,3 +1,8 @@
+import english from 'languages/en';
+import spanish from 'languages/es';
+import en from 'assets/en.png';
+import es from 'assets/es.png';
+
 export const FIREBASE_RESPONSE = {
   EMAIL_IN_USE: 'auth/email-already-exists',
   EMAIL_INVALID: 'auth/invalid-email',
@@ -98,4 +103,18 @@ export const inputValidations = (email, password) => {
   }
 
   return inputs;
+};
+
+export const messages = {
+  en: english,
+  es: spanish
+};
+
+export const availableLocales = Object.keys(messages);
+
+export const browserLocale = navigator.language.split(/[-_]/)[0];
+
+export const flags = {
+  en,
+  es
 };

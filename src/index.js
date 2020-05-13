@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import ReduxToastr from 'react-redux-toastr';
 
+import LanguageWrapper from 'components/LanguageWrapper';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { configureStore } from './state/store';
 import './index.scss';
@@ -16,19 +17,21 @@ const { store, persistor } = configureStore({});
 
 const app = (
   <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <ReduxToastr
-        newestOnTop={false}
-        preventDuplicates
-        position="bottom-right"
-        getState={state => state.toastr}
-        transitionIn="fadeIn"
-        transitionOut="fadeOut"
-        progressBar
-        closeOnToastrClick
-      />
-      <Router />
-    </PersistGate>
+    <LanguageWrapper>
+      <PersistGate persistor={persistor}>
+        <ReduxToastr
+          newestOnTop={false}
+          preventDuplicates
+          position="bottom-right"
+          getState={state => state.toastr}
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick
+        />
+        <Router />
+      </PersistGate>
+    </LanguageWrapper>
   </Provider>
 );
 

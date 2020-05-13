@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import { useFormatMessage } from 'hooks';
 import paths from 'pages/Router/paths';
 import NavLink from '../Link';
 import classes from './Aside.module.scss';
@@ -52,6 +53,8 @@ const Aside = ({ handleMobileToggle }) => {
     shallowEqual
   );
 
+  const usersMessage = useFormatMessage('Aside.users');
+
   return (
     <aside className="aside is-placed-left is-expanded">
       <Link to={paths.ROOT} className="aside-tools">
@@ -72,7 +75,9 @@ const Aside = ({ handleMobileToggle }) => {
               <span className="icon">
                 <i className="mdi mdi-home" />
               </span>
-              <span className="menu-item-label">Home</span>
+              <span className="menu-item-label">
+                {useFormatMessage('Aside.home')}
+              </span>
             </NavLink>
           </li>
           {isAdmin && (
@@ -85,18 +90,18 @@ const Aside = ({ handleMobileToggle }) => {
                 <span className="icon">
                   <i className="mdi mdi-account-supervisor" />
                 </span>
-                <span className="menu-item-label">Users</span>
+                <span className="menu-item-label">{usersMessage}</span>
               </NavLink>
             </li>
           )}
-          <SubMenu label="Dropdown Menu">
+          <SubMenu label={useFormatMessage('Aside.dropdownMenu')}>
             <li>
               <NavLink
                 className={classes.submenuLink}
                 to={paths.SUBMENU_1}
                 onClick={handleMobileToggle}
               >
-                <span>Submenu 1</span>
+                <span>{useFormatMessage('Aside.submenu1')}</span>
               </NavLink>
             </li>
             <li>
@@ -105,7 +110,7 @@ const Aside = ({ handleMobileToggle }) => {
                 to={paths.SUBMENU_2}
                 onClick={handleMobileToggle}
               >
-                <span>Submenu 2</span>
+                <span>{useFormatMessage('Aside.submenu2')}</span>
               </NavLink>
             </li>
           </SubMenu>

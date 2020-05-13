@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 import firebase from 'firebase.js';
 import { auth, setPassword, authCleanUp } from 'state/actions/auth';
-import { useChangeHandler } from 'utils/hooks';
+import { useChangeHandler, useFormatMessage } from 'hooks';
 import { inputValidations } from 'utils';
 import paths from '../Router/paths';
 import classes from './Login.module.scss';
@@ -76,6 +76,14 @@ const Login = () => {
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
+  const setNewPasswordMessage = useFormatMessage('Login.setNewPassword');
+
+  const loginMessage = useFormatMessage('Login.login');
+
+  const setPasswordMessage = useFormatMessage('Login.setPassword');
+
+  const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
+
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -90,14 +98,14 @@ const Login = () => {
                       <i className="mdi mdi-lock default" />
                     </span>
                     <span>
-                      {isEmailLink ? 'Set your new password' : 'Login'}
+                      {isEmailLink ? setNewPasswordMessage : loginMessage}
                     </span>
                   </p>
                 </header>
                 <div className="card-content">
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
-                      <p className="label">E-mail Address</p>
+                      <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
                           className={`input ${inputs.email.modifier}`}
@@ -115,7 +123,9 @@ const Login = () => {
                       )}
                     </div>
                     <div className="field">
-                      <p className="label">Password</p>
+                      <p className="label">
+                        {useFormatMessage('Login.password')}
+                      </p>
                       <div className="control is-clearfix">
                         <input
                           className={`input ${inputs.password.modifier}`}
@@ -140,7 +150,7 @@ const Login = () => {
                           className={`button is-black ${modifierLoading}`}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
-                          {isEmailLink ? 'Set Password' : 'Login'}
+                          {isEmailLink ? setPasswordMessage : loginMessage}
                         </button>
                       </div>
                       {!isEmailLink && (
@@ -149,7 +159,7 @@ const Login = () => {
                             to={paths.RESET_PASSWORD}
                             className="button is-outlined"
                           >
-                            Forgot Password?
+                            {forgotPasswordMessage}
                           </Link>
                         </div>
                       )}

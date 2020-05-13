@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import { changeUserPassword, authCleanUp } from 'state/actions/auth';
-import { useChangeHandler } from 'utils/hooks';
+import { useChangeHandler, useFormatMessage } from 'hooks';
 
 const ChangePasswordCard = () => {
   const [passwords, setPasswords] = useState({
@@ -55,12 +55,18 @@ const ChangePasswordCard = () => {
 
   const isNewPasswordSecure = passwords.new && passwords.new.length >= 6;
 
+  const safePasswordMessage = useFormatMessage(`ChangePassword.safePassword`);
+
+  const insecurePasswordMessage = useFormatMessage(
+    `ChangePassword.insecurePassword`
+  );
+
   if (isNewPasswordSecure) {
     setInputs('new', {
       modifier: 'is-success',
       message: {
         modifier: 'is-success',
-        content: 'Safe password'
+        content: safePasswordMessage
       }
     });
   } else if (passwords.new) {
@@ -68,7 +74,7 @@ const ChangePasswordCard = () => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: 'Insecure password'
+        content: insecurePasswordMessage
       }
     });
   }
@@ -78,12 +84,20 @@ const ChangePasswordCard = () => {
     passwords.confirmation &&
     passwords.new === passwords.confirmation;
 
+  const passwordsMatchMessagge = useFormatMessage(
+    `ChangePassword.matchPassword`
+  );
+
+  const notMatchPasswordMessage = useFormatMessage(
+    `ChangePassword.notMatchPassword`
+  );
+
   if (newPasswordsAreEqual) {
     setInputs('confirmation', {
       modifier: 'is-success',
       message: {
         modifier: 'is-success',
-        content: 'Passwords match'
+        content: passwordsMatchMessagge
       }
     });
   } else if (passwords.confirmation) {
@@ -91,7 +105,7 @@ const ChangePasswordCard = () => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: 'Passwords do not match'
+        content: notMatchPasswordMessage
       }
     });
   }
@@ -99,9 +113,9 @@ const ChangePasswordCard = () => {
   const currentAndNewPasswordsEqual =
     passwords.new && passwords.current === passwords.new;
 
-  const errorMessage =
-    currentAndNewPasswordsEqual &&
-    'The new password and the current one cannot be the same';
+  const samePasswordMessage = useFormatMessage(`ChangePassword.samePassword`);
+
+  const errorMessage = currentAndNewPasswordsEqual && samePasswordMessage;
 
   const canSubmit =
     isNewPasswordSecure && newPasswordsAreEqual && !currentAndNewPasswordsEqual;
@@ -118,14 +132,16 @@ const ChangePasswordCard = () => {
           <span className="icon">
             <i className="fa fa-lock" />
           </span>
-          Change password
+          {useFormatMessage(`ChangePassword.changePassword`)}
         </p>
       </header>
       <div className="card-content">
         <form onSubmit={onSubmitHandler}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Current Password</label>
+              <label className="label">
+                {useFormatMessage(`ChangePassword.currentPassword`)}
+              </label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -145,7 +161,9 @@ const ChangePasswordCard = () => {
           <hr />
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">New Password</label>
+              <label className="label">
+                {useFormatMessage(`ChangePassword.newPassword`)}
+              </label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -170,7 +188,9 @@ const ChangePasswordCard = () => {
 
           <div className="field is-horizontal">
             <div className="field-label is-normal">
-              <label className="label">Confirm Password</label>
+              <label className="label">
+                {useFormatMessage(`ChangePassword.confirmPassword`)}
+              </label>
             </div>
             <div className="field-body">
               <div className="field">
@@ -204,7 +224,7 @@ const ChangePasswordCard = () => {
                     className={`button is-primary ${loading && 'is-loading'}`}
                     disabled={!canSubmit}
                   >
-                    Submit
+                    {useFormatMessage(`ChangePassword.submits`)}
                   </button>
                 </div>
                 {errorMessage && (

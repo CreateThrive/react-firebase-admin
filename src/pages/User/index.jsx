@@ -7,6 +7,7 @@ import UserForm from 'components/UserForm';
 import { createUser, modifyUser } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import firebase from 'firebase.js';
+import { useFormatMessage } from 'hooks';
 
 const User = () => {
   const { id } = useParams();
@@ -69,12 +70,18 @@ const User = () => {
 
   const redirect = (user.error || success) && <Redirect to={paths.USERS} />;
 
+  const editUserMessage = useFormatMessage('User.editUser');
+
+  const newUserMessage = useFormatMessage('User.editUser');
+
   return (
     <>
       {redirect}
       <section className="hero is-hero-bar">
         <div className="hero-body">
-          <h1 className="title">{isEditing ? 'Edit User' : 'New User'}</h1>
+          <h1 className="title">
+            {isEditing ? editUserMessage : newUserMessage}
+          </h1>
         </div>
       </section>
       <section className="section is-main-section">{userForm}</section>
