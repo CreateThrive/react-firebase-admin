@@ -11,6 +11,17 @@ import './DatePicker.scss';
 registerLocale('en', en);
 registerLocale('es', es);
 
+const dateFormat = locale => {
+  switch (locale) {
+    case 'en':
+      return 'MM-dd-yy';
+    case 'es':
+      return 'dd/MM/yy';
+    default:
+      return 'MM-dd-yy';
+  }
+};
+
 const DatePickerStyled = ({ name, date, setState }) => {
   const onDateChangedHandler = value =>
     setState(prevState => ({
@@ -25,12 +36,10 @@ const DatePickerStyled = ({ name, date, setState }) => {
     shallowEqual
   );
 
-  const dateFormat = locale === 'en' ? 'MM-dd-yy' : 'dd/MM/yy';
-
   return (
     <DatePicker
       locale={locale}
-      dateFormat={dateFormat}
+      dateFormat={dateFormat(locale)}
       selected={date}
       onChange={onDateChangedHandler}
     />

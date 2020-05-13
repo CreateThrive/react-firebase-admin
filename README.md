@@ -494,7 +494,7 @@ For the internationalization we decided to choose the library [Format.js](https:
 - Import your `.json` file/s on the `src/utils/index.js` and add them to `messages`.
 - Place your icon/s for your language/s on `src/assets`.
 - Import your icon/s and add it/them to `flags` on `src/utils/index.js`.
-- Import your language/s from the `date-fns` library and then call **registerLocale** and pass your import to make sure **DatePicker** can use your language.
+- Import your language/s from the `date-fns` library and then call **registerLocale** and pass your import to make sure **DatePicker** can use your language. Then put your language format on **dateFormat** for the **DatePicker**.
 
 ### Creating your translation file
 
@@ -567,6 +567,7 @@ const date = Date.now();
 
 - Import your language from `date-fns/locale/[yourlanguage]`
 - Add another **registerLocale** with your language as the first parameter and the import from `date-fns` as second parameter.
+- Place your language with its date format on **dateFormat**.
 
 ## Contributors
 
