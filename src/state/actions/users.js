@@ -41,17 +41,15 @@ export const fetchUsers = () => {
 
     dispatch(USERS_FETCH_DATA_INIT());
 
-    const { tenant, id } = getState().auth.userData;
+    const { id } = getState().auth.userData;
 
     let users;
 
     try {
-      const ref = firebase.database().ref('users');
-
       users = (
-        await ref
-          .orderByChild('tenant')
-          .equalTo(tenant)
+        await firebase
+          .database()
+          .ref('users')
           .once('value')
       ).val();
     } catch (error) {
@@ -108,10 +106,8 @@ export const createUser = ({
   createdAt,
   isAdmin
 }) => {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     dispatch(USERS_CREATE_USER_INIT());
-
-    const { tenant } = getState().auth.userData;
 
     const user = firebase.auth().currentUser;
 
@@ -131,7 +127,6 @@ export const createUser = ({
     body.append('location', location);
     body.append('email', email);
     body.append('password', uuid());
-    body.append('tenant', tenant);
     body.append('createdAt', createdAt);
     body.append('isAdmin', isAdmin);
 
@@ -188,10 +183,8 @@ export const modifyUser = ({
   isEditing,
   isProfile
 }) => {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     dispatch(USERS_MODIFY_USER_INIT());
-
-    const { tenant } = getState().auth.userData;
 
     const user = firebase.auth().currentUser;
 
@@ -209,7 +202,6 @@ export const modifyUser = ({
 
     body.append('name', name);
     body.append('location', location);
-    body.append('tenant', tenant);
     body.append('createdAt', createdAt);
     body.append('isAdmin', isAdmin);
 

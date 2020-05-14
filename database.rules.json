@@ -2,11 +2,10 @@
   "rules": {
     "users": {
       "$user": {
-        ".write": "auth !== null && auth.token.email_verified === true && data.child('tenant').val() === auth.token.tenant && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)",
-        ".read": "auth !== null && auth.token.email_verified === true && data.child('tenant').val() === auth.token.tenant && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)"
+        ".write": "auth !== null && auth.token.email_verified === true && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)",
+        ".read": "auth !== null && auth.token.email_verified === true && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)"
       },
-      ".read": "auth !== null && auth.token.email_verified === true && auth.token.isAdmin === true && query.orderByChild === 'tenant' && query.equalTo === auth.token.tenant",
-      ".indexOn": ["tenant"]
+      ".read": "auth !== null && auth.token.email_verified === true && auth.token.isAdmin === true"
     }
   }
 }

@@ -138,7 +138,6 @@ describe('Establishments reducer', () => {
         location: 'test location',
         email: 'test email',
         id: 'test id',
-        tenant: 'test tenant',
         logoUrl: 'some logo'
       }
     ];
@@ -149,7 +148,6 @@ describe('Establishments reducer', () => {
         location: 'test location',
         email: 'test email',
         id: 'test id',
-        tenant: 'test tenant',
         logoUrl: 'some logo'
       }
     ];
@@ -161,7 +159,6 @@ describe('Establishments reducer', () => {
           name: 'test name 2',
           location: 'test location',
           email: 'test email',
-          tenant: 'test tenant',
           logoUrl: 'some logo'
         },
         id: 'test id'

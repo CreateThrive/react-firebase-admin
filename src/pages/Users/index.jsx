@@ -158,7 +158,6 @@ const Users = () => {
     ? usersList.filter(el => {
         const clonedElem = { ...el };
         delete clonedElem.id;
-        delete clonedElem.tenant;
         delete clonedElem.isAdmin;
         delete clonedElem.logoUrl;
         return Object.values(clonedElem).some(field =>

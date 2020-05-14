@@ -89,7 +89,6 @@ export const usersReducer = createReducer(
             name: payload.user.name,
             location: payload.user.location,
             id: payload.id,
-            tenant: payload.user.tenant,
             logoUrl: payload.user.logoUrl,
             createdAt: payload.user.createdAt,
             email: elem.email

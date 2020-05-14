@@ -16,7 +16,6 @@ describe('<UserForm /> rendering', () => {
       file: null,
       id: 'test id',
       logoUrl: 'some logoUrl',
-      tenant: 'some tenantId',
       createdAt: new Date().toDateString()
     };
   });
@@ -114,7 +113,6 @@ describe('<LoginForm /> actions', () => {
       location: 'Montevideo, Uruguay',
       id: 'test id',
       logoUrl: 'some logoUrl',
-      tenant: 'some tenantId',
       isAdmin: false,
       file: null,
       createdAt: new Date().toDateString()

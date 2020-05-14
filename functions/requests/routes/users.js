@@ -24,12 +24,11 @@ const uploadImageToBucket = async uploadedImage => {
   });
 };
 
-const createUserAuth = async (email, password, tenant, isAdmin) => {
+const createUserAuth = async (email, password, isAdmin) => {
   const { uid } = await admin.auth().createUser({ email, password });
 
   await admin.auth().setCustomUserClaims(uid, {
-    isAdmin,
-    tenant
+    isAdmin
   });
 
   return uid;
@@ -39,7 +38,6 @@ const createUserOnDb = async (
   name,
   email,
   location,
-  tenant,
   logoUrl,
   userId,
   createdAt,
@@ -49,7 +47,6 @@ const createUserOnDb = async (
     name,
     email,
     location,
-    tenant,
     logoUrl,
     createdAt,
     isAdmin
@@ -84,7 +81,7 @@ router.post('/', (request, response) => {
     });
 
     busboy.on('finish', async () => {
-      const { name, email, password, location, tenant, createdAt } = fieldData;
+      const { name, email, password, location, createdAt } = fieldData;
 
       const isAdmin = JSON.parse(fieldData.isAdmin);
 
@@ -92,7 +89,7 @@ router.post('/', (request, response) => {
 
       try {
         console.log('Creating user in auth and setting custom claims');
-        id = await createUserAuth(email, password, tenant, isAdmin);
+        id = await createUserAuth(email, password, isAdmin);
         console.log('Created user auth and setting custom claims');
       } catch (error) {
         console.error(
@@ -122,7 +119,6 @@ router.post('/', (request, response) => {
           name,
           email,
           location,
-          tenant,
           logoUrl,
           id,
           createdAt,
@@ -139,7 +135,6 @@ router.post('/', (request, response) => {
         name,
         location,
         email,
-        tenant,
         logoUrl,
         isAdmin
       });
@@ -178,10 +173,9 @@ router.delete('/:id', async (request, response) => {
   return response.status(200).json({});
 });
 
-const modifyUserAuth = (userId, isAdmin, tenant) => {
+const modifyUserAuth = (userId, isAdmin) => {
   return admin.auth().setCustomUserClaims(userId, {
-    isAdmin,
-    tenant
+    isAdmin
   });
 };
 
@@ -235,13 +229,13 @@ router.patch('/:id', (request, response) => {
     });
 
     busboy.on('finish', async () => {
-      const { name, location, createdAt, tenant } = fieldData;
+      const { name, location, createdAt } = fieldData;
 
       const isAdmin = JSON.parse(fieldData.isAdmin);
 
       const { id } = request.params;
 
-      const setUserClaims = modifyUserAuth(id, isAdmin, tenant);
+      const setUserClaims = modifyUserAuth(id, isAdmin);
 
       let removeLogo = Promise.resolve();
       let uploadImage = Promise.resolve();
@@ -279,7 +273,6 @@ router.patch('/:id', (request, response) => {
         id,
         name,
         location,
-        tenant,
         logoUrl,
         isAdmin,
         createdAt
