@@ -5,6 +5,7 @@ const Busboy = require('busboy');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+const uuid = require('uuid/v4');
 
 const router = express.Router();
 
@@ -24,8 +25,8 @@ const uploadImageToBucket = async uploadedImage => {
   });
 };
 
-const createUserAuth = async (email, password, isAdmin) => {
-  const { uid } = await admin.auth().createUser({ email, password });
+const createUserAuth = async (email, isAdmin) => {
+  const { uid } = await admin.auth().createUser({ email, password: uuid() });
 
   await admin.auth().setCustomUserClaims(uid, {
     isAdmin
@@ -34,114 +35,22 @@ const createUserAuth = async (email, password, isAdmin) => {
   return uid;
 };
 
-const createUserOnDb = async (
-  name,
-  email,
-  location,
-  logoUrl,
-  userId,
-  createdAt,
-  isAdmin
-) => {
-  const userData = {
-    name,
-    email,
-    location,
-    logoUrl,
-    createdAt,
-    isAdmin
-  };
+router.post('/', async (request, response) => {
+  const { email, isAdmin } = request.body;
 
-  const response = await admin
-    .database()
-    .ref(`users/${userId}`)
-    .set({ ...userData });
+  if (!email) {
+    return response.status(400).json({ error: { code: 'auth/invalid-email' } });
+  }
 
-  return response;
-};
+  let uid;
+  try {
+    uid = await createUserAuth(email, isAdmin);
+  } catch (error) {
+    console.error('Error while creating user', error);
+    return response.status(500).json({ error });
+  }
 
-router.post('/', (request, response) => {
-  cors(request, response, () => {
-    const busboy = new Busboy({ headers: request.headers });
-
-    let uploadedImage = null;
-
-    let fieldData = {};
-
-    busboy.on('field', (fieldName, value) => {
-      fieldData = { ...fieldData, [`${fieldName}`]: value };
-    });
-
-    busboy.on('file', (fieldName, file, fileName, encoding, mimetype) => {
-      const filepath = path.join(os.tmpdir(), fileName);
-
-      uploadedImage = { file: filepath, type: mimetype, fileName };
-
-      file.pipe(fs.createWriteStream(filepath));
-    });
-
-    busboy.on('finish', async () => {
-      const { name, email, password, location, createdAt } = fieldData;
-
-      const isAdmin = JSON.parse(fieldData.isAdmin);
-
-      let id;
-
-      try {
-        console.log('Creating user in auth and setting custom claims');
-        id = await createUserAuth(email, password, isAdmin);
-        console.log('Created user auth and setting custom claims');
-      } catch (error) {
-        console.error(
-          'Error while creating user in auth and setting custom claims',
-          error
-        );
-        return response.status(500).json({ error });
-      }
-
-      let logoUrl = null;
-
-      if (uploadedImage) {
-        try {
-          console.log('Uploading logo to bucket');
-          await uploadImageToBucket(uploadedImage);
-          logoUrl = `https://storage.googleapis.com/${bucket.name}/${uploadedImage.fileName}`;
-          console.log('Uploaded logo to bucket', logoUrl);
-        } catch (error) {
-          console.error('Error while uploading image to bucket', error);
-          return response.status(500).json({ error });
-        }
-      }
-
-      try {
-        console.log('Creating user');
-        await createUserOnDb(
-          name,
-          email,
-          location,
-          logoUrl,
-          id,
-          createdAt,
-          isAdmin
-        );
-        console.log('Created user');
-      } catch (error) {
-        console.error('Error while creating user', error);
-        return response.status(500).json({ error });
-      }
-
-      return response.status(201).json({
-        id,
-        name,
-        location,
-        email,
-        logoUrl,
-        isAdmin
-      });
-    });
-
-    busboy.end(request.rawBody);
-  });
+  return response.status(200).json({ uid });
 });
 
 router.delete('/:id', async (request, response) => {

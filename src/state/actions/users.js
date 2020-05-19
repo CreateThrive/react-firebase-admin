@@ -113,63 +113,83 @@ export const createUser = ({
 
     const userToken = await user.getIdToken();
 
-    const body = new FormData();
-
-    if (file) {
-      const fileExtension = file.name.split('.')[1];
-
-      const fileName = `${uuid()}.${fileExtension}`;
-
-      body.append('logo', file, fileName);
+    let response;
+    try {
+      response = await axios(userToken).post('/users', { email, isAdmin });
+    } catch (error) {
+      const errorMessage = firebaseError(error.response.data.error.code);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_CREATE_USER_FAIL({
+          error: errorMessage
+        })
+      );
     }
 
-    body.append('name', name);
-    body.append('location', location);
-    body.append('email', email);
-    body.append('password', uuid());
-    body.append('createdAt', createdAt);
-    body.append('isAdmin', isAdmin);
+    const { uid } = response.data;
+    let path = null;
+    if (file) {
+      const storageRef = firebase.storage().ref();
 
-    axios(userToken)
-      .post('/users', body)
-      .then(async response => {
-        const userCreated = response.data;
+      const fileExtension = file.name.split('.').pop();
 
-        const actionCodeSettings = {
-          url: process.env.REACT_APP_LOGIN_PAGE_URL,
-          handleCodeInApp: true
-        };
+      const fileName = `${uid}.${fileExtension}`;
 
-        try {
-          await firebase
-            .auth()
-            .sendSignInLinkToEmail(email, actionCodeSettings);
-        } catch (error) {
-          const errorMessage = firebaseError(error.response.data.error.code);
-
-          return dispatch(
-            USERS_CREATE_USER_FAIL({
-              error: errorMessage
-            })
-          );
-        }
-
-        toastr.success('', 'User created successfully');
-        return dispatch(
-          USERS_CREATE_USER_SUCCESS({
-            user: userCreated
-          })
-        );
-      })
-      .catch(error => {
-        const errorMessage = firebaseError(error.response.data.error.code);
+      const basePath = 'users/';
+      try {
+        await storageRef.child(`${basePath}${fileName}`).put(file);
+      } catch (error) {
+        const errorMessage = firebaseError(error.code);
         toastr.error('', errorMessage);
         return dispatch(
           USERS_CREATE_USER_FAIL({
             error: errorMessage
           })
         );
-      });
+      }
+      path = `${basePath}${uid}_200x200.${fileExtension}`;
+    }
+
+    try {
+      await firebase
+        .database()
+        .ref(`users/${uid}`)
+        .set({
+          name,
+          email,
+          location,
+          logoUrl: path,
+          createdAt,
+          isAdmin
+        });
+    } catch (error) {
+      const errorMessage = firebaseError(error.code);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_CREATE_USER_FAIL({
+          error: errorMessage
+        })
+      );
+    }
+
+    const actionCodeSettings = {
+      url: process.env.REACT_APP_LOGIN_PAGE_URL,
+      handleCodeInApp: true
+    };
+
+    try {
+      await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code);
+      return dispatch(
+        USERS_CREATE_USER_FAIL({
+          error: errorMessage
+        })
+      );
+    }
+
+    toastr.success('', 'User created successfully');
+    return dispatch(USERS_CREATE_USER_SUCCESS({ user: response.data }));
   };
 };
 
