@@ -1,11 +1,10 @@
 import { createAction } from 'redux-act';
-import uuid from 'uuid/v4';
 import { toastr } from 'react-redux-toastr';
 
 import axios from 'utils/axios';
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
-import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
+import { checkUserData } from './auth';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
 export const USERS_FETCH_DATA_SUCCESS = createAction(
@@ -71,22 +70,36 @@ export const fetchUsers = () => {
     );
   };
 };
+const deleteLogo = async id => {
+  const userRef = firebase.database().ref(`users/${id}`);
+  const oldLogo = (await userRef.child('logoUrl').once('value')).val();
+  if (oldLogo) {
+    await firebase
+      .storage()
+      .ref(oldLogo)
+      .delete();
+  }
+};
 
 export const deleteUser = id => {
   return async dispatch => {
     dispatch(USERS_DELETE_USER_INIT());
 
-    const user = firebase.auth().currentUser;
-
-    const userToken = await user.getIdToken();
-
     try {
-      await axios(userToken).delete(`/users/${id}`);
+      await deleteLogo(id);
     } catch (error) {
-      toastr.error('', error);
-      return dispatch(USERS_DELETE_USER_FAIL({ error }));
+      const errorMessage = firebaseError(error.response.data.error.code);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_DELETE_USER_FAIL({
+          error: errorMessage
+        })
+      );
     }
 
+    const userRef = firebase.database().ref(`users/${id}`);
+
+    userRef.remove();
     toastr.success('', 'The user was deleted.');
     return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
   };
@@ -96,6 +109,20 @@ export const clearUsersData = () => {
   return dispatch => {
     dispatch(USERS_CLEAR_DATA());
   };
+};
+
+const uploadLogo = async (uid, file) => {
+  const storageRef = firebase.storage().ref();
+
+  const fileExtension = file.name.split('.').pop();
+
+  const fileName = `${uid}.${fileExtension}`;
+
+  const basePath = 'users/';
+
+  await storageRef.child(`${basePath}${fileName}`).put(file);
+
+  return `${basePath}${uid}_200x200.${fileExtension}`;
 };
 
 export const createUser = ({
@@ -127,17 +154,11 @@ export const createUser = ({
     }
 
     const { uid } = response.data;
-    let path = null;
+
+    let logoUrl = null;
     if (file) {
-      const storageRef = firebase.storage().ref();
-
-      const fileExtension = file.name.split('.').pop();
-
-      const fileName = `${uid}.${fileExtension}`;
-
-      const basePath = 'users/';
       try {
-        await storageRef.child(`${basePath}${fileName}`).put(file);
+        logoUrl = await uploadLogo(uid, file);
       } catch (error) {
         const errorMessage = firebaseError(error.code);
         toastr.error('', errorMessage);
@@ -147,21 +168,12 @@ export const createUser = ({
           })
         );
       }
-      path = `${basePath}${uid}_200x200.${fileExtension}`;
     }
-
     try {
       await firebase
         .database()
         .ref(`users/${uid}`)
-        .set({
-          name,
-          email,
-          location,
-          logoUrl: path,
-          createdAt,
-          isAdmin
-        });
+        .set({ name, email, location, logoUrl, createdAt, isAdmin });
     } catch (error) {
       const errorMessage = firebaseError(error.code);
       toastr.error('', errorMessage);
@@ -206,56 +218,64 @@ export const modifyUser = ({
   return async dispatch => {
     dispatch(USERS_MODIFY_USER_INIT());
 
-    const user = firebase.auth().currentUser;
-
-    const userToken = await user.getIdToken();
-
-    const body = new FormData();
-
+    let logoUrl = null;
     if (file) {
-      const fileExtension = file.name.split('.')[1];
-
-      const fileName = `${uuid()}.${fileExtension}`;
-
-      body.append('logo', file, fileName);
-    }
-
-    body.append('name', name);
-    body.append('location', location);
-    body.append('createdAt', createdAt);
-    body.append('isAdmin', isAdmin);
-
-    axios(userToken)
-      .patch(`/users/${id}`, body)
-      .then(response => {
-        const userCreated = response.data;
-        const { uid } = firebase.auth().currentUser;
-
-        if (id === uid) {
-          dispatch(AUTH_UPDATE_USER_DATA({ ...userCreated }));
-        }
-
-        if (isProfile) {
-          toastr.success('', 'Profile updated successfully');
-        } else if (isEditing) {
-          toastr.success('', 'User updated successfully');
-        }
-
-        return dispatch(
-          USERS_MODIFY_USER_SUCCESS({
-            user: userCreated
-          })
-        );
-      })
-      .catch(error => {
-        const errorMessage = firebaseError(error.response.data.error.code);
+      try {
+        await deleteLogo(id);
+      } catch (error) {
+        const errorMessage = firebaseError(error.code);
         toastr.error('', errorMessage);
         return dispatch(
           USERS_MODIFY_USER_FAIL({
             error: errorMessage
           })
         );
-      });
+      }
+    }
+
+    try {
+      logoUrl = await uploadLogo(id, file);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_MODIFY_USER_FAIL({
+          error: errorMessage
+        })
+      );
+    }
+
+    const userData = {
+      name,
+      location,
+      createdAt,
+      isAdmin
+    };
+
+    if (logoUrl) userData.logoUrl = logoUrl;
+
+    try {
+      await firebase
+        .database()
+        .ref(`users/${id}`)
+        .update({ ...userData });
+    } catch (error) {
+      const errorMessage = firebaseError(error.code);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_MODIFY_USER_FAIL({
+          error: errorMessage
+        })
+      );
+    }
+
+    if (isProfile) {
+      toastr.success('', 'Profile updated successfully');
+    } else if (isEditing) {
+      toastr.success('', 'User updated successfully');
+    }
+
+    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: { ...userData, id } }));
   };
 };
 
