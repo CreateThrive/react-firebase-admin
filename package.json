@@ -25,7 +25,7 @@
     "redux-persist": "^6.0.0",
     "redux-persist-cookie-storage": "^1.0.0",
     "redux-thunk": "^2.3.0",
-    "uuid": "^7.0.1"
+    "uuid": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
