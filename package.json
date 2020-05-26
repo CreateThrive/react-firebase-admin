@@ -16,7 +16,7 @@
     "react-intl": "^4.5.0",
     "react-redux": "^7.2.0",
     "react-redux-toastr": "^7.6.4",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.0",
     "react-spinners": "^0.8.0",
     "react-table": "^7.0.0-rc.16",
