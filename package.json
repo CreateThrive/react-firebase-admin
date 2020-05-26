@@ -19,7 +19,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "react-spinners": "^0.8.0",
-    "react-table": "^7.0.0-rc.16",
+    "react-table": "^7.1.0",
     "redux": "^4.0.5",
     "redux-act": "^1.7.7",
     "redux-persist": "^6.0.0",
