@@ -52,7 +52,7 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "10.0.3",
+    "babel-eslint": "10.1.0",
     "babel-loader": "^8.0.6",
     "deep-freeze": "^0.0.1",
     "dotenv": "^8.2.0",
