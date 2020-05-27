@@ -60,7 +60,6 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 - [File Uploading](#file-uploading)
   - [Image Resize](#image-resize)
   - [Storage Rules](#storage-rules)
-  - [Setting up your storage](#setting-up-your-storage)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -179,7 +178,7 @@ Run the following commands in the root of the repository:
 - `npm install -g firebase-tools`
 - `firebase init`
 
-Select the firebase project you created in the previous step, when prompted select the services you want to setup and check **_Database_**, **_Functions_** and **_Hosting_**.
+Select the firebase project you created in the previous step, when prompted select the services you want to setup and check **_Database_**, **_Functions_**, **_Hosting_** and **_Storage_**.
 
 **_Database_**:
 
@@ -205,6 +204,9 @@ Run the following commands in the `functions/` folder (Using Node v8.17.0):
 You'll get prompted to enter the path to you service account key file. To generate it, go to your **_Firebase Dashboard_**, **_Project settings_** tab and then to **_Service accounts_** option, right there you can generate your private key (more info on this [here](https://firebase.google.com/docs/admin/setup#initialize-sdk)).
 
 You'll need to enter the **_email_** and **_password_** for the admin account of the admin dashboard. With this in place, you've successfully created your admin account for the dashboard.
+
+**_Storage_**
+-For the file we should use for the Storage Rules select storage.rules.
 
 ### Setting up the React frontend
 
@@ -576,21 +578,40 @@ const date = Date.now();
 
 ## File Uploading
 
+For file uploading, we used the [Firebase Client](https://firebase.google.com/docs/storage/web/upload-files?authuser=1#upload_files) in conjuntion with **Firebase Storage**. We store the users profile images in a subfolder called `/users`. Besides, we decided to use the firebase storage as a bucket to store files.
+
 ### Image Resize
 
-For resizing images uploaded to our storage, we decided to add [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images), it is a Plugin made by Firebase for image resize, this plugin allows you to set sizes for resized images, deletion of the original upload, and two optional settings, Cloud Storage path for resized images and Cache-Control header for resized images.
+We use [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) for resizing every image uploaded to the storage.
+Every image uploaded to the storage is resized to our size preference (`200px x 200px`).
+
+**Setting your image resize**
+
+<ol>
+<li>Go to your Firebase Proyect on <a href= "https://console.firebase.google.com/u/1/">Firebase Console</a> </li>
+<li>Select extensions from the sidebar</li>
+<li>Search for Resize Images extension</li>
+<li>Click install on the extension</li>
+<li>On extension configuration set sizes of resized images to 200x200 and the deletion of original file to true</li>
+<li>Click on install extension</li>
+</ol>
 
 ### Storage Rules
 
 To make images reachable, we needed to set our storage rules to allow users to `write` on the storage made for the user logo, only if they are authenticated, but they can always `read`, this was set for saving the user´s logo path on the database.
 
-### Setting up your storage
-
-Paste `'https://firebasestorage.googleapis.com/v0/b/${REACT_APP_FIRE_BASE_STORAGE_BUCKET}'` into the `REACT_APP_FIRE_BASE_STORAGE_API` environment variable in your `.env` file.
-
 **Should look like this**
 
-`REACT_APP_FIRE_BASE_STORAGE_API = 'https://firebasestorage.googleapis.com/v0/b/${REACT_APP_FIRE_BASE_STORAGE_BUCKET}'`
+```javascript
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{imageId} {
+      allow write: if request.auth!=null;
+      allow read: if true;
+    }
+  }
+}
+```
 
 ## Contributors
 
