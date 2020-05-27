@@ -70,13 +70,19 @@ export const fetchUsers = () => {
     );
   };
 };
+
 const deleteLogo = async id => {
-  const userRef = firebase.database().ref(`users/${id}`);
+  const basePath = 'users/';
+  const userRef = firebase.database().ref(`${basePath}${id}`);
   const oldLogo = (await userRef.child('logoUrl').once('value')).val();
   if (oldLogo) {
+    const fileExtension = oldLogo
+      .split('.')
+      .pop()
+      .split('?')[0];
     await firebase
       .storage()
-      .ref(oldLogo)
+      .ref(`${basePath}${id}_200x200.${fileExtension}`)
       .delete();
   }
 };
@@ -88,7 +94,7 @@ export const deleteUser = id => {
     try {
       await deleteLogo(id);
     } catch (error) {
-      const errorMessage = firebaseError(error.response.data.error.code);
+      const errorMessage = firebaseError(error.code);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_DELETE_USER_FAIL({
@@ -118,11 +124,11 @@ const uploadLogo = async (uid, file) => {
 
   const fileName = `${uid}.${fileExtension}`;
 
-  const basePath = 'users/';
+  await storageRef.child(`users/${fileName}`).put(file);
 
-  await storageRef.child(`${basePath}${fileName}`).put(file);
+  const bucketUrl = `${process.env.REACT_APP_FIRE_BASE_STORAGE_API}`;
 
-  return `${basePath}${uid}_200x200.${fileExtension}`;
+  return `${bucketUrl}/o/users%2F${uid}_200x200.${fileExtension}?alt=media`;
 };
 
 export const createUser = ({

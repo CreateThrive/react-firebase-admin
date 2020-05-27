@@ -57,6 +57,10 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [How to translate a Text with a variable](#how-to-translate-a-text-with-a-variable)
   - [How to internationalize a Date](#how-to-internationalize-a-date)
   - [How to add your language on DatePicker](#how-to-add-your-language-on-datepicker)
+- [File Uploading](#file-uploading)
+  - [Image Resize](#image-resize)
+  - [Storage Rules](#storage-rules)
+  - [Setting up your storage](#setting-up-your-storage)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -147,6 +151,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [Sharp](https://github.com/lovell/sharp) (★ 15.8k) high performance Node.js image processing.
 - [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
 - [Fs-extra](https://github.com/jprichardson/node-fs-extra) (★ 6.6k) Node.js: extra methods for the fs object like copy(), remove(), mkdirs().
+- [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
 
 ## Prerequisites
 
@@ -568,6 +573,24 @@ const date = Date.now();
 - Import your language from `date-fns/locale/[yourlanguage]`
 - Add another **registerLocale** with your language as the first parameter and the import from `date-fns` as second parameter.
 - Place your language with its date format on **dateFormat**.
+
+## File Uploading
+
+### Image Resize
+
+For resizing images uploaded to our storage, we decided to add [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images), it is a Plugin made by Firebase for image resize, this plugin allows you to set sizes for resized images, deletion of the original upload, and two optional settings, Cloud Storage path for resized images and Cache-Control header for resized images.
+
+### Storage Rules
+
+To make images reachable, we needed to set our storage rules to allow users to `write` on the storage made for the user logo, only if they are authenticated, but they can always `read`, this was set for saving the user´s logo path on the database.
+
+### Setting up your storage
+
+Paste `'https://firebasestorage.googleapis.com/v0/b/${REACT_APP_FIRE_BASE_STORAGE_BUCKET}'` into the `REACT_APP_FIRE_BASE_STORAGE_API` environment variable in your `.env` file.
+
+**Should look like this**
+
+`REACT_APP_FIRE_BASE_STORAGE_API = 'https://firebasestorage.googleapis.com/v0/b/${REACT_APP_FIRE_BASE_STORAGE_BUCKET}'`
 
 ## Contributors
 
