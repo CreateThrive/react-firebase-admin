@@ -15,6 +15,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
 - [Features](#features)
@@ -57,7 +58,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [How to translate a Text with a variable](#how-to-translate-a-text-with-a-variable)
   - [How to internationalize a Date](#how-to-internationalize-a-date)
   - [How to add your language on DatePicker](#how-to-add-your-language-on-datepicker)
-- [File Uploading](#file-uploading)
+- [File Upload](#file-upload)
   - [Image Resize](#image-resize)
   - [Storage Rules](#storage-rules)
 - [Contributors](#contributors)
@@ -576,9 +577,9 @@ const date = Date.now();
 - Add another **registerLocale** with your language as the first parameter and the import from `date-fns` as second parameter.
 - Place your language with its date format on **dateFormat**.
 
-## File Uploading
+## File Upload
 
-For file uploading, we used the [Firebase Client](https://firebase.google.com/docs/storage/web/upload-files?authuser=1#upload_files) in conjuntion with **Firebase Storage**. We store the users profile images in a subfolder called `/users`. Besides, we decided to use the firebase storage as a bucket to store files.
+For file upload, we used the [Firebase Client](https://firebase.google.com/docs/storage/web/upload-files?authuser=1#upload_files) together with **Firebase Storage**. We store the users profile image in a subfolder named `/users`.
 
 ### Image Resize
 
