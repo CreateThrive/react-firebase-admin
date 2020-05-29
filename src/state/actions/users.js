@@ -71,28 +71,36 @@ export const fetchUsers = () => {
   };
 };
 
-const deleteLogo = async id => {
-  const basePath = 'users/';
-  const userRef = firebase.database().ref(`${basePath}${id}`);
-  const oldLogo = (await userRef.child('logoUrl').once('value')).val();
+const deleteLogo = async oldLogo => {
   if (oldLogo) {
-    const fileExtension = oldLogo
-      .split('.')
+    const logoPath = oldLogo
+      .split('users%2F')
       .pop()
-      .split('?')[0];
+      .split('?alt=media')
+      .shift();
     await firebase
       .storage()
-      .ref(`${basePath}${id}_200x200.${fileExtension}`)
+      .ref(`users/${logoPath}`)
       .delete();
   }
 };
 
 export const deleteUser = id => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
+    const { logoUrl } = getState()
+      .users.data.filter(user => user.id === id)
+      .pop();
+
+    const deleteLogoTask = deleteLogo(logoUrl);
+
+    const deleteUserTask = firebase
+      .database()
+      .ref(`users/${id}`)
+      .remove();
 
     try {
-      await deleteLogo(id);
+      await Promise.all([deleteLogoTask, deleteUserTask]);
     } catch (error) {
       const errorMessage = firebaseError(error.code);
       toastr.error('', errorMessage);
@@ -103,9 +111,6 @@ export const deleteUser = id => {
       );
     }
 
-    const userRef = firebase.database().ref(`users/${id}`);
-
-    userRef.remove();
     toastr.success('', 'The user was deleted.');
     return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
   };
@@ -124,7 +129,14 @@ const uploadLogo = async (uid, file) => {
 
   const fileName = `${uid}.${fileExtension}`;
 
-  await storageRef.child(`users/${fileName}`).put(file);
+  return storageRef.child(`users/${fileName}`).put(file);
+};
+
+const getLogoUrl = (uid, file) => {
+  if (!file) {
+    return null;
+  }
+  const fileExtension = file.name.split('.').pop();
 
   const bucketUrl = `${process.env.REACT_APP_FIRE_BASE_STORAGE_API}`;
 
@@ -161,44 +173,35 @@ export const createUser = ({
 
     const { uid } = response.data;
 
-    let logoUrl = null;
+    let uploadLogoTask = null;
     if (file) {
-      try {
-        logoUrl = await uploadLogo(uid, file);
-      } catch (error) {
-        const errorMessage = firebaseError(error.code);
-        toastr.error('', errorMessage);
-        return dispatch(
-          USERS_CREATE_USER_FAIL({
-            error: errorMessage
-          })
-        );
-      }
+      uploadLogoTask = uploadLogo(uid, file);
     }
-    try {
-      await firebase
-        .database()
-        .ref(`users/${uid}`)
-        .set({ name, email, location, logoUrl, createdAt, isAdmin });
-    } catch (error) {
-      const errorMessage = firebaseError(error.code);
-      toastr.error('', errorMessage);
-      return dispatch(
-        USERS_CREATE_USER_FAIL({
-          error: errorMessage
-        })
-      );
-    }
+    const logoUrl = getLogoUrl(uid, file);
+
+    const createUserDbTask = firebase
+      .database()
+      .ref(`users/${uid}`)
+      .set({ name, email, location, logoUrl, createdAt, isAdmin });
 
     const actionCodeSettings = {
       url: process.env.REACT_APP_LOGIN_PAGE_URL,
       handleCodeInApp: true
     };
 
+    const sendSignInLinkToEmailTask = firebase
+      .auth()
+      .sendSignInLinkToEmail(email, actionCodeSettings);
+
     try {
-      await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
+      await Promise.all([
+        uploadLogoTask,
+        createUserDbTask,
+        sendSignInLinkToEmailTask
+      ]);
     } catch (error) {
       const errorMessage = firebaseError(error.code);
+      toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
           error: errorMessage
@@ -221,34 +224,18 @@ export const modifyUser = ({
   isEditing,
   isProfile
 }) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(USERS_MODIFY_USER_INIT());
+    const { logoUrl } = getState()
+      .users.data.filter(user => user.id === id)
+      .pop();
 
-    let logoUrl = null;
+    let deleteLogoTask;
+    let uploadLogoTask;
+    const newLogoUrl = getLogoUrl(id, file);
     if (file) {
-      try {
-        await deleteLogo(id);
-      } catch (error) {
-        const errorMessage = firebaseError(error.code);
-        toastr.error('', errorMessage);
-        return dispatch(
-          USERS_MODIFY_USER_FAIL({
-            error: errorMessage
-          })
-        );
-      }
-    }
-
-    try {
-      logoUrl = await uploadLogo(id, file);
-    } catch (error) {
-      const errorMessage = firebaseError(error.code);
-      toastr.error('', errorMessage);
-      return dispatch(
-        USERS_MODIFY_USER_FAIL({
-          error: errorMessage
-        })
-      );
+      deleteLogoTask = deleteLogo(logoUrl);
+      uploadLogoTask = uploadLogo(id, file);
     }
 
     const userData = {
@@ -258,13 +245,15 @@ export const modifyUser = ({
       isAdmin
     };
 
-    if (logoUrl) userData.logoUrl = logoUrl;
+    if (logoUrl) userData.logoUrl = newLogoUrl;
+
+    const updateUserDbTask = firebase
+      .database()
+      .ref(`users/${id}`)
+      .update({ ...userData });
 
     try {
-      await firebase
-        .database()
-        .ref(`users/${id}`)
-        .update({ ...userData });
+      await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
     } catch (error) {
       const errorMessage = firebaseError(error.code);
       toastr.error('', errorMessage);

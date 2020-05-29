@@ -58,8 +58,9 @@ export const usersReducer = createReducer(
       loading: false,
       error: payload.error
     }),
-    [USERS_CLEAR_DATA]: () => ({
-      ...initialState
+    [USERS_CLEAR_DATA]: state => ({
+      ...initialState,
+      data: state.data
     }),
     [USERS_CREATE_USER_INIT]: state => ({
       ...state,
