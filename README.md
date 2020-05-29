@@ -139,12 +139,14 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 ### Cloud functions
 
 - [Express](https://github.com/expressjs/express) (★ 47.5k) fast, unopinionated, minimalist web framework for node.
+- [Cors](https://github.com/expressjs/cors) (★ 4.4k) Node.js CORS middleware.
 - [Firebase-admin](https://github.com/firebase/firebase-admin-node) (★ 790) Firebase Admin Node.js SDK.
 - [Firebase-functions](https://github.com/firebase/firebase-functions) (★ 658) Firebase SDK for Cloud Functions.
 - [@google-cloud/storage](https://github.com/googleapis/nodejs-storage) (★ 421) Node.js client for Google Cloud Storage.
 - [Firebase-function-tools](https://github.com/TarikHuber/react-most-wanted) (★ 780) a tool for naming and loading our Cloud Functions.
 - [Cookie-parser](https://github.com/expressjs/cookie-parser) (★ 1.4k) parse HTTP request cookies.
 - [Uuid](https://github.com/uuidjs/uuid) (★ 8.7k) generate RFC-compliant UUIDs in JavaScript.
+- [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
 - [Fs-extra](https://github.com/jprichardson/node-fs-extra) (★ 6.6k) Node.js: extra methods for the fs object like copy(), remove(), mkdirs().
 - [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
 
