@@ -66,5 +66,18 @@
   "UserForm.pickFile": "Elige un archivo",
   "UserForm.submit": "Enviar",
   "UserForm.goBack": "Regresar",
-  "UserForm.userPreview": "Vista previa del usuario"
+  "UserForm.userPreview": "Vista previa del usuario",
+  "auth/email-already-exists": "Email ya esta siendo usado",
+  "utils.emailInvalid": "El Email inválido",
+  "utils.invalidCredentials": "Credenciales inválidas",
+  "utils.userDisabled": "Usuario ",
+  "utils.manyRequest": "Demasiados intentos, intententelo más tarde",
+  "utils.expiredLink": "El link de invitación expiró, contáctese con su administrador",
+  "utils.serverError": "Error interno del servidor, contáctese con su administrador",
+  "utils.unauthenticated": "Sin autenticación, por favor autentíquese e intente de nuevo",
+  "utils.unauthorized": "Sin autorización, no se encuentra autorizado para realizar esta acción",
+  "utils.default": "Error desconocido, contáctese con su administrador",
+  "utils.safePassword": "Contraseña segura",
+  "utils.unsafePassword": "Contraseña insegura",
+  "utils.invalidEmail": "Email inválido"
 }

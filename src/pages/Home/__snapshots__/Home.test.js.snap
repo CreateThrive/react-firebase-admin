@@ -76,6 +76,20 @@ exports[`<Home /> rendering should render without crashing 1`] = `
       "Users.permDelete": "This will permanently delete the user. Action can not be undone.",
       "Users.search": "Search:",
       "Users.users": "Users",
+      "auth/email-already-exists": "Email already in use",
+      "auth/expired-action-code": "The invitation link has expired, get in touch with your administrator",
+      "auth/invalid-action-code": "The invitation link has expired, get in touch with your administrator",
+      "auth/invalid-email": "Email is invalid",
+      "auth/too-many-requests": "Too many attempts made, try again later",
+      "auth/user-disabled": "User disabled",
+      "auth/wrong-password": "Invalid credentials",
+      "storage/quota-exceeded": "Internal server error, get in touch with your administrator",
+      "storage/unauthenticated": "Unauthenticated, please authenticate and try again",
+      "storage/unauthorized": "Unauthorized, you are not authorized to perform this action",
+      "utils.default": "Unknown error, get in touch with your administrator",
+      "utils.invalidEmail": "Invalid email",
+      "utils.safePassword": "Safe password",
+      "utils.unsafePassword": "Unsafe password",
     }
   }
   onError={[Function]}
