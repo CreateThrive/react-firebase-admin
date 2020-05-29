@@ -58,8 +58,9 @@ export const usersReducer = createReducer(
       loading: false,
       error: payload.error
     }),
-    [USERS_CLEAR_DATA]: () => ({
-      ...initialState
+    [USERS_CLEAR_DATA]: state => ({
+      ...initialState,
+      data: state.data
     }),
     [USERS_CREATE_USER_INIT]: state => ({
       ...state,
@@ -89,7 +90,6 @@ export const usersReducer = createReducer(
             name: payload.user.name,
             location: payload.user.location,
             id: payload.id,
-            tenant: payload.user.tenant,
             logoUrl: payload.user.logoUrl,
             createdAt: payload.user.createdAt,
             email: elem.email

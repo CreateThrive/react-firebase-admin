@@ -122,9 +122,9 @@ export const fetchUserData = () => {
 
 export const checkUserData = () => {
   return (dispatch, getState) => {
-    const { tenant } = getState().auth.userData;
+    const { id } = getState().auth.userData;
 
-    if (!tenant) {
+    if (!id) {
       dispatch(fetchUserData());
     }
   };

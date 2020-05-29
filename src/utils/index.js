@@ -11,7 +11,10 @@ export const FIREBASE_RESPONSE = {
   USER_DISABLED: 'auth/user-disabled',
   TOO_MANY_REQUESTS: 'auth/too-many-requests',
   EXPIRED_ACTION_CODE: 'auth/expired-action-code',
-  INVALID_ACTION_CODE: 'auth/invalid-action-code'
+  INVALID_ACTION_CODE: 'auth/invalid-action-code',
+  QUOTA_EXCEEDED_STORAGE: 'storage/quota-exceeded',
+  UNAUTHENTICATED_STORAGE: 'storage/unauthenticated',
+  UNAUTHORIZED_STORAGE: 'storage/unauthorized'
 };
 
 export const firebaseError = error => {
@@ -43,6 +46,17 @@ export const firebaseError = error => {
     case FIREBASE_RESPONSE.INVALID_ACTION_CODE:
       errorMessage =
         'The invitation link has expired, get in touch with your administrator';
+      break;
+    case FIREBASE_RESPONSE.QUOTA_EXCEEDED_STORAGE:
+      errorMessage =
+        'Internal server error, get in touch with your administrator';
+      break;
+    case FIREBASE_RESPONSE.UNAUTHENTICATED_STORAGE:
+      errorMessage = 'Unauthenticated, please authenticate and try again.';
+      break;
+    case FIREBASE_RESPONSE.UNAUTHORIZED_STORAGE:
+      errorMessage =
+        'Unauthoriez, you are not authorized to perform this action.';
       break;
     default:
       errorMessage = 'Unknown error, get in touch with your administrator';

@@ -27,8 +27,7 @@ import {
 const initialState = {
   userData: {
     id: null,
-    isAdmin: null,
-    tenant: null
+    isAdmin: null
   },
   loading: false,
   error: null,
@@ -62,7 +61,6 @@ export const authReducer = createReducer(
         name: payload.name,
         location: payload.location,
         logoUrl: payload.logoUrl,
-        tenant: payload.tenant,
         createdAt: payload.createdAt
       },
       loading: false,
@@ -140,7 +138,6 @@ export const authReducer = createReducer(
         name: payload.name,
         location: payload.location,
         logoUrl: payload.logoUrl || state.userData.logoUrl,
-        tenant: payload.tenant,
         createdAt: payload.createdAt
       }
     })

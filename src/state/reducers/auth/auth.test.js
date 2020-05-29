@@ -28,8 +28,7 @@ describe('Auth reducer', () => {
   const initialState = {
     userData: {
       id: null,
-      isAdmin: null,
-      tenant: null
+      isAdmin: null
     },
     loading: false,
     error: null,
@@ -80,8 +79,7 @@ describe('Auth reducer', () => {
   it('should set the state with the corresponding payload, loading to false and error to null when AUTH_FETCH_USER_DATA_SUCCESS actions is fired', () => {
     const payload = {
       id: 'some user id',
-      isAdmin: false,
-      tenant: 'some sompanyId'
+      isAdmin: false
     };
 
     reducerTest(initialState, AUTH_FETCH_USER_DATA_SUCCESS(payload), {
@@ -206,7 +204,6 @@ describe('Auth reducer', () => {
       isAdmin: false,
       name: 'some name',
       location: 'some location',
-      tenant: 'some tenantId',
       createdAt: '11/20/2020'
     };
     reducerTest(initialState, AUTH_UPDATE_USER_DATA({ ...userData }), {
