@@ -71,18 +71,16 @@ export const fetchUsers = () => {
   };
 };
 
-const deleteLogo = async oldLogo => {
-  if (oldLogo) {
-    const logoPath = oldLogo
-      .split('users%2F')
-      .pop()
-      .split('?alt=media')
-      .shift();
-    await firebase
-      .storage()
-      .ref(`users/${logoPath}`)
-      .delete();
-  }
+const deleteLogo = oldLogo => {
+  const logoPath = oldLogo
+    .split('users%2F')
+    .pop()
+    .split('?alt=media')
+    .shift();
+  return firebase
+    .storage()
+    .ref(`users/${logoPath}`)
+    .delete();
 };
 
 export const deleteUser = id => {
@@ -92,7 +90,7 @@ export const deleteUser = id => {
       .users.data.filter(user => user.id === id)
       .pop();
 
-    const deleteLogoTask = deleteLogo(logoUrl);
+    const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
 
     const deleteUserTask = firebase
       .database()
@@ -122,7 +120,7 @@ export const clearUsersData = () => {
   };
 };
 
-const uploadLogo = async (uid, file) => {
+const uploadLogo = (uid, file) => {
   const storageRef = firebase.storage().ref();
 
   const fileExtension = file.name.split('.').pop();
@@ -133,9 +131,6 @@ const uploadLogo = async (uid, file) => {
 };
 
 const getLogoUrl = (uid, file) => {
-  if (!file) {
-    return null;
-  }
   const fileExtension = file.name.split('.').pop();
 
   const bucketUrl = `${process.env.REACT_APP_FIRE_BASE_STORAGE_API}`;
@@ -174,10 +169,11 @@ export const createUser = ({
     const { uid } = response.data;
 
     let uploadLogoTask = null;
+    let logoUrl = null;
     if (file) {
+      logoUrl = getLogoUrl(uid, file);
       uploadLogoTask = uploadLogo(uid, file);
     }
-    const logoUrl = getLogoUrl(uid, file);
 
     const createUserDbTask = firebase
       .database()
@@ -229,12 +225,12 @@ export const modifyUser = ({
     const { logoUrl } = getState()
       .users.data.filter(user => user.id === id)
       .pop();
-
     let deleteLogoTask;
     let uploadLogoTask;
-    const newLogoUrl = getLogoUrl(id, file);
+    let newLogoUrl = null;
     if (file) {
-      deleteLogoTask = deleteLogo(logoUrl);
+      newLogoUrl = getLogoUrl(id, file);
+      deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
       uploadLogoTask = uploadLogo(id, file);
     }
 
@@ -242,15 +238,14 @@ export const modifyUser = ({
       name,
       location,
       createdAt,
-      isAdmin
+      isAdmin,
+      logoUrl: newLogoUrl || logoUrl
     };
-
-    if (logoUrl) userData.logoUrl = newLogoUrl;
 
     const updateUserDbTask = firebase
       .database()
       .ref(`users/${id}`)
-      .update({ ...userData });
+      .update(userData);
 
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
