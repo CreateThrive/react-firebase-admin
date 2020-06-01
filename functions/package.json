@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^4.7.0",
-    "busboy": "^0.3.1",
     "camelcase": "^5.3.1",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
@@ -25,8 +24,6 @@
     "firebase-functions": "^3.6.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
-    "nodemailer": "^6.4.8",
-    "sharp": "^0.25.3",
     "uuid": "^7.0.3"
   },
   "devDependencies": {

@@ -404,7 +404,6 @@ UserForm.propTypes = {
     name: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     logoUrl: PropTypes.string,
-    tenant: PropTypes.string,
     createdAt: PropTypes.string.isRequired
   }),
   action: PropTypes.func.isRequired

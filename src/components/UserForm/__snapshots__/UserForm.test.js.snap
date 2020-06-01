@@ -132,7 +132,6 @@ exports[`<UserForm /> rendering should render without crashing 1`] = `
             "location": "Montevideo, Uruguay",
             "logoUrl": "some logoUrl",
             "name": "Mateo",
-            "tenant": "some tenantId",
           }
         }
       />

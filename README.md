@@ -15,6 +15,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
 - [Features](#features)
@@ -57,6 +58,9 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [How to translate a Text with a variable](#how-to-translate-a-text-with-a-variable)
   - [How to internationalize a Date](#how-to-internationalize-a-date)
   - [How to add your language on DatePicker](#how-to-add-your-language-on-datepicker)
+- [File Upload](#file-upload)
+  - [Image Resize](#image-resize)
+  - [Storage Rules](#storage-rules)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -136,17 +140,15 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 
 - [Express](https://github.com/expressjs/express) (★ 47.5k) fast, unopinionated, minimalist web framework for node.
 - [Cors](https://github.com/expressjs/cors) (★ 4.4k) Node.js CORS middleware.
-- [Nodemailer](https://github.com/nodemailer/nodemailer) (★ 12.2k) send e-mails with Node.js.
 - [Firebase-admin](https://github.com/firebase/firebase-admin-node) (★ 790) Firebase Admin Node.js SDK.
 - [Firebase-functions](https://github.com/firebase/firebase-functions) (★ 658) Firebase SDK for Cloud Functions.
 - [@google-cloud/storage](https://github.com/googleapis/nodejs-storage) (★ 421) Node.js client for Google Cloud Storage.
 - [Firebase-function-tools](https://github.com/TarikHuber/react-most-wanted) (★ 780) a tool for naming and loading our Cloud Functions.
 - [Cookie-parser](https://github.com/expressjs/cookie-parser) (★ 1.4k) parse HTTP request cookies.
 - [Uuid](https://github.com/uuidjs/uuid) (★ 8.7k) generate RFC-compliant UUIDs in JavaScript.
-- [Busboy](https://github.com/mscdex/busboy) (★ 1.8k) a streaming parser for HTML form data for Node.js.
-- [Sharp](https://github.com/lovell/sharp) (★ 15.8k) high performance Node.js image processing.
 - [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
 - [Fs-extra](https://github.com/jprichardson/node-fs-extra) (★ 6.6k) Node.js: extra methods for the fs object like copy(), remove(), mkdirs().
+- [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
 
 ## Prerequisites
 
@@ -174,7 +176,7 @@ Run the following commands in the root of the repository:
 - `npm install -g firebase-tools`
 - `firebase init`
 
-Select the firebase project you created in the previous step, when prompted select the services you want to setup and check **_Database_**, **_Functions_** and **_Hosting_**.
+Select the firebase project you created in the previous step, when prompted select the services you want to setup and check **_Database_**, **_Functions_**, **_Hosting_** and **_Storage_**.
 
 **_Database_**:
 
@@ -200,6 +202,9 @@ Run the following commands in the `functions/` folder (Using Node v8.17.0):
 You'll get prompted to enter the path to you service account key file. To generate it, go to your **_Firebase Dashboard_**, **_Project settings_** tab and then to **_Service accounts_** option, right there you can generate your private key (more info on this [here](https://firebase.google.com/docs/admin/setup#initialize-sdk)).
 
 You'll need to enter the **_email_** and **_password_** for the admin account of the admin dashboard. With this in place, you've successfully created your admin account for the dashboard.
+
+**_Storage_**
+-For the file we should use for the Storage Rules select storage.rules.
 
 ### Setting up the React frontend
 
@@ -568,6 +573,53 @@ const date = Date.now();
 - Import your language from `date-fns/locale/[yourlanguage]`
 - Add another **registerLocale** with your language as the first parameter and the import from `date-fns` as second parameter.
 - Place your language with its date format on **dateFormat**.
+
+## File Upload
+
+For file upload, we used the [Firebase Client](https://firebase.google.com/docs/storage/web/upload-files?authuser=1#upload_files) together with **Firebase Storage** for our storage needs. We store the users profile image in a subfolder named `/users`.
+
+### Image Resize
+
+We use [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) for resizing every image uploaded to the storage.
+Every image uploaded to the storage is resized to our size preference (`200px x 200px`).
+
+**Setting your image resize**
+
+If you want to install it from the cmd, you can execute:
+
+```javascript
+firebase ext:install storage-resize-images --project=projectId
+```
+
+Wih your own `projectId`
+
+<ol>
+<li>Go to your Firebase Proyect on <a href= "https://console.firebase.google.com/u/1/">Firebase Console</a> </li>
+<li>Select extensions from the sidebar</li>
+<li>Search for Resize Images extension</li>
+<li>Click install on the extension</li>
+<li>On extension configuration set sizes of resized images to 200x200 and the deletion of original file to true</li>
+<li>Click on install extension</li>
+</ol>
+
+In case you do not want to upload a resized version and upload the original file, you should avoid step **5**.
+
+### Storage Rules
+
+To make images reachable, we needed to set our storage rules to allow users to `write` on the storage made for the user logo, only if they are authenticated, but they can always `read`, this was set for saving the user´s logo path on the database.
+
+**Should look like this**
+
+```javascript
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{imageId} {
+      allow write: if request.auth!=null;
+      allow read: if true;
+    }
+  }
+}
+```
 
 ## Contributors
 
