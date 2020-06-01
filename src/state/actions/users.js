@@ -228,9 +228,12 @@ export const modifyUser = ({
   return async (dispatch, getState) => {
     dispatch(USERS_MODIFY_USER_INIT());
     const { locale } = getState().preferences;
-    const { logoUrl } = getState()
-      .users.data.filter(user => user.id === id)
-      .pop();
+    const { logoUrl } = isProfile
+      ? getState().auth.userData
+      : getState()
+          .users.data.filter(user => user.id === id)
+          .pop();
+
     let deleteLogoTask;
     let uploadLogoTask;
     let newLogoUrl = null;
