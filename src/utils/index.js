@@ -1,3 +1,5 @@
+import { createIntl, createIntlCache } from 'react-intl';
+
 import english from 'languages/en';
 import spanish from 'languages/es';
 import en from 'assets/en.png';
@@ -17,52 +19,28 @@ export const FIREBASE_RESPONSE = {
   UNAUTHORIZED_STORAGE: 'storage/unauthorized'
 };
 
-export const firebaseError = error => {
-  let errorMessage = '';
+export const messages = {
+  en: english,
+  es: spanish
+};
 
-  switch (error) {
-    case FIREBASE_RESPONSE.EMAIL_IN_USE:
-      errorMessage = 'Email already in use';
-      break;
-    case FIREBASE_RESPONSE.EMAIL_INVALID:
-      errorMessage = 'Email is invalid';
-      break;
-    case FIREBASE_RESPONSE.EMAIL_NOT_FOUND:
-      errorMessage = 'Invalid credentials';
-      break;
-    case FIREBASE_RESPONSE.PASSWORD_INVALID:
-      errorMessage = 'Invalid credentials';
-      break;
-    case FIREBASE_RESPONSE.USER_DISABLED:
-      errorMessage = 'User disabled';
-      break;
-    case FIREBASE_RESPONSE.TOO_MANY_REQUESTS:
-      errorMessage = 'Too many attempts made, try again later';
-      break;
-    case FIREBASE_RESPONSE.EXPIRED_ACTION_CODE:
-      errorMessage =
-        'The invitation link has expired, get in touch with your administrator';
-      break;
-    case FIREBASE_RESPONSE.INVALID_ACTION_CODE:
-      errorMessage =
-        'The invitation link has expired, get in touch with your administrator';
-      break;
-    case FIREBASE_RESPONSE.QUOTA_EXCEEDED_STORAGE:
-      errorMessage =
-        'Internal server error, get in touch with your administrator';
-      break;
-    case FIREBASE_RESPONSE.UNAUTHENTICATED_STORAGE:
-      errorMessage = 'Unauthenticated, please authenticate and try again.';
-      break;
-    case FIREBASE_RESPONSE.UNAUTHORIZED_STORAGE:
-      errorMessage =
-        'Unauthoriez, you are not authorized to perform this action.';
-      break;
-    default:
-      errorMessage = 'Unknown error, get in touch with your administrator';
-  }
+const getIntlContext = locale => {
+  const cache = createIntlCache();
+  return createIntl(
+    {
+      locale,
+      messages: messages[locale]
+    },
+    cache
+  );
+};
 
-  return errorMessage;
+export const firebaseError = (error, locale) => {
+  const intl = getIntlContext(locale);
+  return intl.formatMessage({
+    id: error,
+    defaultMessage: messages[locale]['utils.default']
+  });
 };
 
 export const validateEmail = email => {
@@ -72,7 +50,7 @@ export const validateEmail = email => {
   );
 };
 
-export const inputValidations = (email, password) => {
+export const inputValidations = (email, password, locale) => {
   let inputs = {
     email: {
       modifier: null,
@@ -84,6 +62,7 @@ export const inputValidations = (email, password) => {
     },
     canSubmit: null
   };
+  const intl = getIntlContext(locale);
 
   const setInputs = (key, value) => {
     inputs = { ...inputs, [`${key}`]: value };
@@ -94,7 +73,7 @@ export const inputValidations = (email, password) => {
   if (email && !isValidEmail) {
     setInputs('email', {
       modifier: 'is-danger',
-      message: 'Invalid email'
+      message: intl.formatMessage({ id: 'utils.invalidEmail' })
     });
   }
 
@@ -103,12 +82,12 @@ export const inputValidations = (email, password) => {
   if (isValidPassword) {
     setInputs('password', {
       modifier: 'is-success',
-      message: 'Safe password'
+      message: intl.formatMessage({ id: 'utils.safePassword' })
     });
   } else if (password) {
     setInputs('password', {
       modifier: 'is-danger',
-      message: 'Unsafe password'
+      message: intl.formatMessage({ id: 'utils.unsafePassword' })
     });
   }
 
@@ -117,11 +96,6 @@ export const inputValidations = (email, password) => {
   }
 
   return inputs;
-};
-
-export const messages = {
-  en: english,
-  es: spanish
 };
 
 export const availableLocales = Object.keys(messages);

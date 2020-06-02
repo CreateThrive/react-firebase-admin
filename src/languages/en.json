@@ -66,5 +66,19 @@
   "UserForm.pickFile": "Pick a file",
   "UserForm.submit": "Submit",
   "UserForm.goBack": "Go Back",
-  "UserForm.userPreview": "User Preview"
+  "UserForm.userPreview": "User Preview",
+  "auth/email-already-exists": "Email already in use",
+  "auth/invalid-email": "Email is invalid",
+  "auth/wrong-password": "Invalid credentials",
+  "auth/user-disabled": "User disabled",
+  "auth/too-many-requests": "Too many attempts made, try again later",
+  "auth/expired-action-code": "The invitation link has expired, get in touch with your administrator",
+  "auth/invalid-action-code": "The invitation link has expired, get in touch with your administrator",
+  "storage/quota-exceeded": "Internal server error, get in touch with your administrator",
+  "storage/unauthenticated": "Unauthenticated, please authenticate and try again",
+  "storage/unauthorized": "Unauthorized, you are not authorized to perform this action",
+  "utils.default": "Unknown error, get in touch with your administrator",
+  "utils.safePassword": "Safe password",
+  "utils.unsafePassword": "Unsafe password",
+  "utils.invalidEmail": "Invalid email"
 }

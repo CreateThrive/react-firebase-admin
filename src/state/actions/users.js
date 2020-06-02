@@ -86,6 +86,7 @@ const deleteLogo = oldLogo => {
 export const deleteUser = id => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
+    const { locale } = getState().preferences;
     const { logoUrl } = getState()
       .users.data.filter(user => user.id === id)
       .pop();
@@ -100,7 +101,7 @@ export const deleteUser = id => {
     try {
       await Promise.all([deleteLogoTask, deleteUserTask]);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_DELETE_USER_FAIL({
@@ -146,8 +147,9 @@ export const createUser = ({
   createdAt,
   isAdmin
 }) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(USERS_CREATE_USER_INIT());
+    const { locale } = getState().preferences;
 
     const user = firebase.auth().currentUser;
 
@@ -157,7 +159,10 @@ export const createUser = ({
     try {
       response = await axios(userToken).post('/users', { email, isAdmin });
     } catch (error) {
-      const errorMessage = firebaseError(error.response.data.error.code);
+      const errorMessage = firebaseError(
+        error.response.data.error.code,
+        locale
+      );
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
@@ -196,7 +201,7 @@ export const createUser = ({
         sendSignInLinkToEmailTask
       ]);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
@@ -222,6 +227,7 @@ export const modifyUser = ({
 }) => {
   return async (dispatch, getState) => {
     dispatch(USERS_MODIFY_USER_INIT());
+    const { locale } = getState().preferences;
     const { logoUrl } = getState()
       .users.data.filter(user => user.id === id)
       .pop();
@@ -230,7 +236,7 @@ export const modifyUser = ({
     let newLogoUrl = null;
     if (file) {
       newLogoUrl = getLogoUrl(id, file);
-      deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
+      deleteLogoTask = logoUrl && deleteLogo(logoUrl);
       uploadLogoTask = uploadLogo(id, file);
     }
 
@@ -250,7 +256,7 @@ export const modifyUser = ({
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_MODIFY_USER_FAIL({
