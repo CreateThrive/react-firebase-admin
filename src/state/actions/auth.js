@@ -131,20 +131,23 @@ export const checkUserData = () => {
 };
 
 export const auth = (email, password) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_SIGN_IN_INIT());
-
+    const { locale } = getState().preferences;
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
     }
 
     const { emailVerified } = firebase.auth().currentUser;
 
     if (!emailVerified) {
-      const errorMessage = firebaseError(FIREBASE_RESPONSE.USER_DISABLED);
+      const errorMessage = firebaseError(
+        FIREBASE_RESPONSE.USER_DISABLED,
+        locale
+      );
       return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
     }
 
@@ -153,13 +156,14 @@ export const auth = (email, password) => {
 };
 
 export const setPassword = (email, password, url) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_SET_PASSWORD_INIT());
+    const { locale } = getState().preferences;
 
     try {
       await firebase.auth().signInWithEmailLink(email, url);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_SET_PASSWORD_FAIL({ error: errorMessage }));
     }
 
@@ -168,7 +172,7 @@ export const setPassword = (email, password, url) => {
     try {
       await user.updatePassword(password);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_SET_PASSWORD_FAIL({ error: errorMessage }));
     }
 
@@ -179,13 +183,14 @@ export const setPassword = (email, password, url) => {
 };
 
 export const resetPassword = email => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_RESET_PASSWORD_INIT());
+    const { locale } = getState().preferences;
 
     try {
       await firebase.auth().sendPasswordResetEmail(email);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_RESET_PASSWORD_FAIL({ error: errorMessage }));
     }
 
@@ -196,8 +201,9 @@ export const resetPassword = email => {
 export const authCleanUp = () => dispatch => dispatch(AUTH_CLEAN_UP());
 
 export const changeUserPassword = (currentPassword, newPassword) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_CHANGE_PASSWORD_INIT());
+    const { locale } = getState().preferences;
 
     const user = firebase.auth().currentUser;
 
@@ -211,7 +217,7 @@ export const changeUserPassword = (currentPassword, newPassword) => {
     try {
       await user.reauthenticateWithCredential(credential);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(AUTH_CHANGE_PASSWORD_FAIL({ error: errorMessage }));
     }
@@ -219,7 +225,7 @@ export const changeUserPassword = (currentPassword, newPassword) => {
     try {
       await user.updatePassword(newPassword);
     } catch (error) {
-      const errorMessage = firebaseError(error);
+      const errorMessage = firebaseError(error, locale);
       toastr.error('', errorMessage);
       return dispatch(AUTH_CHANGE_PASSWORD_FAIL({ error: errorMessage }));
     }

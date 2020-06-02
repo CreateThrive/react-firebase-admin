@@ -10,11 +10,12 @@ import paths from '../Router/paths';
 import classes from './Login.module.scss';
 
 const Login = () => {
-  const { error, isAuth, loading } = useSelector(
+  const { error, isAuth, loading, locale } = useSelector(
     state => ({
       error: state.auth.error,
       isAuth: !!state.auth.userData.id,
-      loading: state.auth.loading
+      loading: state.auth.loading,
+      locale: state.preferences.locale
     }),
     shallowEqual
   );
@@ -61,7 +62,7 @@ const Login = () => {
   const modifierLoading = loading && 'is-loading';
 
   const inputs = isEmailLink
-    ? inputValidations(authData.email, authData.password)
+    ? inputValidations(authData.email, authData.password, locale)
     : {
         email: {
           modifier: null,
