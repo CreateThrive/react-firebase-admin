@@ -2,8 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 
+import 'bulma/css/bulma.min.css';
+import 'bulma-social/bin/bulma-social.min.css';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import firebase from 'firebase.js';
-import { auth, setPassword, authCleanUp } from 'state/actions/auth';
+import {
+  auth,
+  setPassword,
+  authCleanUp,
+  authFacebook
+} from 'state/actions/auth';
 import { useChangeHandler, useFormatMessage } from 'hooks';
 import { inputValidations } from 'utils';
 import paths from '../Router/paths';
@@ -61,6 +71,10 @@ const Login = () => {
 
   const modifierLoading = loading && 'is-loading';
 
+  const onFacebookHandler = () => {
+    dispatch(authFacebook());
+  };
+
   const inputs = isEmailLink
     ? inputValidations(authData.email, authData.password, locale)
     : {
@@ -104,6 +118,20 @@ const Login = () => {
                   </p>
                 </header>
                 <div className="card-content">
+                  <div className="field is-grouped">
+                    <div className="control button ">
+                      <a
+                        className={`${modifierLoading}`}
+                        onClick={onFacebookHandler}
+                      >
+                        <span className="icon">
+                          <i className="fab fa-facebook" />
+                        </span>
+                        <span>{useFormatMessage('Login.facebook')}</span>
+                      </a>
+                    </div>
+                  </div>
+                  <hr />
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
                       <p className="label">{useFormatMessage('Login.email')}</p>
@@ -143,7 +171,6 @@ const Login = () => {
                         </p>
                       )}
                     </div>
-                    <hr />
                     <div className="field is-grouped">
                       <div className="control">
                         <button
