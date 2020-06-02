@@ -2,7 +2,6 @@
 /* eslint-disable global-require */
 const admin = require('firebase-admin');
 const readline = require('readline');
-const uuid = require('uuid/v4');
 
 const rl = readline.createInterface({
   input: process.stdin,
