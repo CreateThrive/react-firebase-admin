@@ -19,7 +19,10 @@ import {
   AUTH_CHANGE_PASSWORD_INIT,
   AUTH_CHANGE_PASSWORD_SUCCESS,
   AUTH_CHANGE_PASSWORD_FAIL,
-  AUTH_UPDATE_USER_DATA
+  AUTH_UPDATE_USER_DATA,
+  AUTH_FACEBOOK_FAIL,
+  AUTH_FACEBOOK_INIT,
+  AUTH_FACEBOOK_SUCCESS
 } from 'state/actions/auth';
 
 import { authReducer } from '.';
@@ -212,5 +215,28 @@ describe('Auth reducer', () => {
         ...userData
       }
     });
+  });
+
+  it('should set loading to true when AUTH_FACEBOOK_INIT action is fired', () => {
+    reducerTest(initialState, AUTH_FACEBOOK_INIT(), {
+      ...initialState,
+      loading: true
+    });
+  });
+
+  it('should set loading to false and error to null when AUTH_FACEBOOK_SUCCESS action is fired', () => {
+    reducerTest(
+      { ...initialState, loading: true },
+      AUTH_FACEBOOK_SUCCESS(),
+      initialState
+    );
+  });
+
+  it('should set loading to false and error with the corresponding payload when AUTH_FACEBOOK_FAIL action is fired', () => {
+    reducerTest(
+      { ...initialState, loading: true },
+      AUTH_FACEBOOK_FAIL({ error: 'sample error' }),
+      { ...initialState, error: 'sample error' }
+    );
   });
 });
