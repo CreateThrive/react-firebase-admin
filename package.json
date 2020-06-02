@@ -8,7 +8,7 @@
     "classnames": "^2.2.6",
     "cookies-js": "^1.2.3",
     "date-fns": "^2.14.0",
-    "firebase": "^7.14.5",
+    "firebase": "^7.14.6",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-datepicker": "^2.16.0",
