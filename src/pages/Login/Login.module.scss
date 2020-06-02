@@ -1,8 +1,15 @@
 .errorMessage {
   margin: 0.7rem 0 0 0;
 }
-
-.forgot-password {
-  display: block;
-  margin: 1rem 0 0 0;
+.socialButtons {
+  flex-direction: column;
+}
+.socialButton {
+  border-radius: 4px;
+  padding: calc(0.375em - 1px) .75em calc(0.375em - 1px) .75em;
+  margin: 5px;
+  text-align: center;
+}
+.icon {
+  margin-right: 5px;
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -75,6 +77,14 @@ const Login = () => {
     dispatch(authFacebook());
   };
 
+  const onGoogleHandler = () => {
+    alert('Coming soon');
+  };
+
+  const onMicrosoftHandler = () => {
+    alert('Coming soon');
+  };
+
   const inputs = isEmailLink
     ? inputValidations(authData.email, authData.password, locale)
     : {
@@ -118,20 +128,6 @@ const Login = () => {
                   </p>
                 </header>
                 <div className="card-content">
-                  <div className="field is-grouped">
-                    <div className="control button ">
-                      <a
-                        className={`${modifierLoading}`}
-                        onClick={onFacebookHandler}
-                      >
-                        <span className="icon">
-                          <i className="fab fa-facebook" />
-                        </span>
-                        <span>{useFormatMessage('Login.facebook')}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <hr />
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
                       <p className="label">{useFormatMessage('Login.email')}</p>
@@ -171,6 +167,7 @@ const Login = () => {
                         </p>
                       )}
                     </div>
+                    <br />
                     <div className="field is-grouped">
                       <div className="control">
                         <button
@@ -198,6 +195,36 @@ const Login = () => {
                       </p>
                     )}
                   </form>
+                  <hr />
+                  <div className={`${classes.socialButtons} field is-grouped`}>
+                    <a
+                      className={`${classes.socialButton} is-facebook`}
+                      onClick={onFacebookHandler}
+                    >
+                      <span className={`${classes.icon} icon`}>
+                        <i className="fab fa-facebook" />
+                      </span>
+                      <span>{useFormatMessage('Login.facebook')}</span>
+                    </a>
+                    <a
+                      className={`${classes.socialButton} is-google`}
+                      onClick={onGoogleHandler}
+                    >
+                      <span className={`${classes.icon} icon`}>
+                        <i className="fab fa-google" />
+                      </span>
+                      <span>{useFormatMessage('Login.google')}</span>
+                    </a>
+                    <a
+                      className={`${classes.socialButton} is-microsoft`}
+                      onClick={onMicrosoftHandler}
+                    >
+                      <span className={`${classes.icon} icon`}>
+                        <i className="fab fa-microsoft" />
+                      </span>
+                      <span>{useFormatMessage('Login.microsoft')}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

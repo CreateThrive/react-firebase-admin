@@ -249,7 +249,6 @@ export const authFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider();
 
     provider.addScope('email');
-    provider.addScope('user_birthday');
     provider.addScope('user_location');
 
     let result;

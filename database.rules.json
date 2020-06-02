@@ -5,8 +5,8 @@
         ".write": "auth !== null && (auth.token.email_verified === true || auth.provider === 'facebook') && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)",
         ".read": "auth !== null && (auth.token.email_verified === true || auth.provider === 'facebook') && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)"
       },
-      ".write": "auth !== null && (auth.token.email_verified === true && auth.token.isAdmin === true || auth.provider === 'facebook')",
-      ".read": "auth !== null && (auth.token.email_verified === true && auth.token.isAdmin === true || auth.provider === 'facebook')"
+      ".write": "auth !== null && (auth.token.email_verified === true || auth.provider === 'facebook') && auth.token.isAdmin === true",
+      ".read": "auth !== null && (auth.token.email_verified === true || auth.provider === 'facebook') && auth.token.isAdmin === true"
     }
   }
 }

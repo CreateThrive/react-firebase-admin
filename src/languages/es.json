@@ -8,6 +8,8 @@
   "Login.setPassword": "Establecer contraseña",
   "Login.forgotPassword": "Olvido su contraseña?",
   "Login.facebook": "Continuar con Facebook",
+  "Login.google": "Continuar con Google",
+  "Login.microsoft": "Continuar con Microsoft",
   "NotFound.404": "Error 404: página no encontrada",
   "NotFound.url": "El URL {url} no fue encontrado",
   "NotFound.back": "Regresar",
