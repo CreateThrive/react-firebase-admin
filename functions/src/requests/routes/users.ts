@@ -9,9 +9,11 @@ const router = Router();
 const createUserAuth = async (email: string, isAdmin: boolean) => {
   const { uid } = await auth().createUser({ email, password: uuid() });
 
-  return auth().setCustomUserClaims(uid, {
+  await auth().setCustomUserClaims(uid, {
     isAdmin
   });
+
+  return uid;
 };
 
 router.post('/', (request, response) => {
