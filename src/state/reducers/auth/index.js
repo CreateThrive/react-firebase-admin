@@ -148,8 +148,17 @@ export const authReducer = createReducer(
       ...state,
       loading: true
     }),
-    [AUTH_FACEBOOK_SUCCESS]: state => ({
+    [AUTH_FACEBOOK_SUCCESS]: (state, payload) => ({
       ...state,
+      userData: {
+        id: payload.id,
+        isAdmin: payload.isAdmin,
+        email: payload.email,
+        name: payload.name,
+        location: payload.location,
+        logoUrl: payload.logoUrl,
+        createdAt: payload.createdAt
+      },
       error: null,
       loading: false
     }),

@@ -224,12 +224,18 @@ describe('Auth reducer', () => {
     });
   });
 
-  it('should set loading to false and error to null when AUTH_FACEBOOK_SUCCESS action is fired', () => {
-    reducerTest(
-      { ...initialState, loading: true },
-      AUTH_FACEBOOK_SUCCESS(),
-      initialState
-    );
+  it('should set the state with the corresponding payload, loading to false and error to null when AUTH_FACEBOOK_SUCCESS actions is fired', () => {
+    const payload = {
+      id: 'some user id',
+      isAdmin: false
+    };
+
+    reducerTest(initialState, AUTH_FACEBOOK_SUCCESS(payload), {
+      ...initialState,
+      userData: {
+        ...payload
+      }
+    });
   });
 
   it('should set loading to false and error with the corresponding payload when AUTH_FACEBOOK_FAIL action is fired', () => {

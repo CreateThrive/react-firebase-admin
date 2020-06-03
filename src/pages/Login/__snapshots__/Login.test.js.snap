@@ -28,7 +28,9 @@ exports[`<Login /> rendering should render without crashing 1`] = `
       "Login.email": "E-mail Address",
       "Login.facebook": "Continue with Facebook",
       "Login.forgotPassword": "Forgot Password?",
+      "Login.google": "Continue with Google",
       "Login.login": "Login",
+      "Login.microsoft": "Continue with Microsoft",
       "Login.password": "Password",
       "Login.setNewPassword": "Set your new password",
       "Login.setPassword": "Set Password",
@@ -177,30 +179,6 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                       <div
                         className="card-content"
                       >
-                        <div
-                          className="field is-grouped"
-                        >
-                          <div
-                            className="control button "
-                          >
-                            <a
-                              className="undefined"
-                              onClick={[Function]}
-                            >
-                              <span
-                                className="icon"
-                              >
-                                <i
-                                  className="fab fa-facebook"
-                                />
-                              </span>
-                              <span>
-                                Continue with Facebook
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                        <hr />
                         <form
                           onSubmit={[Function]}
                         >
@@ -246,6 +224,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               />
                             </div>
                           </div>
+                          <br />
                           <div
                             className="field is-grouped"
                           >
@@ -284,6 +263,56 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                             </div>
                           </div>
                         </form>
+                        <hr />
+                        <div
+                          className="socialButtons field is-grouped"
+                        >
+                          <a
+                            className="socialButton is-facebook"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="icon icon"
+                            >
+                              <i
+                                className="fab fa-facebook"
+                              />
+                            </span>
+                            <span>
+                              Continue with Facebook
+                            </span>
+                          </a>
+                          <a
+                            className="socialButton is-google"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="icon icon"
+                            >
+                              <i
+                                className="fab fa-google"
+                              />
+                            </span>
+                            <span>
+                              Continue with Google
+                            </span>
+                          </a>
+                          <a
+                            className="socialButton is-microsoft"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="icon icon"
+                            >
+                              <i
+                                className="fab fa-microsoft"
+                              />
+                            </span>
+                            <span>
+                              Continue with Microsoft
+                            </span>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>

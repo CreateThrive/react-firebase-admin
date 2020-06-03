@@ -249,7 +249,6 @@ export const authFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider();
 
     provider.addScope('email');
-    provider.addScope('user_birthday');
     provider.addScope('user_location');
 
     let result;
@@ -258,8 +257,7 @@ export const authFacebook = () => {
       result = await firebase.auth().signInWithPopup(provider);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
-      toastr.error('', errorMessage);
-      return dispatch(AUTH_FACEBOOK_FAIL({ error: error.message }));
+      return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
     }
     const { user, additionalUserInfo } = result;
 
@@ -284,7 +282,6 @@ export const authFacebook = () => {
       ).val();
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
-      toastr.error('', errorMessage);
       return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
     }
 
@@ -296,13 +293,10 @@ export const authFacebook = () => {
           .set(userData);
       } catch (error) {
         const errorMessage = firebaseError(error.code, locale);
-        toastr.error('', errorMessage);
         return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
       }
     }
 
-    dispatch(AUTH_FACEBOOK_SUCCESS());
-
-    return dispatch(fetchUserData());
+    return dispatch(AUTH_FACEBOOK_SUCCESS({ id: uid, ...userData }));
   };
 };
