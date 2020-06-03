@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-
+import classNames from 'classnames';
 import 'bulma-social/bin/bulma-social.min.css';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import firebase from 'firebase.js';
 import {
@@ -70,7 +68,7 @@ const Login = () => {
     }
   };
 
-  const modifierLoading = loading && 'is-loading';
+  const iconsClassName = classNames('icon', classes.icon);
 
   const onFacebookHandler = () => {
     dispatch(authFacebook());
@@ -132,7 +130,7 @@ const Login = () => {
                       <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
-                          className={`input ${inputs.email.modifier}`}
+                          className={classNames('input', inputs.email.modifier)}
                           type="email"
                           name="email"
                           required
@@ -141,7 +139,9 @@ const Login = () => {
                         />
                       </div>
                       {inputs.email.message && (
-                        <p className={`help ${inputs.email.modifier}`}>
+                        <p
+                          className={classNames('help', inputs.email.modifier)}
+                        >
                           {inputs.email.message}
                         </p>
                       )}
@@ -152,7 +152,10 @@ const Login = () => {
                       </p>
                       <div className="control is-clearfix">
                         <input
-                          className={`input ${inputs.password.modifier}`}
+                          className={classNames(
+                            'input',
+                            inputs.password.modifier
+                          )}
                           type="password"
                           name="password"
                           required
@@ -161,7 +164,12 @@ const Login = () => {
                         />
                       </div>
                       {inputs.password.message && (
-                        <p className={`help ${inputs.password.modifier}`}>
+                        <p
+                          className={classNames(
+                            'help',
+                            inputs.password.modifier
+                          )}
+                        >
                           {inputs.password.message}
                         </p>
                       )}
@@ -171,7 +179,9 @@ const Login = () => {
                       <div className="control">
                         <button
                           type="submit"
-                          className={`button is-black ${modifierLoading}`}
+                          className={classNames('button', 'is-black', {
+                            'is-loading': loading
+                          })}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
                           {isEmailLink ? setPasswordMessage : loginMessage}
@@ -189,37 +199,57 @@ const Login = () => {
                       )}
                     </div>
                     {error && (
-                      <p className={`has-text-danger ${classes.errorMessage}`}>
+                      <p
+                        className={classNames(
+                          'has-text-danger',
+                          classes.errorMessage
+                        )}
+                      >
                         {error}
                       </p>
                     )}
                   </form>
                   <hr />
-                  <div className={`${classes.socialButtons} field is-grouped`}>
+                  <div
+                    className={classNames(
+                      'field',
+                      'is-grouped',
+                      classes.socialButtons
+                    )}
+                  >
                     <a
-                      className={`${classes.socialButton} is-facebook`}
+                      className={classNames(
+                        'is-facebook',
+                        classes.socialButton
+                      )}
+                      id="facebook"
                       onClick={onFacebookHandler}
                     >
-                      <span className={`${classes.icon} icon`}>
-                        <i className="fab fa-facebook" />
+                      <span className={iconsClassName}>
+                        <i className="mdi mdi-facebook" />
                       </span>
                       <span>{useFormatMessage('Login.facebook')}</span>
                     </a>
                     <a
-                      className={`${classes.socialButton} is-google`}
+                      className={classNames('is-google', classes.socialButton)}
+                      id="google"
                       onClick={onGoogleHandler}
                     >
-                      <span className={`${classes.icon} icon`}>
-                        <i className="fab fa-google" />
+                      <span className={iconsClassName}>
+                        <i className="mdi mdi-google" />
                       </span>
                       <span>{useFormatMessage('Login.google')}</span>
                     </a>
                     <a
-                      className={`${classes.socialButton} is-microsoft`}
+                      className={classNames(
+                        'is-microsoft',
+                        classes.socialButton
+                      )}
+                      id="microsoft"
                       onClick={onMicrosoftHandler}
                     >
-                      <span className={`${classes.icon} icon`}>
-                        <i className="fab fa-microsoft" />
+                      <span className={iconsClassName}>
+                        <i className="mdi mdi-microsoft" />
                       </span>
                       <span>{useFormatMessage('Login.microsoft')}</span>
                     </a>

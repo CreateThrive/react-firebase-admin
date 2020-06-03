@@ -194,7 +194,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               className="control is-clearfix"
                             >
                               <input
-                                className="input null"
+                                className="input"
                                 name="email"
                                 onChange={[Function]}
                                 required={true}
@@ -215,7 +215,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               className="control is-clearfix"
                             >
                               <input
-                                className="input null"
+                                className="input"
                                 name="password"
                                 onChange={[Function]}
                                 required={true}
@@ -232,7 +232,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               className="control"
                             >
                               <button
-                                className="button is-black undefined"
+                                className="button is-black"
                                 disabled={false}
                                 type="submit"
                               >
@@ -265,17 +265,18 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                         </form>
                         <hr />
                         <div
-                          className="socialButtons field is-grouped"
+                          className="field is-grouped socialButtons"
                         >
                           <a
-                            className="socialButton is-facebook"
+                            className="is-facebook socialButton"
+                            id="facebook"
                             onClick={[Function]}
                           >
                             <span
                               className="icon icon"
                             >
                               <i
-                                className="fab fa-facebook"
+                                className="mdi mdi-facebook"
                               />
                             </span>
                             <span>
@@ -283,14 +284,15 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                             </span>
                           </a>
                           <a
-                            className="socialButton is-google"
+                            className="is-google socialButton"
+                            id="google"
                             onClick={[Function]}
                           >
                             <span
                               className="icon icon"
                             >
                               <i
-                                className="fab fa-google"
+                                className="mdi mdi-google"
                               />
                             </span>
                             <span>
@@ -298,14 +300,15 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                             </span>
                           </a>
                           <a
-                            className="socialButton is-microsoft"
+                            className="is-microsoft socialButton"
+                            id="microsoft"
                             onClick={[Function]}
                           >
                             <span
                               className="icon icon"
                             >
                               <i
-                                className="fab fa-microsoft"
+                                className="mdi mdi-microsoft"
                               />
                             </span>
                             <span>
