@@ -248,7 +248,7 @@ export const modifyUser = ({
       location,
       createdAt,
       isAdmin,
-      logoUrl: newLogoUrl || logoUrl
+      logoUrl: logoUrl || newLogoUrl
     };
 
     const updateUserDbTask = firebase
