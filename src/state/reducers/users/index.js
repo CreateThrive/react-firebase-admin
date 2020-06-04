@@ -14,7 +14,8 @@ import {
   USERS_MODIFY_USER_INIT,
   USERS_MODIFY_USER_SUCCESS,
   USERS_MODIFY_USER_FAIL,
-  USERS_CLEAN_UP
+  USERS_CLEAN_UP,
+  USERS_CLEAR_DATA_LOGOUT
 } from 'state/actions/users';
 
 const initialState = {
@@ -112,6 +113,9 @@ export const usersReducer = createReducer(
       error: null,
       success: false,
       deleted: false
+    }),
+    [USERS_CLEAR_DATA_LOGOUT]: () => ({
+      ...initialState
     })
   },
   initialState
