@@ -61,11 +61,11 @@ export const AUTH_CHANGE_PASSWORD_FAIL = createAction(
 
 export const AUTH_UPDATE_USER_DATA = createAction('AUTH_UPDATE_USER_DATA');
 
-export const AUTH_FACEBOOK_INIT = createAction('AUTH_FACEBOOK_INIT');
+export const AUTH_PROVIDER_INIT = createAction('AUTH_PROVIDER_INIT');
 
-export const AUTH_FACEBOOK_SUCCESS = createAction('AUTH_FACEBOOK_SUCCESS');
+export const AUTH_PROVIDER_SUCCESS = createAction('AUTH_PROVIDER_SUCCESS');
 
-export const AUTH_FACEBOOK_FAIL = createAction('AUTH_FACEBOOK_FAIL');
+export const AUTH_PROVIDER_FAIL = createAction('AUTH_PROVIDER_FAIL');
 
 export const logout = () => {
   return async dispatch => {
@@ -241,40 +241,38 @@ export const changeUserPassword = (currentPassword, newPassword) => {
   };
 };
 
-export const authFacebook = () => {
+const authWithProvider = provider => {
   return async (dispatch, getState) => {
-    dispatch(AUTH_FACEBOOK_INIT());
+    dispatch(AUTH_PROVIDER_INIT());
     const { locale } = getState().preferences;
-
-    const provider = new firebase.auth.FacebookAuthProvider();
-
-    provider.addScope('email');
-    provider.addScope('user_location');
-
     let result;
 
     try {
       result = await firebase.auth().signInWithPopup(provider);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
-      return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
+      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
     }
     const { user, additionalUserInfo } = result;
 
     const { uid } = firebase.auth().currentUser;
 
     const createdAt = new Date().toString();
+
+    const { location } = additionalUserInfo.profile;
+
     const userData = {
       isAdmin: false,
       email: user.email,
       name: user.displayName,
       createdAt,
       logoUrl: user.photoURL,
-      location: additionalUserInfo.profile.location.name
+      location: location ? location.name : null
     };
-    let userFacebook;
+
+    let userValue;
     try {
-      userFacebook = (
+      userValue = (
         await firebase
           .database()
           .ref(`users/${uid}`)
@@ -282,10 +280,10 @@ export const authFacebook = () => {
       ).val();
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
-      return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
+      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
     }
 
-    if (!userFacebook) {
+    if (!userValue) {
       try {
         await firebase
           .database()
@@ -293,10 +291,24 @@ export const authFacebook = () => {
           .set(userData);
       } catch (error) {
         const errorMessage = firebaseError(error.code, locale);
-        return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
+        return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
       }
     }
 
-    return dispatch(AUTH_FACEBOOK_SUCCESS({ id: uid, ...userData }));
+    return dispatch(AUTH_PROVIDER_SUCCESS({ id: uid, ...userData }));
   };
+};
+
+export const authFacebook = () => {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  provider.addScope('email');
+  provider.addScope('user_location');
+  return authWithProvider(provider);
+};
+
+export const authGoogle = () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
+  provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+  return authWithProvider(provider);
 };
