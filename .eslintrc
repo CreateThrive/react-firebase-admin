@@ -49,5 +49,8 @@
         "paths": ["src"]
       }
     }
+  },
+  "env": {
+    "mocha": true
   }
 }

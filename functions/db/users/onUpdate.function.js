@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-export default functions.database
+module.exports = functions.database
   .ref('/users/{uid}')
   .onUpdate((change, context) => {
     const before = change.before.val();
