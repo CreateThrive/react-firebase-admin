@@ -1,7 +1,6 @@
 import { createAction } from 'redux-act';
 import { toastr } from 'react-redux-toastr';
 
-import axios from 'utils/axios';
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
 import { checkUserData } from './auth';
@@ -151,18 +150,15 @@ export const createUser = ({
     dispatch(USERS_CREATE_USER_INIT());
     const { locale } = getState().preferences;
 
-    const user = firebase.auth().currentUser;
-
-    const userToken = await user.getIdToken();
-
     let response;
     try {
-      response = await axios(userToken).post('/users', { email, isAdmin });
+      const createUserAuth = firebase
+        .functions()
+        .httpsCallable('httpsCreateUser');
+
+      response = await createUserAuth({ email, isAdmin });
     } catch (error) {
-      const errorMessage = firebaseError(
-        error.response.data.error.code,
-        locale
-      );
+      const errorMessage = firebaseError(error.message, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
