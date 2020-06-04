@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr';
 import axios from 'utils/axios';
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
-import { checkUserData } from './auth';
+import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
 export const USERS_FETCH_DATA_SUCCESS = createAction(
@@ -255,6 +255,12 @@ export const modifyUser = ({
       .database()
       .ref(`users/${id}`)
       .update(userData);
+
+    const { uid } = firebase.auth().currentUser;
+
+    if (id === uid) {
+      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
+    }
 
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
