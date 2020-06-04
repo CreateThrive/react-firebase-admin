@@ -295,7 +295,9 @@ const authWithProvider = provider => {
       }
     }
 
-    return dispatch(AUTH_PROVIDER_SUCCESS({ id: uid, ...userData }));
+    return dispatch(
+      AUTH_PROVIDER_SUCCESS({ id: uid, ...userData, ...userValue })
+    );
   };
 };
 
