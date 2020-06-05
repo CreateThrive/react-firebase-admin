@@ -12,7 +12,8 @@ import {
   setPassword,
   authCleanUp,
   authFacebook,
-  authGoogle
+  authGoogle,
+  authMicrosoft
 } from 'state/actions/auth';
 import { useChangeHandler, useFormatMessage } from 'hooks';
 import { inputValidations } from 'utils';
@@ -80,7 +81,7 @@ const Login = () => {
   };
 
   const onMicrosoftHandler = () => {
-    alert('Coming soon');
+    dispatch(authMicrosoft());
   };
 
   const inputs = isEmailLink
