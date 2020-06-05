@@ -314,3 +314,8 @@ export const authGoogle = () => {
   provider.addScope('https://www.googleapis.com/auth/userinfo.email');
   return authWithProvider(provider);
 };
+
+export const authMicrosoft = () => {
+  const provider = new firebase.auth.OAuthProvider('microsoft.com');
+  return authWithProvider(provider);
+};

@@ -47,6 +47,7 @@ beforeEach(() => {
   jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => dispatchMock);
   jest.spyOn(authActions, 'authFacebook').mockImplementation(jest.fn);
   jest.spyOn(authActions, 'authGoogle').mockImplementation(jest.fn);
+  jest.spyOn(authActions, 'authMicrosoft').mockImplementation(jest.fn);
 });
 
 it('should dispatch authFacebook action when the user tries to log in with Facebook', () => {
@@ -71,4 +72,16 @@ it('should dispatch authGoogle action when the user tries to log in with Google'
   component.find('#google').simulate('click');
 
   expect(authActions.authGoogle).toHaveBeenCalled();
+});
+
+it('should dispatch authMicrosoft action when the user tries to log in with Microsoft', () => {
+  const { component } = mountWithProviders(<Login />)({
+    auth: {
+      userData: {}
+    }
+  });
+
+  component.find('#microsoft').simulate('click');
+
+  expect(authActions.authMicrosoft).toHaveBeenCalled();
 });
