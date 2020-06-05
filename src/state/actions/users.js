@@ -34,6 +34,8 @@ export const USERS_MODIFY_USER_FAIL = createAction('USERS_MODIFY_USER_FAIL');
 
 export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
 
+export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
+
 export const fetchUsers = () => {
   return async (dispatch, getState) => {
     dispatch(checkUserData());
@@ -118,6 +120,12 @@ export const deleteUser = id => {
 export const clearUsersData = () => {
   return dispatch => {
     dispatch(USERS_CLEAR_DATA());
+  };
+};
+
+export const clearUsersDataLogout = () => {
+  return dispatch => {
+    dispatch(USERS_CLEAR_DATA_LOGOUT());
   };
 };
 
