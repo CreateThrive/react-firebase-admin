@@ -15,7 +15,6 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
 - [Features](#features)
@@ -112,7 +111,6 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [Redux-persist](https://github.com/rt2zz/redux-persist) (★ 9.8k) persists store state between sessions.
 - [React-redux-toastr](https://github.com/diegoddox/react-redux-toastr) (★ 703) a toastr message implemented with Redux.
 - [React-router](https://github.com/ReactTraining/react-router) (★ 39.6k) declarative routing for React.
-- [Axios](https://github.com/axios/axios) (★ 70.2k) promise-based HTTP client.
 - [Prop-Types](https://reactjs.org/docs/typechecking-with-proptypes.html) (★ 3.4k) typechecking for react component props.
 - [Classnames](https://github.com/JedWatson/classnames) (★ 11.9k) a simple javascript utility for conditionally joining classNames together.
 - [React-datepicker](https://github.com/Hacker0x01/react-datepicker) (★ 4.5k) a simple and reusable datepicker component for React.
@@ -138,22 +136,23 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 
 ### Cloud functions
 
-- [Express](https://github.com/expressjs/express) (★ 47.5k) fast, unopinionated, minimalist web framework for node.
-- [Cors](https://github.com/expressjs/cors) (★ 4.4k) Node.js CORS middleware.
 - [Firebase-admin](https://github.com/firebase/firebase-admin-node) (★ 790) Firebase Admin Node.js SDK.
 - [Firebase-functions](https://github.com/firebase/firebase-functions) (★ 658) Firebase SDK for Cloud Functions.
-- [@google-cloud/storage](https://github.com/googleapis/nodejs-storage) (★ 421) Node.js client for Google Cloud Storage.
+- [Typescript](https://github.com/Microsoft/TypeScript) (★ 61.1k) TypeScript is a superset of JavaScript that compiles to clean JavaScript output.
+- [TSlint](https://github.com/palantir/tslint) (★ 5.8k) An extensible linter for the TypeScript language.
 - [Firebase-function-tools](https://github.com/TarikHuber/react-most-wanted) (★ 780) a tool for naming and loading our Cloud Functions.
-- [Cookie-parser](https://github.com/expressjs/cookie-parser) (★ 1.4k) parse HTTP request cookies.
-- [Uuid](https://github.com/uuidjs/uuid) (★ 8.7k) generate RFC-compliant UUIDs in JavaScript.
 - [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
-- [Fs-extra](https://github.com/jprichardson/node-fs-extra) (★ 6.6k) Node.js: extra methods for the fs object like copy(), remove(), mkdirs().
+- [Camelcase](https://github.com/sindresorhus/camelcase) (★ 423) convert a dash/dot/underscore/space separated string to camelCase.
 - [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
+
+### Unit Testing
+
+- [Firebase-functions-test](https://github.com/firebase/firebase-functions-test) (★ 117) unit testing library for Cloud Functions for Firebase.
 
 ## Prerequisites
 
 - [Firebase](https://firebase.google.com/) account in order to set up the serverless BaaS for the project.
-- [Node.js](https://nodejs.org/) v12.15.0 or higher (React frontend) and v8.17.0 (Cloud Functions) (You can install them using [NVM](https://github.com/nvm-sh/nvm)).
+- [Node.js](https://nodejs.org/) v12.15.0 or higher (React frontend) and v10.0.0 (Cloud Functions) (You can install them using [NVM](https://github.com/nvm-sh/nvm)).
 - [VSCode](https://code.visualstudio.com/) editor (preferred) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [Babel JavaScript ](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel) plug-ins.
 
 You also need to be familiar with [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML), [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS), [SASS](https://sass-lang.com/), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) ([ES2015](http://babeljs.io/learn-es2015/)) and [React](https://reactjs.org/) with [React Hooks](https://reactjs.org/docs/hooks-intro.html).
@@ -166,6 +165,7 @@ You also need to be familiar with [HTML](https://developer.mozilla.org/en-US/doc
 - In the **_Storage_** section set up your storage bucket with the default values provided by Firebase.
 - Setup your sign-in providers in the **_Authentication_** section. On the **_Sign in method_** tab, enable **_Email/Password_** provider with the **_Email Link_** feature.
 - Copy the config values you get from you Firebase dashboard's **_Web Setup_** option and enter them into a `.env` file with the same structure as the `.env.example` in the root directory of the repository.
+- Setup the [image resize extension](https://firebase.google.com/products/extensions/storage-resize-images) in your Firebase project. For instructions go to the [File upload section](#file-upload)
 
 ### Setting up the Firebase project locally
 
@@ -173,8 +173,13 @@ First we need to install the Firebase cli tool and then initialize our new Fireb
 
 Run the following commands in the root of the repository:
 
-- `npm install -g firebase-tools`
-- `firebase init`
+```
+npm install -g firebase-tools
+```
+
+```
+firebase init
+```
 
 Select the firebase project you created in the previous step, when prompted select the services you want to setup and check **_Database_**, **_Functions_**, **_Hosting_** and **_Storage_**.
 
@@ -183,42 +188,41 @@ Select the firebase project you created in the previous step, when prompted sele
 - Leave the default name for our rules `.json` file.
 - Select **_No_** when prompted if you want to overwrite the file containing our rules.
 
-**_Functions_**:
-
-- For the language to be used in our functions select **_JavaScript_**.
-- If we want to use ESLint as our linting tool select **_No_**.
-- If we want to overwrite the `package.json`, `.gitignore` and `index.js` select **_No_**.
-- Then select **_Yes_** so that we install our dependencies with npm.
-
 **_Hosting_**:
 
 - Set **build** as our public directory for our hosting files.
 - Select **_Yes_** when asked if we want our hosting to be configured as a single page application.
 
-Run the following commands in the `functions/` folder (Using Node v8.17.0):
+**_Storage_**
 
-- `npm run setup-firebase`
+- For the file we should use for the Storage Rules select **storage.rules**.
+
+**_Functions_**:
+
+- For the language to be used in our functions select **_TypeScript_**.
+- If we want to use ESLint as our linting tool select **_No_**.
+- If we want to overwrite the `package.json`, `.gitignore` and `index.js` select **_No_**.
+- Then select **_Yes_** so that we install our dependencies with npm.
+
+Run the following command on the **functions/** folder (Using Node v10.0.0):
+
+```
+npm run setup-firebase
+```
 
 You'll get prompted to enter the path to you service account key file. To generate it, go to your **_Firebase Dashboard_**, **_Project settings_** tab and then to **_Service accounts_** option, right there you can generate your private key (more info on this [here](https://firebase.google.com/docs/admin/setup#initialize-sdk)).
 
 You'll need to enter the **_email_** and **_password_** for the admin account of the admin dashboard. With this in place, you've successfully created your admin account for the dashboard.
 
-**_Storage_**
--For the file we should use for the Storage Rules select storage.rules.
-
 ### Setting up the React frontend
 
-Run the following commands in the root of the repository (Using Node v12.15.0 or higher ):
+Run the following commands in the root of the repository (Using Node v12.15.0 or higher):
 
-- `npm run setup-admin-dashboard`
+```
+npm run setup-admin-dashboard
+```
 
-If you go to your dashboard you'll see all the Firebase services are now deployed, go to the **_Functons_** section and copy the Cloud Functions URL and paste it into the `REACT_APP_CLOUD_FUNCTIONS_REST_API` environment variable in your `.env` file.
-
-It should look like this:
-
-`REACT_APP_CLOUD_FUNCTIONS_REST_API = '<CLOUD FUNCTION URL>/requestsApp'`
-
-At this point we have a fully functional admin dashboard. You can start a local development server with the command `npm run start`, and for the deployed project you can go to the Firebase Dashboard within the **_Hosting_** tab find out the url of the hosted project.
+If you go to your dashboard you'll see all the Firebase services are now deployed.
 
 ## React frontend
 
@@ -304,7 +308,9 @@ Launches the test runner in the interactive watch mode.
 
 ### How to deploy
 
-`npm run deploy`
+```
+npm run deploy
+```
 
 ## Cloud functions
 
@@ -312,26 +318,21 @@ Launches the test runner in the interactive watch mode.
 
 ```
 functions/
-├── auth/
-│   ├── onCreate.function.js
-|   └── onDelete.function.js
-├── db/
-│   ├── users/
-│   │   ├── onCreate.function.js
-│   │   └── onModify.function.js
-│   └── ... other database functions ...
-├── storage/
-│    ... storage functions ...
-├── requests/
-│   ├── middlewares/
-│   │   └── auth.js
-│   ├── routes/
-│   │   ├── users.js
-│   │   └── establishments.js
-|   └── app.function.js
-├── index.js
-├── production-key.json
-└── staging-key.json
+├── src/
+│     ├── auth/
+│     │     ├── onCreate.function.ts
+|     │     └── onDelete.function.ts
+│     ├── db/
+│     │    ├── users/
+│     │    ├── onCreate.function.ts
+│     │    ├── onModify.function.ts
+│     │    └── ... other database functions ...
+│     ├── storage/
+│     │   ... storage functions ...
+│     ├── https/
+│     │    ├── createUser.function.ts
+│     │     └── ... other https functions ...
+│     └── index.ts
 ```
 
 ### Installing dependencies
@@ -578,9 +579,9 @@ const date = Date.now();
 
 For file upload, we used the [Firebase Client](https://firebase.google.com/docs/storage/web/upload-files?authuser=1#upload_files) together with **Firebase Storage** for our storage needs. We store the users profile image in a subfolder named `/users`.
 
-### Image Resize
+### Image resize extension
 
-We use [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) for resizing every image uploaded to the storage.
+We use [Resize Image extension](https://github.com/firebase/extensions/tree/master/storage-resize-images) for resizing every image uploaded to the storage.
 Every image uploaded to the storage is resized to our size preference (`200px x 200px`).
 
 **Setting your image resize**
@@ -591,7 +592,9 @@ If you want to install it from the cmd, you can execute:
 firebase ext:install storage-resize-images --project=projectId
 ```
 
-Wih your own `projectId`
+With your own `projectId`.
+
+Installing the extesion via de Firebase dashboard:
 
 <ol>
 <li>Go to your Firebase Proyect on <a href= "https://console.firebase.google.com/u/1/">Firebase Console</a> </li>
