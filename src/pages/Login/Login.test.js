@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import * as reactRedux from 'react-redux';
 
+import * as authActions from 'state/actions/auth';
 import paths from '../Router/paths';
 import Login from '.';
 
@@ -37,4 +39,23 @@ describe('<Login /> rendering', () => {
 
     expect(component.contains(<Redirect to={paths.ROOT} />)).toEqual(true);
   });
+});
+
+const dispatchMock = jest.fn();
+
+beforeEach(() => {
+  jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => dispatchMock);
+  jest.spyOn(authActions, 'authFacebook').mockImplementation(jest.fn);
+});
+
+it('should dispatch authFacebook action when the user tries to log in with Facebook', () => {
+  const { component } = mountWithProviders(<Login />)({
+    auth: {
+      userData: {}
+    }
+  });
+
+  component.find('#facebook').simulate('click');
+
+  expect(authActions.authFacebook).toHaveBeenCalled();
 });

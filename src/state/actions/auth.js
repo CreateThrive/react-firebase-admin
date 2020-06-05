@@ -61,6 +61,12 @@ export const AUTH_CHANGE_PASSWORD_FAIL = createAction(
 
 export const AUTH_UPDATE_USER_DATA = createAction('AUTH_UPDATE_USER_DATA');
 
+export const AUTH_FACEBOOK_INIT = createAction('AUTH_FACEBOOK_INIT');
+
+export const AUTH_FACEBOOK_SUCCESS = createAction('AUTH_FACEBOOK_SUCCESS');
+
+export const AUTH_FACEBOOK_FAIL = createAction('AUTH_FACEBOOK_FAIL');
+
 export const logout = () => {
   return async dispatch => {
     dispatch(AUTH_LOGOUT_INIT());
@@ -232,5 +238,65 @@ export const changeUserPassword = (currentPassword, newPassword) => {
 
     toastr.success('', 'Password changed successfully');
     return dispatch(AUTH_CHANGE_PASSWORD_SUCCESS());
+  };
+};
+
+export const authFacebook = () => {
+  return async (dispatch, getState) => {
+    dispatch(AUTH_FACEBOOK_INIT());
+    const { locale } = getState().preferences;
+
+    const provider = new firebase.auth.FacebookAuthProvider();
+
+    provider.addScope('email');
+    provider.addScope('user_location');
+
+    let result;
+
+    try {
+      result = await firebase.auth().signInWithPopup(provider);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
+    }
+    const { user, additionalUserInfo } = result;
+
+    const { uid } = firebase.auth().currentUser;
+
+    const createdAt = new Date().toString();
+    const userData = {
+      isAdmin: false,
+      email: user.email,
+      name: user.displayName,
+      createdAt,
+      logoUrl: user.photoURL,
+      location: additionalUserInfo.profile.location.name
+    };
+    let userFacebook;
+    try {
+      userFacebook = (
+        await firebase
+          .database()
+          .ref(`users/${uid}`)
+          .once('value')
+      ).val();
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
+    }
+
+    if (!userFacebook) {
+      try {
+        await firebase
+          .database()
+          .ref(`users/${uid}`)
+          .set(userData);
+      } catch (error) {
+        const errorMessage = firebaseError(error.code, locale);
+        return dispatch(AUTH_FACEBOOK_FAIL({ error: errorMessage }));
+      }
+    }
+
+    return dispatch(AUTH_FACEBOOK_SUCCESS({ id: uid, ...userData }));
   };
 };

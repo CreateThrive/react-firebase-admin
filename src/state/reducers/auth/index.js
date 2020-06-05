@@ -21,7 +21,10 @@ import {
   AUTH_CHANGE_PASSWORD_INIT,
   AUTH_CHANGE_PASSWORD_SUCCESS,
   AUTH_CHANGE_PASSWORD_FAIL,
-  AUTH_UPDATE_USER_DATA
+  AUTH_UPDATE_USER_DATA,
+  AUTH_FACEBOOK_FAIL,
+  AUTH_FACEBOOK_INIT,
+  AUTH_FACEBOOK_SUCCESS
 } from 'state/actions/auth';
 
 const initialState = {
@@ -140,6 +143,29 @@ export const authReducer = createReducer(
         logoUrl: payload.logoUrl || state.userData.logoUrl,
         createdAt: payload.createdAt
       }
+    }),
+    [AUTH_FACEBOOK_INIT]: state => ({
+      ...state,
+      loading: true
+    }),
+    [AUTH_FACEBOOK_SUCCESS]: (state, payload) => ({
+      ...state,
+      userData: {
+        id: payload.id,
+        isAdmin: payload.isAdmin,
+        email: payload.email,
+        name: payload.name,
+        location: payload.location,
+        logoUrl: payload.logoUrl,
+        createdAt: payload.createdAt
+      },
+      error: null,
+      loading: false
+    }),
+    [AUTH_FACEBOOK_FAIL]: (state, payload) => ({
+      ...state,
+      loading: false,
+      error: payload.error
     })
   },
   initialState
