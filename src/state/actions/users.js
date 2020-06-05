@@ -73,6 +73,9 @@ export const fetchUsers = () => {
 };
 
 const deleteLogo = oldLogo => {
+  if (!oldLogo.includes('firebasestorage')) {
+    return null;
+  }
   const logoPath = oldLogo
     .split('users%2F')
     .pop()

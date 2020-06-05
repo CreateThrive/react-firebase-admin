@@ -11,7 +11,8 @@ import {
   auth,
   setPassword,
   authCleanUp,
-  authFacebook
+  authFacebook,
+  authGoogle
 } from 'state/actions/auth';
 import { useChangeHandler, useFormatMessage } from 'hooks';
 import { inputValidations } from 'utils';
@@ -75,7 +76,7 @@ const Login = () => {
   };
 
   const onGoogleHandler = () => {
-    alert('Coming soon');
+    dispatch(authGoogle());
   };
 
   const onMicrosoftHandler = () => {

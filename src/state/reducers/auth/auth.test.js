@@ -20,9 +20,9 @@ import {
   AUTH_CHANGE_PASSWORD_SUCCESS,
   AUTH_CHANGE_PASSWORD_FAIL,
   AUTH_UPDATE_USER_DATA,
-  AUTH_FACEBOOK_FAIL,
-  AUTH_FACEBOOK_INIT,
-  AUTH_FACEBOOK_SUCCESS
+  AUTH_PROVIDER_FAIL,
+  AUTH_PROVIDER_INIT,
+  AUTH_PROVIDER_SUCCESS
 } from 'state/actions/auth';
 
 import { authReducer } from '.';
@@ -217,20 +217,20 @@ describe('Auth reducer', () => {
     });
   });
 
-  it('should set loading to true when AUTH_FACEBOOK_INIT action is fired', () => {
-    reducerTest(initialState, AUTH_FACEBOOK_INIT(), {
+  it('should set loading to true when AUTH_PROVIDER_INIT action is fired', () => {
+    reducerTest(initialState, AUTH_PROVIDER_INIT(), {
       ...initialState,
       loading: true
     });
   });
 
-  it('should set the state with the corresponding payload, loading to false and error to null when AUTH_FACEBOOK_SUCCESS actions is fired', () => {
+  it('should set the state with the corresponding payload, loading to false and error to null when AUTH_PROVIDER_SUCCESS actions is fired', () => {
     const payload = {
       id: 'some user id',
       isAdmin: false
     };
 
-    reducerTest(initialState, AUTH_FACEBOOK_SUCCESS(payload), {
+    reducerTest(initialState, AUTH_PROVIDER_SUCCESS(payload), {
       ...initialState,
       userData: {
         ...payload
@@ -238,10 +238,10 @@ describe('Auth reducer', () => {
     });
   });
 
-  it('should set loading to false and error with the corresponding payload when AUTH_FACEBOOK_FAIL action is fired', () => {
+  it('should set loading to false and error with the corresponding payload when AUTH_PROVIDER_FAIL action is fired', () => {
     reducerTest(
       { ...initialState, loading: true },
-      AUTH_FACEBOOK_FAIL({ error: 'sample error' }),
+      AUTH_PROVIDER_FAIL({ error: 'sample error' }),
       { ...initialState, error: 'sample error' }
     );
   });
