@@ -1,7 +1,8 @@
-const loadFunctions = require('firebase-function-tools');
-const admin = require('firebase-admin');
+import * as loadFunctions from 'firebase-function-tools';
+import * as admin from 'firebase-admin';
 // This import is needed by admin.initializeApp() to get the project info (Database url, project id, etc)
-const functions = require('firebase-functions');
+// @ts-ignore
+import * as functions from 'firebase-functions';
 
 admin.initializeApp();
 

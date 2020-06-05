@@ -12,7 +12,8 @@ import {
   USERS_MODIFY_USER_INIT,
   USERS_MODIFY_USER_SUCCESS,
   USERS_MODIFY_USER_FAIL,
-  USERS_CLEAN_UP
+  USERS_CLEAN_UP,
+  USERS_CLEAR_DATA_LOGOUT
 } from 'state/actions/users';
 
 import { usersReducer } from '.';
@@ -90,8 +91,30 @@ describe('Establishments reducer', () => {
     });
   });
 
-  it('should reset the state to the initial state when USERS_CLEAR_DATA action is fired', () => {
-    reducerTest(initialState, USERS_CLEAR_DATA(), initialState);
+  it('should reset the state to the initial state when USERS_CLEAR_DATA_LOGOUT action is fired', () => {
+    reducerTest(initialState, USERS_CLEAR_DATA_LOGOUT(), initialState);
+  });
+
+  it('should reset the state to the initial state while maintaining the data when USERS_CLEAR_DATA action is fired', () => {
+    const userData = [
+      {
+        name: 'Test name',
+        email: 'Test email',
+        location: 'Test location',
+        createdAt: '11/20/2020'
+      }
+    ];
+
+    reducerTest(
+      {
+        ...initialState,
+        data: userData,
+        loading: true,
+        error: null
+      },
+      USERS_CLEAR_DATA(),
+      { ...initialState, data: userData }
+    );
   });
 
   it('should set loading to true to the current state when USERS_CREATE_USER_INIT action is fired', () => {

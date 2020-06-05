@@ -1,10 +1,9 @@
 import { createAction } from 'redux-act';
 import { toastr } from 'react-redux-toastr';
 
-import axios from 'utils/axios';
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
-import { checkUserData } from './auth';
+import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
 export const USERS_FETCH_DATA_SUCCESS = createAction(
@@ -33,6 +32,8 @@ export const USERS_MODIFY_USER_SUCCESS = createAction(
 export const USERS_MODIFY_USER_FAIL = createAction('USERS_MODIFY_USER_FAIL');
 
 export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
+
+export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
 
 export const fetchUsers = () => {
   return async (dispatch, getState) => {
@@ -124,6 +125,12 @@ export const clearUsersData = () => {
   };
 };
 
+export const clearUsersDataLogout = () => {
+  return dispatch => {
+    dispatch(USERS_CLEAR_DATA_LOGOUT());
+  };
+};
+
 const uploadLogo = (uid, file) => {
   const storageRef = firebase.storage().ref();
 
@@ -154,18 +161,15 @@ export const createUser = ({
     dispatch(USERS_CREATE_USER_INIT());
     const { locale } = getState().preferences;
 
-    const user = firebase.auth().currentUser;
-
-    const userToken = await user.getIdToken();
-
     let response;
     try {
-      response = await axios(userToken).post('/users', { email, isAdmin });
+      const createUserAuth = firebase
+        .functions()
+        .httpsCallable('httpsCreateUser');
+
+      response = await createUserAuth({ email, isAdmin });
     } catch (error) {
-      const errorMessage = firebaseError(
-        error.response.data.error.code,
-        locale
-      );
+      const errorMessage = firebaseError(error.message, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
@@ -251,13 +255,19 @@ export const modifyUser = ({
       location,
       createdAt,
       isAdmin,
-      logoUrl: newLogoUrl || logoUrl
+      logoUrl: logoUrl || newLogoUrl
     };
 
     const updateUserDbTask = firebase
       .database()
       .ref(`users/${id}`)
       .update(userData);
+
+    const { uid } = firebase.auth().currentUser;
+
+    if (id === uid) {
+      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
+    }
 
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);

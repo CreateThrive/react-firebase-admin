@@ -3,7 +3,7 @@ import { toastr } from 'react-redux-toastr';
 
 import { firebaseError, FIREBASE_RESPONSE } from 'utils';
 import firebase from 'firebase.js';
-import { clearUsersData } from './users';
+import { clearUsersDataLogout } from './users';
 
 export const AUTH_SIGN_IN_INIT = createAction('AUTH_SIGN_IN_INIT');
 export const AUTH_SIGN_IN_FAIL = createAction('AUTH_SIGN_IN_FAIL');
@@ -71,7 +71,7 @@ export const logout = () => {
   return async dispatch => {
     dispatch(AUTH_LOGOUT_INIT());
 
-    dispatch(clearUsersData());
+    dispatch(clearUsersDataLogout());
     await firebase.auth().signOut();
 
     dispatch(AUTH_LOGOUT_SUCCESS());
