@@ -3,7 +3,7 @@ import { toastr } from 'react-redux-toastr';
 
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
-import { checkUserData } from './auth';
+import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
 export const USERS_FETCH_DATA_SUCCESS = createAction(
@@ -32,6 +32,8 @@ export const USERS_MODIFY_USER_SUCCESS = createAction(
 export const USERS_MODIFY_USER_FAIL = createAction('USERS_MODIFY_USER_FAIL');
 
 export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
+
+export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
 
 export const fetchUsers = () => {
   return async (dispatch, getState) => {
@@ -117,6 +119,12 @@ export const deleteUser = id => {
 export const clearUsersData = () => {
   return dispatch => {
     dispatch(USERS_CLEAR_DATA());
+  };
+};
+
+export const clearUsersDataLogout = () => {
+  return dispatch => {
+    dispatch(USERS_CLEAR_DATA_LOGOUT());
   };
 };
 
@@ -251,6 +259,12 @@ export const modifyUser = ({
       .database()
       .ref(`users/${id}`)
       .update(userData);
+
+    const { uid } = firebase.auth().currentUser;
+
+    if (id === uid) {
+      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
+    }
 
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
