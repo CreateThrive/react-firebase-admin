@@ -1,10 +1,9 @@
 import { createAction } from 'redux-act';
 import { toastr } from 'react-redux-toastr';
 
-import axios from 'utils/axios';
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
-import { checkUserData } from './auth';
+import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
 export const USERS_FETCH_DATA_SUCCESS = createAction(
@@ -33,6 +32,8 @@ export const USERS_MODIFY_USER_SUCCESS = createAction(
 export const USERS_MODIFY_USER_FAIL = createAction('USERS_MODIFY_USER_FAIL');
 
 export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
+
+export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
 
 export const fetchUsers = () => {
   return async (dispatch, getState) => {
@@ -86,6 +87,7 @@ const deleteLogo = oldLogo => {
 export const deleteUser = id => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
+    const { locale } = getState().preferences;
     const { logoUrl } = getState()
       .users.data.filter(user => user.id === id)
       .pop();
@@ -100,7 +102,7 @@ export const deleteUser = id => {
     try {
       await Promise.all([deleteLogoTask, deleteUserTask]);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_DELETE_USER_FAIL({
@@ -117,6 +119,12 @@ export const deleteUser = id => {
 export const clearUsersData = () => {
   return dispatch => {
     dispatch(USERS_CLEAR_DATA());
+  };
+};
+
+export const clearUsersDataLogout = () => {
+  return dispatch => {
+    dispatch(USERS_CLEAR_DATA_LOGOUT());
   };
 };
 
@@ -146,18 +154,19 @@ export const createUser = ({
   createdAt,
   isAdmin
 }) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(USERS_CREATE_USER_INIT());
-
-    const user = firebase.auth().currentUser;
-
-    const userToken = await user.getIdToken();
+    const { locale } = getState().preferences;
 
     let response;
     try {
-      response = await axios(userToken).post('/users', { email, isAdmin });
+      const createUserAuth = firebase
+        .functions()
+        .httpsCallable('httpsCreateUser');
+
+      response = await createUserAuth({ email, isAdmin });
     } catch (error) {
-      const errorMessage = firebaseError(error.response.data.error.code);
+      const errorMessage = firebaseError(error.message, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
@@ -196,7 +205,7 @@ export const createUser = ({
         sendSignInLinkToEmailTask
       ]);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
@@ -222,15 +231,19 @@ export const modifyUser = ({
 }) => {
   return async (dispatch, getState) => {
     dispatch(USERS_MODIFY_USER_INIT());
-    const { logoUrl } = getState()
-      .users.data.filter(user => user.id === id)
-      .pop();
+    const { locale } = getState().preferences;
+    const { logoUrl } = isProfile
+      ? getState().auth.userData
+      : getState()
+          .users.data.filter(user => user.id === id)
+          .pop();
+
     let deleteLogoTask;
     let uploadLogoTask;
     let newLogoUrl = null;
     if (file) {
       newLogoUrl = getLogoUrl(id, file);
-      deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
+      deleteLogoTask = logoUrl && deleteLogo(logoUrl);
       uploadLogoTask = uploadLogo(id, file);
     }
 
@@ -239,7 +252,7 @@ export const modifyUser = ({
       location,
       createdAt,
       isAdmin,
-      logoUrl: newLogoUrl || logoUrl
+      logoUrl: logoUrl || newLogoUrl
     };
 
     const updateUserDbTask = firebase
@@ -247,10 +260,16 @@ export const modifyUser = ({
       .ref(`users/${id}`)
       .update(userData);
 
+    const { uid } = firebase.auth().currentUser;
+
+    if (id === uid) {
+      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
+    }
+
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_MODIFY_USER_FAIL({
