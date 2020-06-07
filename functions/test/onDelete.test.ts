@@ -1,12 +1,12 @@
 import { admin, test } from './util/admin';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
+import * as onDelete from '../src/db/users/onDelete.function';
 import 'mocha';
 
 chai.use(chaiAsPromised);
 
 describe('onDelete', () => {
-  let onDelete: any;
   let userRecord: any;
 
   before(async () => {
@@ -15,12 +15,11 @@ describe('onDelete', () => {
       email: 'user@example.com',
       password: 'secretPassword'
     };
-    onDelete = require('../src/db/users/onDelete.function');
     userRecord = await admin.auth().createUser(user);
   });
 
   it('should delete the user from the authentication section', () => {
-    const wrapped = test.wrap(onDelete);
+    const wrapped = test.wrap(onDelete.default);
 
     return wrapped(
       {},

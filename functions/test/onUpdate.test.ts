@@ -1,14 +1,12 @@
 import { admin, test } from './util/admin';
 import * as chai from 'chai';
+import * as onUpdate from '../src/db/users/onUpdate.function';
 import 'mocha';
 
 describe('onUpdate', () => {
-  let onUpdate: any;
   let userRecord: any;
 
   before(async () => {
-    onUpdate = require('../src/db/users/onUpdate.function');
-
     const user = {
       uid: '1234',
       email: 'user@example.com',
@@ -24,10 +22,11 @@ describe('onUpdate', () => {
 
   after(async () => {
     await admin.auth().deleteUser(userRecord.uid);
+    test.cleanup();
   });
 
   it('should update the user information in the database', () => {
-    const wrapped = test.wrap(onUpdate);
+    const wrapped = test.wrap(onUpdate.default);
 
     const beforeSnap = test.database.makeDataSnapshot(
       { email: 'user@example.com', isAdmin: false },

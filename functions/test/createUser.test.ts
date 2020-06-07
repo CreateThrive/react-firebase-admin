@@ -1,39 +1,45 @@
-import { test } from './util/admin';
+import { admin, test } from './util/admin';
 import { https } from 'firebase-functions';
 import * as chai from 'chai';
+import * as createUser from '../src/https/createUser.function';
 import 'mocha';
 
-describe('onCreateUser', () => {
-  let onCreateUser: any;
+describe('createUser', () => {
+  let userRecord: any;
 
-  before(async () => {
-    onCreateUser = require('../src/https/createUser.function');
+  after(async () => {
+    await admin.auth().deleteUser(userRecord.uid);
   });
 
   it('should throw an error because the email is not provided', () => {
-    const wrapped = test.wrap(onCreateUser);
+    const wrapped = test.wrap(createUser.default);
 
     const data = {
       email: '',
       isAdmin: false
     };
 
-    return wrapped(data).then(() => {
-      chai.expect(https.HttpsError, 'auth/invalid-email');
-    });
+    return chai
+        .expect(wrapped(data))
+        .to.be.rejectedWith(
+          https.HttpsError,
+          'auth/invalid-email'
+        );
   });
 
-  it('should create the user into the database', () => {
-    const wrapped = test.wrap(onCreateUser);
+  it('should create the user in auth with correct email and custom claims', () => {
+    const wrapped = test.wrap(createUser.default);
 
     const data = {
-      uid: '1234',
       email: 'user@example.com',
       isAdmin: false
     };
 
-    return wrapped(data).then((res: any) => {
-      chai.assert.equal(data.uid, res.uid);
+    return wrapped(data).then(async (res: any) => {
+      userRecord = await admin.auth().getUser(res.uid);
+
+      chai.assert.equal(data.email, userRecord.email);
+      chai.assert.equal(data.isAdmin, userRecord.customClaims!.isAdmin);
     });
   });
 });
