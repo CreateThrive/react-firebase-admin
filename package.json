@@ -77,7 +77,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "CI=true yarn test && lint-staged"
+      "pre-commit": "CI=true yarn test && (cd /functions && npm test) && lint-staged"
     }
   },
   "jest": {
