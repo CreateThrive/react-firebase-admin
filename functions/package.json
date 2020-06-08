@@ -16,7 +16,6 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.2",

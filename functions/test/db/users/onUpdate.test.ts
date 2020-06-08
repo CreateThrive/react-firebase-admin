@@ -1,6 +1,6 @@
-import { admin, test } from '../../util/admin';
+import { admin, test } from '../../util/config';
 import * as chai from 'chai';
-import * as onUpdate from '../../../src/db/users/onUpdate.function';
+import onUpdate from '../../../src/db/users/onUpdate.function';
 import 'mocha';
 
 describe('onUpdate', () => {
@@ -8,7 +8,6 @@ describe('onUpdate', () => {
 
   before(async () => {
     const user = {
-      uid: '1234',
       email: 'user@example.com',
       password: 'secretPassword'
     };
@@ -25,8 +24,8 @@ describe('onUpdate', () => {
     test.cleanup();
   });
 
-  it('should update the user information in the database', () => {
-    const wrapped = test.wrap(onUpdate.default);
+  it("should update user's custom claims in auth", async () => {
+    const wrapped = test.wrap(onUpdate);
 
     const beforeSnap = test.database.makeDataSnapshot(
       { email: 'user@example.com', isAdmin: false },
@@ -39,17 +38,16 @@ describe('onUpdate', () => {
 
     const change = test.makeChange(beforeSnap, afterSnap);
 
-    return wrapped(change, {
+    await wrapped(change, {
       params: {
         uid: userRecord.uid
       }
-    }).then(() => {
-      return admin
-        .auth()
-        .getUser(userRecord.uid)
-        .then(snap => {
-          chai.assert.isTrue(snap.customClaims!.isAdmin);
-        });
     });
+    return admin
+      .auth()
+      .getUser(userRecord.uid)
+      .then(snap => {
+        chai.assert.isTrue(snap.customClaims!.isAdmin);
+      });
   });
 });
