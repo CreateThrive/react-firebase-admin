@@ -23,6 +23,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Unit Testing](#unit-testing)
   - [Linting](#linting)
   - [Cloud functions](#cloud-functions)
+  - [Unit Testing](#unit-testing-1)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
   - [Setting up the Firebase project locally](#setting-up-the-firebase-project-locally)
@@ -58,8 +59,12 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [How to internationalize a Date](#how-to-internationalize-a-date)
   - [How to add your language on DatePicker](#how-to-add-your-language-on-datepicker)
 - [File Upload](#file-upload)
-  - [Image Resize](#image-resize)
+  - [Image resize extension](#image-resize-extension)
   - [Storage Rules](#storage-rules)
+- [Authentication via social media accounts](#authentication-via-social-media-accounts)
+  - [Facebook](#facebook)
+  - [Google](#google)
+  - [Microsoft](#microsoft)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -623,6 +628,88 @@ service firebase.storage {
   }
 }
 ```
+
+## Authentication via social media accounts
+
+![Boilerplate - Login](https://i.imgur.com/xQz5pSR.png)
+
+### Facebook
+
+Go to your [Firebase console](https://console.firebase.google.com/), select the proyect, then select Authentication on the Side Bar and Sign-in method. Click the Facebook logo, copy the OAuth redirect URI and keep this window open for later.
+
+Before setting your App id and the App secret on the Facebook Sign-in from the Firebase console, you will need to Log-in into your [Facebook for developers](https://developers.facebook.com/) account, create an app and configure it to make Sign-in via Facebook available.
+
+**Facebook for developers App configuration**
+
+<ol>
+<li>Name your App</li>
+<li>Click on configure on Log in with Facebook</li>
+<li>Choose the Web option </li>
+<li>Select Web, set http://localhost:3000 as the URL</li>
+<li>Select Product Settings > Facebook Login config on the Side Bar</li>
+<li>Put your OAuth redirect URI (the one you copied in the past), you can verify your redirect URI at the buttom of this page</li>
+<li>Select Configuration > Basic on the Side Bar</li>
+<li>There you got your App id and your App secret for setting them on your proyect from the Firebase console</li>
+</ol>
+
+**Facebook for developers App configuration on production**
+
+<ol>
+<li>Select Configuration > Basic on the Side Bar</li>
+<li>Put your contact email and your privacy policy URL</li>
+<li>At the buttom of the page, select Website and change the URL for your domain</li>
+<li>Save Changes</li>
+<li>Turn on the "on Development" switch</li> 
+</ol>
+
+**Firebase console**
+
+<ol>
+<li>Go to the Firebase Console window from the beggining</li>
+<li>Put the App id and the App secret</li>
+<li>Enable the Facebook provider</li>
+<li>Save</li>
+</ol>
+
+For more on this [here](https://firebase.google.com/docs/auth/web/facebook-login).
+
+### Google
+
+For setting your Google authentication you will only need to go to your proyect from the [Firebase console](https://console.firebase.google.com/), then select Authentication on the Side Bar and Sign-in method. Click the Google logo, select a Project support email, enable the Google provider and save.
+
+For more on this [here](https://firebase.google.com/docs/auth/web/google-signin).
+
+### Microsoft
+
+Go to your [Firebase console](https://console.firebase.google.com/), select the proyect, then select Authentication on the Side Bar and Sign-in method. Click the Microsoft logo, copy the redirect URL and keep this window open for later.
+
+Before setting your Application id and the Application secret on the Microsoft Sign-in method from the Firebase console, you will need to log-in into your [Azure](https://portal.azure.com/) account, create an app and configure it to make Sign-in via Microsoft available.
+
+**Azure App configuration**
+
+<ol>
+<li>Once you are logged to your account click the left, top corner and select Azure Active Directory</li>
+<li>Under Manage, select App registration</li>
+<li>Name your App</li>
+<li>Specify who can use the application</li>
+<li>Put your redirect URL (the one you copied in the past)</li>
+<li>Select Register</li>
+<li>Select Certificates & secrets from the Side Bar</li>
+<li>Select Add a new client secret</li>
+<li>Specify expiration time</li>
+</ol>
+
+For more on [Register](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app) and [configure the app](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis).
+
+**Firebase console**
+
+<li>Go to the Firebase Console window from the beggining</li>
+<li>Put the Application id, located on Overview on your Azure App </li>
+<li>Put Application secret, located on Certificates & secrets on your Azure App</li>
+<li>Enable the Microsoft provider</li>
+<li>Save</li>
+
+For more on this [here](https://firebase.google.com/docs/auth/web/microsoft-oauth).
 
 ## Contributors
 
