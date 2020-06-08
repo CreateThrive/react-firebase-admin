@@ -9,7 +9,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "setup-firebase": "node setupProject.js",
-    "test": "mocha -r ts-node/register --recursive 'test/**/*.test.ts' --timeout 10000"
+    "test": "mocha -r ts-node/register --recursive 'test/**/*.test.ts' --timeout 10000 --exit"
   },
   "engines": {
     "node": "10"
