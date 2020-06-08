@@ -1,16 +1,20 @@
-import * as functions from 'firebase-functions';
 import * as testConfig from 'firebase-functions-test';
 import * as admin from 'firebase-admin';
-
-const config = functions.config().env.testingConfig;
+import {
+  databaseURL,
+  storageBucket,
+  projectId,
+  serviceAccountKey
+} from '../../env.json';
 
 const projectConfig = {
-  databaseURL: config.databaseURL,
-  storageBucket: config.storageBucket,
-  projectId: config.projectId
+  databaseURL,
+  storageBucket,
+  projectId,
+  serviceAccountKey
 };
 
-const test = testConfig(projectConfig, config.serviceAccountKey);
+const test = testConfig(projectConfig, serviceAccountKey);
 
 admin.initializeApp();
 
