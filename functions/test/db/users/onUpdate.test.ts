@@ -1,6 +1,6 @@
-import { admin, test } from './util/admin';
+import { admin, test } from '../../util/admin';
 import * as chai from 'chai';
-import * as onUpdate from '../src/db/users/onUpdate.function';
+import * as onUpdate from '../../../src/db/users/onUpdate.function';
 import 'mocha';
 
 describe('onUpdate', () => {

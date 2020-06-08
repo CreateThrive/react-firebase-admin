@@ -1,7 +1,7 @@
-import { admin, test } from './util/admin';
+import { admin, test } from '../../util/admin';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import * as onDelete from '../src/db/users/onDelete.function';
+import * as onDelete from '../../../src/db/users/onDelete.function';
 import 'mocha';
 
 chai.use(chaiAsPromised);

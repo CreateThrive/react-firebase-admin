@@ -1,7 +1,7 @@
-import { admin, test } from './util/admin';
+import { admin, test } from '../util/admin';
 import { https } from 'firebase-functions';
 import * as chai from 'chai';
-import * as createUser from '../src/https/createUser.function';
+import * as createUser from '../../src/https/createUser.function';
 import 'mocha';
 
 describe('createUser', () => {
@@ -20,11 +20,8 @@ describe('createUser', () => {
     };
 
     return chai
-        .expect(wrapped(data))
-        .to.be.rejectedWith(
-          https.HttpsError,
-          'auth/invalid-email'
-        );
+      .expect(wrapped(data))
+      .to.be.rejectedWith(https.HttpsError, 'auth/invalid-email');
   });
 
   it('should create the user in auth with correct email and custom claims', () => {
