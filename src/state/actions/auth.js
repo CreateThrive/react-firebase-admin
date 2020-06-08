@@ -245,15 +245,15 @@ const authWithProvider = provider => {
   return async (dispatch, getState) => {
     dispatch(AUTH_PROVIDER_INIT());
     const { locale } = getState().preferences;
-    let result;
+    let logInData;
 
     try {
-      result = await firebase.auth().signInWithPopup(provider);
+      logInData = await firebase.auth().signInWithPopup(provider);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
     }
-    const { user, additionalUserInfo } = result;
+    const { user, additionalUserInfo } = logInData;
 
     const { uid } = firebase.auth().currentUser;
 
@@ -267,12 +267,12 @@ const authWithProvider = provider => {
       name: user.displayName,
       createdAt,
       logoUrl: user.photoURL,
-      location: location ? location.name : null
+      location: location?.name || null
     };
 
-    let userValue;
+    let userFromDb;
     try {
-      userValue = (
+      userFromDb = (
         await firebase
           .database()
           .ref(`users/${uid}`)
@@ -283,7 +283,7 @@ const authWithProvider = provider => {
       return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
     }
 
-    if (!userValue) {
+    if (!userFromDb) {
       try {
         await firebase
           .database()
@@ -296,7 +296,7 @@ const authWithProvider = provider => {
     }
 
     return dispatch(
-      AUTH_PROVIDER_SUCCESS({ id: uid, ...userData, ...userValue })
+      AUTH_PROVIDER_SUCCESS({ id: uid, ...userData, ...userFromDb })
     );
   };
 };
@@ -304,7 +304,6 @@ const authWithProvider = provider => {
 export const authFacebook = () => {
   const provider = new firebase.auth.FacebookAuthProvider();
   provider.addScope('email');
-  provider.addScope('user_location');
   return authWithProvider(provider);
 };
 

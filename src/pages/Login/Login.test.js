@@ -57,7 +57,7 @@ it('should dispatch authFacebook action when the user tries to log in with Faceb
     }
   });
 
-  component.find('#facebook').simulate('click');
+  component.find('.is-facebook').simulate('click');
 
   expect(authActions.authFacebook).toHaveBeenCalled();
 });
@@ -69,7 +69,7 @@ it('should dispatch authGoogle action when the user tries to log in with Google'
     }
   });
 
-  component.find('#google').simulate('click');
+  component.find('.is-google').simulate('click');
 
   expect(authActions.authGoogle).toHaveBeenCalled();
 });
@@ -81,7 +81,7 @@ it('should dispatch authMicrosoft action when the user tries to log in with Micr
     }
   });
 
-  component.find('#microsoft').simulate('click');
+  component.find('.is-microsoft').simulate('click');
 
   expect(authActions.authMicrosoft).toHaveBeenCalled();
 });

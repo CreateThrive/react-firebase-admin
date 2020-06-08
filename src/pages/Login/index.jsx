@@ -1,6 +1,4 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-alert */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -72,17 +70,17 @@ const Login = () => {
 
   const iconsClassName = classNames('icon', classes.icon);
 
-  const onFacebookHandler = () => {
+  const onFacebookHandler = useCallback(() => {
     dispatch(authFacebook());
-  };
+  }, [dispatch, authFacebook]);
 
-  const onGoogleHandler = () => {
+  const onGoogleHandler = useCallback(() => {
     dispatch(authGoogle());
-  };
+  }, [dispatch, authGoogle]);
 
-  const onMicrosoftHandler = () => {
+  const onMicrosoftHandler = useCallback(() => {
     dispatch(authMicrosoft());
-  };
+  }, [dispatch, authMicrosoft]);
 
   const inputs = isEmailLink
     ? inputValidations(authData.email, authData.password, locale)
@@ -224,7 +222,6 @@ const Login = () => {
                         'is-facebook',
                         classes.socialButton
                       )}
-                      id="facebook"
                       onClick={onFacebookHandler}
                     >
                       <span className={iconsClassName}>
@@ -234,7 +231,6 @@ const Login = () => {
                     </a>
                     <a
                       className={classNames('is-google', classes.socialButton)}
-                      id="google"
                       onClick={onGoogleHandler}
                     >
                       <span className={iconsClassName}>
@@ -247,7 +243,6 @@ const Login = () => {
                         'is-microsoft',
                         classes.socialButton
                       )}
-                      id="microsoft"
                       onClick={onMicrosoftHandler}
                     >
                       <span className={iconsClassName}>

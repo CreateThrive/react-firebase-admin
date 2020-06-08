@@ -269,7 +269,6 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                         >
                           <a
                             className="is-facebook socialButton"
-                            id="facebook"
                             onClick={[Function]}
                           >
                             <span
@@ -285,7 +284,6 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                           </a>
                           <a
                             className="is-google socialButton"
-                            id="google"
                             onClick={[Function]}
                           >
                             <span
@@ -301,7 +299,6 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                           </a>
                           <a
                             className="is-microsoft socialButton"
-                            id="microsoft"
                             onClick={[Function]}
                           >
                             <span
