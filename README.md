@@ -330,9 +330,9 @@ functions/
 |     │     └── onDelete.function.ts
 │     ├── db/
 │     │    ├── users/
-│     │    ├── onCreate.function.ts
-│     │    ├── onModify.function.ts
-│     │    └── ... other database functions ...
+│     │    │    ├── onCreate.function.ts
+│     │    │    ├── onModify.function.ts
+│     │    │    └── ... other database functions ...
 │     ├── storage/
 │     │   ... storage functions ...
 │     ├── https/
@@ -342,9 +342,9 @@ functions/
 ├── test/
 │     ├── db/
 │     │    ├── users/
-│     │    ├── onDelete.test.ts
-│     │    ├── onUpdate.test.ts
-│     │    └── ... other database tests ...
+│     │    │    ├── onDelete.test.ts
+│     │    │    ├── onUpdate.test.ts
+│     │    │    └── ... other database tests ...
 │     ├── https/
 │     │    ├── createUser.test.ts
 │     │    └── ... other https tests ...
