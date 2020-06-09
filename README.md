@@ -42,6 +42,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Selecting an alias](#selecting-an-alias)
   - [Creating a new cloud function](#creating-a-new-cloud-function)
   - [Testing functions locally](#testing-functions-locally)
+  - [Testing functions in online mode](#testing-functions-online)
   - [Deployment](#deployment)
 - [Continuous integration/deployment](#continuous-integrationdeployment)
   - [Workflows folder structure](#workflows-folder-structure)
@@ -408,6 +409,18 @@ After it initializes, you should get your endpoints to test your HTTP functions:
 
 More information about the [Firebase Emulator](https://firebase.google.com/docs/rules/emulator-setup).
 
+### Testing functions in online mode
+
+Testing your cloud functions online is very simple and easy.
+
+For that, you only have to set the variables localted in the env.example.json inside /functions folder. (Remember to rename the file to env.json)
+
+After that, navigate to the /functions folder and execute **npm test** in your terminal.
+
+Note: For finding your service account key you should go to your proyect in the Firebase dashboard, click on **_Project settings_** and then click on **_Service accounts_** tab. After that you'll be able to click on **_Generate new private key_** button and a json file containing your service account's credentials will be downloaded. Place that file in your project and include the location of it into the **_"serviceAccountKey"_** in your env.json file.
+
+_Warning: Use extra caution when handling service account credentials in your code. Do not commit them to a public repository, deploy them in a client app, or expose them in any way that could compromise the security of your Firebase project._
+
 ### Deployment
 
 When a pull request gets merged into development, functions are deployed automatically to the staging project in Firebase. Likewise, when merging/pushing into master, they're deployed to production.
@@ -634,6 +647,7 @@ We'd like to thank these awesome people who made this whole thing happen:
     <li><a href="https://github.com/jbheber">Juan Heber</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
     <li><a href="https://github.com/TOPOFGR">Franco Galeano</a></li>
+    <li><a href="https://github.com/jfocco">Juan Focco</a></li>
 </ul>
 
 ## License
