@@ -24,7 +24,6 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Unit Testing](#unit-testing)
   - [Linting](#linting)
   - [Cloud functions](#cloud-functions)
-  - [Unit Testing](#unit-testing-1)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
   - [Setting up the Firebase project locally](#setting-up-the-firebase-project-locally)
@@ -157,10 +156,6 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
 - [Camelcase](https://github.com/sindresorhus/camelcase) (★ 423) convert a dash/dot/underscore/space separated string to camelCase.
 - [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
-
-### Unit Testing
-
-- [Firebase-functions-test](https://github.com/firebase/firebase-functions-test) (★ 117) unit testing library for Cloud Functions for Firebase.
 
 ## Prerequisites
 
