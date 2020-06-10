@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bulma": "^0.8.2",
+    "bulma": "^0.9.0",
     "bulma-social": "^1.1.1",
     "classnames": "^2.2.6",
     "cookies-js": "^1.2.3",
