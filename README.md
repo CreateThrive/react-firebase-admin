@@ -24,6 +24,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Unit Testing](#unit-testing)
   - [Linting](#linting)
   - [Cloud functions](#cloud-functions)
+  - [Unit Testing](#unit-testing-1)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
   - [Setting up the Firebase project locally](#setting-up-the-firebase-project-locally)
@@ -43,6 +44,7 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
   - [Selecting an alias](#selecting-an-alias)
   - [Creating a new cloud function](#creating-a-new-cloud-function)
   - [Testing functions locally](#testing-functions-locally)
+  - [Testing functions in online mode](#testing-functions-in-online-mode)
   - [Deployment](#deployment)
 - [Continuous integration/deployment](#continuous-integrationdeployment)
   - [Workflows folder structure](#workflows-folder-structure)
@@ -156,6 +158,14 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
 - [Camelcase](https://github.com/sindresorhus/camelcase) (★ 423) convert a dash/dot/underscore/space separated string to camelCase.
 - [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
+
+#### Unit Testing
+
+- [Firebase-functions-test](https://github.com/firebase/firebase-functions-test) (★ 117) unit testing library for Cloud Functions for Firebase.
+- [Mocha](https://github.com/mochajs/mocha) (★ 19.4k) simple, flexible, fun javascript test framework for node.js & the browser.
+- [Chai](https://github.com/chaijs/chai) (★ 6.8k) BDD / TDD assertion framework for node.js and the browser that can be paired with any testing framework.
+- [Chai-as-promised](https://github.com/domenic/chai-as-promised/) (★ 1.4k) Extends Chai with assertions about promises.
+- [Ts-node](https://github.com/TypeStrong/ts-node) (★ 7k) TypeScript execution and REPL for node.js, with source map support.
 
 ## Prerequisites
 
@@ -332,15 +342,27 @@ functions/
 |     │     └── onDelete.function.ts
 │     ├── db/
 │     │    ├── users/
-│     │    ├── onCreate.function.ts
-│     │    ├── onModify.function.ts
-│     │    └── ... other database functions ...
+│     │    │    ├── onCreate.function.ts
+│     │    │    ├── onModify.function.ts
+│     │    │    └── ... other database functions ...
 │     ├── storage/
 │     │   ... storage functions ...
 │     ├── https/
 │     │    ├── createUser.function.ts
-│     │     └── ... other https functions ...
+│     │    └── ... other https functions ...
 │     └── index.ts
+├── test/
+│     ├── db/
+│     │    ├── users/
+│     │    │    ├── onDelete.test.ts
+│     │    │    ├── onUpdate.test.ts
+│     │    │    └── ... other database tests ...
+│     ├── https/
+│     │    ├── createUser.test.ts
+│     │    └── ... other https tests ...
+│     └── util/
+│          ├── config.ts
+│
 ```
 
 ### Installing dependencies
@@ -415,6 +437,24 @@ After it initializes, you should get your endpoints to test your HTTP functions:
 ```
 
 More information about the [Firebase Emulator](https://firebase.google.com/docs/rules/emulator-setup).
+
+### Testing functions in online mode
+
+Testing your cloud functions online is very simple and easy.
+
+For that, you only have to set the variables localted in the env.example.json inside /functions folder. (Remember to rename the file to env.json)
+
+Follow these steps for setting up your env.json file:
+
+- The first 3 properties **_"databaseURL"_**, **_"storageBucket"_** and **_"projectId"_** are the same ones previously added to the frontend .env file.
+- For **_"serviceAccountKey"_** you should do the following:
+  - Go to your proyect in the Firebase dashboard, click on **_Project settings_** and then click on **_Service accounts_** tab.
+  - After that you'll be able to click on **_Generate new private key_** button and a json file containing your service account's credentials will be downloaded.
+  - Place that file in your project and include the location of it into the **_"serviceAccountKey"_** in your env.json file.
+
+After that, open your terminal, navigate to the /functions folder and execute **npm test**.
+
+_Warning: Use extra caution when handling service account credentials in your code. Do not commit them to a public repository, deploy them in a client app, or expose them in any way that could compromise the security of your Firebase project._
 
 ### Deployment
 
@@ -742,6 +782,7 @@ We'd like to thank these awesome people who made this whole thing happen:
     <li><a href="https://github.com/jbheber">Juan Heber</a></li>
     <li><a href="https://github.com/vikdiesel">Viktor Kuzhelny</a></li>
     <li><a href="https://github.com/TOPOFGR">Franco Galeano</a></li>
+    <li><a href="https://github.com/jfocco">Juan Focco</a></li>
 </ul>
 
 ## License

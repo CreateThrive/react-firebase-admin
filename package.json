@@ -33,7 +33,10 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "setup-admin-dashboard": "npm install && npm build && firebase deploy",
-    "deploy": "npm run build && firebase deploy --only hosting"
+    "deploy": "npm run build && firebase deploy --only hosting",
+    "precommit:react": "npm test",
+    "precommit:functions": "cd functions/ && tsc && npm test",
+    "precommit": "CI=true npm run precommit:react && npm run precommit:functions"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -78,7 +81,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "CI=true yarn test && lint-staged"
+      "pre-commit": "npm run precommit && lint-staged"
     }
   },
   "jest": {
@@ -98,6 +101,9 @@
     "*.{js,jsx}": [
       "eslint --fix",
       "prettier --write"
+    ],
+    "functions/**/*.ts": [
+      "npm run lint"
     ]
   }
 }
