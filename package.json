@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bulma": "^0.8.2",
+    "bulma-social": "^1.1.1",
     "classnames": "^2.2.6",
     "cookies-js": "^1.2.3",
     "date-fns": "^2.14.0",

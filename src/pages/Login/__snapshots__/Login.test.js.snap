@@ -26,8 +26,11 @@ exports[`<Login /> rendering should render without crashing 1`] = `
       "Home.content": "Home content",
       "Home.home": "Home",
       "Login.email": "E-mail Address",
+      "Login.facebook": "Continue with Facebook",
       "Login.forgotPassword": "Forgot Password?",
+      "Login.google": "Continue with Google",
       "Login.login": "Login",
+      "Login.microsoft": "Continue with Microsoft",
       "Login.password": "Password",
       "Login.setNewPassword": "Set your new password",
       "Login.setPassword": "Set Password",
@@ -76,10 +79,14 @@ exports[`<Login /> rendering should render without crashing 1`] = `
       "Users.permDelete": "This will permanently delete the user. Action can not be undone.",
       "Users.search": "Search:",
       "Users.users": "Users",
+      "auth/account-exists-with-different-credential": "Email on another sign in method",
+      "auth/cancelled-popup-request": "Too many pop ups, just one pop up is allowed",
       "auth/email-already-exists": "Email already in use",
       "auth/expired-action-code": "The invitation link has expired, get in touch with your administrator",
       "auth/invalid-action-code": "The invitation link has expired, get in touch with your administrator",
       "auth/invalid-email": "Email is invalid",
+      "auth/popup-blocked": "Pop up blocked by the browser, please enable pop ups for this page",
+      "auth/popup-closed-by-user": "Operation cancelled, pop up was closed",
       "auth/too-many-requests": "Too many attempts made, try again later",
       "auth/user-disabled": "User disabled",
       "auth/wrong-password": "Invalid credentials",
@@ -187,7 +194,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               className="control is-clearfix"
                             >
                               <input
-                                className="input null"
+                                className="input"
                                 name="email"
                                 onChange={[Function]}
                                 required={true}
@@ -208,7 +215,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               className="control is-clearfix"
                             >
                               <input
-                                className="input null"
+                                className="input"
                                 name="password"
                                 onChange={[Function]}
                                 required={true}
@@ -217,7 +224,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               />
                             </div>
                           </div>
-                          <hr />
+                          <br />
                           <div
                             className="field is-grouped"
                           >
@@ -225,7 +232,7 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                               className="control"
                             >
                               <button
-                                className="button is-black undefined"
+                                className="button is-black"
                                 disabled={false}
                                 type="submit"
                               >
@@ -256,6 +263,56 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                             </div>
                           </div>
                         </form>
+                        <hr />
+                        <div
+                          className="field is-grouped socialButtons"
+                        >
+                          <a
+                            className="is-facebook socialButton"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="icon icon"
+                            >
+                              <i
+                                className="mdi mdi-facebook"
+                              />
+                            </span>
+                            <span>
+                              Continue with Facebook
+                            </span>
+                          </a>
+                          <a
+                            className="is-google socialButton"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="icon icon"
+                            >
+                              <i
+                                className="mdi mdi-google"
+                              />
+                            </span>
+                            <span>
+                              Continue with Google
+                            </span>
+                          </a>
+                          <a
+                            className="is-microsoft socialButton"
+                            onClick={[Function]}
+                          >
+                            <span
+                              className="icon icon"
+                            >
+                              <i
+                                className="mdi mdi-microsoft"
+                              />
+                            </span>
+                            <span>
+                              Continue with Microsoft
+                            </span>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>

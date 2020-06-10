@@ -61,6 +61,12 @@ export const AUTH_CHANGE_PASSWORD_FAIL = createAction(
 
 export const AUTH_UPDATE_USER_DATA = createAction('AUTH_UPDATE_USER_DATA');
 
+export const AUTH_PROVIDER_INIT = createAction('AUTH_PROVIDER_INIT');
+
+export const AUTH_PROVIDER_SUCCESS = createAction('AUTH_PROVIDER_SUCCESS');
+
+export const AUTH_PROVIDER_FAIL = createAction('AUTH_PROVIDER_FAIL');
+
 export const logout = () => {
   return async dispatch => {
     dispatch(AUTH_LOGOUT_INIT());
@@ -233,4 +239,82 @@ export const changeUserPassword = (currentPassword, newPassword) => {
     toastr.success('', 'Password changed successfully');
     return dispatch(AUTH_CHANGE_PASSWORD_SUCCESS());
   };
+};
+
+const authWithProvider = provider => {
+  return async (dispatch, getState) => {
+    dispatch(AUTH_PROVIDER_INIT());
+    const { locale } = getState().preferences;
+    let logInData;
+
+    try {
+      logInData = await firebase.auth().signInWithPopup(provider);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
+    }
+    const { user, additionalUserInfo } = logInData;
+
+    const { uid } = firebase.auth().currentUser;
+
+    const createdAt = new Date().toString();
+
+    const { location } = additionalUserInfo.profile;
+
+    const userData = {
+      isAdmin: false,
+      email: user.email,
+      name: user.displayName,
+      createdAt,
+      logoUrl: user.photoURL,
+      location: location?.name || null
+    };
+
+    let userFromDb;
+    try {
+      userFromDb = (
+        await firebase
+          .database()
+          .ref(`users/${uid}`)
+          .once('value')
+      ).val();
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
+    }
+
+    if (!userFromDb) {
+      try {
+        await firebase
+          .database()
+          .ref(`users/${uid}`)
+          .set(userData);
+      } catch (error) {
+        const errorMessage = firebaseError(error.code, locale);
+        return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
+      }
+    }
+
+    return dispatch(
+      AUTH_PROVIDER_SUCCESS({ id: uid, ...userData, ...userFromDb })
+    );
+  };
+};
+
+export const authFacebook = () => {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  provider.addScope('email');
+  return authWithProvider(provider);
+};
+
+export const authGoogle = () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
+  provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+  return authWithProvider(provider);
+};
+
+export const authMicrosoft = () => {
+  const provider = new firebase.auth.OAuthProvider('microsoft.com');
+  return authWithProvider(provider);
 };
