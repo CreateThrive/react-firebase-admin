@@ -23,7 +23,7 @@
     "glob": "^7.1.6"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.11",
+    "@types/chai": "^4.2.12",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
