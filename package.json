@@ -13,7 +13,7 @@
     "react": "^16.13.1",
     "react-datepicker": "^3.0.0",
     "react-dom": "^16.13.1",
-    "react-intl": "^5.4.1",
+    "react-intl": "^5.4.5",
     "react-redux": "^7.2.0",
     "react-redux-toastr": "^7.6.4",
     "react-router-dom": "^5.2.0",
