@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import UserForm from 'components/UserForm';
-import { createUser, modifyUser } from 'state/actions/users';
+import { createUser, modifyUser, fetchUsers } from 'state/actions/users';
 import paths from 'pages/Router/paths';
-import firebase from 'firebase.js';
 import { useFormatMessage } from 'hooks';
 
 const User = () => {
   const { id } = useParams();
 
-  const { success } = useSelector(
-    state => ({
-      success: state.users.success
+  const { success, usersList } = useSelector(
+    (state) => ({
+      success: state.users.success,
+      usersList: state.users.data,
     }),
     shallowEqual
   );
@@ -25,35 +25,30 @@ const User = () => {
     location: '',
     isAdmin: false,
     file: null,
-    createdAt: new Date().toDateString()
+    createdAt: new Date().toDateString(),
   });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const response = (
-        await firebase
-          .database()
-          .ref(`users/${id}`)
-          .once('value')
-      ).val();
-      return response;
-    };
+  const dispatch = useDispatch();
 
+  useEffect(() => {
     if (id) {
-      fetchUserData()
-        .then(userData => {
-          setUser({
-            ...userData,
-            createdAt: userData.createdAt,
-            id,
-            isAdmin: userData.isAdmin
-          });
-        })
-        .catch(() => {
-          setUser({ error: true });
-        });
+      const thisUser = usersList
+        ?.filter((fetchedUser) => fetchedUser.id === id)
+        .pop();
+      if (thisUser) {
+        setUser(thisUser);
+      } else {
+        dispatch(fetchUsers(id));
+      }
     }
   }, [id]);
+
+  useEffect(() => {
+    const thisUser = usersList
+      ?.filter((fetchedUser) => fetchedUser.id === id)
+      .pop();
+    setUser(thisUser);
+  }, [usersList]);
 
   const isEditing = !!id;
 
