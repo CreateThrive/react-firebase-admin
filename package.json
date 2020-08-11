@@ -33,7 +33,7 @@
     "setup-admin-dashboard": "npm install && npm build && firebase deploy",
     "deploy": "npm run build && firebase deploy --only hosting",
     "precommit:react": "npm test",
-    "precommit:functions": "cd functions/ && yarn build && npm test",
+    "precommit:functions": "cd functions/ && npm run build && npm test",
     "precommit": "cross-env CI=true npm run precommit:react && npm run precommit:functions"
   },
   "eslintConfig": {

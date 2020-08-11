@@ -131,7 +131,8 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [React-spinners](https://github.com/davidhu2000/react-spinners) (★ 1.2k) a collection of loading spinner components for React.
 - [Firebase](https://firebase.google.com/) for serverless architecture - CDN Hosting, Realtime Database, Authentication, Storage and Cloud Functions (see [docs](https://firebase.google.com/docs/web)).
 - [Format.js](https://formatjs.io/) (★ 11.7k) libraries for internationalization (see [docs](https://formatjs.io/docs/basic-internationalization-principles)).
-- [date-fns](https://formatjs.io/) (★ 22.3k) date utility library (see [docs]https://date-fns.org/docs/Getting-Started)).
+- [date-fns](https://date-fns.org/) (★ 22.3k) date utility library (see [docs](https://date-fns.org/docs/Getting-Started)).
+- [cross-env](https://github.com/kentcdodds/cross-env) (★ 4.9k) run scripts that set and use environment variables across platforms (see [docs](https://www.npmjs.com/package/cross-env)).
 
 ### Unit Testing
 
