@@ -402,7 +402,7 @@ UserForm.propTypes = {
     id: PropTypes.string,
     isAdmin: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
+    location: PropTypes.string,
     logoUrl: PropTypes.string,
     createdAt: PropTypes.string.isRequired
   }),

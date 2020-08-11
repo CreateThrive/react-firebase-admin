@@ -11,49 +11,37 @@ import { useFormatMessage } from 'hooks';
 const User = () => {
   const { id } = useParams();
 
-  const { success, usersList } = useSelector(
+  const { success, usersList, userData, error } = useSelector(
     (state) => ({
       success: state.users.success,
-      usersList: state.users.data,
+      usersList: state.users.list,
+      userData: state.users.user,
+      error: state.users.error
     }),
     shallowEqual
   );
 
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    location: '',
-    isAdmin: false,
-    file: null,
-    createdAt: new Date().toDateString(),
-  });
+  const [user, setUser] = useState(userData);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
-      const thisUser = usersList
-        ?.filter((fetchedUser) => fetchedUser.id === id)
-        .pop();
-      if (thisUser) {
-        setUser(thisUser);
+      const userFetched = usersList?.find((fetchedUser) => fetchedUser.id === id);
+      if (userFetched) {
+        setUser(userFetched);
+      } else if(userData.id === id) {
+        setUser(userData);
       } else {
         dispatch(fetchUsers(id));
       }
     }
-  }, [id]);
-
-  useEffect(() => {
-    const thisUser = usersList
-      ?.filter((fetchedUser) => fetchedUser.id === id)
-      .pop();
-    setUser(thisUser);
-  }, [usersList]);
+  }, [id, userData]);
 
   const isEditing = !!id;
 
   const userForm =
-    !user.name && id ? (
+    !user && id ? (
       <ClipLoader />
     ) : (
       <UserForm
@@ -63,7 +51,7 @@ const User = () => {
       />
     );
 
-  const redirect = (user.error || success) && <Redirect to={paths.USERS} />;
+  const redirect = (error || success) && <Redirect to={paths.USERS} />;
 
   const editUserMessage = useFormatMessage('User.editUser');
 

@@ -54,7 +54,8 @@ export const fetchUsers = (userId = '') => {
       const user = { ...userData, id: userId };
       return dispatch(
         USERS_FETCH_DATA_SUCCESS({
-          users: [user],
+          list: getState().users.list,
+          user
         })
       );
     }
@@ -79,7 +80,8 @@ export const fetchUsers = (userId = '') => {
 
     return dispatch(
       USERS_FETCH_DATA_SUCCESS({
-        users: usersData.filter((user) => user.id !== id),
+        list: usersData.filter((user) => user.id !== id),
+        user: getState().users.user
       })
     );
   };
@@ -98,7 +100,7 @@ export const deleteUser = (id) => {
     dispatch(USERS_DELETE_USER_INIT());
     const { locale } = getState().preferences;
     const { logoUrl } = getState()
-      .users.data.filter((user) => user.id === id)
+      .users.list.filter((user) => user.id === id)
       .pop();
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
@@ -241,7 +243,7 @@ export const modifyUser = ({
     const { logoUrl } = isProfile
       ? getState().auth.userData
       : getState()
-          .users.data.filter((user) => user.id === id)
+          .users.list.filter((user) => user.id === id)
           .pop();
 
     let deleteLogoTask;

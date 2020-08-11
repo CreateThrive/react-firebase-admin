@@ -19,7 +19,15 @@ import {
 } from 'state/actions/users';
 
 const initialState = {
-  data: [],
+  list: [],
+  user: {
+    name: '',
+    email: '',
+    location: '',
+    isAdmin: false,
+    file: null,
+    createdAt: new Date().toDateString()
+  },
   loading: false,
   error: null,
   success: false,
@@ -34,7 +42,8 @@ export const usersReducer = createReducer(
     }),
     [USERS_FETCH_DATA_SUCCESS]: (state, payload) => ({
       ...state,
-      data: payload.users,
+      list: payload.list,
+      user: payload.user,
       loading: false,
       error: null
     }),
@@ -49,7 +58,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_DELETE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      data: state.data.filter(elem => elem.id !== payload.id),
+      list: state.list.filter(elem => elem.id !== payload.id),
       loading: false,
       error: null,
       deleted: true
@@ -61,7 +70,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_CLEAR_DATA]: state => ({
       ...initialState,
-      data: state.data
+      list: state.list
     }),
     [USERS_CREATE_USER_INIT]: state => ({
       ...state,
@@ -69,7 +78,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_CREATE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      data: state.data.concat(payload.user),
+      list: state.list.concat(payload.user),
       loading: false,
       error: null,
       success: true
@@ -85,7 +94,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_MODIFY_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      data: state.data.map(elem => {
+      list: state.list.map(elem => {
         if (elem.id === payload.id) {
           return {
             name: payload.user.name,
@@ -98,6 +107,7 @@ export const usersReducer = createReducer(
         }
         return elem;
       }),
+      user: payload,
       loading: false,
       error: null,
       success: true
