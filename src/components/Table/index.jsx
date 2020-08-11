@@ -22,11 +22,11 @@ const Table = ({ columns, data }) => {
     nextPage,
     setPageSize,
     canPreviousPage,
-    canNextPage
+    canNextPage,
   } = useTable(
     {
       columns,
-      data
+      data,
     },
     useSortBy,
     usePagination
@@ -41,9 +41,9 @@ const Table = ({ columns, data }) => {
         {...getTableProps()}
       >
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th
                   className={classNames(
                     { [classes.isCurrentSort]: column.isSorted },
@@ -72,18 +72,18 @@ const Table = ({ columns, data }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map(row => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
+                {row.cells.map((cell) => {
                   return (
                     <td
                       className={classNames(
                         { 'is-actions-cell': cell.column.id === 'actions' },
                         {
                           'has-no-head-mobile is-image-cell':
-                            cell.column.id === 'logoUrl'
+                            cell.column.id === 'logoUrl',
                         }
                       )}
                       data-label={cell.column.Header}
@@ -104,11 +104,11 @@ const Table = ({ columns, data }) => {
             <span className="select">
               <select
                 value={pageSize}
-                onChange={e => {
+                onChange={(e) => {
                   setPageSize(Number(e.target.value));
                 }}
               >
-                {[5, 10, 15, 20, 50].map(size => (
+                {[5, 10, 15, 20, 50].map((size) => (
                   <option key={size} value={size}>
                     {size} {perPage}
                   </option>
@@ -162,7 +162,7 @@ const Table = ({ columns, data }) => {
                     <button
                       type="button"
                       className="pagination-link"
-                      onClick={() => gotoPage(2)}
+                      onClick={() => gotoPage(1)}
                     >
                       2
                     </button>
@@ -207,7 +207,7 @@ const Table = ({ columns, data }) => {
                     <button
                       type="button"
                       className="pagination-link"
-                      onClick={() => gotoPage(pageCount - 1)}
+                      onClick={() => gotoPage(pageCount - 2)}
                     >
                       {pageCount - 1}
                     </button>
@@ -246,9 +246,9 @@ Table.propTypes = {
       Cell: PropTypes.func,
       sortType: PropTypes.string,
       id: PropTypes.string,
-      disableSortBy: PropTypes.bool
+      disableSortBy: PropTypes.bool,
     })
-  ).isRequired
+  ).isRequired,
 };
 
 export default Table;
