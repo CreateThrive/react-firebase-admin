@@ -8,13 +8,12 @@ import { availableLocales, browserLocale, messages } from 'utils/index';
 const LanguageWrapper = ({ children }) => {
   const dispatch = useDispatch();
 
-  let { locale } =
-    useSelector(
-      (state) => ({
-        locale: state.preferences.locale,
-      }),
-      shallowEqual
-    ) || localStorage.getItem('locale');
+  let { locale } = useSelector(
+    (state) => ({
+      locale: state.preferences.locale,
+    }),
+    shallowEqual
+  );
 
   if (!locale) {
     locale = availableLocales.includes(browserLocale) ? browserLocale : 'en';
