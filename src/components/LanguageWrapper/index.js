@@ -9,8 +9,8 @@ const LanguageWrapper = ({ children }) => {
   const dispatch = useDispatch();
 
   let { locale } = useSelector(
-    state => ({
-      locale: state.preferences.locale
+    (state) => ({
+      locale: state.preferences.locale,
     }),
     shallowEqual
   );
