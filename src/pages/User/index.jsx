@@ -16,21 +16,23 @@ const User = () => {
       success: state.users.success,
       usersList: state.users.list,
       userData: state.users.user,
-      error: state.users.error
+      error: state.users.error,
     }),
     shallowEqual
   );
 
-  const [user, setUser] = useState(userData);
+  const [user, setUser] = useState(userData || {});
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (id) {
-      const userFetched = usersList?.find((fetchedUser) => fetchedUser.id === id);
+      const userFetched = usersList.find(
+        (fetchedUser) => fetchedUser.id === id
+      );
       if (userFetched) {
         setUser(userFetched);
-      } else if(userData.id === id) {
+      } else if (userData.id === id) {
         setUser(userData);
       } else {
         dispatch(fetchUsers(id));
@@ -46,7 +48,8 @@ const User = () => {
     ) : (
       <UserForm
         isEditing={isEditing}
-        userData={user}
+        user={user}
+        setUser={setUser}
         action={isEditing ? modifyUser : createUser}
       />
     );

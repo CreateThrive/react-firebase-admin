@@ -55,7 +55,7 @@ export const fetchUsers = (userId = '') => {
       return dispatch(
         USERS_FETCH_DATA_SUCCESS({
           list: getState().users.list,
-          user
+          user,
         })
       );
     }
@@ -81,7 +81,7 @@ export const fetchUsers = (userId = '') => {
     return dispatch(
       USERS_FETCH_DATA_SUCCESS({
         list: usersData.filter((user) => user.id !== id),
-        user: getState().users.user
+        user: getState().users.user,
       })
     );
   };
@@ -242,9 +242,8 @@ export const modifyUser = ({
     const { locale } = getState().preferences;
     const { logoUrl } = isProfile
       ? getState().auth.userData
-      : getState()
-          .users.list.filter((user) => user.id === id)
-          .pop();
+      : getState().users.list.find((user) => user.id === id) ||
+        getState().users.user;
 
     let deleteLogoTask;
     let uploadLogoTask;
@@ -292,7 +291,7 @@ export const modifyUser = ({
       toastr.success('', 'User updated successfully');
     }
 
-    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: { ...userData, id } }));
+    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: userData, id }));
   };
 };
 
