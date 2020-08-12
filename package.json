@@ -7,7 +7,7 @@
     "bulma-social": "^1.1.1",
     "classnames": "^2.2.6",
     "date-fns": "^2.15.0",
-    "firebase": "^7.17.1",
+    "firebase": "^7.17.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-datepicker": "^3.0.0",
