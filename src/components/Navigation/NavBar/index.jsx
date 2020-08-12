@@ -15,10 +15,10 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);
 
   const { userName, logoUrl, locale } = useSelector(
-    state => ({
+    (state) => ({
       userName: state.auth.userData.name,
       logoUrl: state.auth.userData.logoUrl,
-      locale: state.preferences.locale
+      locale: state.preferences.locale,
     }),
     shallowEqual
   );
@@ -33,11 +33,11 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
     setNavMobileActive(!navMobileActive);
   }, [setNavMobileActive, navMobileActive]);
 
-  const changeLocaleHandler = local => {
+  const changeLocaleHandler = (local) => {
     dispatch(setUserLocale(local));
   };
 
-  const locales = availableLocales.filter(local => local !== locale);
+  const locales = availableLocales.filter((local) => local !== locale);
 
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">
@@ -77,7 +77,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
       </div>
       <div
         className={classNames('navbar-menu', 'fadeIn', 'animated', 'faster', {
-          'is-active': navMobileActive
+          'is-active': navMobileActive,
         })}
         id="navbar-menu"
       >
@@ -94,7 +94,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
               </span>
             </a>
             <div className="navbar-dropdown">
-              {locales.map(local => (
+              {locales.map((local) => (
                 <a
                   onClick={() => changeLocaleHandler(local)}
                   className="navbar-item"
@@ -150,7 +150,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
 
 NavBar.propTypes = {
   handleMobileToggle: PropTypes.func.isRequired,
-  asideMobileActive: PropTypes.bool
+  asideMobileActive: PropTypes.bool,
 };
 
 export default NavBar;
