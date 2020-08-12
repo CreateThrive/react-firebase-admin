@@ -1,9 +1,9 @@
 import { createAction } from 'redux-act';
 import { toastr } from 'react-redux-toastr';
 
-import { firebaseError, FIREBASE_RESPONSE } from '../../utils';
-import { clearUsersData } from './users';
-import firebase from '../../firebase';
+import { firebaseError, FIREBASE_RESPONSE } from 'utils';
+import firebase from 'firebase.js';
+import { clearUsersDataLogout } from './users';
 
 export const AUTH_SIGN_IN_INIT = createAction('AUTH_SIGN_IN_INIT');
 export const AUTH_SIGN_IN_FAIL = createAction('AUTH_SIGN_IN_FAIL');
@@ -61,11 +61,17 @@ export const AUTH_CHANGE_PASSWORD_FAIL = createAction(
 
 export const AUTH_UPDATE_USER_DATA = createAction('AUTH_UPDATE_USER_DATA');
 
+export const AUTH_PROVIDER_INIT = createAction('AUTH_PROVIDER_INIT');
+
+export const AUTH_PROVIDER_SUCCESS = createAction('AUTH_PROVIDER_SUCCESS');
+
+export const AUTH_PROVIDER_FAIL = createAction('AUTH_PROVIDER_FAIL');
+
 export const logout = () => {
   return async dispatch => {
     dispatch(AUTH_LOGOUT_INIT());
 
-    dispatch(clearUsersData());
+    dispatch(clearUsersDataLogout());
     await firebase.auth().signOut();
 
     dispatch(AUTH_LOGOUT_SUCCESS());
@@ -122,29 +128,32 @@ export const fetchUserData = () => {
 
 export const checkUserData = () => {
   return (dispatch, getState) => {
-    const { tenant } = getState().auth.userData;
+    const { id } = getState().auth.userData;
 
-    if (!tenant) {
+    if (!id) {
       dispatch(fetchUserData());
     }
   };
 };
 
 export const auth = (email, password) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_SIGN_IN_INIT());
-
+    const { locale } = getState().preferences;
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
     }
 
     const { emailVerified } = firebase.auth().currentUser;
 
     if (!emailVerified) {
-      const errorMessage = firebaseError(FIREBASE_RESPONSE.USER_DISABLED);
+      const errorMessage = firebaseError(
+        FIREBASE_RESPONSE.USER_DISABLED,
+        locale
+      );
       return dispatch(AUTH_SIGN_IN_FAIL({ error: errorMessage }));
     }
 
@@ -153,13 +162,14 @@ export const auth = (email, password) => {
 };
 
 export const setPassword = (email, password, url) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_SET_PASSWORD_INIT());
+    const { locale } = getState().preferences;
 
     try {
       await firebase.auth().signInWithEmailLink(email, url);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_SET_PASSWORD_FAIL({ error: errorMessage }));
     }
 
@@ -168,7 +178,7 @@ export const setPassword = (email, password, url) => {
     try {
       await user.updatePassword(password);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_SET_PASSWORD_FAIL({ error: errorMessage }));
     }
 
@@ -179,13 +189,14 @@ export const setPassword = (email, password, url) => {
 };
 
 export const resetPassword = email => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_RESET_PASSWORD_INIT());
+    const { locale } = getState().preferences;
 
     try {
       await firebase.auth().sendPasswordResetEmail(email);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       return dispatch(AUTH_RESET_PASSWORD_FAIL({ error: errorMessage }));
     }
 
@@ -196,8 +207,9 @@ export const resetPassword = email => {
 export const authCleanUp = () => dispatch => dispatch(AUTH_CLEAN_UP());
 
 export const changeUserPassword = (currentPassword, newPassword) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(AUTH_CHANGE_PASSWORD_INIT());
+    const { locale } = getState().preferences;
 
     const user = firebase.auth().currentUser;
 
@@ -211,7 +223,7 @@ export const changeUserPassword = (currentPassword, newPassword) => {
     try {
       await user.reauthenticateWithCredential(credential);
     } catch (error) {
-      const errorMessage = firebaseError(error.code);
+      const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(AUTH_CHANGE_PASSWORD_FAIL({ error: errorMessage }));
     }
@@ -219,7 +231,7 @@ export const changeUserPassword = (currentPassword, newPassword) => {
     try {
       await user.updatePassword(newPassword);
     } catch (error) {
-      const errorMessage = firebaseError(error);
+      const errorMessage = firebaseError(error, locale);
       toastr.error('', errorMessage);
       return dispatch(AUTH_CHANGE_PASSWORD_FAIL({ error: errorMessage }));
     }
@@ -227,4 +239,82 @@ export const changeUserPassword = (currentPassword, newPassword) => {
     toastr.success('', 'Password changed successfully');
     return dispatch(AUTH_CHANGE_PASSWORD_SUCCESS());
   };
+};
+
+const authWithProvider = provider => {
+  return async (dispatch, getState) => {
+    dispatch(AUTH_PROVIDER_INIT());
+    const { locale } = getState().preferences;
+    let logInData;
+
+    try {
+      logInData = await firebase.auth().signInWithPopup(provider);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
+    }
+    const { user, additionalUserInfo } = logInData;
+
+    const { uid } = firebase.auth().currentUser;
+
+    const createdAt = new Date().toString();
+
+    const { location } = additionalUserInfo.profile;
+
+    const userData = {
+      isAdmin: false,
+      email: user.email,
+      name: user.displayName,
+      createdAt,
+      logoUrl: user.photoURL,
+      location: location?.name || null
+    };
+
+    let userFromDb;
+    try {
+      userFromDb = (
+        await firebase
+          .database()
+          .ref(`users/${uid}`)
+          .once('value')
+      ).val();
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
+    }
+
+    if (!userFromDb) {
+      try {
+        await firebase
+          .database()
+          .ref(`users/${uid}`)
+          .set(userData);
+      } catch (error) {
+        const errorMessage = firebaseError(error.code, locale);
+        return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
+      }
+    }
+
+    return dispatch(
+      AUTH_PROVIDER_SUCCESS({ id: uid, ...userData, ...userFromDb })
+    );
+  };
+};
+
+export const authFacebook = () => {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  provider.addScope('email');
+  return authWithProvider(provider);
+};
+
+export const authGoogle = () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
+  provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+  return authWithProvider(provider);
+};
+
+export const authMicrosoft = () => {
+  const provider = new firebase.auth.OAuthProvider('microsoft.com');
+  return authWithProvider(provider);
 };

@@ -39,10 +39,18 @@
     "Request": true,
     "fetch": true,
     "reducerTester": true,
-    "mountWithProvider": true,
-    "shallowWithProvider": true,
-    "shallowWithRouter": true,
-    "mountWithRouter": true
+    "mountWithProviders": true,
+    "shallowWithProviders": true
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
+  "env": {
+    "mocha": true
+  }
 }

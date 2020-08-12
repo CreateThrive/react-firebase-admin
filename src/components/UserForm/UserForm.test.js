@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import * as actions from '../../state/actions/users';
+import * as actions from 'state/actions/users';
 import UserForm from '.';
 
 describe('<UserForm /> rendering', () => {
@@ -16,7 +16,6 @@ describe('<UserForm /> rendering', () => {
       file: null,
       id: 'test id',
       logoUrl: 'some logoUrl',
-      tenant: 'some tenantId',
       createdAt: new Date().toDateString()
     };
   });
@@ -24,7 +23,7 @@ describe('<UserForm /> rendering', () => {
   it('should render without crashing', () => {
     const user = { ...userData, createdAt: '11/21/2020' };
 
-    const { component } = shallowWithProvider(
+    const { component } = shallowWithProviders(
       <UserForm userData={user} action={actions.createUser} />
     )({
       users: {}
@@ -34,7 +33,7 @@ describe('<UserForm /> rendering', () => {
   });
 
   it('should display user name preview', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} action={actions.createUser} />
     )({
       users: {}
@@ -49,7 +48,7 @@ describe('<UserForm /> rendering', () => {
   });
 
   it('should display email preview if it is creating a new user', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} action={actions.createUser} />
     )({
       users: {}
@@ -64,7 +63,7 @@ describe('<UserForm /> rendering', () => {
   });
 
   it('should display location preview', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} isEditing action={actions.createUser} />
     )({
       users: {}
@@ -79,7 +78,7 @@ describe('<UserForm /> rendering', () => {
   });
 
   it('should display admin preview', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} isEditing action={actions.createUser} />
     )({
       users: {}
@@ -89,18 +88,12 @@ describe('<UserForm /> rendering', () => {
   });
 
   it('should display created preview', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} isEditing action={actions.createUser} />
     )({
       users: {}
     });
-
-    expect(
-      component
-        .find('input.input.is-static')
-        .last()
-        .props().value
-    ).toEqual(new Date().toDateString());
+    expect(component.find('p.date')).toBeTruthy();
   });
 });
 
@@ -120,7 +113,6 @@ describe('<LoginForm /> actions', () => {
       location: 'Montevideo, Uruguay',
       id: 'test id',
       logoUrl: 'some logoUrl',
-      tenant: 'some tenantId',
       isAdmin: false,
       file: null,
       createdAt: new Date().toDateString()
@@ -128,7 +120,7 @@ describe('<LoginForm /> actions', () => {
   });
 
   it('should dispatch createUser action when creating a new user', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} action={actions.createUser} />
     )({
       users: {}
@@ -140,7 +132,7 @@ describe('<LoginForm /> actions', () => {
   });
 
   it('should dispatch modifyUser action when editing a user', () => {
-    const { component } = mountWithProvider(
+    const { component } = mountWithProviders(
       <UserForm userData={userData} isEditing action={actions.modifyUser} />
     )({
       users: {}

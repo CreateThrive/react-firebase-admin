@@ -1,20 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import classNames from 'classnames';
+import 'bulma-social/bin/bulma-social.min.css';
 
-import firebase from '../../firebase';
-import { auth, setPassword, authCleanUp } from '../../state/actions/auth';
+import firebase from 'firebase.js';
+import {
+  auth,
+  setPassword,
+  authCleanUp,
+  authFacebook,
+  authGoogle,
+  authMicrosoft
+} from 'state/actions/auth';
+import { useChangeHandler, useFormatMessage } from 'hooks';
+import { inputValidations } from 'utils';
 import paths from '../Router/paths';
-import { useChangeHandler } from '../../utils/hooks';
-import { inputValidations } from '../../utils';
 import classes from './Login.module.scss';
 
 const Login = () => {
-  const { error, isAuth, loading } = useSelector(
+  const { error, isAuth, loading, locale } = useSelector(
     state => ({
       error: state.auth.error,
       isAuth: !!state.auth.userData.id,
-      loading: state.auth.loading
+      loading: state.auth.loading,
+      locale: state.preferences.locale
     }),
     shallowEqual
   );
@@ -58,10 +68,22 @@ const Login = () => {
     }
   };
 
-  const modifierLoading = loading && 'is-loading';
+  const iconsClassName = classNames('icon', classes.icon);
+
+  const onFacebookHandler = useCallback(() => {
+    dispatch(authFacebook());
+  }, [dispatch, authFacebook]);
+
+  const onGoogleHandler = useCallback(() => {
+    dispatch(authGoogle());
+  }, [dispatch, authGoogle]);
+
+  const onMicrosoftHandler = useCallback(() => {
+    dispatch(authMicrosoft());
+  }, [dispatch, authMicrosoft]);
 
   const inputs = isEmailLink
-    ? inputValidations(authData.email, authData.password)
+    ? inputValidations(authData.email, authData.password, locale)
     : {
         email: {
           modifier: null,
@@ -75,6 +97,14 @@ const Login = () => {
       };
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
+
+  const setNewPasswordMessage = useFormatMessage('Login.setNewPassword');
+
+  const loginMessage = useFormatMessage('Login.login');
+
+  const setPasswordMessage = useFormatMessage('Login.setPassword');
+
+  const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
 
   return (
     <section className="section hero is-fullheight is-error-section">
@@ -90,17 +120,17 @@ const Login = () => {
                       <i className="mdi mdi-lock default" />
                     </span>
                     <span>
-                      {isEmailLink ? 'Set your new password' : 'Login'}
+                      {isEmailLink ? setNewPasswordMessage : loginMessage}
                     </span>
                   </p>
                 </header>
                 <div className="card-content">
                   <form onSubmit={onSubmitHandler}>
                     <div className="field">
-                      <p className="label">E-mail Address</p>
+                      <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
-                          className={`input ${inputs.email.modifier}`}
+                          className={classNames('input', inputs.email.modifier)}
                           type="email"
                           name="email"
                           required
@@ -109,16 +139,23 @@ const Login = () => {
                         />
                       </div>
                       {inputs.email.message && (
-                        <p className={`help ${inputs.email.modifier}`}>
+                        <p
+                          className={classNames('help', inputs.email.modifier)}
+                        >
                           {inputs.email.message}
                         </p>
                       )}
                     </div>
                     <div className="field">
-                      <p className="label">Password</p>
+                      <p className="label">
+                        {useFormatMessage('Login.password')}
+                      </p>
                       <div className="control is-clearfix">
                         <input
-                          className={`input ${inputs.password.modifier}`}
+                          className={classNames(
+                            'input',
+                            inputs.password.modifier
+                          )}
                           type="password"
                           name="password"
                           required
@@ -127,20 +164,27 @@ const Login = () => {
                         />
                       </div>
                       {inputs.password.message && (
-                        <p className={`help ${inputs.password.modifier}`}>
+                        <p
+                          className={classNames(
+                            'help',
+                            inputs.password.modifier
+                          )}
+                        >
                           {inputs.password.message}
                         </p>
                       )}
                     </div>
-                    <hr />
+                    <br />
                     <div className="field is-grouped">
                       <div className="control">
                         <button
                           type="submit"
-                          className={`button is-black ${modifierLoading}`}
+                          className={classNames('button', 'is-black', {
+                            'is-loading': loading
+                          })}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
-                          {isEmailLink ? 'Set Password' : 'Login'}
+                          {isEmailLink ? setPasswordMessage : loginMessage}
                         </button>
                       </div>
                       {!isEmailLink && (
@@ -149,17 +193,64 @@ const Login = () => {
                             to={paths.RESET_PASSWORD}
                             className="button is-outlined"
                           >
-                            Forgot Password?
+                            {forgotPasswordMessage}
                           </Link>
                         </div>
                       )}
                     </div>
                     {error && (
-                      <p className={`has-text-danger ${classes.errorMessage}`}>
+                      <p
+                        className={classNames(
+                          'has-text-danger',
+                          classes.errorMessage
+                        )}
+                      >
                         {error}
                       </p>
                     )}
                   </form>
+                  <hr />
+                  <div
+                    className={classNames(
+                      'field',
+                      'is-grouped',
+                      classes.socialButtons
+                    )}
+                  >
+                    <a
+                      className={classNames(
+                        'is-facebook',
+                        classes.socialButton
+                      )}
+                      onClick={onFacebookHandler}
+                    >
+                      <span className={iconsClassName}>
+                        <i className="mdi mdi-facebook" />
+                      </span>
+                      <span>{useFormatMessage('Login.facebook')}</span>
+                    </a>
+                    <a
+                      className={classNames('is-google', classes.socialButton)}
+                      onClick={onGoogleHandler}
+                    >
+                      <span className={iconsClassName}>
+                        <i className="mdi mdi-google" />
+                      </span>
+                      <span>{useFormatMessage('Login.google')}</span>
+                    </a>
+                    <a
+                      className={classNames(
+                        'is-microsoft',
+                        classes.socialButton
+                      )}
+                      onClick={onMicrosoftHandler}
+                    >
+                      <span className={iconsClassName}>
+                        <i className="mdi mdi-microsoft" />
+                      </span>
+                      <span>{useFormatMessage('Login.microsoft')}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

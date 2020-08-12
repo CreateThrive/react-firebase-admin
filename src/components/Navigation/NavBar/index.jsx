@@ -3,18 +3,22 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import { availableLocales, flags } from 'utils';
+import { setUserLocale } from 'state/actions/preferences';
+import { useFormatMessage } from 'hooks';
+import { logout } from 'state/actions/auth';
+import paths from 'pages/Router/paths';
+import defaultLogo from 'assets/user-default-log.svg';
 import Link from '../Link';
-import { logout } from '../../../state/actions/auth';
-import paths from '../../../pages/Router/paths';
-import defaultLogo from '../../../assets/user-default-log.svg';
 
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);
 
-  const { userName, logoUrl } = useSelector(
-    state => ({
+  const { userName, logoUrl, locale } = useSelector(
+    (state) => ({
       userName: state.auth.userData.name,
-      logoUrl: state.auth.userData.logoUrl
+      logoUrl: state.auth.userData.logoUrl,
+      locale: state.preferences.locale,
     }),
     shallowEqual
   );
@@ -28,6 +32,12 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const onMobileToggleHandler = useCallback(() => {
     setNavMobileActive(!navMobileActive);
   }, [setNavMobileActive, navMobileActive]);
+
+  const changeLocaleHandler = (local) => {
+    dispatch(setUserLocale(local));
+  };
+
+  const locales = availableLocales.filter((local) => local !== locale);
 
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">
@@ -67,11 +77,39 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
       </div>
       <div
         className={classNames('navbar-menu', 'fadeIn', 'animated', 'faster', {
-          'is-active': navMobileActive
+          'is-active': navMobileActive,
         })}
         id="navbar-menu"
       >
         <div className="navbar-end">
+          <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+            <a className="navbar-link is-arrowless">
+              <div className="is-user-avatar">
+                <span>
+                  <img id={locale} src={flags[locale]} alt={`${locale} flag`} />
+                </span>
+              </div>
+              <span className="icon">
+                <i className="mdi mdi-chevron-down" />
+              </span>
+            </a>
+            <div className="navbar-dropdown">
+              {locales.map((local) => (
+                <a
+                  onClick={() => changeLocaleHandler(local)}
+                  className="navbar-item"
+                  id={local}
+                  key={local}
+                >
+                  <div className="is-user-avatar">
+                    <span>
+                      <img src={flags[local]} alt={`${local} flag`} />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
             <a className="navbar-link is-arrowless">
               <div className="is-user-avatar">
@@ -89,7 +127,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-account" />
                 </span>
-                <span>Profile</span>
+                <span>{useFormatMessage('NavBar.profile')}</span>
               </Link>
               <hr className="navbar-divider" />
               <a
@@ -100,7 +138,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span className="icon">
                   <i className="mdi mdi-logout" />
                 </span>
-                <span>Log Out</span>
+                <span>{useFormatMessage('NavBar.logOut')}</span>
               </a>
             </div>
           </div>
@@ -112,7 +150,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
 
 NavBar.propTypes = {
   handleMobileToggle: PropTypes.func.isRequired,
-  asideMobileActive: PropTypes.bool
+  asideMobileActive: PropTypes.bool,
 };
 
 export default NavBar;

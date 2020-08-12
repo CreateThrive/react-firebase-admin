@@ -3,7 +3,7 @@ import Profile from '.';
 
 describe('<Profile /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithProvider(<Profile />)({
+    const { component } = shallowWithProviders(<Profile />)({
       users: {},
       auth: {}
     });

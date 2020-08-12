@@ -2,8 +2,9 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import path from '../Router/paths';
-import NotFoudImage from '../../assets/404.gif';
+import { useFormatMessage } from 'hooks';
+import path from 'pages/Router/paths';
+import NotFoudImage from 'assets/404.gif';
 import classes from './NotFound.module.scss';
 
 const NotFound = () => {
@@ -25,12 +26,12 @@ const NotFound = () => {
           <div className="container">
             <div className="columns is-vcentered is-desktop">
               <div className="column has-text-centered">
-                <h1 className="title">Error 404: page not found</h1>
+                <h1 className="title">{useFormatMessage('NotFound.404')}</h1>
                 <p className="subtitle">
-                  The requested URL {location.pathname} was not found
+                  {useFormatMessage('NotFound.url', { url: location.pathname })}
                 </p>
                 <Link className="button is-info is-normal" to={userPath}>
-                  Go Back
+                  {useFormatMessage('NotFound.back')}
                 </Link>
               </div>
               <div className="column has-text-centered">

@@ -2,7 +2,6 @@
 /* eslint-disable global-require */
 const admin = require('firebase-admin');
 const readline = require('readline');
-const uuid = require('uuid/v4');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -27,11 +26,8 @@ rl.question('Enter the path to the service account key file: ', path => {
           emailVerified: true
         });
 
-        const tenant = uuid();
-
         await admin.auth().setCustomUserClaims(uid, {
-          isAdmin: true,
-          tenant
+          isAdmin: true
         });
 
         console.log('Created admin account in authentication');
@@ -43,7 +39,6 @@ rl.question('Enter the path to the service account key file: ', path => {
           .ref(`users/${uid}`)
           .set({
             isAdmin: true,
-            tenant,
             name: 'Test Name',
             location: 'Test Location',
             createdAt: new Date().toDateString(),

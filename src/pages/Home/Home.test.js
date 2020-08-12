@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import * as actions from '../../state/actions/auth';
+import * as actions from 'state/actions/auth';
 import Home from '.';
 
 describe('<Home /> rendering', () => {
@@ -15,7 +15,7 @@ describe('<Home /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = mountWithProvider(<Home />)({
+    const { component } = mountWithProviders(<Home />)({
       auth: {}
     });
 

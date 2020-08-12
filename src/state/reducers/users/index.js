@@ -14,8 +14,9 @@ import {
   USERS_MODIFY_USER_INIT,
   USERS_MODIFY_USER_SUCCESS,
   USERS_MODIFY_USER_FAIL,
-  USERS_CLEAN_UP
-} from '../../actions/users';
+  USERS_CLEAN_UP,
+  USERS_CLEAR_DATA_LOGOUT
+} from 'state/actions/users';
 
 const initialState = {
   data: [],
@@ -58,8 +59,9 @@ export const usersReducer = createReducer(
       loading: false,
       error: payload.error
     }),
-    [USERS_CLEAR_DATA]: () => ({
-      ...initialState
+    [USERS_CLEAR_DATA]: state => ({
+      ...initialState,
+      data: state.data
     }),
     [USERS_CREATE_USER_INIT]: state => ({
       ...state,
@@ -89,7 +91,6 @@ export const usersReducer = createReducer(
             name: payload.user.name,
             location: payload.user.location,
             id: payload.id,
-            tenant: payload.user.tenant,
             logoUrl: payload.user.logoUrl,
             createdAt: payload.user.createdAt,
             email: elem.email
@@ -112,6 +113,9 @@ export const usersReducer = createReducer(
       error: null,
       success: false,
       deleted: false
+    }),
+    [USERS_CLEAR_DATA_LOGOUT]: () => ({
+      ...initialState
     })
   },
   initialState

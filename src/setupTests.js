@@ -3,9 +3,11 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import deepFreeze from 'deep-freeze';
 import { configure, mount, shallow } from 'enzyme';
-import { BrowserRouter, MemoryRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { IntlProvider } from 'react-intl';
+import english from 'languages/en';
 
 configure({ adapter: new Adapter() });
 
@@ -22,47 +24,37 @@ const mockedStore = (initial = {}) =>
     /* place middlewares here */
   ])(initial);
 
+const initStore = initialState =>
+  mockedStore({
+    ...initialState,
+    preferences: { locale: 'en' }
+  });
+
 // Use this to test mounted components w/ store connection
-global.mountWithProvider = children => initialState => {
-  const store = mockedStore(initialState);
+global.mountWithProviders = children => initialState => {
+  const store = initStore(initialState);
   return {
     component: mount(
-      <BrowserRouter keyLength={0}>
-        <Provider store={store}>{children}</Provider>
-      </BrowserRouter>
+      <IntlProvider locale="en" messages={english}>
+        <BrowserRouter keyLength={0}>
+          <Provider store={store}>{children}</Provider>
+        </BrowserRouter>
+      </IntlProvider>
     ),
     store
   };
 };
 
-global.shallowWithProvider = children => initialState => {
-  const store = mockedStore(initialState);
+global.shallowWithProviders = children => initialState => {
+  const store = initStore(initialState);
   return {
     component: shallow(
-      <BrowserRouter keyLength={0}>
-        <Provider store={store}>{children}</Provider>
-      </BrowserRouter>
+      <IntlProvider locale="en" messages={english}>
+        <BrowserRouter keyLength={0}>
+          <Provider store={store}>{children}</Provider>
+        </BrowserRouter>
+      </IntlProvider>
     ),
     store
-  };
-};
-
-global.shallowWithRouter = children => (path, entries) => {
-  return {
-    component: shallow(
-      <MemoryRouter initialEntries={[...entries]} initialIndex={0}>
-        <Route path={path}>{children}</Route>
-      </MemoryRouter>
-    )
-  };
-};
-
-global.mountWithRouter = children => (path, entries) => {
-  return {
-    component: mount(
-      <MemoryRouter initialEntries={[...entries]}>
-        <Route path={path}>{children}</Route>
-      </MemoryRouter>
-    )
   };
 };

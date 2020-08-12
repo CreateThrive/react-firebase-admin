@@ -21,14 +21,16 @@ import {
   AUTH_CHANGE_PASSWORD_INIT,
   AUTH_CHANGE_PASSWORD_SUCCESS,
   AUTH_CHANGE_PASSWORD_FAIL,
-  AUTH_UPDATE_USER_DATA
-} from '../../actions/auth';
+  AUTH_UPDATE_USER_DATA,
+  AUTH_PROVIDER_FAIL,
+  AUTH_PROVIDER_INIT,
+  AUTH_PROVIDER_SUCCESS
+} from 'state/actions/auth';
 
 const initialState = {
   userData: {
     id: null,
-    isAdmin: null,
-    tenant: null
+    isAdmin: null
   },
   loading: false,
   error: null,
@@ -62,7 +64,6 @@ export const authReducer = createReducer(
         name: payload.name,
         location: payload.location,
         logoUrl: payload.logoUrl,
-        tenant: payload.tenant,
         createdAt: payload.createdAt
       },
       loading: false,
@@ -140,9 +141,31 @@ export const authReducer = createReducer(
         name: payload.name,
         location: payload.location,
         logoUrl: payload.logoUrl || state.userData.logoUrl,
-        tenant: payload.tenant,
         createdAt: payload.createdAt
       }
+    }),
+    [AUTH_PROVIDER_INIT]: state => ({
+      ...state,
+      loading: true
+    }),
+    [AUTH_PROVIDER_SUCCESS]: (state, payload) => ({
+      ...state,
+      userData: {
+        id: payload.id,
+        isAdmin: payload.isAdmin,
+        email: payload.email,
+        name: payload.name,
+        location: payload.location,
+        logoUrl: payload.logoUrl,
+        createdAt: payload.createdAt
+      },
+      error: null,
+      loading: false
+    }),
+    [AUTH_PROVIDER_FAIL]: (state, payload) => ({
+      ...state,
+      loading: false,
+      error: payload.error
     })
   },
   initialState

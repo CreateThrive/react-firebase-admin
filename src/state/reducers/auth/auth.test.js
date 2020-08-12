@@ -19,8 +19,11 @@ import {
   AUTH_CHANGE_PASSWORD_INIT,
   AUTH_CHANGE_PASSWORD_SUCCESS,
   AUTH_CHANGE_PASSWORD_FAIL,
-  AUTH_UPDATE_USER_DATA
-} from '../../actions/auth';
+  AUTH_UPDATE_USER_DATA,
+  AUTH_PROVIDER_FAIL,
+  AUTH_PROVIDER_INIT,
+  AUTH_PROVIDER_SUCCESS
+} from 'state/actions/auth';
 
 import { authReducer } from '.';
 
@@ -28,8 +31,7 @@ describe('Auth reducer', () => {
   const initialState = {
     userData: {
       id: null,
-      isAdmin: null,
-      tenant: null
+      isAdmin: null
     },
     loading: false,
     error: null,
@@ -80,8 +82,7 @@ describe('Auth reducer', () => {
   it('should set the state with the corresponding payload, loading to false and error to null when AUTH_FETCH_USER_DATA_SUCCESS actions is fired', () => {
     const payload = {
       id: 'some user id',
-      isAdmin: false,
-      tenant: 'some sompanyId'
+      isAdmin: false
     };
 
     reducerTest(initialState, AUTH_FETCH_USER_DATA_SUCCESS(payload), {
@@ -206,7 +207,6 @@ describe('Auth reducer', () => {
       isAdmin: false,
       name: 'some name',
       location: 'some location',
-      tenant: 'some tenantId',
       createdAt: '11/20/2020'
     };
     reducerTest(initialState, AUTH_UPDATE_USER_DATA({ ...userData }), {
@@ -215,5 +215,34 @@ describe('Auth reducer', () => {
         ...userData
       }
     });
+  });
+
+  it('should set loading to true when AUTH_PROVIDER_INIT action is fired', () => {
+    reducerTest(initialState, AUTH_PROVIDER_INIT(), {
+      ...initialState,
+      loading: true
+    });
+  });
+
+  it('should set the state with the corresponding payload, loading to false and error to null when AUTH_PROVIDER_SUCCESS actions is fired', () => {
+    const payload = {
+      id: 'some user id',
+      isAdmin: false
+    };
+
+    reducerTest(initialState, AUTH_PROVIDER_SUCCESS(payload), {
+      ...initialState,
+      userData: {
+        ...payload
+      }
+    });
+  });
+
+  it('should set loading to false and error with the corresponding payload when AUTH_PROVIDER_FAIL action is fired', () => {
+    reducerTest(
+      { ...initialState, loading: true },
+      AUTH_PROVIDER_FAIL({ error: 'sample error' }),
+      { ...initialState, error: 'sample error' }
+    );
   });
 });
