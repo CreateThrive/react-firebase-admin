@@ -15,7 +15,6 @@ Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a ful
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [What is this?](#what-is-this)
 - [Why should I use it?](#why-should-i-use-it)
 - [Features](#features)
@@ -132,9 +131,8 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [React-spinners](https://github.com/davidhu2000/react-spinners) (★ 1.2k) a collection of loading spinner components for React.
 - [Firebase](https://firebase.google.com/) for serverless architecture - CDN Hosting, Realtime Database, Authentication, Storage and Cloud Functions (see [docs](https://firebase.google.com/docs/web)).
 - [Format.js](https://formatjs.io/) (★ 11.7k) libraries for internationalization (see [docs](https://formatjs.io/docs/basic-internationalization-principles)).
-- [date-fns](https://formatjs.io/) (★ 22.3k) date utility library (see [docs]https://date-fns.org/docs/Getting-Started)).
-- [redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage) (★ 70) **Redux Persist** storage adapter for cookies.
-- [cookies-js](https://github.com/js-cookie/js-cookie) (★ 15.5k) API for handling browser cookies.
+- [date-fns](https://date-fns.org/) (★ 22.3k) date utility library (see [docs](https://date-fns.org/docs/Getting-Started)).
+- [cross-env](https://github.com/kentcdodds/cross-env) (★ 4.9k) run scripts that set and use environment variables across platforms (see [docs](https://www.npmjs.com/package/cross-env)).
 
 ### Unit Testing
 
@@ -536,7 +534,7 @@ For requesting access to the [demo](https://react-firebase-admin-eeac2.firebasea
 
 ## Internationalization
 
-For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **LanguageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using cookies ([redux-persist-cookie-storage](https://github.com/abersager/redux-persist-cookie-storage)). The user has the option to change their language preferences.
+For the internationalization we decided to choose the library [Format.js](https://formatjs.io/) using react-intl as the react integration. We made a wrapper called **LanguageWrapper** that contains all of our translation logic. Apart from that, we save the language preferences of the user in the redux store and we persist it using the local storage. The user has the option to change their language preferences.
 
 ![Boilerplate - Dinamical Internationalization](https://media.giphy.com/media/St3bw0rjlBQmKzf6fC/source.gif)
 
@@ -686,7 +684,7 @@ We implemented social media authentication using Firebase!. You can take a look 
 
 ### Can I add more login methods?
 
-Yes you can!. We already have the setup in place for more login methods like Twitter, GitHub, etc. You can add them without chaning much code at all. You can see other login methods provided by Firebase [here](https://firebase.google.com/docs/auth/web/start).
+Yes you can!. We already have the setup in place for more login methods like Twitter, GitHub, etc. You can add them without changing much code at all. You can see other login methods provided by Firebase [here](https://firebase.google.com/docs/auth/web/start).
 
 ### Facebook
 
