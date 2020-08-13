@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import { useFormatMessage } from 'hooks';
@@ -15,10 +15,6 @@ const Profile = () => {
   );
 
   const [profile, setProfile] = useState(userData);
-
-  useEffect(() => {
-    setProfile(userData);
-  }, [userData]);
 
   return (
     <>
