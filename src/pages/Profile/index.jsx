@@ -14,7 +14,7 @@ const Profile = () => {
     shallowEqual
   );
 
-  const [profile, setProfile] = useState(userData);
+  const [user, setUser] = useState(userData);
 
   return (
     <>
@@ -27,8 +27,8 @@ const Profile = () => {
         <UserForm
           isEditing
           isProfile
-          user={profile}
-          setUser={setProfile}
+          user={user}
+          setUser={setUser}
           action={modifyUser}
         />
         <ChangePassword />
