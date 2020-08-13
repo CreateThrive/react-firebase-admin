@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import { useFormatMessage } from 'hooks';
@@ -8,11 +8,13 @@ import ChangePassword from './ChangePassword';
 
 const Profile = () => {
   const { userData } = useSelector(
-    state => ({
-      userData: state.auth.userData
+    (state) => ({
+      userData: state.auth.userData,
     }),
     shallowEqual
   );
+
+  const [user, setUser] = useState(userData);
 
   return (
     <>
@@ -22,7 +24,13 @@ const Profile = () => {
         </div>
       </section>
       <section className="section is-main-section">
-        <UserForm isEditing isProfile userData={userData} action={modifyUser} />
+        <UserForm
+          isEditing
+          isProfile
+          user={user}
+          setUser={setUser}
+          action={modifyUser}
+        />
         <ChangePassword />
       </section>
     </>
