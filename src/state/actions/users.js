@@ -35,23 +35,37 @@ export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
 
 export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
 
-export const fetchUsers = () => {
+export const fetchUsers = (userId = '') => {
   return async (dispatch, getState) => {
     dispatch(checkUserData());
 
     dispatch(USERS_FETCH_DATA_INIT());
+    if (userId) {
+      let userData;
+      try {
+        userData = (
+          await firebase.database().ref(`users/${userId}`).once('value')
+        ).val();
+      } catch (error) {
+        toastr.error('', error);
+        return dispatch(USERS_FETCH_DATA_FAIL({ error }));
+      }
+
+      const user = { ...userData, id: userId };
+      return dispatch(
+        USERS_FETCH_DATA_SUCCESS({
+          list: getState().users.list,
+          user,
+        })
+      );
+    }
 
     const { id } = getState().auth.userData;
 
     let users;
 
     try {
-      users = (
-        await firebase
-          .database()
-          .ref('users')
-          .once('value')
-      ).val();
+      users = (await firebase.database().ref('users').once('value')).val();
     } catch (error) {
       toastr.error('', error);
       return dispatch(USERS_FETCH_DATA_FAIL({ error }));
@@ -60,47 +74,38 @@ export const fetchUsers = () => {
     const usersData = users
       ? Object.entries(users).map(([key, value]) => ({
           id: key,
-          ...value
+          ...value,
         }))
       : [];
 
     return dispatch(
       USERS_FETCH_DATA_SUCCESS({
-        users: usersData.filter(user => user.id !== id)
+        list: usersData.filter((user) => user.id !== id),
+        user: getState().users.user,
       })
     );
   };
 };
 
-const deleteLogo = oldLogo => {
+const deleteLogo = (oldLogo) => {
   if (!oldLogo.includes('firebasestorage')) {
     return null;
   }
-  const logoPath = oldLogo
-    .split('users%2F')
-    .pop()
-    .split('?alt=media')
-    .shift();
-  return firebase
-    .storage()
-    .ref(`users/${logoPath}`)
-    .delete();
+  const logoPath = oldLogo.split('users%2F').pop().split('?alt=media').shift();
+  return firebase.storage().ref(`users/${logoPath}`).delete();
 };
 
-export const deleteUser = id => {
+export const deleteUser = (id) => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
     const { locale } = getState().preferences;
     const { logoUrl } = getState()
-      .users.data.filter(user => user.id === id)
+      .users.list.filter((user) => user.id === id)
       .pop();
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
 
-    const deleteUserTask = firebase
-      .database()
-      .ref(`users/${id}`)
-      .remove();
+    const deleteUserTask = firebase.database().ref(`users/${id}`).remove();
 
     try {
       await Promise.all([deleteLogoTask, deleteUserTask]);
@@ -109,7 +114,7 @@ export const deleteUser = id => {
       toastr.error('', errorMessage);
       return dispatch(
         USERS_DELETE_USER_FAIL({
-          error: errorMessage
+          error: errorMessage,
         })
       );
     }
@@ -120,13 +125,13 @@ export const deleteUser = id => {
 };
 
 export const clearUsersData = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(USERS_CLEAR_DATA());
   };
 };
 
 export const clearUsersDataLogout = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(USERS_CLEAR_DATA_LOGOUT());
   };
 };
@@ -155,7 +160,7 @@ export const createUser = ({
   location,
   file,
   createdAt,
-  isAdmin
+  isAdmin,
 }) => {
   return async (dispatch, getState) => {
     dispatch(USERS_CREATE_USER_INIT());
@@ -173,7 +178,7 @@ export const createUser = ({
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
-          error: errorMessage
+          error: errorMessage,
         })
       );
     }
@@ -194,7 +199,7 @@ export const createUser = ({
 
     const actionCodeSettings = {
       url: process.env.REACT_APP_LOGIN_PAGE_URL,
-      handleCodeInApp: true
+      handleCodeInApp: true,
     };
 
     const sendSignInLinkToEmailTask = firebase
@@ -205,14 +210,14 @@ export const createUser = ({
       await Promise.all([
         uploadLogoTask,
         createUserDbTask,
-        sendSignInLinkToEmailTask
+        sendSignInLinkToEmailTask,
       ]);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
       return dispatch(
         USERS_CREATE_USER_FAIL({
-          error: errorMessage
+          error: errorMessage,
         })
       );
     }
@@ -230,16 +235,15 @@ export const modifyUser = ({
   createdAt,
   id,
   isEditing,
-  isProfile
+  isProfile,
 }) => {
   return async (dispatch, getState) => {
     dispatch(USERS_MODIFY_USER_INIT());
     const { locale } = getState().preferences;
     const { logoUrl } = isProfile
       ? getState().auth.userData
-      : getState()
-          .users.data.filter(user => user.id === id)
-          .pop();
+      : getState().users.list.find((user) => user.id === id) ||
+        getState().users.user;
 
     let deleteLogoTask;
     let uploadLogoTask;
@@ -255,7 +259,7 @@ export const modifyUser = ({
       location,
       createdAt,
       isAdmin,
-      logoUrl: logoUrl || newLogoUrl
+      logoUrl: logoUrl || newLogoUrl,
     };
 
     const updateUserDbTask = firebase
@@ -276,7 +280,7 @@ export const modifyUser = ({
       toastr.error('', errorMessage);
       return dispatch(
         USERS_MODIFY_USER_FAIL({
-          error: errorMessage
+          error: errorMessage,
         })
       );
     }
@@ -287,8 +291,8 @@ export const modifyUser = ({
       toastr.success('', 'User updated successfully');
     }
 
-    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: { ...userData, id } }));
+    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: userData, id }));
   };
 };
 
-export const usersCleanUp = () => dispatch => dispatch(USERS_CLEAN_UP());
+export const usersCleanUp = () => (dispatch) => dispatch(USERS_CLEAN_UP());

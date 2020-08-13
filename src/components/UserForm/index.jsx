@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -11,10 +11,10 @@ import { validateEmail } from 'utils';
 import './UserForm.scss';
 import DatePicker from '../DatePicker';
 
-const UserForm = ({ isEditing, isProfile, userData, action }) => {
+const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
   const { loading } = useSelector(
-    state => ({
-      loading: state.users.loading
+    (state) => ({
+      loading: state.users.loading,
     }),
     shallowEqual
   );
@@ -25,16 +25,14 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
     return () => dispatch(usersCleanUp());
   }, [dispatch]);
 
-  const [user, setUser] = useState(userData);
-
   const onChangeHandler = useChangeHandler(setUser);
 
-  const onFileChangedHandler = event => {
+  const onFileChangedHandler = (event) => {
     const file = event.target.files[0];
-    setUser(prevState => ({ ...prevState, file, logoUrl: null }));
+    setUser((prevState) => ({ ...prevState, file, logoUrl: null }));
   };
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
     dispatch(
       action({ ...user, createdAt: user.createdAt, isEditing, isProfile })
@@ -43,7 +41,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
 
   let emailInput = {
     modifier: null,
-    message: { modifier: null, content: null }
+    message: { modifier: null, content: null },
   };
 
   const invalidEmail = user.email && !validateEmail(user.email);
@@ -55,8 +53,8 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
       modifier: 'is-danger',
       message: {
         modifier: 'is-danger',
-        content: invalidEmailMessage
-      }
+        content: invalidEmailMessage,
+      },
     };
   }
 
@@ -270,8 +268,9 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                         <div className="control">
                           <button
                             type="submit"
-                            className={`button is-primary ${loading &&
-                              'is-loading'}`}
+                            className={`button is-primary ${
+                              loading && 'is-loading'
+                            }`}
                             disabled={!canSubmit}
                           >
                             <span>{useFormatMessage('UserForm.submit')}</span>
@@ -383,7 +382,7 @@ const UserForm = ({ isEditing, isProfile, userData, action }) => {
                       weekday: 'short',
                       year: 'numeric',
                       month: 'short',
-                      day: 'numeric'
+                      day: 'numeric',
                     })}
                   </p>
                 </div>
@@ -402,11 +401,11 @@ UserForm.propTypes = {
     id: PropTypes.string,
     isAdmin: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
+    location: PropTypes.string,
     logoUrl: PropTypes.string,
-    createdAt: PropTypes.string.isRequired
+    createdAt: PropTypes.string.isRequired,
   }),
-  action: PropTypes.func.isRequired
+  action: PropTypes.func.isRequired,
 };
 
 export default UserForm;

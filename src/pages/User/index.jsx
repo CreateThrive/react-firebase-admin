@@ -1,74 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import UserForm from 'components/UserForm';
-import { createUser, modifyUser } from 'state/actions/users';
+import { createUser, modifyUser, fetchUsers } from 'state/actions/users';
 import paths from 'pages/Router/paths';
-import firebase from 'firebase.js';
 import { useFormatMessage } from 'hooks';
 
 const User = () => {
   const { id } = useParams();
 
-  const { success } = useSelector(
-    state => ({
-      success: state.users.success
+  const { success, usersList, userData, error } = useSelector(
+    (state) => ({
+      success: state.users.success,
+      usersList: state.users.list,
+      userData: state.users.user,
+      error: state.users.error,
     }),
     shallowEqual
   );
 
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    location: '',
-    isAdmin: false,
-    file: null,
-    createdAt: new Date().toDateString()
-  });
+  const [user, setUser] = useState(userData || {});
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const response = (
-        await firebase
-          .database()
-          .ref(`users/${id}`)
-          .once('value')
-      ).val();
-      return response;
-    };
-
     if (id) {
-      fetchUserData()
-        .then(userData => {
-          setUser({
-            ...userData,
-            createdAt: userData.createdAt,
-            id,
-            isAdmin: userData.isAdmin
-          });
-        })
-        .catch(() => {
-          setUser({ error: true });
-        });
+      const userFetched = usersList.find(
+        (fetchedUser) => fetchedUser.id === id
+      );
+      if (userFetched) {
+        setUser(userFetched);
+      } else if (userData.id === id) {
+        setUser(userData);
+      } else {
+        dispatch(fetchUsers(id));
+      }
     }
-  }, [id]);
+  }, [id, userData]);
 
   const isEditing = !!id;
 
   const userForm =
-    !user.name && id ? (
+    !user && id ? (
       <ClipLoader />
     ) : (
       <UserForm
         isEditing={isEditing}
-        userData={user}
+        user={user}
+        setUser={setUser}
         action={isEditing ? modifyUser : createUser}
       />
     );
 
-  const redirect = (user.error || success) && <Redirect to={paths.USERS} />;
+  const redirect = (error || success) && <Redirect to={paths.USERS} />;
 
   const editUserMessage = useFormatMessage('User.editUser');
 

@@ -12,7 +12,7 @@ export default combineReducers({
     {
       key: 'auth',
       storage,
-      blacklist: ['error', 'loading']
+      blacklist: ['error', 'loading'],
     },
     authReducer
   ),
@@ -24,9 +24,9 @@ export default combineReducers({
     {
       key: 'users',
       storage,
-      blacklist: ['error', 'loading']
+      blacklist: ['error', 'loading'],
     },
     usersReducer
   ),
-  toastr: toastrReducer
+  toastr: toastrReducer,
 });
