@@ -1,30 +1,29 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
-import 'bulma-social/bin/bulma-social.min.css';
+import { toastr } from 'react-redux-toastr';
+import { StyledFirebaseAuth } from 'react-firebaseui';
 
 import firebase from 'firebase.js';
 import {
   auth,
   setPassword,
   authCleanUp,
-  authFacebook,
-  authGoogle,
-  authMicrosoft
+  authWithSocialMedia,
 } from 'state/actions/auth';
 import { useChangeHandler, useFormatMessage } from 'hooks';
-import { inputValidations } from 'utils';
+import { inputValidations, firebaseError, uiConfig } from 'utils';
 import paths from '../Router/paths';
 import classes from './Login.module.scss';
 
 const Login = () => {
   const { error, isAuth, loading, locale } = useSelector(
-    state => ({
+    (state) => ({
       error: state.auth.error,
       isAuth: !!state.auth.userData.id,
       loading: state.auth.loading,
-      locale: state.preferences.locale
+      locale: state.preferences.locale,
     }),
     shallowEqual
   );
@@ -33,7 +32,7 @@ const Login = () => {
 
   const [authData, setAuthData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const onChangeHandler = useChangeHandler(setAuthData);
@@ -56,7 +55,7 @@ const Login = () => {
     .auth()
     .isSignInWithEmailLink(window.location.href);
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
 
     if (isEmailLink) {
@@ -68,32 +67,27 @@ const Login = () => {
     }
   };
 
-  const iconsClassName = classNames('icon', classes.icon);
+  const onSignInSuccessHandler = (authResult) => {
+    dispatch(authWithSocialMedia(authResult));
+  };
 
-  const onFacebookHandler = useCallback(() => {
-    dispatch(authFacebook());
-  }, [dispatch, authFacebook]);
-
-  const onGoogleHandler = useCallback(() => {
-    dispatch(authGoogle());
-  }, [dispatch, authGoogle]);
-
-  const onMicrosoftHandler = useCallback(() => {
-    dispatch(authMicrosoft());
-  }, [dispatch, authMicrosoft]);
+  const onSignInFailHandler = (signInEror) => {
+    const errorMessage = firebaseError(signInEror.code, locale);
+    toastr.error('', errorMessage);
+  };
 
   const inputs = isEmailLink
     ? inputValidations(authData.email, authData.password, locale)
     : {
         email: {
           modifier: null,
-          message: null
+          message: null,
         },
         password: {
           modifier: null,
-          message: null
+          message: null,
         },
-        canSubmit: false
+        canSubmit: false,
       };
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
@@ -180,7 +174,7 @@ const Login = () => {
                         <button
                           type="submit"
                           className={classNames('button', 'is-black', {
-                            'is-loading': loading
+                            'is-loading': loading,
                           })}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
@@ -217,39 +211,13 @@ const Login = () => {
                       classes.socialButtons
                     )}
                   >
-                    <a
-                      className={classNames(
-                        'is-facebook',
-                        classes.socialButton
+                    <StyledFirebaseAuth
+                      uiConfig={uiConfig(
+                        onSignInSuccessHandler,
+                        onSignInFailHandler
                       )}
-                      onClick={onFacebookHandler}
-                    >
-                      <span className={iconsClassName}>
-                        <i className="mdi mdi-facebook" />
-                      </span>
-                      <span>{useFormatMessage('Login.facebook')}</span>
-                    </a>
-                    <a
-                      className={classNames('is-google', classes.socialButton)}
-                      onClick={onGoogleHandler}
-                    >
-                      <span className={iconsClassName}>
-                        <i className="mdi mdi-google" />
-                      </span>
-                      <span>{useFormatMessage('Login.google')}</span>
-                    </a>
-                    <a
-                      className={classNames(
-                        'is-microsoft',
-                        classes.socialButton
-                      )}
-                      onClick={onMicrosoftHandler}
-                    >
-                      <span className={iconsClassName}>
-                        <i className="mdi mdi-microsoft" />
-                      </span>
-                      <span>{useFormatMessage('Login.microsoft')}</span>
-                    </a>
+                      firebaseAuth={firebase.auth()}
+                    />
                   </div>
                 </div>
               </div>

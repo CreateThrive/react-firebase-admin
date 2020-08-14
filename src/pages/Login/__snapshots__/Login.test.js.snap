@@ -267,51 +267,51 @@ exports[`<Login /> rendering should render without crashing 1`] = `
                         <div
                           className="field is-grouped socialButtons"
                         >
-                          <a
-                            className="is-facebook socialButton"
-                            onClick={[Function]}
+                          <e
+                            firebaseAuth={
+                              Object {
+                                "apiKey": "AIzaSyA0DDb3-lvIxvS9x8UZF0_A4gEThrdTIJ8",
+                                "appName": "[DEFAULT]",
+                                "authDomain": "react-firebase-admin-eeac2.firebaseapp.com",
+                                "currentUser": null,
+                              }
+                            }
+                            uiConfig={
+                              Object {
+                                "callbacks": Object {
+                                  "signInFailure": [Function],
+                                  "signInSuccessWithAuthResult": [Function],
+                                },
+                                "signInFlow": "popup",
+                                "signInOptions": Array [
+                                  Object {
+                                    "fullLabel": "Continue with Facebook",
+                                    "provider": "facebook.com",
+                                    "scopes": Array [
+                                      "email",
+                                    ],
+                                  },
+                                  Object {
+                                    "fullLabel": "Continue with Google",
+                                    "provider": "google.com",
+                                    "scopes": Array [
+                                      "https://www.googleapis.com/auth/user.addresses.read",
+                                      "https://www.googleapis.com/auth/userinfo.email",
+                                    ],
+                                  },
+                                  Object {
+                                    "fullLabel": "Continue with Microsoft",
+                                    "provider": "microsoft.com",
+                                  },
+                                ],
+                                "signInSuccessUrl": "/home",
+                              }
+                            }
                           >
-                            <span
-                              className="icon icon"
-                            >
-                              <i
-                                className="mdi mdi-facebook"
-                              />
-                            </span>
-                            <span>
-                              Continue with Facebook
-                            </span>
-                          </a>
-                          <a
-                            className="is-google socialButton"
-                            onClick={[Function]}
-                          >
-                            <span
-                              className="icon icon"
-                            >
-                              <i
-                                className="mdi mdi-google"
-                              />
-                            </span>
-                            <span>
-                              Continue with Google
-                            </span>
-                          </a>
-                          <a
-                            className="is-microsoft socialButton"
-                            onClick={[Function]}
-                          >
-                            <span
-                              className="icon icon"
-                            >
-                              <i
-                                className="mdi mdi-microsoft"
-                              />
-                            </span>
-                            <span>
-                              Continue with Microsoft
-                            </span>
-                          </a>
+                            <div
+                              id="firebaseui_container"
+                            />
+                          </e>
                         </div>
                       </div>
                     </div>

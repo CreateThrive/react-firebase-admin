@@ -68,7 +68,7 @@ export const AUTH_PROVIDER_SUCCESS = createAction('AUTH_PROVIDER_SUCCESS');
 export const AUTH_PROVIDER_FAIL = createAction('AUTH_PROVIDER_FAIL');
 
 export const logout = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(AUTH_LOGOUT_INIT());
 
     dispatch(clearUsersDataLogout());
@@ -79,8 +79,8 @@ export const logout = () => {
 };
 
 export const verifyAuth = () => {
-  return dispatch => {
-    firebase.auth().onAuthStateChanged(user => {
+  return (dispatch) => {
+    firebase.auth().onAuthStateChanged((user) => {
       dispatch(AUTH_RESTORE_SESSION_INIT());
 
       if (user !== null) {
@@ -94,7 +94,7 @@ export const verifyAuth = () => {
 };
 
 export const fetchUserData = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(AUTH_FETCH_USER_DATA_INIT());
 
     const { uid } = firebase.auth().currentUser;
@@ -103,10 +103,7 @@ export const fetchUserData = () => {
 
     try {
       user = (
-        await firebase
-          .database()
-          .ref(`users/${uid}`)
-          .once('value')
+        await firebase.database().ref(`users/${uid}`).once('value')
       ).val();
     } catch (error) {
       dispatch(logout());
@@ -120,7 +117,7 @@ export const fetchUserData = () => {
     return dispatch(
       AUTH_FETCH_USER_DATA_SUCCESS({
         id: uid,
-        ...user
+        ...user,
       })
     );
   };
@@ -188,7 +185,7 @@ export const setPassword = (email, password, url) => {
   };
 };
 
-export const resetPassword = email => {
+export const resetPassword = (email) => {
   return async (dispatch, getState) => {
     dispatch(AUTH_RESET_PASSWORD_INIT());
     const { locale } = getState().preferences;
@@ -204,7 +201,7 @@ export const resetPassword = email => {
   };
 };
 
-export const authCleanUp = () => dispatch => dispatch(AUTH_CLEAN_UP());
+export const authCleanUp = () => (dispatch) => dispatch(AUTH_CLEAN_UP());
 
 export const changeUserPassword = (currentPassword, newPassword) => {
   return async (dispatch, getState) => {
@@ -241,54 +238,38 @@ export const changeUserPassword = (currentPassword, newPassword) => {
   };
 };
 
-const authWithProvider = provider => {
+export const authWithSocialMedia = (authResult) => {
   return async (dispatch, getState) => {
     dispatch(AUTH_PROVIDER_INIT());
     const { locale } = getState().preferences;
-    let logInData;
+    const { user, additionalUserInfo } = authResult;
+    const { isNewUser, profile } = additionalUserInfo;
+    const { uid, photoURL, email, displayName } = user;
 
-    try {
-      logInData = await firebase.auth().signInWithPopup(provider);
-    } catch (error) {
-      const errorMessage = firebaseError(error.code, locale);
-      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
-    }
-    const { user, additionalUserInfo } = logInData;
-
-    const { uid } = firebase.auth().currentUser;
-
-    const createdAt = new Date().toString();
-
-    const { location } = additionalUserInfo.profile;
+    const { location } = profile;
 
     const userData = {
       isAdmin: false,
-      email: user.email,
-      name: user.displayName,
-      createdAt,
-      logoUrl: user.photoURL,
-      location: location?.name || null
+      email,
+      name: displayName,
+      createdAt: new Date().toString(),
+      logoUrl: photoURL,
+      location: location?.name || null,
     };
 
-    let userFromDb;
-    try {
-      userFromDb = (
-        await firebase
-          .database()
-          .ref(`users/${uid}`)
-          .once('value')
-      ).val();
-    } catch (error) {
-      const errorMessage = firebaseError(error.code, locale);
-      return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
-    }
-
-    if (!userFromDb) {
+    let userFromDb = {};
+    if (isNewUser) {
       try {
-        await firebase
-          .database()
-          .ref(`users/${uid}`)
-          .set(userData);
+        await firebase.database().ref(`users/${uid}`).set(userData);
+      } catch (e) {
+        const errorMessage = firebaseError(e.code, locale);
+        return dispatch(AUTH_PROVIDER_FAIL({ e: errorMessage }));
+      }
+    } else {
+      try {
+        userFromDb = (
+          await firebase.database().ref(`users/${uid}`).once('value')
+        ).val();
       } catch (error) {
         const errorMessage = firebaseError(error.code, locale);
         return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
@@ -299,22 +280,4 @@ const authWithProvider = provider => {
       AUTH_PROVIDER_SUCCESS({ id: uid, ...userData, ...userFromDb })
     );
   };
-};
-
-export const authFacebook = () => {
-  const provider = new firebase.auth.FacebookAuthProvider();
-  provider.addScope('email');
-  return authWithProvider(provider);
-};
-
-export const authGoogle = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  provider.addScope('https://www.googleapis.com/auth/user.addresses.read');
-  provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-  return authWithProvider(provider);
-};
-
-export const authMicrosoft = () => {
-  const provider = new firebase.auth.OAuthProvider('microsoft.com');
-  return authWithProvider(provider);
 };
