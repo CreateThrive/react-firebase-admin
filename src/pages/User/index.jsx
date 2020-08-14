@@ -11,10 +11,9 @@ import { useFormatMessage } from 'hooks';
 const User = () => {
   const { id } = useParams();
 
-  const { success, usersList, userData, error } = useSelector(
+  const { success, userData, error } = useSelector(
     (state) => ({
       success: state.users.success,
-      usersList: state.users.list,
       userData: state.users.user,
       error: state.users.error,
     }),
@@ -27,12 +26,7 @@ const User = () => {
 
   useEffect(() => {
     if (id) {
-      const userFetched = usersList.find(
-        (fetchedUser) => fetchedUser.id === id
-      );
-      if (userFetched) {
-        setUser(userFetched);
-      } else if (userData.id === id) {
+      if (userData.id === id) {
         setUser(userData);
       } else {
         dispatch(fetchUsers(id));

@@ -41,6 +41,19 @@ export const fetchUsers = (userId = '') => {
 
     dispatch(USERS_FETCH_DATA_INIT());
     if (userId) {
+      const userFetched = getState().users.list.find(
+        (fetchedUser) => fetchedUser.id === userId
+      );
+
+      if (userId) {
+        return dispatch(
+          USERS_FETCH_DATA_SUCCESS({
+            list: getState().users.list,
+            user: userFetched,
+          })
+        );
+      }
+
       let userData;
       try {
         userData = (
