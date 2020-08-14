@@ -7,7 +7,6 @@ import {
   USERS_DELETE_USER_INIT,
   USERS_DELETE_USER_SUCCESS,
   USERS_DELETE_USER_FAIL,
-  USERS_CLEAR_DATA,
   USERS_CREATE_USER_INIT,
   USERS_CREATE_USER_SUCCESS,
   USERS_CREATE_USER_FAIL,
@@ -20,14 +19,6 @@ import {
 
 const initialState = {
   list: [],
-  user: {
-    name: '',
-    email: '',
-    location: '',
-    isAdmin: false,
-    file: null,
-    createdAt: new Date().toDateString(),
-  },
   loading: false,
   error: null,
   success: false,
@@ -42,8 +33,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_FETCH_DATA_SUCCESS]: (state, payload) => ({
       ...state,
-      list: payload.list || [],
-      user: payload.user || initialState.user,
+      list: payload.list,
       loading: false,
       error: null,
     }),
@@ -67,10 +57,6 @@ export const usersReducer = createReducer(
       ...state,
       loading: false,
       error: payload.error,
-    }),
-    [USERS_CLEAR_DATA]: (state) => ({
-      ...initialState,
-      list: state.list,
     }),
     [USERS_CREATE_USER_INIT]: (state) => ({
       ...state,

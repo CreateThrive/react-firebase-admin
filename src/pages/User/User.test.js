@@ -8,14 +8,7 @@ describe('<User /> rendering', () => {
   it('should render without crashing', () => {
     const { component } = shallowWithProviders(<User />)({
       users: {
-        user: {
-          name: '',
-          email: '',
-          location: '',
-          isAdmin: false,
-          file: null,
-          createdAt: new Date().toDateString(),
-        },
+        list: [],
       },
     });
 
@@ -25,14 +18,7 @@ describe('<User /> rendering', () => {
   it('should not show the spinner when creating a user', () => {
     const { component } = mountWithProviders(<User />)({
       users: {
-        user: {
-          name: '',
-          email: '',
-          location: '',
-          isAdmin: false,
-          file: null,
-          createdAt: new Date().toDateString(),
-        },
+        list: [],
       },
     });
 
@@ -42,14 +28,7 @@ describe('<User /> rendering', () => {
   it('should render the UserForm component when creating a user', () => {
     const { component } = mountWithProviders(<User />)({
       users: {
-        user: {
-          name: '',
-          email: '',
-          location: '',
-          isAdmin: false,
-          file: null,
-          createdAt: new Date().toDateString(),
-        },
+        list: [],
       },
     });
 

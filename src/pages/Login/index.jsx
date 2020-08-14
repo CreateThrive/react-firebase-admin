@@ -11,7 +11,7 @@ import {
   authCleanUp,
   authFacebook,
   authGoogle,
-  authMicrosoft
+  authMicrosoft,
 } from 'state/actions/auth';
 import { useChangeHandler, useFormatMessage } from 'hooks';
 import { inputValidations } from 'utils';
@@ -20,11 +20,11 @@ import classes from './Login.module.scss';
 
 const Login = () => {
   const { error, isAuth, loading, locale } = useSelector(
-    state => ({
+    (state) => ({
       error: state.auth.error,
       isAuth: !!state.auth.userData.id,
       loading: state.auth.loading,
-      locale: state.preferences.locale
+      locale: state.preferences.locale,
     }),
     shallowEqual
   );
@@ -33,7 +33,7 @@ const Login = () => {
 
   const [authData, setAuthData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const onChangeHandler = useChangeHandler(setAuthData);
@@ -56,7 +56,7 @@ const Login = () => {
     .auth()
     .isSignInWithEmailLink(window.location.href);
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
 
     if (isEmailLink) {
@@ -72,28 +72,28 @@ const Login = () => {
 
   const onFacebookHandler = useCallback(() => {
     dispatch(authFacebook());
-  }, [dispatch, authFacebook]);
+  }, [dispatch]);
 
   const onGoogleHandler = useCallback(() => {
     dispatch(authGoogle());
-  }, [dispatch, authGoogle]);
+  }, [dispatch]);
 
   const onMicrosoftHandler = useCallback(() => {
     dispatch(authMicrosoft());
-  }, [dispatch, authMicrosoft]);
+  }, [dispatch]);
 
   const inputs = isEmailLink
     ? inputValidations(authData.email, authData.password, locale)
     : {
         email: {
           modifier: null,
-          message: null
+          message: null,
         },
         password: {
           modifier: null,
-          message: null
+          message: null,
         },
-        canSubmit: false
+        canSubmit: false,
       };
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
@@ -180,7 +180,7 @@ const Login = () => {
                         <button
                           type="submit"
                           className={classNames('button', 'is-black', {
-                            'is-loading': loading
+                            'is-loading': loading,
                           })}
                           disabled={isEmailLink ? !inputs.canSubmit : false}
                         >

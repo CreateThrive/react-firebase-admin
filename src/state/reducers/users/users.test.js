@@ -5,7 +5,6 @@ import {
   USERS_DELETE_USER_INIT,
   USERS_DELETE_USER_SUCCESS,
   USERS_DELETE_USER_FAIL,
-  USERS_CLEAR_DATA,
   USERS_CREATE_USER_INIT,
   USERS_CREATE_USER_SUCCESS,
   USERS_CREATE_USER_FAIL,
@@ -21,14 +20,6 @@ import { usersReducer } from '.';
 describe('Establishments reducer', () => {
   const initialState = {
     list: [],
-    user: {
-      name: '',
-      email: '',
-      location: '',
-      isAdmin: false,
-      file: null,
-      createdAt: new Date().toDateString(),
-    },
     loading: false,
     error: null,
     success: false,
@@ -75,15 +66,17 @@ describe('Establishments reducer', () => {
   });
 
   it('should set error to null, loading to false and user with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
-    const userData = {
-      name: 'Test name',
-      email: 'Test email',
-      location: 'Test location',
-      createdAt: '11/20/2020',
-    };
-    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ user: userData }), {
+    const list = [
+      {
+        name: 'Test name',
+        email: 'Test email',
+        location: 'Test location',
+        createdAt: '11/20/2020',
+      },
+    ];
+    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ list }), {
       ...initialState,
-      user: userData,
+      list,
       loading: false,
       error: null,
     });
@@ -116,28 +109,6 @@ describe('Establishments reducer', () => {
 
   it('should reset the state to the initial state when USERS_CLEAR_DATA_LOGOUT action is fired', () => {
     reducerTest(initialState, USERS_CLEAR_DATA_LOGOUT(), initialState);
-  });
-
-  it('should reset the state to the initial state while maintaining the list when USERS_CLEAR_DATA action is fired', () => {
-    const userData = [
-      {
-        name: 'Test name',
-        email: 'Test email',
-        location: 'Test location',
-        createdAt: '11/20/2020',
-      },
-    ];
-
-    reducerTest(
-      {
-        ...initialState,
-        list: userData,
-        loading: true,
-        error: null,
-      },
-      USERS_CLEAR_DATA(),
-      { ...initialState, list: userData }
-    );
   });
 
   it('should set loading to true to the current state when USERS_CREATE_USER_INIT action is fired', () => {
@@ -213,7 +184,6 @@ describe('Establishments reducer', () => {
       }
     );
   });
-
 
   it('should set loading to false and error with the corresponding payload to the current state USERS_MODIFY_USER_FAIL action is fired', () => {
     reducerTest(initialState, USERS_MODIFY_USER_FAIL({ error: 'some error' }), {

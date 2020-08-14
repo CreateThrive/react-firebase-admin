@@ -6,26 +6,26 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useFormatMessage, useFormatDate } from 'hooks';
 import Table from 'components/Table';
-import { fetchUsers, deleteUser, clearUsersData } from 'state/actions/users';
+import { fetchUsers, deleteUser, usersCleanUp } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
 import classes from './Users.module.scss';
 
 const Users = () => {
   const { usersList, isAdmin, error, loading, deleted } = useSelector(
-    state => ({
+    (state) => ({
       usersList: state.users.list,
       isAdmin: state.auth.userData.isAdmin,
       error: state.users.error,
       loading: state.users.loading,
-      deleted: state.users.deleted
+      deleted: state.users.deleted,
     }),
     shallowEqual
   );
 
   const [deleteModal, setDeleteModal] = useState({
     userId: null,
-    isOpen: false
+    isOpen: false,
   });
 
   const dispatch = useDispatch();
@@ -37,24 +37,24 @@ const Users = () => {
       dispatch(fetchUsers());
     }
 
-    return () => dispatch(clearUsersData());
+    return () => dispatch(usersCleanUp());
   }, [dispatch, isAdmin]);
 
   useEffect(() => {
     if (deleted && !loading) {
-      setDeleteModal(prevState => ({
+      setDeleteModal((prevState) => ({
         userId: null,
-        isOpen: !prevState.isOpen
+        isOpen: !prevState.isOpen,
       }));
     }
   }, [deleted, loading]);
 
   const redirect = !isAdmin && <Redirect to={paths.ROOT} />;
 
-  const onRemoveButtonClickHandler = userId => {
-    setDeleteModal(prevState => ({
+  const onRemoveButtonClickHandler = (userId) => {
+    setDeleteModal((prevState) => ({
       userId,
-      isOpen: !prevState.isOpen
+      isOpen: !prevState.isOpen,
     }));
   };
 
@@ -75,19 +75,19 @@ const Users = () => {
           <img src={row.original.logoUrl} alt="" className="is-rounded" />
         </div>
       ),
-      disableSortBy: true
+      disableSortBy: true,
     },
     {
       Header: useFormatMessage('Users.name'),
-      accessor: 'name'
+      accessor: 'name',
     },
     {
       Header: useFormatMessage('Users.email'),
-      accessor: 'email'
+      accessor: 'email',
     },
     {
       Header: useFormatMessage('Users.location'),
-      accessor: 'location'
+      accessor: 'location',
     },
     {
       Header: useFormatMessage('Users.admin'),
@@ -104,7 +104,7 @@ const Users = () => {
             </span>
           )}
         </small>
-      )
+      ),
     },
     {
       Header: useFormatMessage('Users.created'),
@@ -115,10 +115,10 @@ const Users = () => {
             weekday: 'short',
             year: 'numeric',
             month: 'short',
-            day: 'numeric'
+            day: 'numeric',
           })}
         </small>
-      )
+      ),
     },
     {
       Header: '',
@@ -150,17 +150,17 @@ const Users = () => {
           )}
         </>
       ),
-      disableSortBy: true
-    }
+      disableSortBy: true,
+    },
   ];
 
   const data = search
-    ? usersList.filter(el => {
+    ? usersList.filter((el) => {
         const clonedElem = { ...el };
         delete clonedElem.id;
         delete clonedElem.isAdmin;
         delete clonedElem.logoUrl;
-        return Object.values(clonedElem).some(field =>
+        return Object.values(clonedElem).some((field) =>
           field.toLowerCase().includes(search.toLowerCase())
         );
       })
@@ -216,7 +216,7 @@ const Users = () => {
                 type="text"
                 className="input"
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </p>
           </header>

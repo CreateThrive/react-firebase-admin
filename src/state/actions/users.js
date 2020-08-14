@@ -17,8 +17,6 @@ export const USERS_DELETE_USER_SUCCESS = createAction(
 );
 export const USERS_DELETE_USER_FAIL = createAction('USERS_DELETE_USER_FAIL');
 
-export const USERS_CLEAR_DATA = createAction('USERS_CLEAR_DATA');
-
 export const USERS_CREATE_USER_INIT = createAction('USERS_CREATE_USER_INIT');
 export const USERS_CREATE_USER_SUCCESS = createAction(
   'USERS_CREATE_USER_SUCCESS'
@@ -40,20 +38,8 @@ export const fetchUsers = (userId = '') => {
     dispatch(checkUserData());
 
     dispatch(USERS_FETCH_DATA_INIT());
+
     if (userId) {
-      const userFetched = getState().users.list.find(
-        (fetchedUser) => fetchedUser.id === userId
-      );
-
-      if (userId) {
-        return dispatch(
-          USERS_FETCH_DATA_SUCCESS({
-            list: getState().users.list,
-            user: userFetched,
-          })
-        );
-      }
-
       let userData;
       try {
         userData = (
@@ -65,10 +51,12 @@ export const fetchUsers = (userId = '') => {
       }
 
       const user = { ...userData, id: userId };
+      const users = getState().users.list;
+      users.push(user);
+
       return dispatch(
         USERS_FETCH_DATA_SUCCESS({
-          list: getState().users.list,
-          user,
+          list: users,
         })
       );
     }
@@ -94,7 +82,6 @@ export const fetchUsers = (userId = '') => {
     return dispatch(
       USERS_FETCH_DATA_SUCCESS({
         list: usersData.filter((user) => user.id !== id),
-        user: getState().users.user,
       })
     );
   };
@@ -134,12 +121,6 @@ export const deleteUser = (id) => {
 
     toastr.success('', 'The user was deleted.');
     return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
-  };
-};
-
-export const clearUsersData = () => {
-  return (dispatch) => {
-    dispatch(USERS_CLEAR_DATA());
   };
 };
 
