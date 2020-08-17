@@ -111,12 +111,8 @@ export const flags = {
 export const uiConfig = (onSignInSuccessHandler, onSignInFailHandler) => {
   return {
     callbacks: {
-      signInSuccessWithAuthResult: (authResult) => {
-        onSignInSuccessHandler(authResult);
-      },
-      signInFailure: (signInEror) => {
-        onSignInFailHandler(signInEror);
-      },
+      signInSuccessWithAuthResult: onSignInSuccessHandler,
+      signInFailure: onSignInFailHandler,
     },
     signInFlow: 'popup',
     signInSuccessUrl: '/home',
