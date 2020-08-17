@@ -18,7 +18,7 @@ import {
 } from 'state/actions/users';
 
 const initialState = {
-  list: [],
+  data: [],
   loading: false,
   error: null,
   success: false,
@@ -33,7 +33,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_FETCH_DATA_SUCCESS]: (state, payload) => ({
       ...state,
-      list: payload.list,
+      data: payload.data,
       loading: false,
       error: null,
     }),
@@ -48,7 +48,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_DELETE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      list: state.list.filter((elem) => elem.id !== payload.id),
+      data: state.data.filter((elem) => elem.id !== payload.id),
       loading: false,
       error: null,
       deleted: true,
@@ -64,7 +64,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_CREATE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      list: state.list.concat(payload.user),
+      data: state.data.concat(payload.user),
       loading: false,
       error: null,
       success: true,
@@ -80,9 +80,9 @@ export const usersReducer = createReducer(
     }),
     [USERS_MODIFY_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      list: !state.list
+      data: !state.data
         ? []
-        : state.list.map((elem) => {
+        : state.data.map((elem) => {
             if (elem.id === payload.id) {
               return {
                 name: payload.user.name,

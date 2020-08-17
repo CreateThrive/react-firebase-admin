@@ -14,7 +14,7 @@ import classes from './Users.module.scss';
 const Users = () => {
   const { usersList, isAdmin, error, loading, deleted } = useSelector(
     (state) => ({
-      usersList: state.users.list,
+      usersList: state.users.data,
       isAdmin: state.auth.userData.isAdmin,
       error: state.users.error,
       loading: state.users.loading,

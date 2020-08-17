@@ -16,7 +16,7 @@ const User = () => {
   const { success, userData, error } = useSelector(
     (state) => ({
       success: state.users.success,
-      userData: state.users.list.find((user) => user.id === id),
+      userData: state.users.data.find((user) => user.id === id),
       error: state.users.error,
     }),
     shallowEqual

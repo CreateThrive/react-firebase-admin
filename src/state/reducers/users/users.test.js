@@ -19,7 +19,7 @@ import { usersReducer } from '.';
 
 describe('Establishments reducer', () => {
   const initialState = {
-    list: [],
+    data: [],
     loading: false,
     error: null,
     success: false,
@@ -47,7 +47,7 @@ describe('Establishments reducer', () => {
     });
   });
 
-  it('should set error to null, loading to false and list with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
+  it('should set error to null, loading to false and data with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
     const userData = [
       {
         name: 'Test name',
@@ -57,16 +57,16 @@ describe('Establishments reducer', () => {
       },
     ];
 
-    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ list: userData }), {
+    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ data: userData }), {
       ...initialState,
-      list: userData,
+      data: userData,
       loading: false,
       error: null,
     });
   });
 
   it('should set error to null, loading to false and user with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
-    const list = [
+    const data = [
       {
         name: 'Test name',
         email: 'Test email',
@@ -74,9 +74,9 @@ describe('Establishments reducer', () => {
         createdAt: '11/20/2020',
       },
     ];
-    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ list }), {
+    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ data }), {
       ...initialState,
-      list,
+      data,
       loading: false,
       error: null,
     });
@@ -93,7 +93,7 @@ describe('Establishments reducer', () => {
     const user = { id: 'exampleId' };
 
     reducerTest(
-      { ...initialState, list: [user] },
+      { ...initialState, data: [user] },
       USERS_DELETE_USER_SUCCESS({ id: 'exampleId' }),
       { ...initialState, error: null, loading: false, deleted: true }
     );
@@ -129,7 +129,7 @@ describe('Establishments reducer', () => {
 
     reducerTest(initialState, USERS_CREATE_USER_SUCCESS({ user }), {
       ...initialState,
-      list: user,
+      data: user,
       success: true,
     });
   });
@@ -170,14 +170,14 @@ describe('Establishments reducer', () => {
     };
 
     reducerTest(
-      { ...initialState, list: initialUsers },
+      { ...initialState, data: initialUsers },
       USERS_MODIFY_USER_SUCCESS({
         user: resultUser,
         id: 'test id',
       }),
       {
         ...initialState,
-        list: [resultUser],
+        data: [resultUser],
         loading: false,
         error: null,
         success: true,

@@ -8,7 +8,7 @@ describe('<User /> rendering', () => {
   it('should render without crashing', () => {
     const { component } = shallowWithProviders(<User />)({
       users: {
-        list: [],
+        data: [],
       },
     });
 
@@ -18,7 +18,7 @@ describe('<User /> rendering', () => {
   it('should not show the spinner when creating a user', () => {
     const { component } = mountWithProviders(<User />)({
       users: {
-        list: [],
+        data: [],
       },
     });
 
@@ -28,7 +28,7 @@ describe('<User /> rendering', () => {
   it('should render the UserForm component when creating a user', () => {
     const { component } = mountWithProviders(<User />)({
       users: {
-        list: [],
+        data: [],
       },
     });
 
