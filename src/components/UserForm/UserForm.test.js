@@ -5,8 +5,9 @@ import * as actions from 'state/actions/users';
 import UserForm from '.';
 
 describe('<UserForm /> rendering', () => {
-  let userData;
+  const setUser = jest.fn();
 
+  let userData;
   beforeEach(() => {
     userData = {
       email: 'mkrukuy@gmail.com',
@@ -24,7 +25,7 @@ describe('<UserForm /> rendering', () => {
     const user = { ...userData, createdAt: '11/21/2020' };
 
     const { component } = shallowWithProviders(
-      <UserForm user={user} action={actions.createUser} />
+      <UserForm user={user} action={actions.createUser} setUser={setUser} />
     )({
       users: {},
     });
@@ -34,7 +35,7 @@ describe('<UserForm /> rendering', () => {
 
   it('should display user name preview', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
     )({
       users: {},
     });
@@ -46,7 +47,7 @@ describe('<UserForm /> rendering', () => {
 
   it('should display email preview if it is creating a new user', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
     )({
       users: {},
     });
@@ -58,7 +59,12 @@ describe('<UserForm /> rendering', () => {
 
   it('should display location preview', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.createUser}
+        setUser={setUser}
+      />
     )({
       users: {},
     });
@@ -70,7 +76,12 @@ describe('<UserForm /> rendering', () => {
 
   it('should display admin preview', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.createUser}
+        setUser={setUser}
+      />
     )({
       users: {},
     });
@@ -80,7 +91,12 @@ describe('<UserForm /> rendering', () => {
 
   it('should display created preview', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.createUser}
+        setUser={setUser}
+      />
     )({
       users: {},
     });
@@ -90,8 +106,9 @@ describe('<UserForm /> rendering', () => {
 
 describe('<LoginForm /> actions', () => {
   const dispatchMock = jest.fn();
-  let userData;
+  const setUser = jest.fn();
 
+  let userData;
   beforeEach(() => {
     jest
       .spyOn(reactRedux, 'useDispatch')
@@ -112,7 +129,7 @@ describe('<LoginForm /> actions', () => {
 
   it('should dispatch createUser action when creating a new user', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
     )({
       users: {},
     });
@@ -124,7 +141,12 @@ describe('<LoginForm /> actions', () => {
 
   it('should dispatch modifyUser action when editing a user', () => {
     const { component } = mountWithProviders(
-      <UserForm user={userData} isEditing action={actions.modifyUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.modifyUser}
+        setUser={setUser}
+      />
     )({
       users: {},
     });

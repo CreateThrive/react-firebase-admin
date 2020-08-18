@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -11,48 +11,42 @@ import { useFormatMessage } from 'hooks';
 const User = () => {
   const { id } = useParams();
 
-  const { success, usersList, userData, error } = useSelector(
+  const isEditing = useMemo(() => !!id, [id]);
+
+  const { success, userData, error } = useSelector(
     (state) => ({
       success: state.users.success,
-      usersList: state.users.list,
-      userData: state.users.user,
+      userData: state.users.data.find((user) => user.id === id),
       error: state.users.error,
     }),
     shallowEqual
   );
 
-  const [user, setUser] = useState(userData || {});
+  const [user, setUser] = useState(
+    isEditing
+      ? userData
+      : {
+          name: '',
+          email: '',
+          location: '',
+          createdAt: new Date().toDateString(),
+          isAdmin: false,
+        }
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (id) {
-      const userFetched = usersList.find(
-        (fetchedUser) => fetchedUser.id === id
-      );
-      if (userFetched) {
-        setUser(userFetched);
-      } else if (userData.id === id) {
-        setUser(userData);
-      } else {
+    if (isEditing) {
+      if (!userData) {
         dispatch(fetchUsers(id));
       }
+
+      if (userData && !user) {
+        setUser(userData);
+      }
     }
-  }, [id, userData]);
-
-  const isEditing = !!id;
-
-  const userForm =
-    !user && id ? (
-      <ClipLoader />
-    ) : (
-      <UserForm
-        isEditing={isEditing}
-        user={user}
-        setUser={setUser}
-        action={isEditing ? modifyUser : createUser}
-      />
-    );
+  }, [isEditing, id, userData, user, dispatch]);
 
   const redirect = (error || success) && <Redirect to={paths.USERS} />;
 
@@ -70,7 +64,18 @@ const User = () => {
           </h1>
         </div>
       </section>
-      <section className="section is-main-section">{userForm}</section>
+      <section className="section is-main-section">
+        {isEditing && !user ? (
+          <ClipLoader />
+        ) : (
+          <UserForm
+            isEditing={isEditing}
+            user={user}
+            setUser={setUser}
+            action={isEditing ? modifyUser : createUser}
+          />
+        )}
+      </section>
     </>
   );
 };

@@ -7,7 +7,6 @@ import {
   USERS_DELETE_USER_INIT,
   USERS_DELETE_USER_SUCCESS,
   USERS_DELETE_USER_FAIL,
-  USERS_CLEAR_DATA,
   USERS_CREATE_USER_INIT,
   USERS_CREATE_USER_SUCCESS,
   USERS_CREATE_USER_FAIL,
@@ -19,15 +18,7 @@ import {
 } from 'state/actions/users';
 
 const initialState = {
-  list: [],
-  user: {
-    name: '',
-    email: '',
-    location: '',
-    isAdmin: false,
-    file: null,
-    createdAt: new Date().toDateString(),
-  },
+  data: [],
   loading: false,
   error: null,
   success: false,
@@ -42,8 +33,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_FETCH_DATA_SUCCESS]: (state, payload) => ({
       ...state,
-      list: payload.list || [],
-      user: payload.user || initialState.user,
+      data: payload.data,
       loading: false,
       error: null,
     }),
@@ -58,7 +48,7 @@ export const usersReducer = createReducer(
     }),
     [USERS_DELETE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      list: state.list.filter((elem) => elem.id !== payload.id),
+      data: state.data.filter((elem) => elem.id !== payload.id),
       loading: false,
       error: null,
       deleted: true,
@@ -68,17 +58,13 @@ export const usersReducer = createReducer(
       loading: false,
       error: payload.error,
     }),
-    [USERS_CLEAR_DATA]: (state) => ({
-      ...initialState,
-      list: state.list,
-    }),
     [USERS_CREATE_USER_INIT]: (state) => ({
       ...state,
       loading: true,
     }),
     [USERS_CREATE_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      list: state.list.concat(payload.user),
+      data: state.data.concat(payload.user),
       loading: false,
       error: null,
       success: true,
@@ -94,9 +80,9 @@ export const usersReducer = createReducer(
     }),
     [USERS_MODIFY_USER_SUCCESS]: (state, payload) => ({
       ...state,
-      list: !state.list
+      data: !state.data
         ? []
-        : state.list.map((elem) => {
+        : state.data.map((elem) => {
             if (elem.id === payload.id) {
               return {
                 name: payload.user.name,

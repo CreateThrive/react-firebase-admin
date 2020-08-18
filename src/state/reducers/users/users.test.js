@@ -5,7 +5,6 @@ import {
   USERS_DELETE_USER_INIT,
   USERS_DELETE_USER_SUCCESS,
   USERS_DELETE_USER_FAIL,
-  USERS_CLEAR_DATA,
   USERS_CREATE_USER_INIT,
   USERS_CREATE_USER_SUCCESS,
   USERS_CREATE_USER_FAIL,
@@ -20,15 +19,7 @@ import { usersReducer } from '.';
 
 describe('Establishments reducer', () => {
   const initialState = {
-    list: [],
-    user: {
-      name: '',
-      email: '',
-      location: '',
-      isAdmin: false,
-      file: null,
-      createdAt: new Date().toDateString(),
-    },
+    data: [],
     loading: false,
     error: null,
     success: false,
@@ -56,7 +47,7 @@ describe('Establishments reducer', () => {
     });
   });
 
-  it('should set error to null, loading to false and list with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
+  it('should set error to null, loading to false and data with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
     const userData = [
       {
         name: 'Test name',
@@ -66,24 +57,26 @@ describe('Establishments reducer', () => {
       },
     ];
 
-    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ list: userData }), {
+    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ data: userData }), {
       ...initialState,
-      list: userData,
+      data: userData,
       loading: false,
       error: null,
     });
   });
 
   it('should set error to null, loading to false and user with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
-    const userData = {
-      name: 'Test name',
-      email: 'Test email',
-      location: 'Test location',
-      createdAt: '11/20/2020',
-    };
-    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ user: userData }), {
+    const data = [
+      {
+        name: 'Test name',
+        email: 'Test email',
+        location: 'Test location',
+        createdAt: '11/20/2020',
+      },
+    ];
+    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ data }), {
       ...initialState,
-      user: userData,
+      data,
       loading: false,
       error: null,
     });
@@ -100,7 +93,7 @@ describe('Establishments reducer', () => {
     const user = { id: 'exampleId' };
 
     reducerTest(
-      { ...initialState, list: [user] },
+      { ...initialState, data: [user] },
       USERS_DELETE_USER_SUCCESS({ id: 'exampleId' }),
       { ...initialState, error: null, loading: false, deleted: true }
     );
@@ -116,28 +109,6 @@ describe('Establishments reducer', () => {
 
   it('should reset the state to the initial state when USERS_CLEAR_DATA_LOGOUT action is fired', () => {
     reducerTest(initialState, USERS_CLEAR_DATA_LOGOUT(), initialState);
-  });
-
-  it('should reset the state to the initial state while maintaining the list when USERS_CLEAR_DATA action is fired', () => {
-    const userData = [
-      {
-        name: 'Test name',
-        email: 'Test email',
-        location: 'Test location',
-        createdAt: '11/20/2020',
-      },
-    ];
-
-    reducerTest(
-      {
-        ...initialState,
-        list: userData,
-        loading: true,
-        error: null,
-      },
-      USERS_CLEAR_DATA(),
-      { ...initialState, list: userData }
-    );
   });
 
   it('should set loading to true to the current state when USERS_CREATE_USER_INIT action is fired', () => {
@@ -158,7 +129,7 @@ describe('Establishments reducer', () => {
 
     reducerTest(initialState, USERS_CREATE_USER_SUCCESS({ user }), {
       ...initialState,
-      list: user,
+      data: user,
       success: true,
     });
   });
@@ -199,21 +170,20 @@ describe('Establishments reducer', () => {
     };
 
     reducerTest(
-      { ...initialState, list: initialUsers },
+      { ...initialState, data: initialUsers },
       USERS_MODIFY_USER_SUCCESS({
         user: resultUser,
         id: 'test id',
       }),
       {
         ...initialState,
-        list: [resultUser],
+        data: [resultUser],
         loading: false,
         error: null,
         success: true,
       }
     );
   });
-
 
   it('should set loading to false and error with the corresponding payload to the current state USERS_MODIFY_USER_FAIL action is fired', () => {
     reducerTest(initialState, USERS_MODIFY_USER_FAIL({ error: 'some error' }), {
