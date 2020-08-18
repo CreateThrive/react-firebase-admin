@@ -118,17 +118,17 @@ export const uiConfig = (onSignInSuccessHandler, onSignInFailHandler) => {
     signInSuccessUrl: '/home',
     signInOptions: [
       {
-        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        fullLabel: 'Continue with Facebook',
-        scopes: ['email'],
-      },
-      {
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         fullLabel: 'Continue with Google',
         scopes: [
           'https://www.googleapis.com/auth/user.addresses.read',
           'https://www.googleapis.com/auth/userinfo.email',
         ],
+      },
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        fullLabel: 'Continue with Facebook',
+        scopes: ['email'],
       },
       { provider: 'microsoft.com', fullLabel: 'Continue with Microsoft' },
     ],
