@@ -4,9 +4,11 @@ import { Redirect } from 'react-router-dom';
 import paths from '../Router/paths';
 import Login from '.';
 
+jest.mock('react-firebaseui');
+
 describe('<Login /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = mountWithProviders(<Login />)({
+    const { component } = shallowWithProviders(<Login />)({
       auth: {
         userData: {},
       },
