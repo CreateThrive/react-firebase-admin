@@ -675,7 +675,7 @@ service firebase.storage {
 In this boilerplate users have the option to login via e-mail and password but also they can sign-up/sign-in with their Facebook, Google and Microsoft accounts.
 
 <p align="center">
-  <img src="https://i.imgur.com/xQz5pSR.png">
+  <img src="https://i.imgur.com/AxRBSXT.png">
 </p>
 
 ### How it works?
@@ -684,7 +684,23 @@ We implemented social media authentication using Firebase!. You can take a look 
 
 ### Can I add more login methods?
 
-Yes you can!. We already have the setup in place for more login methods like Twitter, GitHub, etc. You can add them without changing much code at all. You can see other login methods provided by Firebase [here](https://firebase.google.com/docs/auth/web/start).
+Yes you can!. We already have the setup in place for more login methods like Twitter, GitHub, etc. You can add them without changing much code at all.
+
+#### Adding more login methods
+
+Each login method needs a especific configuration to enable login for users, you can see other login methods provided by Firebase and how to configure them [here](https://firebase.google.com/docs/auth/web/start).
+
+Once you configured your new login method and enabled it on your Firebase console, you can add it to the Login page by adding the provider's value on `signInOptions` from `uiConfig` located in the `index.js` file, from the utils folder. You can check your provider value [here](https://github.com/firebase/firebaseui-web/#available-providers).
+
+The new value value on `signInOptions` should look like this:
+
+```javascript
+{
+ provider: ProviderValue,
+ fullLabel: 'Continue with $ProviderName',
+ scopes: ['providerScope']
+}
+```
 
 ### Facebook
 
