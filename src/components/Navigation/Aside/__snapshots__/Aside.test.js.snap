@@ -7,7 +7,6 @@ Object {
       Object {
         "defaultFormats": Object {},
         "defaultLocale": "en",
-        "defaultRichTextElements": undefined,
         "formatDate": [Function],
         "formatDateToParts": [Function],
         "formatDisplayName": [Function],

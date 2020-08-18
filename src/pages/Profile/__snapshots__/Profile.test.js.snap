@@ -6,7 +6,6 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
     Object {
       "defaultFormats": Object {},
       "defaultLocale": "en",
-      "defaultRichTextElements": undefined,
       "formatDate": [Function],
       "formatDateToParts": [Function],
       "formatDisplayName": [Function],
