@@ -11,3 +11,5 @@ lib/
 
 #Necessary config for testing
 env.json
+
+service-account-key.json

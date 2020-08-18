@@ -17,8 +17,6 @@ export const USERS_DELETE_USER_SUCCESS = createAction(
 );
 export const USERS_DELETE_USER_FAIL = createAction('USERS_DELETE_USER_FAIL');
 
-export const USERS_CLEAR_DATA = createAction('USERS_CLEAR_DATA');
-
 export const USERS_CREATE_USER_INIT = createAction('USERS_CREATE_USER_INIT');
 export const USERS_CREATE_USER_SUCCESS = createAction(
   'USERS_CREATE_USER_SUCCESS'
@@ -40,6 +38,7 @@ export const fetchUsers = (userId = '') => {
     dispatch(checkUserData());
 
     dispatch(USERS_FETCH_DATA_INIT());
+
     if (userId) {
       let userData;
       try {
@@ -52,10 +51,12 @@ export const fetchUsers = (userId = '') => {
       }
 
       const user = { ...userData, id: userId };
+      const users = getState().users.data;
+      users.push(user);
+
       return dispatch(
         USERS_FETCH_DATA_SUCCESS({
-          list: getState().users.list,
-          user,
+          data: users,
         })
       );
     }
@@ -80,8 +81,7 @@ export const fetchUsers = (userId = '') => {
 
     return dispatch(
       USERS_FETCH_DATA_SUCCESS({
-        list: usersData.filter((user) => user.id !== id),
-        user: getState().users.user,
+        data: usersData.filter((user) => user.id !== id),
       })
     );
   };
@@ -100,7 +100,7 @@ export const deleteUser = (id) => {
     dispatch(USERS_DELETE_USER_INIT());
     const { locale } = getState().preferences;
     const { logoUrl } = getState()
-      .users.list.filter((user) => user.id === id)
+      .users.data.filter((user) => user.id === id)
       .pop();
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
@@ -121,12 +121,6 @@ export const deleteUser = (id) => {
 
     toastr.success('', 'The user was deleted.');
     return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
-  };
-};
-
-export const clearUsersData = () => {
-  return (dispatch) => {
-    dispatch(USERS_CLEAR_DATA());
   };
 };
 
@@ -242,7 +236,7 @@ export const modifyUser = ({
     const { locale } = getState().preferences;
     const { logoUrl } = isProfile
       ? getState().auth.userData
-      : getState().users.list.find((user) => user.id === id) ||
+      : getState().users.data.find((user) => user.id === id) ||
         getState().users.user;
 
     let deleteLogoTask;

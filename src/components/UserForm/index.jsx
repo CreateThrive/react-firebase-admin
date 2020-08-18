@@ -396,16 +396,24 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
 };
 
 UserForm.propTypes = {
-  isEditing: PropTypes.bool,
-  userData: PropTypes.shape({
+  user: PropTypes.shape({
     id: PropTypes.string,
     isAdmin: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     location: PropTypes.string,
     logoUrl: PropTypes.string,
     createdAt: PropTypes.string.isRequired,
-  }),
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  setUser: PropTypes.func.isRequired,
   action: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool,
+  isProfile: PropTypes.bool,
+};
+
+UserForm.defaultProps = {
+  isEditing: false,
+  isProfile: false,
 };
 
 export default UserForm;

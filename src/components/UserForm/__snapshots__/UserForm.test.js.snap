@@ -143,6 +143,9 @@ exports[`<UserForm /> rendering should render without crashing 1`] = `
     >
       <UserForm
         action={[Function]}
+        isEditing={false}
+        isProfile={false}
+        setUser={[MockFunction]}
         user={
           Object {
             "createdAt": "11/21/2020",
