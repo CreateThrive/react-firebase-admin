@@ -50,6 +50,12 @@ export const fetchUsers = (userId = '') => {
         return dispatch(USERS_FETCH_DATA_FAIL({ error }));
       }
 
+      if (!userData) {
+        const errorMessage = 'User not available';
+        toastr.error('', errorMessage);
+        return dispatch(USERS_FETCH_DATA_FAIL({ error: errorMessage }));
+      }
+
       const user = { ...userData, id: userId };
       const users = getState().users.data;
       users.push(user);

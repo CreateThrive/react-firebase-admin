@@ -48,7 +48,9 @@ const User = () => {
     }
   }, [isEditing, id, userData, user, dispatch]);
 
-  const redirect = (error || success) && <Redirect to={paths.USERS} />;
+  const redirect = ((isEditing && error) || success) && (
+    <Redirect to={paths.USERS} />
+  );
 
   const editUserMessage = useFormatMessage('User.editUser');
 
