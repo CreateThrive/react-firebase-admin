@@ -13,11 +13,10 @@ const User = () => {
 
   const isEditing = useMemo(() => !!id, [id]);
 
-  const { success, userData, error } = useSelector(
+  const { success, userData } = useSelector(
     (state) => ({
       success: state.users.success,
       userData: state.users.data.find((user) => user.id === id),
-      error: state.users.error,
     }),
     shallowEqual
   );
@@ -48,7 +47,7 @@ const User = () => {
     }
   }, [isEditing, id, userData, user, dispatch]);
 
-  const redirect = (error || success) && <Redirect to={paths.USERS} />;
+  const redirect = success && <Redirect to={paths.USERS} />;
 
   const editUserMessage = useFormatMessage('User.editUser');
 
