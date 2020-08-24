@@ -19,7 +19,7 @@
     "camelcase": "^6.0.0",
     "firebase-admin": "^9.1.0",
     "firebase-function-tools": "^1.1.3",
-    "firebase-functions": "^3.9.1",
+    "firebase-functions": "^3.11.0",
     "glob": "^7.1.6"
   },
   "devDependencies": {
