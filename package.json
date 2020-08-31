@@ -12,7 +12,7 @@
     "react-datepicker": "^3.0.0",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
-    "react-intl": "^5.6.5",
+    "react-intl": "^5.8.0",
     "react-redux": "^7.2.1",
     "react-redux-toastr": "^7.6.4",
     "react-router-dom": "^5.2.0",
