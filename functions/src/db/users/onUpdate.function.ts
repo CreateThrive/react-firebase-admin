@@ -13,6 +13,6 @@ export default database.ref('/users/{uid}').onUpdate((change, context) => {
   const { uid } = context.params;
 
   return auth().setCustomUserClaims(uid, {
-    isAdmin
+    isAdmin,
   });
 });

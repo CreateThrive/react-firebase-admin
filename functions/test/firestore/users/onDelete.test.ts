@@ -1,12 +1,12 @@
 import { admin, test } from '../../util/config';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-import onDelete from '../../../src/db/users/onDelete.function';
+import onDelete from '../../../src/firestore/users/onDelete.function';
 import 'mocha';
 
 chai.use(chaiAsPromised);
 
-describe('onDelete Real Time Database', () => {
+describe('onDelete Firestore', () => {
   let userRecord: any;
 
   it('should delete the user from the authentication section', async () => {
