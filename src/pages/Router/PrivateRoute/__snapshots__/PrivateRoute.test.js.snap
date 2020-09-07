@@ -647,7 +647,7 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
                           >
                             <img
                               alt="CreateThrive.com"
-                              src="https://createthrive.com/assets/logos/Logo-CT.svg"
+                              src="https://createthrive.com/assets/images/Logo-CT.svg"
                             />
                           </a>
                         </div>
