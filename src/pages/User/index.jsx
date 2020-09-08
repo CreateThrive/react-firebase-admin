@@ -73,7 +73,6 @@ const User = () => {
           <UserForm
             isEditing={isEditing}
             user={user}
-            setUser={setUser}
             action={isEditing ? modifyUser : createUser}
           />
         )}

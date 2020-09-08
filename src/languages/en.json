@@ -10,6 +10,9 @@
   "Login.facebook": "Continue with Facebook",
   "Login.google": "Continue with Google",
   "Login.microsoft": "Continue with Microsoft",
+  "Login.safePassword": "Safe password",
+  "Login.unsafePassword": "Unsafe password",
+  "Login.invalidEmail": "Invalid email",
   "NotFound.404": "Error 404: page not found",
   "NotFound.url": "The requested URL {url} was not found",
   "NotFound.back": "Go Back",
@@ -85,7 +88,6 @@
   "auth/popup-closed-by-user": "Operation cancelled, pop up was closed",
   "auth/cancelled-popup-request": "Too many pop ups, just one pop up is allowed",
   "utils.default": "Unknown error, get in touch with your administrator",
-  "utils.safePassword": "Safe password",
-  "utils.unsafePassword": "Unsafe password",
-  "utils.invalidEmail": "Invalid email"
+  "ErrorMessage.defaultMessage": "This field is required",
+  "invalidEmail": "Invalid E-mail"
 }

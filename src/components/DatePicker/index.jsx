@@ -11,7 +11,7 @@ import './DatePicker.scss';
 registerLocale('en', en);
 registerLocale('es', es);
 
-const dateFormat = locale => {
+const dateFormat = (locale) => {
   switch (locale) {
     case 'en':
       return 'MM-dd-yy';
@@ -22,16 +22,13 @@ const dateFormat = locale => {
   }
 };
 
-const DatePickerStyled = ({ name, date, setState }) => {
-  const onDateChangedHandler = value =>
-    setState(prevState => ({
-      ...prevState,
-      [name]: value.toDateString()
-    }));
+const DatePickerStyled = ({ date, onChange }) => {
+  const onDateChangedHandler = (value) =>
+    onChange(value ? value.toDateString() : new Date().toDateString());
 
   const { locale } = useSelector(
-    state => ({
-      locale: state.preferences.locale
+    (state) => ({
+      locale: state.preferences.locale,
     }),
     shallowEqual
   );
@@ -47,9 +44,8 @@ const DatePickerStyled = ({ name, date, setState }) => {
 };
 
 DatePickerStyled.propTypes = {
-  name: PropTypes.string.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
-  setState: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default DatePickerStyled;

@@ -30,7 +30,7 @@ const Users = () => {
 
   const dispatch = useDispatch();
 
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     if (isAdmin) {

@@ -8,10 +8,13 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { IntlProvider } from 'react-intl';
 import english from 'languages/en';
+import 'mutationobserver-shim';
 
 configure({ adapter: new Adapter() });
 
-global.reducerTester = reducer => (currentState, action, expectedState) => {
+global.MutationObserver = window.MutationObserver;
+
+global.reducerTester = (reducer) => (currentState, action, expectedState) => {
   if (currentState && typeof currentState === 'object') {
     deepFreeze(currentState);
   }
@@ -24,14 +27,14 @@ const mockedStore = (initial = {}) =>
     /* place middlewares here */
   ])(initial);
 
-const initStore = initialState =>
+const initStore = (initialState) =>
   mockedStore({
     ...initialState,
-    preferences: { locale: 'en' }
+    preferences: { locale: 'en' },
   });
 
 // Use this to test mounted components w/ store connection
-global.mountWithProviders = children => initialState => {
+global.mountWithProviders = (children) => (initialState) => {
   const store = initStore(initialState);
   return {
     component: mount(
@@ -41,11 +44,11 @@ global.mountWithProviders = children => initialState => {
         </BrowserRouter>
       </IntlProvider>
     ),
-    store
+    store,
   };
 };
 
-global.shallowWithProviders = children => initialState => {
+global.shallowWithProviders = (children) => (initialState) => {
   const store = initStore(initialState);
   return {
     component: shallow(
@@ -55,6 +58,6 @@ global.shallowWithProviders = children => initialState => {
         </BrowserRouter>
       </IntlProvider>
     ),
-    store
+    store,
   };
 };

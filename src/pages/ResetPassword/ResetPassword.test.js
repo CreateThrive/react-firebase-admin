@@ -8,8 +8,8 @@ describe('<ResetPassword /> rendering', () => {
   it('should render without crashing', () => {
     const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
     expect(component).toMatchSnapshot();
@@ -19,8 +19,8 @@ describe('<ResetPassword /> rendering', () => {
     const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {},
-        error: 'some error'
-      }
+        error: 'some error',
+      },
     });
 
     expect(component.find('.has-text-danger').length).toBe(1);
@@ -30,8 +30,8 @@ describe('<ResetPassword /> rendering', () => {
     const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {},
-        restoredPassword: true
-      }
+        restoredPassword: true,
+      },
     });
 
     expect(component.find('.card-content p').length).toBe(1);
@@ -41,8 +41,8 @@ describe('<ResetPassword /> rendering', () => {
     const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
         userData: {},
-        loading: true
-      }
+        loading: true,
+      },
     });
 
     expect(component.find('button.is-loading').length).toBe(1);
@@ -60,23 +60,11 @@ describe('<ResetPassword /> actions', () => {
     jest.spyOn(actions, 'authCleanUp').mockImplementation(jest.fn);
   });
 
-  it('should dispatch resetPassword action when the form is submitted', () => {
-    const { component } = mountWithProviders(<ResetPassword />)({
-      auth: {
-        userData: {}
-      }
-    });
-
-    component.find('form').simulate('submit');
-
-    expect(actions.resetPassword).toBeCalled();
-  });
-
   it('should dispatch resetPasswordCleanUp action when the component is unmounted', () => {
     const { component } = mountWithProviders(<ResetPassword />)({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
     component.unmount();

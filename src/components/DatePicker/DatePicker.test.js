@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import DatePickerStyled from '.';
 
 describe('<DatePickerStyled /> rendering', () => {
-  const setState = jest.fn();
+  const onChange = jest.fn();
 
   it('should render without crashing', () => {
     const { component } = shallowWithProviders(
@@ -12,7 +12,7 @@ describe('<DatePickerStyled /> rendering', () => {
         name="test"
         dateFormat="en-US"
         date={new Date('Thu Nov 12 2020 00:00:00 GMT-0000')}
-        setState={setState}
+        onChange={onChange}
       />
     )({});
 
@@ -25,7 +25,7 @@ describe('<DatePickerStyled /> rendering', () => {
         name="test"
         dateFormat="en-US"
         date={new Date('11/12/2020')}
-        setState={setState}
+        onChange={onChange}
       />
     )({});
 
@@ -38,7 +38,7 @@ describe('<DatePickerStyled /> rendering', () => {
         name="test"
         dateFormat="en-US"
         date={new Date('11/12/2020')}
-        setState={setState}
+        onChange={onChange}
       />
     )({});
 

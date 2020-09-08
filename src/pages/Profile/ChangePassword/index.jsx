@@ -1,59 +1,52 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from 'yup';
+import classNames from 'classnames';
 
 import { changeUserPassword, authCleanUp } from 'state/actions/auth';
-import { useChangeHandler, useFormatMessage } from 'hooks';
+import { useFormatMessage } from 'hooks';
+import errorMessage from 'components/ErrorMessage';
 
 const ChangePasswordCard = () => {
-  const [passwords, setPasswords] = useState({
-    current: '',
-    new: '',
-    confirmation: ''
-  });
-
-  const onChangeHandler = useChangeHandler(setPasswords);
-
-  const { loading, changedPassword } = useSelector(
-    state => ({
+  const { loading } = useSelector(
+    (state) => ({
       loading: state.auth.loading,
-      changedPassword: state.auth.changedPassword
     }),
     shallowEqual
   );
 
   const dispatch = useDispatch();
 
+  const schema = yup.object().shape({
+    current: yup
+      .string()
+      .min(6)
+      .notOneOf([yup.ref('new')])
+      .required(),
+    new: yup.string().min(6).required(),
+    confirmation: yup
+      .string()
+      .equals([yup.ref('new')])
+      .required(),
+  });
+
+  const { register, handleSubmit, watch, errors } = useForm({
+    defaultValues: {
+      current: '',
+      new: '',
+      confirmation: '',
+    },
+    resolver: yupResolver(schema),
+  });
+
   useEffect(() => {
     return () => dispatch(authCleanUp());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (changedPassword) {
-      setPasswords({
-        current: '',
-        new: '',
-        confirmation: ''
-      });
-    }
-  }, [changedPassword, setPasswords]);
-
-  let inputs = {
-    new: {
-      modifier: null,
-      message: { modifier: null, content: null }
-    },
-    confirmation: {
-      modifier: null,
-      message: { modifier: null, content: null }
-    }
-  };
-
-  const setInputs = (key, value) => {
-    inputs = { ...inputs, [`${key}`]: value };
-  };
-
-  const isNewPasswordSecure = passwords.new && passwords.new.length >= 6;
+  const isNewPasswordSecure = watch('new') && watch('new').length >= 6;
 
   const safePasswordMessage = useFormatMessage(`ChangePassword.safePassword`);
 
@@ -61,28 +54,10 @@ const ChangePasswordCard = () => {
     `ChangePassword.insecurePassword`
   );
 
-  if (isNewPasswordSecure) {
-    setInputs('new', {
-      modifier: 'is-success',
-      message: {
-        modifier: 'is-success',
-        content: safePasswordMessage
-      }
-    });
-  } else if (passwords.new) {
-    setInputs('new', {
-      modifier: 'is-danger',
-      message: {
-        modifier: 'is-danger',
-        content: insecurePasswordMessage
-      }
-    });
-  }
-
   const newPasswordsAreEqual =
-    passwords.new &&
-    passwords.confirmation &&
-    passwords.new === passwords.confirmation;
+    watch('new') &&
+    watch('confirmation') &&
+    watch('new') === watch('confirmation');
 
   const passwordsMatchMessagge = useFormatMessage(
     `ChangePassword.matchPassword`
@@ -92,37 +67,13 @@ const ChangePasswordCard = () => {
     `ChangePassword.notMatchPassword`
   );
 
-  if (newPasswordsAreEqual) {
-    setInputs('confirmation', {
-      modifier: 'is-success',
-      message: {
-        modifier: 'is-success',
-        content: passwordsMatchMessagge
-      }
-    });
-  } else if (passwords.confirmation) {
-    setInputs('confirmation', {
-      modifier: 'is-danger',
-      message: {
-        modifier: 'is-danger',
-        content: notMatchPasswordMessage
-      }
-    });
-  }
-
   const currentAndNewPasswordsEqual =
-    passwords.new && passwords.current === passwords.new;
+    watch('new') && watch('current') === watch('new');
 
   const samePasswordMessage = useFormatMessage(`ChangePassword.samePassword`);
 
-  const errorMessage = currentAndNewPasswordsEqual && samePasswordMessage;
-
-  const canSubmit =
-    isNewPasswordSecure && newPasswordsAreEqual && !currentAndNewPasswordsEqual;
-
-  const onSubmitHandler = event => {
-    event.preventDefault();
-    dispatch(changeUserPassword(passwords.current, passwords.confirmation));
+  const onSubmitHandler = ({ current, confirmation }) => {
+    dispatch(changeUserPassword(current, confirmation));
   };
 
   return (
@@ -136,7 +87,7 @@ const ChangePasswordCard = () => {
         </p>
       </header>
       <div className="card-content">
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label className="label">
@@ -147,12 +98,12 @@ const ChangePasswordCard = () => {
               <div className="field">
                 <div className="control">
                   <input
-                    className="input"
+                    className={classNames('input', {
+                      'is-danger': errors.current,
+                    })}
                     type="password"
                     name="current"
-                    required
-                    value={passwords.current}
-                    onChange={onChangeHandler}
+                    ref={register}
                   />
                 </div>
               </div>
@@ -169,19 +120,21 @@ const ChangePasswordCard = () => {
               <div className="field">
                 <div className="control">
                   <input
-                    className={`input ${inputs.new.modifier}`}
+                    className={classNames(
+                      `input`,
+                      { 'is-success': isNewPasswordSecure },
+                      { 'is-danger': watch('new') && !isNewPasswordSecure }
+                    )}
                     type="password"
                     name="new"
-                    required
-                    value={passwords.new}
-                    onChange={onChangeHandler}
+                    ref={register}
                   />
                 </div>
-                {inputs.new.message.content ? (
-                  <p className={`help is-${inputs.new.message.modifier}`}>
-                    {inputs.new.message.content}
-                  </p>
-                ) : null}
+                {isNewPasswordSecure ? (
+                  <p className="is-success">{safePasswordMessage}</p>
+                ) : (
+                  watch('new') && errorMessage(insecurePasswordMessage)
+                )}
               </div>
             </div>
           </div>
@@ -196,20 +149,23 @@ const ChangePasswordCard = () => {
               <div className="field">
                 <div className="control">
                   <input
-                    className={`input ${inputs.confirmation.modifier}`}
+                    className={classNames(
+                      `input`,
+                      { 'is-success': newPasswordsAreEqual },
+                      {
+                        'is-danger':
+                          watch('confirmation') && !newPasswordsAreEqual,
+                      }
+                    )}
                     type="password"
                     name="confirmation"
-                    required
-                    value={passwords.confirmation}
-                    onChange={onChangeHandler}
+                    ref={register}
                   />
                 </div>
-                {inputs.confirmation.message.content && (
-                  <p
-                    className={`help is-${inputs.confirmation.message.modifier}`}
-                  >
-                    {inputs.confirmation.message.content}
-                  </p>
+                {newPasswordsAreEqual ? (
+                  <p className="is-success">{passwordsMatchMessagge}</p>
+                ) : (
+                  watch('confirmation') && errorMessage(notMatchPasswordMessage)
                 )}
               </div>
             </div>
@@ -222,14 +178,12 @@ const ChangePasswordCard = () => {
                   <button
                     type="submit"
                     className={`button is-primary ${loading && 'is-loading'}`}
-                    disabled={!canSubmit}
                   >
                     {useFormatMessage(`ChangePassword.submits`)}
                   </button>
                 </div>
-                {errorMessage && (
-                  <p className="help is-danger">{errorMessage}</p>
-                )}
+                {currentAndNewPasswordsEqual &&
+                  errorMessage(samePasswordMessage)}
               </div>
             </div>
           </div>

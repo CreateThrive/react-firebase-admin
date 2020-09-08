@@ -240,11 +240,12 @@ export const modifyUser = ({
   return async (dispatch, getState) => {
     dispatch(USERS_MODIFY_USER_INIT());
     const { locale } = getState().preferences;
-    const { logoUrl } = isProfile
+    const user = isProfile
       ? getState().auth.userData
-      : getState().users.data.find((user) => user.id === id) ||
+      : getState().users.data.find((thisUser) => thisUser.id === id) ||
         getState().users.user;
 
+    const { logoUrl } = user;
     let deleteLogoTask;
     let uploadLogoTask;
     let newLogoUrl = null;
@@ -258,7 +259,7 @@ export const modifyUser = ({
       name,
       location,
       createdAt,
-      isAdmin,
+      isAdmin: isAdmin || user.isAdmin,
       logoUrl: logoUrl || newLogoUrl,
     };
 
