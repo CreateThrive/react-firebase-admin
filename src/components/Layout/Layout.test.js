@@ -1,54 +1,60 @@
 import React from 'react';
+import * as reactRedux from 'react-redux';
 
 import Layout from '.';
-import NavBar from '../Navigation/NavBar';
-import Aside from '../Navigation/Aside';
-import Footer from '../Navigation/Footer';
 
 describe('<Layout /> rendering', () => {
-  it('should render without crashing', () => {
-    const { component } = shallowWithProviders(<Layout>Test</Layout>)({});
+  const dispatchMock = jest.fn();
 
-    expect(component).toMatchSnapshot();
+  beforeEach(() => {
+    jest
+      .spyOn(reactRedux, 'useSelector')
+      .mockImplementation(() => dispatchMock);
+  });
+
+  it('should render without crashing', () => {
+    const { component } = renderWithProviders(<Layout>Test</Layout>)({});
+
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should render <NavBar /> component correctly', () => {
-    const { component } = mountWithProviders(<Layout>Test</Layout>)({
+    const { component } = renderWithProviders(<Layout>Test</Layout>)({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    expect(component.exists(NavBar)).toBeTruthy();
+    expect(component.container.querySelector('.navbar-brand')).toBeTruthy();
   });
 
   it('should render <Aside /> component correctly', () => {
-    const { component } = mountWithProviders(<Layout>Test</Layout>)({
+    const { component } = renderWithProviders(<Layout>Test</Layout>)({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    expect(component.exists(Aside)).toBeTruthy();
+    expect(component.container.querySelector('.aside')).toBeTruthy();
   });
 
   it('should render <Footer /> component correctly', () => {
-    const { component } = mountWithProviders(<Layout>Test</Layout>)({
+    const { component } = renderWithProviders(<Layout>Test</Layout>)({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    expect(component.exists(Footer)).toBeTruthy();
+    expect(component.container.querySelector('.footer')).toBeTruthy();
   });
 
   it('should render a div with the children', () => {
-    const { component } = mountWithProviders(<Layout>Test</Layout>)({
+    const { component } = renderWithProviders(<Layout>Test</Layout>)({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    expect(component.exists('div[children="Test"]')).toBeTruthy();
+    expect(component.getByText('Test')).toBeTruthy();
   });
 });

@@ -12,7 +12,7 @@ import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
 import { useFormatDate, useFormatMessage } from 'hooks';
 import DatePicker from '../DatePicker';
-import errorMessage from '../ErrorMessage';
+import ErrorMessage from '../ErrorMessage';
 
 import './UserForm.scss';
 
@@ -128,7 +128,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                       <div className="field is-horizontal">
                         <div className="field-label is-normal" />
                         <div className="field-body">
-                          {errorMessage(invalidEmailMessage)}
+                          <ErrorMessage text={invalidEmailMessage} />
                         </div>
                       </div>
                     )}
@@ -160,7 +160,9 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                 {errors.name && (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal" />
-                    <div className="field-body">{errorMessage()}</div>
+                    <div className="field-body">
+                      <ErrorMessage />
+                    </div>
                   </div>
                 )}
                 <div className="field is-horizontal">
@@ -325,6 +327,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                   <label className="label">{emailMessage}</label>
                   <div className="control is-clearfix">
                     <input
+                      data-testid="email"
                       type="text"
                       readOnly="readOnly"
                       className="input is-static"
@@ -340,6 +343,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                 </label>
                 <div className="control is-clearfix">
                   <input
+                    data-testid="name"
                     type="text"
                     readOnly="readOnly"
                     className="input is-static"
@@ -354,6 +358,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                 </label>
                 <div className="control is-clearfix">
                   <input
+                    data-testid="location"
                     type="text"
                     readOnly="readOnly"
                     className="input is-static"
@@ -365,7 +370,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
               {!isProfile && (
                 <div className="field">
                   <label className="label">{adminMessage}</label>
-                  <div className="control is-clearfix">
+                  <div className="control is-clearfix" data-testid="admin">
                     {watch('isAdmin') ? (
                       <span className="icon">
                         <i className="mdi mdi-check" />
@@ -383,7 +388,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                 <label className="label">
                   {useFormatMessage('UserForm.created')}
                 </label>
-                <div className="control is-clearfix">
+                <div className="control is-clearfix" data-testid="date">
                   <p className="date">
                     {useFormatDate(watch('createdAt'), {
                       weekday: 'short',

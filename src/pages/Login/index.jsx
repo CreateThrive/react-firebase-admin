@@ -17,10 +17,15 @@ import {
 } from 'state/actions/auth';
 import { useFormatMessage } from 'hooks';
 import { firebaseError, uiConfig } from 'utils';
-import errorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/ErrorMessage';
 import paths from '../Router/paths';
 
 import classes from './Login.module.scss';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+});
 
 const Login = () => {
   const { error, isAuth, loading, locale } = useSelector(
@@ -34,11 +39,6 @@ const Login = () => {
   );
 
   const dispatch = useDispatch();
-
-  const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
-  });
 
   const { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {},
@@ -135,7 +135,9 @@ const Login = () => {
                           ref={register}
                         />
                       </div>
-                      {errors.email && errorMessage(invalidEmailMessage)}
+                      {errors.email && (
+                        <ErrorMessage text={invalidEmailMessage} />
+                      )}
                     </div>
                     <div className="field">
                       <p className="label">
@@ -161,10 +163,13 @@ const Login = () => {
                         />
                       </div>
                       {isEmailLink &&
-                        (errors.password
-                          ? errorMessage(unsafePasswordMessage)
-                          : isValidPassword &&
-                            errorMessage(safePasswordMessage))}
+                        (errors.password ? (
+                          <ErrorMessage text={unsafePasswordMessage} />
+                        ) : (
+                          isValidPassword && (
+                            <ErrorMessage text={safePasswordMessage} />
+                          )
+                        ))}
                     </div>
                     <br />
                     <div className="field is-grouped">

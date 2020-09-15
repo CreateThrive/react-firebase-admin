@@ -1,37 +1,41 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { Link } from 'react-router-dom';
+import '@testing-library/jest-dom';
 
-import en from 'assets/en.png';
+import es from 'assets/es.png';
 import * as authActions from 'state/actions/auth';
 import * as preferencesActions from 'state/actions/preferences';
+import { fireEvent } from '@testing-library/react';
 import NavBar from '.';
+import paths from '../../../pages/Router/paths';
 
 const onHandleMobile = jest.fn();
 
 describe('<NavBar /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(
+    const { component } = renderWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('should render the links correctly', () => {
-    const { component } = mountWithProviders(
+  it('the link should redirect to the profile page', () => {
+    const { component } = renderWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    expect(component.find(Link)).toHaveLength(1);
+    fireEvent.click(component.getByText('Profile'));
+
+    expect(window.location.pathname).toBe(paths.PROFILE);
   });
 });
 
@@ -47,41 +51,41 @@ describe('<Bar /> actions', () => {
   });
 
   it('should dispatch logout action when the user tries to logout', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
 
-    component.find('#logout').simulate('click');
+    fireEvent.click(component.getByText('Log Out'));
 
     expect(authActions.logout).toHaveBeenCalled();
   });
 
-  it('should dispatch setUserLocale action when the user tries to change language', () => {
-    const { component } = mountWithProviders(
+  it('should display US flag when locale is set to english', () => {
+    const { component } = renderWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
-
-    component.find('#es').simulate('click');
-
-    expect(preferencesActions.setUserLocale).toHaveBeenCalledWith('es');
+    expect(component.getByAltText('es flag')).toHaveAttribute('src', es);
   });
 
-  it('should display US flag when locale is set to english', () => {
-    const { component } = mountWithProviders(
+  it('should dispatch setUserLocale action when the user tries to change language', () => {
+    const { component } = renderWithProviders(
       <NavBar handleMobileToggle={onHandleMobile} />
     )({
       auth: {
-        userData: {}
-      }
+        userData: {},
+      },
     });
-    expect(component.find('#en').prop('src')).toBe(en);
+
+    fireEvent.click(component.getByAltText('es flag'));
+
+    expect(preferencesActions.setUserLocale).toHaveBeenCalledWith('es');
   });
 });

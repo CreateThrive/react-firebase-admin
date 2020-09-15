@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import { useFormatMessage } from 'hooks';
@@ -14,8 +14,6 @@ const Profile = () => {
     shallowEqual
   );
 
-  const [user, setUser] = useState(userData);
-
   return (
     <>
       <section className="hero is-hero-bar">
@@ -24,13 +22,7 @@ const Profile = () => {
         </div>
       </section>
       <section className="section is-main-section">
-        <UserForm
-          isEditing
-          isProfile
-          user={user}
-          setUser={setUser}
-          action={modifyUser}
-        />
+        <UserForm isEditing isProfile user={userData} action={modifyUser} />
         <ChangePassword />
       </section>
     </>

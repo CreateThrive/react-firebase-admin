@@ -4,8 +4,8 @@ import Section from '.';
 
 describe('<Section /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(<Section />)({});
+    const { component } = renderWithProviders(<Section />)({});
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 });

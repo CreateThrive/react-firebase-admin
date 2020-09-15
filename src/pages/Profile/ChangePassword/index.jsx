@@ -8,7 +8,20 @@ import classNames from 'classnames';
 
 import { changeUserPassword, authCleanUp } from 'state/actions/auth';
 import { useFormatMessage } from 'hooks';
-import errorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/ErrorMessage';
+
+const schema = yup.object().shape({
+  current: yup.string().min(6).required(),
+  new: yup
+    .string()
+    .min(6)
+    .notOneOf([yup.ref('current')])
+    .required(),
+  confirmation: yup
+    .string()
+    .equals([yup.ref('new')])
+    .required(),
+});
 
 const ChangePasswordCard = () => {
   const { loading } = useSelector(
@@ -20,20 +33,7 @@ const ChangePasswordCard = () => {
 
   const dispatch = useDispatch();
 
-  const schema = yup.object().shape({
-    current: yup
-      .string()
-      .min(6)
-      .notOneOf([yup.ref('new')])
-      .required(),
-    new: yup.string().min(6).required(),
-    confirmation: yup
-      .string()
-      .equals([yup.ref('new')])
-      .required(),
-  });
-
-  const { register, handleSubmit, watch, errors } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       current: '',
       new: '',
@@ -46,7 +46,11 @@ const ChangePasswordCard = () => {
     return () => dispatch(authCleanUp());
   }, [dispatch]);
 
-  const isNewPasswordSecure = watch('new') && watch('new').length >= 6;
+  const newPassword = watch('new');
+  const currentPassword = watch('current');
+  const confirmationPassword = watch('confirmation');
+
+  const isNewPasswordSecure = newPassword && newPassword.length >= 6;
 
   const safePasswordMessage = useFormatMessage(`ChangePassword.safePassword`);
 
@@ -54,10 +58,10 @@ const ChangePasswordCard = () => {
     `ChangePassword.insecurePassword`
   );
 
+  const insecurePasswordError = <ErrorMessage text={insecurePasswordMessage} />;
+
   const newPasswordsAreEqual =
-    watch('new') &&
-    watch('confirmation') &&
-    watch('new') === watch('confirmation');
+    newPassword && confirmationPassword && newPassword === confirmationPassword;
 
   const passwordsMatchMessagge = useFormatMessage(
     `ChangePassword.matchPassword`
@@ -67,10 +71,14 @@ const ChangePasswordCard = () => {
     `ChangePassword.notMatchPassword`
   );
 
+  const notMatchPasswordError = <ErrorMessage text={notMatchPasswordMessage} />;
+
   const currentAndNewPasswordsEqual =
-    watch('new') && watch('current') === watch('new');
+    newPassword && currentPassword === newPassword;
 
   const samePasswordMessage = useFormatMessage(`ChangePassword.samePassword`);
+
+  const samePasswordError = <ErrorMessage text={samePasswordMessage} />;
 
   const onSubmitHandler = ({ current, confirmation }) => {
     dispatch(changeUserPassword(current, confirmation));
@@ -99,7 +107,8 @@ const ChangePasswordCard = () => {
                 <div className="control">
                   <input
                     className={classNames('input', {
-                      'is-danger': errors.current,
+                      'is-danger':
+                        currentPassword && currentPassword.length < 6,
                     })}
                     type="password"
                     name="current"
@@ -123,7 +132,7 @@ const ChangePasswordCard = () => {
                     className={classNames(
                       `input`,
                       { 'is-success': isNewPasswordSecure },
-                      { 'is-danger': watch('new') && !isNewPasswordSecure }
+                      { 'is-danger': newPassword && !isNewPasswordSecure }
                     )}
                     type="password"
                     name="new"
@@ -133,7 +142,7 @@ const ChangePasswordCard = () => {
                 {isNewPasswordSecure ? (
                   <p className="is-success">{safePasswordMessage}</p>
                 ) : (
-                  watch('new') && errorMessage(insecurePasswordMessage)
+                  newPassword && insecurePasswordError
                 )}
               </div>
             </div>
@@ -154,7 +163,7 @@ const ChangePasswordCard = () => {
                       { 'is-success': newPasswordsAreEqual },
                       {
                         'is-danger':
-                          watch('confirmation') && !newPasswordsAreEqual,
+                          confirmationPassword && !newPasswordsAreEqual,
                       }
                     )}
                     type="password"
@@ -165,7 +174,7 @@ const ChangePasswordCard = () => {
                 {newPasswordsAreEqual ? (
                   <p className="is-success">{passwordsMatchMessagge}</p>
                 ) : (
-                  watch('confirmation') && errorMessage(notMatchPasswordMessage)
+                  confirmationPassword && notMatchPasswordError
                 )}
               </div>
             </div>
@@ -182,8 +191,7 @@ const ChangePasswordCard = () => {
                     {useFormatMessage(`ChangePassword.submits`)}
                   </button>
                 </div>
-                {currentAndNewPasswordsEqual &&
-                  errorMessage(samePasswordMessage)}
+                {currentAndNewPasswordsEqual && samePasswordError}
               </div>
             </div>
           </div>

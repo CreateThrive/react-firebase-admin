@@ -42,13 +42,13 @@ export const SubMenu = ({ label, children }) => {
 
 SubMenu.propTypes = {
   children: PropTypes.node.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
 };
 
 const Aside = ({ handleMobileToggle }) => {
   const { isAdmin } = useSelector(
-    state => ({
-      isAdmin: state.auth.userData.isAdmin
+    (state) => ({
+      isAdmin: state.auth.userData.isAdmin,
     }),
     shallowEqual
   );
@@ -121,7 +121,7 @@ const Aside = ({ handleMobileToggle }) => {
 };
 
 Aside.propTypes = {
-  handleMobileToggle: PropTypes.func.isRequired
+  handleMobileToggle: PropTypes.func.isRequired,
 };
 
 export default Aside;

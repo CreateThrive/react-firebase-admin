@@ -9,9 +9,13 @@ import * as yup from 'yup';
 import { useFormatMessage } from 'hooks';
 import { resetPassword, authCleanUp } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
-import errorMessage from 'components/ErrorMessage';
+import ErrorMessage from 'components/ErrorMessage';
 
 import classes from './ResetPassword.module.scss';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+});
 
 const ResetPassword = () => {
   const { loading, error, restoredPassword, isAuth } = useSelector(
@@ -25,10 +29,6 @@ const ResetPassword = () => {
   );
 
   const dispatch = useDispatch();
-
-  const schema = yup.object().shape({
-    email: yup.string().email().required(),
-  });
 
   const { register, handleSubmit, errors, watch } = useForm({
     resolver: yupResolver(schema),
@@ -100,7 +100,9 @@ const ResetPassword = () => {
                             name="email"
                           />
                         </div>
-                        {errors.email && errorMessage(invalidEmailMessage)}
+                        {errors.email && (
+                          <ErrorMessage text={invalidEmailMessage} />
+                        )}
                         <p className="help">{emailRegistrationMessage}</p>
                       </div>
                       <hr />
