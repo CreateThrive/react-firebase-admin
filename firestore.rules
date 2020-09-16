@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+    	return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return request.auth.token.isAdmin == true;
+    }
+    
+
+    match /users/{userId} {
+      
+    function isUser() {
+      return request.auth.uid == userId;
+    }
+
+      allow read: if isAuthenticated() && (isAdmin() || isUser());
+
+      allow write: if isAuthenticated() && isAdmin();
+     
+      allow update: if isAuthenticated() && (isAdmin() || isUser());
+     
+      allow delete: if isAuthenticated() && isAdmin();
+    }
+  }
+}

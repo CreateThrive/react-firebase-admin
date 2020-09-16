@@ -5,7 +5,7 @@ const admin = require('firebase-admin');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const configPath = '../config.json';
+const configPath = '../src/state/api/index.js';
 
 const questions = [
   {
@@ -57,16 +57,16 @@ const deleteDatabase = async (database) => {
     fs.rmdirSync(`./src/${dir}`, { recursive: true });
 
     console.log(`${database} cloud functions are deleted!`);
-  } catch (err) {
-    console.error(`Error while deleting ${database}.`);
+  } catch (error) {
+    console.error(`Error while deleting ${database}. ${error}`);
   }
 
   try {
     fs.rmdirSync(`./test/${dir}`, { recursive: true });
 
     console.log(`${dir} tests are deleted!`);
-  } catch (err) {
-    console.error(`Error while deleting ${database}.`);
+  } catch (error) {
+    console.error(`Error while deleting ${database} tests. ${error}`);
   }
 };
 
