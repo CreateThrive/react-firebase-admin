@@ -246,7 +246,7 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                           />
                           <span className="file-cta">
                             <span className="file-icon">
-                              <i className="fas fa-upload" />
+                              <i className="mdi mdi-upload" />
                             </span>
                             <span className="file-label">
                               {user.file
