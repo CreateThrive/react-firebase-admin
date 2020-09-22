@@ -16,10 +16,11 @@ import ErrorMessage from '../ErrorMessage';
 
 import './UserForm.scss';
 
-const UserForm = ({ isEditing, isProfile, user, action }) => {
-  const { loading } = useSelector(
+const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
+  const { loading, success } = useSelector(
     (state) => ({
       loading: state.users.loading,
+      success: state.users.success,
     }),
     shallowEqual
   );
@@ -42,8 +43,11 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
   });
 
   useEffect(() => {
+    if (success) {
+      setUser((prevState) => ({ ...prevState, file: null }));
+    }
     return () => dispatch(usersCleanUp());
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   const onSubmitHandler = (value) => {
     const newUser = {
@@ -252,7 +256,7 @@ const UserForm = ({ isEditing, isProfile, user, action }) => {
                           />
                           <span className="file-cta">
                             <span className="file-icon">
-                              <i className="fas fa-upload" />
+                              <i className="mdi mdi-upload" />
                             </span>
                             <span className="file-label">
                               {watch('file') && watch('file').file
