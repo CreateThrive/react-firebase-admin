@@ -10,7 +10,7 @@ describe('<DatePickerStyled /> rendering', () => {
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
-        date={new Date('Thu Nov 12 2020 00:00:00 GMT-0000')}
+        date={new Date('11/12/2020')}
         onChange={onChange}
       />
     )({});

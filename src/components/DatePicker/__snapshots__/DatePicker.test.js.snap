@@ -11,7 +11,7 @@ exports[`<DatePickerStyled /> rendering should render without crashing 1`] = `
       <input
         class=""
         type="text"
-        value="11-11-20"
+        value="11-12-20"
       />
     </div>
   </div>
