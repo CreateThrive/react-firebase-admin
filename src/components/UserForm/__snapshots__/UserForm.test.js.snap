@@ -233,7 +233,7 @@ exports[`<UserForm /> rendering should render without crashing 1`] = `
                           class="file-icon"
                         >
                           <i
-                            class="fas fa-upload"
+                            class="mdi mdi-upload"
                           />
                         </span>
                         <span
