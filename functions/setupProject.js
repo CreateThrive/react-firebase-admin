@@ -33,7 +33,7 @@ const questions = [
     type: 'list',
     name: 'database',
     message: 'Select the database of your choice:',
-    choices: ['Real Time Database', 'Firestore'],
+    choices: ['Realtime Database', 'Firestore'],
   },
 ];
 

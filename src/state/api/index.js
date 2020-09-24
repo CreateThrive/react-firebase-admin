@@ -3,7 +3,7 @@ import {
   deleteDocument,
   fetchCollection,
   fetchDocument,
-  modifyDocument,
+  updateDocument,
 } from './rtdb';
 
 export {
@@ -11,5 +11,5 @@ export {
   deleteDocument,
   fetchCollection,
   fetchDocument,
-  modifyDocument,
+  updateDocument,
 };

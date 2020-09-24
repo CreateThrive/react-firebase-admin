@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import { firestore } from 'firebase';
-
 import firebase from 'firebase.js';
 
 const getFirestoreRef = (path) => firebase.firestore().collection(path);
@@ -44,6 +41,6 @@ export const createDocument = (collection, id, values) => {
   return getFirestoreRef(collection).doc(id).set(values);
 };
 
-export const modifyDocument = (collection, id, values) => {
+export const updateDocument = (collection, id, values) => {
   return getFirestoreRef(collection).doc(id).update(values);
 };

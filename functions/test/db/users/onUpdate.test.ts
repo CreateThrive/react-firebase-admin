@@ -3,7 +3,7 @@ import * as chai from 'chai';
 import onUpdate from '../../../src/db/users/onUpdate.function';
 import 'mocha';
 
-describe('onUpdate Real Time Database', () => {
+describe('onUpdate Realtime Database', () => {
   let userRecord: any;
 
   before(async () => {

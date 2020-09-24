@@ -3,6 +3,7 @@ import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/functions';
+import 'firebase/firestore';
 
 const config = {
   apiKey: process.env.REACT_APP_FIRE_BASE_KEY,
@@ -12,7 +13,7 @@ const config = {
   storageBucket: process.env.REACT_APP_FIRE_BASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIRE_BASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIRE_BASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIRE_BASE_MEASURMENT_ID
+  measurementId: process.env.REACT_APP_FIRE_BASE_MEASURMENT_ID,
 };
 
 firebase.initializeApp(config);

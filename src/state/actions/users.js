@@ -9,7 +9,7 @@ import {
   fetchDocument,
   createDocument,
   deleteDocument,
-  modifyDocument,
+  updateDocument,
 } from '../api';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
@@ -256,7 +256,7 @@ export const modifyUser = ({
       isAdmin,
       logoUrl: logoUrl || newLogoUrl,
     };
-    const updateUserDbTask = modifyDocument('users', id, userData);
+    const updateUserDbTask = updateDocument('users', id, userData);
 
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);

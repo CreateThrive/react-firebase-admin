@@ -64,7 +64,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - PWA ready thanks to CRA and Firebase
 - Multi-tenancy
 - Internationalization (English/Spanish)
-- Interface to choose between Real Time Database and Firestore
+- Ability to choose between Firebase Realtime Database or Firestore
 
 ## Tech Stack
 

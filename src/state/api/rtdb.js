@@ -38,6 +38,6 @@ export const createDocument = (collection, id, values) => {
   return getRealTimeRef(`${collection}/${id}`).set(values);
 };
 
-export const modifyDocument = (collection, id, values) => {
+export const updateDocument = (collection, id, values) => {
   return getRealTimeRef(`${collection}/${id}`).update(values);
 };

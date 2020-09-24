@@ -6,7 +6,7 @@ import 'mocha';
 
 chai.use(chaiAsPromised);
 
-describe('onDelete Real Time Database', () => {
+describe('onDelete Realtime Database', () => {
   let userRecord: any;
 
   it('should delete the user from the authentication section', async () => {

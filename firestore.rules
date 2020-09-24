@@ -13,15 +13,15 @@ service cloud.firestore {
 
     match /users/{userId} {
       
-    function isUser() {
+    function isIdentified() {
       return request.auth.uid == userId;
     }
 
-      allow read: if isAuthenticated() && (isAdmin() || isUser());
+      allow read: if isAuthenticated() && (isAdmin() || isIdentified());
 
       allow write: if isAuthenticated() && isAdmin();
      
-      allow update: if isAuthenticated() && (isAdmin() || isUser());
+      allow update: if isAuthenticated() && (isAdmin() || isIdentified());
      
       allow delete: if isAuthenticated() && isAdmin();
     }

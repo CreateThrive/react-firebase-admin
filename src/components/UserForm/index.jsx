@@ -12,9 +12,10 @@ import './UserForm.scss';
 import DatePicker from '../DatePicker';
 
 const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
-  const { loading } = useSelector(
+  const { loading, success } = useSelector(
     (state) => ({
       loading: state.users.loading,
+      success: state.users.success,
     }),
     shallowEqual
   );
@@ -22,8 +23,11 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (success) {
+      setUser((prevState) => ({ ...prevState, file: null }));
+    }
     return () => dispatch(usersCleanUp());
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   const onChangeHandler = useChangeHandler(setUser);
 
@@ -242,7 +246,7 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                           />
                           <span className="file-cta">
                             <span className="file-icon">
-                              <i className="fas fa-upload" />
+                              <i className="mdi mdi-upload" />
                             </span>
                             <span className="file-label">
                               {user.file
