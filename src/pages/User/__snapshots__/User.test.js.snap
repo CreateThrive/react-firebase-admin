@@ -204,7 +204,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
                         <input
                           class=""
                           type="text"
-                          value="09-22-20"
+                          value="09-24-20"
                         />
                       </div>
                     </div>
@@ -429,7 +429,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
                 <p
                   class="date"
                 >
-                  Tue, Sep 22, 2020
+                  Thu, Sep 24, 2020
                 </p>
               </div>
             </div>

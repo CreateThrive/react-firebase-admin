@@ -1,13 +1,13 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import '@testing-library/jest-dom';
+import { fireEvent } from '@testing-library/react';
 
 import es from 'assets/es.png';
 import * as authActions from 'state/actions/auth';
 import * as preferencesActions from 'state/actions/preferences';
-import { fireEvent } from '@testing-library/react';
+import paths from 'pages/Router/paths';
 import NavBar from '.';
-import paths from '../../../pages/Router/paths';
 
 const onHandleMobile = jest.fn();
 

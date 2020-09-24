@@ -11,8 +11,8 @@ import * as yup from 'yup';
 import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
 import { useFormatDate, useFormatMessage } from 'hooks';
-import DatePicker from '../DatePicker';
-import ErrorMessage from '../ErrorMessage';
+import DatePicker from 'components/DatePicker';
+import ErrorMessage from 'components/ErrorMessage';
 
 import './UserForm.scss';
 

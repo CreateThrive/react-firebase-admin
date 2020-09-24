@@ -18,8 +18,7 @@ import {
 import { useFormatMessage } from 'hooks';
 import { firebaseError, uiConfig } from 'utils';
 import ErrorMessage from 'components/ErrorMessage';
-import paths from '../Router/paths';
-
+import paths from 'pages/Router/paths';
 import classes from './Login.module.scss';
 
 const schema = yup.object().shape({
