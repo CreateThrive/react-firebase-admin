@@ -11,7 +11,7 @@ const ConfirmationModal = ({
   confirmButtonMessage,
   onConfirmation,
   cancelButtonMessage,
-  onCancel
+  onCancel,
 }) => {
   const modifiers = isActive && 'is-active';
   const loadingModifier = isLoading && 'is-loading';
@@ -57,7 +57,7 @@ ConfirmationModal.propTypes = {
   confirmButtonMessage: PropTypes.string.isRequired,
   onConfirmation: PropTypes.func.isRequired,
   cancelButtonMessage: PropTypes.string.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default ConfirmationModal;

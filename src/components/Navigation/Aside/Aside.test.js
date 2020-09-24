@@ -1,124 +1,138 @@
+import { fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import paths from 'pages/Router/paths';
-import Aside, { SubMenu } from '.';
-import NavLink from '../Link';
+import Aside from '.';
 
 describe('<Aside /> rendering', () => {
   const onHandler = jest.fn();
 
   it('should render without crashing', () => {
-    const component = shallowWithProviders(
+    const { component } = renderWithProviders(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
         userData: {
-          isAdmin: true
-        }
-      }
+          isAdmin: true,
+        },
+      },
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('should set the handleMobileToggle prop correctly', () => {
-    const { component } = mountWithProviders(
+  it('should set the handleMobileToggle prop correctly when clicking Home', () => {
+    const { component } = renderWithProviders(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
         userData: {
-          isAdmin: true
-        }
-      }
+          isAdmin: true,
+        },
+      },
     });
 
-    expect(
-      component
-        .find(NavLink)
-        .at(1)
-        .prop('onClick')
-    ).toEqual(onHandler);
+    fireEvent.click(component.getByText('Home'));
+    expect(onHandler).toBeCalled();
+  });
 
-    expect(
-      component
-        .find(NavLink)
-        .at(0)
-        .prop('onClick')
-    ).toEqual(onHandler);
+  it('should set the handleMobileToggle prop correctly when clicking Users', () => {
+    const { component } = renderWithProviders(
+      <Aside handleMobileToggle={onHandler} />
+    )({
+      auth: {
+        userData: {
+          isAdmin: true,
+        },
+      },
+    });
 
-    expect(
-      component
-        .find(NavLink)
-        .at(2)
-        .prop('onClick')
-    ).toEqual(onHandler);
+    fireEvent.click(component.getByText('Users'));
+    expect(onHandler).toBeCalled();
+  });
+
+  it('should set the handleMobileToggle prop correctly when clicking Submenu 1', () => {
+    const { component } = renderWithProviders(
+      <Aside handleMobileToggle={onHandler} />
+    )({
+      auth: {
+        userData: {
+          isAdmin: true,
+        },
+      },
+    });
+
+    fireEvent.click(component.getByText('Submenu 1'));
+    expect(onHandler).toBeCalled();
+  });
+
+  it('should set the handleMobileToggle prop correctly when clicking Submenu 2', () => {
+    const { component } = renderWithProviders(
+      <Aside handleMobileToggle={onHandler} />
+    )({
+      auth: {
+        userData: {
+          isAdmin: true,
+        },
+      },
+    });
+
+    fireEvent.click(component.getByText('Submenu 2'));
+    expect(onHandler).toBeCalled();
   });
 
   it('should not render the /users link if it the user is not an admin', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
         userData: {
-          isAdmin: false
-        }
-      }
+          isAdmin: false,
+        },
+      },
     });
 
-    expect(
-      component.contains(
-        <NavLink to={paths.USERS} onClick={onHandler}>
-          Users
-        </NavLink>
-      )
-    ).toBeFalsy();
+    expect(component.queryByText('Users')).toBeNull();
   });
 
   it('should render the /users link if it the user is an admin', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
         userData: {
-          isAdmin: true
-        }
-      }
+          isAdmin: true,
+        },
+      },
     });
 
-    expect(
-      component.contains(
-        <NavLink to={paths.USERS} onClick={onHandler}>
-          Users
-        </NavLink>
-      )
-    ).toBeFalsy();
+    expect(component.getByText('Users')).toBeTruthy();
   });
 
   it('should render the <SubMenu /> component if the user is an admin', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
         userData: {
-          isAdmin: true
-        }
-      }
+          isAdmin: true,
+        },
+      },
     });
 
-    expect(component.exists(SubMenu)).toBeTruthy();
+    expect(component.getByText('Dropdown Menu')).toBeTruthy();
   });
 
   it('should render the <SubMenu /> component if the user is not an admin', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <Aside handleMobileToggle={onHandler} />
     )({
       auth: {
         userData: {
-          isAdmin: false
-        }
-      }
+          isAdmin: false,
+        },
+      },
     });
 
-    expect(component.exists(SubMenu)).toBeTruthy();
+    expect(component.getByText('Dropdown Menu')).toBeTruthy();
   });
 });

@@ -39,8 +39,7 @@
     "Request": true,
     "fetch": true,
     "reducerTester": true,
-    "mountWithProviders": true,
-    "shallowWithProviders": true
+    "renderWithProviders": true
   },
   "parser": "babel-eslint",
   "settings": {

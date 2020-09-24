@@ -1,48 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Footer /> rendering should render without crashing 1`] = `
-<footer
-  className="footer"
->
-  <div
-    className="container-fluid"
+<DocumentFragment>
+  <footer
+    class="footer"
   >
     <div
-      className="level level"
+      class="container-fluid"
     >
       <div
-        className="level-left"
+        class="level level"
       >
         <div
-          className="level-item"
-        >
-          © 2020 
-          <span>
-              CreateThrive
-          </span>
-        </div>
-      </div>
-      <div
-        className="level-right levelRight"
-      >
-        <div
-          className="level-item"
+          class="level-left"
         >
           <div
-            className="logo"
+            class="level-item"
           >
-            <a
-              href="https://createthrive.com"
+            © 2020 
+            <span>
+                CreateThrive
+            </span>
+          </div>
+        </div>
+        <div
+          class="level-right levelRight"
+        >
+          <div
+            class="level-item"
+          >
+            <div
+              class="logo"
             >
-              <img
-                alt="CreateThrive.com"
-                src="https://createthrive.com/assets/images/Logo-CT.svg"
-              />
-            </a>
+              <a
+                href="https://createthrive.com"
+              >
+                <img
+                  alt="CreateThrive.com"
+                  src="https://createthrive.com/assets/images/Logo-CT.svg"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
+</DocumentFragment>
 `;

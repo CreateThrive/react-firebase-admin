@@ -1,37 +1,46 @@
 import React from 'react';
-import ClipLoader from 'react-spinners/ClipLoader';
+import * as reactRedux from 'react-redux';
 
-import UserForm from 'components/UserForm';
+import * as actions from 'state/actions/users';
 import User from '.';
 
 describe('<User /> rendering', () => {
+  const dispatchMock = jest.fn();
+
+  beforeEach(() => {
+    jest
+      .spyOn(reactRedux, 'useDispatch')
+      .mockImplementation(() => dispatchMock);
+    jest.spyOn(actions, 'usersCleanUp').mockImplementation(jest.fn);
+  });
+
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(<User />)({
+    const { component } = renderWithProviders(<User />)({
       users: {
         data: [],
       },
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should not show the spinner when creating a user', () => {
-    const { component } = mountWithProviders(<User />)({
+    const { component } = renderWithProviders(<User />)({
       users: {
         data: [],
       },
     });
 
-    expect(component.exists(ClipLoader)).toBeFalsy();
+    expect(component.container.querySelector('.spinner')).toBeFalsy();
   });
 
   it('should render the UserForm component when creating a user', () => {
-    const { component } = mountWithProviders(<User />)({
+    const { component } = renderWithProviders(<User />)({
       users: {
         data: [],
       },
     });
 
-    expect(component.exists(UserForm)).toBeTruthy();
+    expect(component.getByText('User Information')).toBeTruthy();
   });
 });

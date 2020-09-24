@@ -56,14 +56,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.2",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
     "deep-freeze": "^0.0.1",
     "dotenv": "^8.2.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.3",
-    "enzyme-to-json": "^3.4.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -88,9 +87,6 @@
     }
   },
   "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],

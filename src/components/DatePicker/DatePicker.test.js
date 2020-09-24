@@ -1,5 +1,4 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
 
 import DatePickerStyled from '.';
 
@@ -7,20 +6,20 @@ describe('<DatePickerStyled /> rendering', () => {
   const onChange = jest.fn();
 
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(
+    const { component } = renderWithProviders(
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
-        date={new Date('Thu Nov 12 2020 00:00:00 GMT-0000')}
+        date={new Date('11/12/2020')}
         onChange={onChange}
       />
     )({});
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should render <DatePicker /> component correctly', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
@@ -29,11 +28,11 @@ describe('<DatePickerStyled /> rendering', () => {
       />
     )({});
 
-    expect(component.exists(DatePicker)).toBeTruthy();
+    expect(component.container.querySelector('input')).toBeTruthy();
   });
 
   it('should pass the date prop to <DatePicker selected={date} /> correctly', () => {
-    const { component } = mountWithProviders(
+    const { component } = renderWithProviders(
       <DatePickerStyled
         name="test"
         dateFormat="en-US"
@@ -42,8 +41,6 @@ describe('<DatePickerStyled /> rendering', () => {
       />
     )({});
 
-    expect(component.find(DatePicker).prop('selected')).toEqual(
-      new Date('11/12/2020')
-    );
+    expect(component.container.querySelector('input').value).toBe('11-12-20');
   });
 });

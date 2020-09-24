@@ -1,44 +1,52 @@
 import React from 'react';
 
+import { fireEvent } from '@testing-library/react';
 import NotFound from '.';
 import paths from '../Router/paths';
 
 describe('<NotFound /> rendering', () => {
   const location = {
-    pathname: '/'
+    pathname: '/',
   };
 
   it('should render without crashing', () => {
-    const { component } = mountWithProviders(<NotFound location={location} />)({
-      auth: {
-        userData: {}
+    const { component } = renderWithProviders(<NotFound location={location} />)(
+      {
+        auth: {
+          userData: {},
+        },
       }
-    });
+    );
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('should display the button with the login path if user is not authenticate', () => {
-    const { component } = mountWithProviders(<NotFound location={location} />)({
-      auth: {
-        userData: {
-          id: null
-        }
+  it('should display the button with the login path if user is not authenticated', () => {
+    const { component } = renderWithProviders(<NotFound location={location} />)(
+      {
+        auth: {
+          userData: {
+            id: null,
+          },
+        },
       }
-    });
-
-    expect(component.find('a').prop('href')).toEqual(paths.LOGIN);
+    );
+    fireEvent.click(component.getByRole('link'));
+    expect(window.location.pathname).toBe(paths.LOGIN);
   });
 
-  it('should display the button with the home path if user is authenticate', () => {
-    const { component } = mountWithProviders(<NotFound location={location} />)({
-      auth: {
-        userData: {
-          id: 'some userId'
-        }
+  it('should display the button with the home path if user is authenticated', () => {
+    const { component } = renderWithProviders(<NotFound location={location} />)(
+      {
+        auth: {
+          userData: {
+            id: 'some userId',
+          },
+        },
       }
-    });
+    );
 
-    expect(component.find('a').prop('href')).toEqual(paths.ROOT);
+    fireEvent.click(component.getByRole('link'));
+    expect(window.location.pathname).toBe(paths.ROOT);
   });
 });

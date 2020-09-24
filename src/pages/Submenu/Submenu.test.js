@@ -4,8 +4,8 @@ import Submenu from '.';
 
 describe('<Submenu /> rendering', () => {
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(<Submenu />)({});
+    const { component } = renderWithProviders(<Submenu />)({});
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 });

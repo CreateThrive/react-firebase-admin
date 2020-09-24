@@ -21,7 +21,7 @@ Link.propTypes = {
   to: PropTypes.string.isRequired,
   className: PropTypes.string,
   noActiveStyle: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default Link;
