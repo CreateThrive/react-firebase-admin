@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable consistent-return */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
@@ -6,6 +7,8 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 const configPath = '../src/state/api/index.js';
+
+const importPath = '../src/firebase.js';
 
 const questions = [
   {
@@ -35,6 +38,13 @@ const questions = [
     message: 'Select the database of your choice:',
     choices: ['Realtime Database', 'Firestore'],
   },
+
+  {
+    type: 'confirm',
+    name: 'deletedb',
+    message: 'Do you want to delete unused cloud functions?',
+    default: true,
+  },
 ];
 
 const replaceDatabase = (oldDatabase, newDatabase) => {
@@ -48,6 +58,36 @@ const replaceDatabase = (oldDatabase, newDatabase) => {
       if (err) return console.log(err);
     });
   });
+
+  fs.readFile(importPath, 'utf8', (error, data) => {
+    if (error) {
+      return console.log(error);
+    }
+
+    let oldInit;
+    let newInit;
+    let oldImport;
+    let newImport;
+    if (oldDatabase === 'rtdb') {
+      oldInit = 'firebase.database()';
+      newInit = 'firebase.firestore()';
+      oldImport = 'firebase/database';
+      newImport = 'firebase/firestore';
+    } else {
+      oldInit = 'firebase.firestore()';
+      newInit = 'firebase.database()';
+      oldImport = 'firebase/firestore';
+      newImport = 'firebase/database';
+    }
+
+    data = data.replace(oldInit, newInit);
+
+    data = data.replace(oldImport, newImport);
+
+    fs.writeFile(importPath, data, 'utf8', (err) => {
+      if (err) return console.log(err);
+    });
+  });
 };
 
 const deleteDatabase = async (database) => {
@@ -55,16 +95,12 @@ const deleteDatabase = async (database) => {
 
   try {
     fs.rmdirSync(`./src/${dir}`, { recursive: true });
-
-    console.log(`${database} cloud functions are deleted!`);
   } catch (error) {
     console.error(`Error while deleting ${database}. ${error}`);
   }
 
   try {
     fs.rmdirSync(`./test/${dir}`, { recursive: true });
-
-    console.log(`${dir} tests are deleted!`);
   } catch (error) {
     console.error(`Error while deleting ${database} tests. ${error}`);
   }
@@ -72,7 +108,7 @@ const deleteDatabase = async (database) => {
 
 inquirer
   .prompt(questions)
-  .then(async ({ database, path, email, password, databaseURL }) => {
+  .then(async ({ database, path, email, password, databaseURL, deletedb }) => {
     const serviceAccount = require(path);
 
     admin.initializeApp({
@@ -112,7 +148,9 @@ inquirer
       await admin.database().ref(`users/${uid}`).set(user);
     }
 
-    deleteDatabase(database);
+    if (deletedb) {
+      deleteDatabase(database);
+    }
 
     console.log(`Created admin account in ${database}`);
     process.exit(0);
