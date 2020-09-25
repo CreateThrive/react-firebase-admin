@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import classNames from 'classnames';
 import { yupResolver } from '@hookform/resolvers';
-import * as yup from 'yup';
 
 import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
@@ -16,7 +15,7 @@ import ErrorMessage from 'components/ErrorMessage';
 
 import './UserForm.scss';
 
-const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
+const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
   const { loading, success } = useSelector(
     (state) => ({
       loading: state.users.loading,
@@ -27,37 +26,17 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
 
   const dispatch = useDispatch();
 
-  const schema = yup.object().shape({
-    email: isEditing
-      ? yup.string().email().notRequired()
-      : yup.string().email().required(),
-    name: yup.string().required(),
-    isAdmin: yup.boolean().notRequired(),
-    location: yup.string().notRequired(),
-    createdAt: yup.string().required(),
-  });
-
-  const { register, handleSubmit, errors, control, watch } = useForm({
+  const { register, handleSubmit, errors, control, watch, setValue } = useForm({
     defaultValues: { ...user },
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     if (success) {
-      setUser((prevState) => ({ ...prevState, file: null }));
+      setValue('file', null);
     }
     return () => dispatch(usersCleanUp());
   }, [dispatch, success]);
-
-  const onSubmitHandler = (value) => {
-    const newUser = {
-      ...value,
-      file: value?.file[0] || null,
-      isEditing,
-      isProfile,
-    };
-    dispatch(action(newUser));
-  };
 
   const invalidEmailMessage = useFormatMessage('UserForm.invalidEmail');
 
@@ -102,7 +81,8 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                             type="text"
                             readOnly="readOnly"
                             className="input is-static"
-                            value={user.email}
+                            name="email"
+                            ref={register}
                           />
                         </div>
                       </div>
@@ -421,7 +401,9 @@ UserForm.propTypes = {
     createdAt: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
-  action: PropTypes.func.isRequired,
+  onSubmitHandler: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  schema: PropTypes.object.isRequired,
   isEditing: PropTypes.bool,
   isProfile: PropTypes.bool,
 };

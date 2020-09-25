@@ -1,10 +1,18 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import * as yup from 'yup';
 
 import { useFormatMessage } from 'hooks';
 import UserForm from 'components/UserForm';
 import { modifyUser } from 'state/actions/users';
 import ChangePassword from './ChangePassword';
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  isAdmin: yup.boolean().notRequired(),
+  location: yup.string().notRequired(),
+  createdAt: yup.string().required(),
+});
 
 const Profile = () => {
   const { userData } = useSelector(
@@ -14,6 +22,19 @@ const Profile = () => {
     shallowEqual
   );
 
+  const dispatch = useDispatch();
+
+  const onSubmitHandler = (value) => {
+    const newUser = {
+      ...value,
+      file: value?.file[0] || null,
+      isEditing: true,
+      isProfile: true,
+      id: userData.id,
+    };
+    dispatch(modifyUser(newUser));
+  };
+
   return (
     <>
       <section className="hero is-hero-bar">
@@ -22,7 +43,13 @@ const Profile = () => {
         </div>
       </section>
       <section className="section is-main-section">
-        <UserForm isEditing isProfile user={userData} action={modifyUser} />
+        <UserForm
+          isEditing
+          isProfile
+          user={userData}
+          onSubmitHandler={onSubmitHandler}
+          schema={schema}
+        />
         <ChangePassword />
       </section>
     </>

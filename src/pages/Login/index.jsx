@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -97,6 +98,8 @@ const Login = () => {
 
   const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
 
+  const invalidPasswordMessage = useFormatMessage('Login.invalidPassword');
+
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -121,15 +124,9 @@ const Login = () => {
                       <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
-                          className={classNames(
-                            'input',
-                            {
-                              'is-danger': errors.email,
-                            },
-                            {
-                              'is-success': !errors.email && isEmailLink,
-                            }
-                          )}
+                          className={classNames('input', {
+                            'is-danger': errors.email,
+                          })}
                           name="email"
                           ref={register}
                         />
@@ -150,10 +147,7 @@ const Login = () => {
                               'is-danger': errors.password,
                             },
                             {
-                              'is-success':
-                                isValidPassword &&
-                                !errors.password &&
-                                isEmailLink,
+                              'is-success': isEmailLink && isValidPassword,
                             }
                           )}
                           type="password"
@@ -161,14 +155,19 @@ const Login = () => {
                           ref={register}
                         />
                       </div>
-                      {isEmailLink &&
-                        (errors.password ? (
+                      {isEmailLink ? (
+                        errors.password ? (
                           <ErrorMessage text={unsafePasswordMessage} />
                         ) : (
                           isValidPassword && (
-                            <ErrorMessage text={safePasswordMessage} />
+                            <p className="is-success">{safePasswordMessage}</p>
                           )
-                        ))}
+                        )
+                      ) : (
+                        errors.password && (
+                          <ErrorMessage text={invalidPasswordMessage} />
+                        )
+                      )}
                     </div>
                     <br />
                     <div className="field is-grouped">
@@ -204,22 +203,26 @@ const Login = () => {
                       </p>
                     )}
                   </form>
-                  <hr />
-                  <div
-                    className={classNames(
-                      'field',
-                      'is-grouped',
-                      classes.socialButtons
-                    )}
-                  >
-                    <StyledFirebaseAuth
-                      uiConfig={uiConfig(
-                        onSignInSuccessHandler,
-                        onSignInFailHandler
-                      )}
-                      firebaseAuth={firebase.auth()}
-                    />
-                  </div>
+                  {!isEmailLink && (
+                    <>
+                      <hr />
+                      <div
+                        className={classNames(
+                          'field',
+                          'is-grouped',
+                          classes.socialButtons
+                        )}
+                      >
+                        <StyledFirebaseAuth
+                          uiConfig={uiConfig(
+                            onSignInSuccessHandler,
+                            onSignInFailHandler
+                          )}
+                          firebaseAuth={firebase.auth()}
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

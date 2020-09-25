@@ -24,16 +24,17 @@ const schema = yup.object().shape({
 });
 
 const ChangePasswordCard = () => {
-  const { loading } = useSelector(
+  const { loading, changedPassword } = useSelector(
     (state) => ({
       loading: state.auth.loading,
+      changedPassword: state.auth.changedPassword,
     }),
     shallowEqual
   );
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, setValue, errors } = useForm({
     defaultValues: {
       current: '',
       new: '',
@@ -43,14 +44,26 @@ const ChangePasswordCard = () => {
   });
 
   useEffect(() => {
+    if (changedPassword) {
+      setValue('current', '');
+      setValue('new', '');
+      setValue('confirmation', '');
+    }
     return () => dispatch(authCleanUp());
-  }, [dispatch]);
+  }, [dispatch, changedPassword]);
 
   const newPassword = watch('new');
   const currentPassword = watch('current');
   const confirmationPassword = watch('confirmation');
 
   const isNewPasswordSecure = newPassword && newPassword.length >= 6;
+
+  const isCurrentPasswordInvalid =
+    currentPassword && currentPassword.length < 6;
+
+  const invalidPasswordMessage = useFormatMessage(
+    `ChangePassword.invalidPassword`
+  );
 
   const safePasswordMessage = useFormatMessage(`ChangePassword.safePassword`);
 
@@ -107,14 +120,17 @@ const ChangePasswordCard = () => {
                 <div className="control">
                   <input
                     className={classNames('input', {
-                      'is-danger':
-                        currentPassword && currentPassword.length < 6,
+                      'is-danger': isCurrentPasswordInvalid,
                     })}
                     type="password"
                     name="current"
                     ref={register}
                   />
                 </div>
+                {isCurrentPasswordInvalid ||
+                  (errors.current && (
+                    <ErrorMessage text={invalidPasswordMessage} />
+                  ))}
               </div>
             </div>
           </div>

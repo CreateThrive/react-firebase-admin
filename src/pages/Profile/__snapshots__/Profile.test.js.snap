@@ -70,9 +70,9 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
                     >
                       <input
                         class="input is-static"
+                        name="email"
                         readonly=""
                         type="text"
-                        value="test@test.com"
                       />
                     </div>
                   </div>
