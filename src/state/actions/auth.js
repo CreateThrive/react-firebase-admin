@@ -4,6 +4,7 @@ import { toastr } from 'react-redux-toastr';
 import { firebaseError, FIREBASE_RESPONSE } from 'utils';
 import firebase from 'firebase.js';
 import { clearUsersDataLogout } from './users';
+import { teamsCleanUp } from './teams';
 import { createDocument, fetchDocument } from '../api';
 
 export const AUTH_SIGN_IN_INIT = createAction('AUTH_SIGN_IN_INIT');
@@ -73,6 +74,8 @@ export const logout = () => {
     dispatch(AUTH_LOGOUT_INIT());
 
     dispatch(clearUsersDataLogout());
+    dispatch(teamsCleanUp());
+
     await firebase.auth().signOut();
 
     dispatch(AUTH_LOGOUT_SUCCESS());
@@ -254,6 +257,7 @@ export const authWithSocialMedia = (authResult) => {
       createdAt: new Date().toString(),
       logoUrl: photoURL,
       location: location?.name || null,
+      teams: [],
     };
 
     let userFromDb = {};

@@ -5,7 +5,7 @@
 
 Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a fully functional admin dashboard with authentication, authorization, Realtime Database / Firestore, built-in CI/CD, file upload and more. We're using up to date industry standards and next-gen technologies like React (with hooks), redux, bulma, sass, webpack, routing and a serverless architecture.
 
-![Boilerplate - Users page](https://imgur.com/7jIt6jh.png)
+![Boilerplate - Users page](https://imgur.com/MWFS3nO.png)
 
 ---
 
@@ -65,7 +65,8 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - PWA ready thanks to CRA and Firebase
 - Multi-tenancy
 - Internationalization (English/Spanish)
-- Ability to choose between Firebase Realtime Database or Firestore
+- Create/modify/delete teams
+- Add/delete team members
 
 ## Tech Stack
 
@@ -93,6 +94,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [React Hook Form](https://github.com/react-hook-form/react-hook-form) (★ 14.6k) Performant, flexible and extensible forms with easy to use validation.
 - [yup](https://github.com/jquense/yup) (★ 11k) schema builder for value parsing and validation.
 - [Inquirer](https://github.com/SBoudrias/Inquirer.js/) (★ 12.2k) A collection of common interactive command line user interfaces (see [docs](https://github.com/SBoudrias/Inquirer.js/#documentation)).
+- [react-select](https://react-select.com/home) (★ 21.1k) a flexible Select input for Reactjs (see [docs](https://react-select.com/home))
 
 ### Unit Testing
 
@@ -145,6 +147,7 @@ You also need to be familiar with [HTML](https://developer.mozilla.org/en-US/doc
     <li><a href="https://docs.react-firebase.com/features/internationalization">Internationalization</a></li>
     <li><a href="https://docs.react-firebase.com/features/file-upload">File Upload</a></li>
     <li><a href="https://docs.react-firebase.com/features/social-media-authentication">Social Media Authentication</a></li>
+    <li><a href="https://docs.react-firebase.com/features/teams">Teams</a></li>
 </ul>
 
 ## Demo

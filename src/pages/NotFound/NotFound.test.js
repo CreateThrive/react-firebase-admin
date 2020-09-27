@@ -21,7 +21,7 @@ describe('<NotFound /> rendering', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('should display the button with the login path if user is not authenticated', () => {
+  it('should redirect to login page if user is not authenticated', () => {
     const { component } = renderWithProviders(<NotFound location={location} />)(
       {
         auth: {
@@ -35,7 +35,7 @@ describe('<NotFound /> rendering', () => {
     expect(window.location.pathname).toBe(paths.LOGIN);
   });
 
-  it('should display the button with the home path if user is authenticated', () => {
+  it('should redirect to home page if user is authenticated', () => {
     const { component } = renderWithProviders(<NotFound location={location} />)(
       {
         auth: {

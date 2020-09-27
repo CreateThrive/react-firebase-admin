@@ -8,7 +8,7 @@ import { setUserLocale } from 'state/actions/preferences';
 import { useFormatMessage } from 'hooks';
 import { logout } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
-import defaultLogo from 'assets/user-default-log.svg';
+import defaultLogo from 'assets/user-default-log.jpg';
 import Link from '../Link';
 
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {

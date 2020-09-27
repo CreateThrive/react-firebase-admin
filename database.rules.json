@@ -6,7 +6,15 @@
         ".read": "auth !== null && ((auth.token.isAdmin === true && data.child('isAdmin').val() === false) || auth.uid === $user)"
       },
       ".write": "auth !== null && auth.token.isAdmin === true",
-      ".read": "auth !== null && auth.token.isAdmin === true"
+      ".read": "auth !== null"
+    },
+    "teams": {
+      "$team": {
+        ".write": "auth !== null && auth.token.isAdmin === true",
+        ".read": "auth !== null && auth.token.isAdmin === true"
+      },
+      ".write": "auth !== null && auth.token.isAdmin === true",
+      ".read": "auth !== null"
     }
   }
 }

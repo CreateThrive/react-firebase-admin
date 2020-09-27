@@ -113,7 +113,7 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
             >
               <img
                 alt="User profile"
-                src="user-default-log.svg"
+                src="user-default-log.jpg"
               />
             </div>
             <div
@@ -210,6 +210,25 @@ exports[`<PrivateRoute /> rendering should render without crashing 1`] = `
               class="menu-item-label"
             >
               Home
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="has-icon"
+            href="/teams"
+          >
+            <span
+              class="icon"
+            >
+              <i
+                class="mdi mdi-account-group"
+              />
+            </span>
+            <span
+              class="menu-item-label"
+            >
+              Teams
             </span>
           </a>
         </li>

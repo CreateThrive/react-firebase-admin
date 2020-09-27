@@ -13,7 +13,7 @@ export const fetchDocument = async (collection, id) => {
 export const fetchCollection = async (collection, options = {}) => {
   let baseQuery = getRealTimeRef(collection);
 
-  if (options.filterBy) {
+  if (options.filterBy && !options.isArray) {
     const { filterBy, value } = options;
     baseQuery = baseQuery.orderByChild(filterBy).equalTo(value);
   }
@@ -40,4 +40,17 @@ export const createDocument = (collection, id, values) => {
 
 export const updateDocument = (collection, id, values) => {
   return getRealTimeRef(`${collection}/${id}`).update(values);
+};
+
+export const batchUpdateDocument = (batchCollections) => {
+  const batch = {};
+  Object.entries(batchCollections).forEach(([key, collectionValue]) => {
+    collectionValue.documents.forEach((documentValue) => {
+      const { id, field, value } = documentValue;
+
+      batch[`/${key}/${id}/${field}`] = value;
+    });
+  });
+
+  return getRealTimeRef('/').update(batch);
 };

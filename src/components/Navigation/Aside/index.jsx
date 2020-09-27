@@ -94,6 +94,20 @@ const Aside = ({ handleMobileToggle }) => {
               </NavLink>
             </li>
           )}
+          <li>
+            <NavLink
+              to={paths.TEAMS}
+              className="has-icon"
+              onClick={handleMobileToggle}
+            >
+              <span className="icon">
+                <i className="mdi mdi-account-group" />
+              </span>
+              <span className="menu-item-label">
+                {useFormatMessage('Aside.teams')}
+              </span>
+            </NavLink>
+          </li>
           <SubMenu label={useFormatMessage('Aside.dropdownMenu')}>
             <li>
               <NavLink

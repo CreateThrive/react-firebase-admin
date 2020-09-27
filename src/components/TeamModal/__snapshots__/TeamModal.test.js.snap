@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TeamModal /> rendering should render without crashing 1`] = `
+<DocumentFragment>
+  <div
+    class="modal is-active"
+  >
+    <div
+      class="modal-background"
+    />
+    <div
+      class="modal-card"
+    >
+      <header
+        class="modal-card-head"
+      >
+        <span>
+          Team Information
+        </span>
+      </header>
+      <form>
+        <section
+          class="modal-card-body"
+        >
+          <div
+            class="field is-horizontal"
+          >
+            <div
+              class="field-label is-normal"
+            >
+              <label
+                class="label"
+              >
+                Name
+              </label>
+            </div>
+            <div
+              class="field-body"
+            >
+              <div
+                class="field"
+              >
+                <div
+                  class="control"
+                >
+                  <input
+                    class="input"
+                    name="name"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="field is-horizontal"
+          >
+            <div
+              class="field-label is-normal"
+            >
+              <label
+                class="label"
+              >
+                Description
+              </label>
+            </div>
+            <div
+              class="field-body"
+            >
+              <div
+                class="field"
+              >
+                <div
+                  class="control"
+                >
+                  <input
+                    class="input"
+                    name="description"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="field is-horizontal"
+          >
+            <div
+              class="field-label is-normal"
+            >
+              <label
+                class="label"
+              >
+                Logo
+              </label>
+            </div>
+            <div
+              class="field-body"
+            >
+              <div
+                class="field"
+              >
+                <div
+                  class="file has-name"
+                >
+                  <label
+                    class="file-label"
+                  >
+                    <input
+                      accept="image/*"
+                      class="file-input"
+                      name="file"
+                      type="file"
+                    />
+                    <span
+                      class="file-cta"
+                    >
+                      <span
+                        class="file-icon"
+                      >
+                        <i
+                          class="mdi mdi-upload"
+                        />
+                      </span>
+                      <span
+                        class="file-label"
+                      >
+                        Pick a file
+                      </span>
+                    </span>
+                    <span
+                      class="file-name"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer
+          class="modal-card-foot"
+        >
+          <button
+            class="button is-success"
+            type="submit"
+          >
+            Add Team
+          </button>
+          <button
+            class="button"
+            type="button"
+          >
+            Cancel
+          </button>
+        </footer>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

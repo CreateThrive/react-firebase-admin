@@ -9,6 +9,8 @@ import Table from 'components/Table';
 import { fetchUsers, deleteUser, usersCleanUp } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
+import { closeModal, openModal } from 'utils';
+
 import classes from './Users.module.scss';
 
 const Users = () => {
@@ -24,7 +26,7 @@ const Users = () => {
   );
 
   const [deleteModal, setDeleteModal] = useState({
-    userId: null,
+    id: null,
     isOpen: false,
   });
 
@@ -43,7 +45,7 @@ const Users = () => {
   useEffect(() => {
     if (deleted && !loading) {
       setDeleteModal((prevState) => ({
-        userId: null,
+        id: null,
         isOpen: !prevState.isOpen,
       }));
     }
@@ -51,19 +53,12 @@ const Users = () => {
 
   const redirect = !isAdmin && <Redirect to={paths.ROOT} />;
 
-  const onRemoveButtonClickHandler = (userId) => {
-    setDeleteModal((prevState) => ({
-      userId,
-      isOpen: !prevState.isOpen,
-    }));
-  };
-
   const onCloseModalHandler = () => {
-    setDeleteModal({ userId: null, isOpen: false });
+    closeModal(setDeleteModal);
   };
 
   const onDeleteUserHandler = () => {
-    dispatch(deleteUser(deleteModal.userId));
+    dispatch(deleteUser(deleteModal.id));
   };
 
   const columns = [
@@ -140,7 +135,7 @@ const Users = () => {
               <button
                 type="button"
                 className="button is-small is-danger"
-                onClick={() => onRemoveButtonClickHandler(row.original.id)}
+                onClick={() => openModal(setDeleteModal, row.original.id)}
               >
                 <span className="icon is-small">
                   <i className="mdi mdi-trash-can" />
@@ -160,6 +155,7 @@ const Users = () => {
         delete clonedElem.id;
         delete clonedElem.isAdmin;
         delete clonedElem.logoUrl;
+        delete clonedElem.teams;
         return Object.values(clonedElem).some((field) =>
           field.toLowerCase().includes(search.toLowerCase())
         );

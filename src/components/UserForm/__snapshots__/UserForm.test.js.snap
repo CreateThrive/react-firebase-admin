@@ -278,12 +278,11 @@ exports[`<UserForm /> rendering should render without crashing 1`] = `
                         </span>
                       </button>
                     </div>
-                    <a
+                    <div
                       class="button"
-                      href="/users"
                     >
                       Go Back
-                    </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -343,7 +342,7 @@ exports[`<UserForm /> rendering should render without crashing 1`] = `
                 data-testid="email"
                 readonly=""
                 type="text"
-                value="mkrukuy@gmail.com"
+                value="test@test.com"
               />
             </div>
           </div>
@@ -363,7 +362,7 @@ exports[`<UserForm /> rendering should render without crashing 1`] = `
                 data-testid="name"
                 readonly=""
                 type="text"
-                value="Mateo"
+                value="Test"
               />
             </div>
           </div>

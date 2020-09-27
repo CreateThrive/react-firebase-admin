@@ -4,6 +4,7 @@ import {
   fetchCollection,
   fetchDocument,
   updateDocument,
+  batchUpdateDocument,
 } from './rtdb';
 
 export {
@@ -12,4 +13,5 @@ export {
   fetchCollection,
   fetchDocument,
   updateDocument,
+  batchUpdateDocument,
 };

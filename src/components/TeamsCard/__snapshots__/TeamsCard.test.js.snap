@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TeamsCard /> rendering should render without crashing 1`] = `
+<DocumentFragment>
+  <div
+    class="card has-height-medium"
+  >
+    <header
+      class="card-header"
+    >
+      <p
+        class="card-header-title"
+      >
+        <span
+          class="icon"
+        >
+          <i
+            class="mdi mdi-account-group default"
+          />
+        </span>
+        <span>
+          Available teams
+        </span>
+      </p>
+      <button
+        class="button"
+        type="button"
+      >
+        <span
+          class="icon"
+        >
+          <i
+            class="mdi mdi-account-multiple-plus default"
+          />
+        </span>
+        <span>
+          Add Team
+        </span>
+      </button>
+    </header>
+    <div>
+      <div
+        class="field-body"
+        style="padding: 0.5rem 0.25rem;"
+      >
+        <div
+          class="field"
+        >
+          <div
+            class="control is-expanded"
+          >
+            <input
+              class="input search"
+              placeholder="Search by name"
+              style="height: 38px;"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="field"
+        >
+          <div
+            class="control is-expanded"
+          >
+            <div
+              style="min-width: 220px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-content ps ps--active-y"
+      style="padding: 0px 1.5rem; overflow: auto; max-height: 700px;"
+    >
+      <div
+        class="media-list"
+      >
+        <div
+          class="media"
+          data-testid="media"
+          style="margin-top: auto; margin-bottom: auto; padding-bottom: 1rem; cursor: pointer;"
+        >
+          <figure
+            class="media-left"
+          >
+            <p
+              class="image is-64x64"
+            >
+              <img
+                alt="Profile logo preview"
+                class="is-rounded"
+                src="team-default-log.png"
+              />
+            </p>
+          </figure>
+          <div
+            class="media-content"
+          >
+            <div
+              class="content"
+            >
+              <p
+                class="media-meta"
+              >
+                <strong>
+                  testTeam
+                </strong>
+                 
+              </p>
+              <p />
+            </div>
+          </div>
+          <div
+            class="media-right"
+          >
+            <div
+              class="field is-grouped is-grouped-multiline"
+            >
+              <div
+                class="control"
+              >
+                <span
+                  class="icon has-text-info"
+                  data-testid="modify"
+                  style="cursor: pointer;"
+                >
+                  <i
+                    class="mdi mdi-pencil"
+                  />
+                </span>
+              </div>
+              <div
+                class="control"
+              >
+                <span
+                  class="icon has-text-danger"
+                  data-testid="delete"
+                  style="cursor: pointer;"
+                >
+                  <i
+                    class="mdi mdi-cancel"
+                  />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

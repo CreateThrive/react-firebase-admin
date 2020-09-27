@@ -69,8 +69,10 @@ exports[`<User /> rendering should render without crashing 1`] = `
                       class="control"
                     >
                       <input
-                        class="input"
+                        class="input is-static"
                         name="email"
+                        readonly=""
+                        type="text"
                       />
                     </div>
                   </div>
@@ -204,7 +206,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
                         <input
                           class=""
                           type="text"
-                          value="10-02-20"
+                          value="11-12-20"
                         />
                       </div>
                     </div>
@@ -294,12 +296,11 @@ exports[`<User /> rendering should render without crashing 1`] = `
                           </span>
                         </button>
                       </div>
-                      <a
+                      <div
                         class="button"
-                        href="/users"
                       >
                         Go Back
-                      </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -334,25 +335,15 @@ exports[`<User /> rendering should render without crashing 1`] = `
             class="card-content"
           >
             <div
-              class="field"
+              class="is-user-avatar image has-max-width is-aligned-center"
             >
-              <label
-                class="label"
-              >
-                E-mail
-              </label>
-              <div
-                class="control is-clearfix"
-              >
-                <input
-                  class="input is-static"
-                  data-testid="email"
-                  readonly=""
-                  type="text"
-                  value=""
-                />
-              </div>
+              <img
+                alt="User profile logo preview"
+                class="user-avatar"
+                src="some logoUrl"
+              />
             </div>
+            <hr />
             <div
               class="field"
             >
@@ -369,7 +360,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
                   data-testid="name"
                   readonly=""
                   type="text"
-                  value=""
+                  value="Test"
                 />
               </div>
             </div>
@@ -389,7 +380,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
                   data-testid="location"
                   readonly=""
                   type="text"
-                  value=""
+                  value="Montevideo, Uruguay"
                 />
               </div>
             </div>
@@ -429,7 +420,7 @@ exports[`<User /> rendering should render without crashing 1`] = `
                 <p
                   class="date"
                 >
-                  Fri, Oct 2, 2020
+                  Thu, Nov 12, 2020
                 </p>
               </div>
             </div>

@@ -15,6 +15,13 @@ export const fetchCollection = async (collection, options = {}) => {
   const data = [];
   let baseQuery = getFirestoreRef(collection);
 
+  if (options.filterBy) {
+    const { filterBy, value, isArray } = options;
+    baseQuery = isArray
+      ? baseQuery.where(filterBy, 'array-contains', value)
+      : baseQuery.where(filterBy, '==', value);
+  }
+
   if (options.queries) {
     const { queries } = options;
     queries.forEach(({ attribute, operator, value }) => {
@@ -43,4 +50,20 @@ export const createDocument = (collection, id, values) => {
 
 export const updateDocument = (collection, id, values) => {
   return getFirestoreRef(collection).doc(id).update(values);
+};
+
+export const batchUpdateDocument = (batchCollections) => {
+  const batch = firebase.firestore().batch();
+
+  Object.entries(batchCollections).forEach(([key, collectionValue]) => {
+    collectionValue.documents.forEach((documentValue) => {
+      const { id, field, value } = documentValue;
+
+      const reference = getFirestoreRef(key).doc(id);
+
+      batch.update(reference, { [field]: value });
+    });
+  });
+
+  return batch.commit();
 };

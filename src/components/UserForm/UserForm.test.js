@@ -1,10 +1,20 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import { fireEvent } from '@testing-library/react';
+import * as yup from 'yup';
 import '@testing-library/jest-dom';
 
 import * as actions from 'state/actions/users';
 import UserForm from '.';
+
+const onSubmitHandler = jest.fn();
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup.number().notRequired().moreThan(0),
+  zipCode: yup.number().notRequired().moreThan(1).lessThan(100000),
+  gender: yup.object().notRequired(),
+});
 
 describe('<UserForm /> rendering', () => {
   let userData;
@@ -12,8 +22,8 @@ describe('<UserForm /> rendering', () => {
 
   beforeEach(() => {
     userData = {
-      email: 'mkrukuy@gmail.com',
-      name: 'Mateo',
+      email: 'test@test.com',
+      name: 'Test',
       location: 'Montevideo, Uruguay',
       isAdmin: false,
       file: null,
@@ -31,7 +41,12 @@ describe('<UserForm /> rendering', () => {
     const user = { ...userData, createdAt: '11/21/2020' };
 
     const { component } = renderWithProviders(
-      <UserForm user={user} action={actions.createUser} />
+      <UserForm
+        user={user}
+        action={actions.createUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -41,30 +56,46 @@ describe('<UserForm /> rendering', () => {
 
   it('should display user name preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm
+        user={userData}
+        action={actions.createUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
 
-    expect(component.getByTestId('name')).toHaveAttribute('value', 'Mateo');
+    expect(component.getByTestId('name')).toHaveAttribute('value', 'Test');
   });
 
   it('should display email preview if it is creating a new user', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm
+        user={userData}
+        action={actions.createUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
 
     expect(component.getByTestId('email')).toHaveAttribute(
       'value',
-      'mkrukuy@gmail.com'
+      'test@test.com'
     );
   });
 
   it('should display location preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.createUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -77,7 +108,13 @@ describe('<UserForm /> rendering', () => {
 
   it('should display admin preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.createUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -87,7 +124,13 @@ describe('<UserForm /> rendering', () => {
 
   it('should display created preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        action={actions.createUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -107,8 +150,8 @@ describe('<LoginForm /> actions', () => {
     jest.spyOn(actions, 'createUser').mockImplementation(jest.fn);
     jest.spyOn(actions, 'modifyUser').mockImplementation(jest.fn);
     userData = {
-      name: 'Mateo',
-      email: 'mkrukuy@gmail.com',
+      name: 'Test',
+      email: 'test@test.com',
       location: 'Montevideo, Uruguay',
       id: 'test id',
       logoUrl: 'some logoUrl',
@@ -120,7 +163,13 @@ describe('<LoginForm /> actions', () => {
 
   it('should dispatch createUser action when creating a new user', async () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
+      <UserForm
+        user={userData}
+        action={actions.createUser}
+        setUser={setUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -139,6 +188,8 @@ describe('<LoginForm /> actions', () => {
         isEditing
         action={actions.modifyUser}
         setUser={setUser}
+        onSubmitHandler={onSubmitHandler}
+        schema={schema}
       />
     )({
       users: {},

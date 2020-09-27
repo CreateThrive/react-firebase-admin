@@ -10,6 +10,7 @@ import NotFound from 'pages/NotFound';
 import User from 'pages/User';
 import Section from 'pages/Section';
 import Submenu from 'pages/Submenu';
+import Teams from 'pages/Teams';
 import paths from './paths';
 import PrivateRoute from './PrivateRoute';
 
@@ -26,6 +27,7 @@ const RouterComponent = () => {
         <PrivateRoute path={paths.SECTION} component={Section} />
         <PrivateRoute path={paths.SUBMENU_1} component={Submenu} />
         <PrivateRoute path={paths.SUBMENU_2} component={Submenu} />
+        <PrivateRoute path={paths.TEAMS} component={Teams} />
         <PrivateRoute path={paths.ROOT} component={Home} />
         <Route component={NotFound} />
       </Switch>

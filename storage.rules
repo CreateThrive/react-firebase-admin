@@ -4,5 +4,9 @@ service firebase.storage {
       allow write: if request.auth!=null;
       allow read: if true;
     }
+    match /teams/{imageId} {
+      allow write: if request.auth!=null;
+      allow read: if true;
+    }
   }
 }

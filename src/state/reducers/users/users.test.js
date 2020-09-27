@@ -13,6 +13,8 @@ import {
   USERS_MODIFY_USER_FAIL,
   USERS_CLEAN_UP,
   USERS_CLEAR_DATA_LOGOUT,
+  USERS_ADD_USER,
+  USERS_REMOVE_USER,
 } from 'state/actions/users';
 
 import { usersReducer } from '.';
@@ -44,24 +46,6 @@ describe('Establishments reducer', () => {
       ...initialState,
       error: 'some error',
       loading: false,
-    });
-  });
-
-  it('should set error to null, loading to false and data with the corresponding values when USERS_FETCH_DATA_SUCCESS actions is fired', () => {
-    const userData = [
-      {
-        name: 'Test name',
-        email: 'Test email',
-        location: 'Test location',
-        createdAt: '11/20/2020',
-      },
-    ];
-
-    reducerTest(initialState, USERS_FETCH_DATA_SUCCESS({ data: userData }), {
-      ...initialState,
-      data: userData,
-      loading: false,
-      error: null,
     });
   });
 
@@ -131,6 +115,7 @@ describe('Establishments reducer', () => {
       ...initialState,
       data: user,
       success: true,
+      loading: false,
     });
   });
 
@@ -138,6 +123,7 @@ describe('Establishments reducer', () => {
     reducerTest(initialState, USERS_CREATE_USER_FAIL({ error: 'some error' }), {
       ...initialState,
       error: 'some error',
+      loading: false,
     });
   });
 
@@ -185,10 +171,11 @@ describe('Establishments reducer', () => {
     );
   });
 
-  it('should set loading to false and error with the corresponding payload to the current state USERS_MODIFY_USER_FAIL action is fired', () => {
+  it('should set loading to false and error with the corresponding payload to the current state when USERS_MODIFY_USER_FAIL action is fired', () => {
     reducerTest(initialState, USERS_MODIFY_USER_FAIL({ error: 'some error' }), {
       ...initialState,
       error: 'some error',
+      loading: false,
     });
   });
 
@@ -200,5 +187,75 @@ describe('Establishments reducer', () => {
       deleted: false,
       error: null,
     });
+  });
+
+  it('should add the user to data when USERS_ADD_USER action is fired', () => {
+    const initialUsers = [
+      {
+        name: 'test name 1',
+        location: 'test location',
+        email: 'test email',
+        id: 'testId1',
+        logoUrl: 'some logo',
+        createdAt: '11/20/2020',
+      },
+    ];
+
+    const newUser = {
+      name: 'test name 2',
+      location: 'test location',
+      email: 'test email',
+      id: 'testId2',
+      logoUrl: 'some logo',
+      createdAt: '11/20/2020',
+    };
+
+    reducerTest(
+      { ...initialState, data: initialUsers },
+      USERS_ADD_USER({ user: newUser }),
+      {
+        ...initialState,
+        data: [...initialUsers, newUser],
+      }
+    );
+  });
+
+  it('should delete the corresponding user from data when USERS_REMOVE_USER action is fired', () => {
+    const initialUsers = [
+      {
+        name: 'test name 1',
+        location: 'test location',
+        email: 'test email',
+        id: 'testId1',
+        logoUrl: 'some logo',
+        createdAt: '11/20/2020',
+      },
+      {
+        name: 'test name 2',
+        location: 'test location',
+        email: 'test email',
+        id: 'testId2',
+        logoUrl: 'some logo',
+        createdAt: '11/20/2020',
+      },
+    ];
+
+    reducerTest(
+      { ...initialState, data: initialUsers },
+      USERS_REMOVE_USER({ userId: 'testId2' }),
+      {
+        ...initialState,
+        data: [
+          {
+            name: 'test name 1',
+            location: 'test location',
+            email: 'test email',
+            id: 'testId1',
+            logoUrl: 'some logo',
+            createdAt: '11/20/2020',
+          },
+        ],
+      }
+    );
   });
 });
