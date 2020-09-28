@@ -242,9 +242,7 @@ export const modifyUser = ({
     const { locale } = getState().preferences;
     const user = isProfile
       ? getState().auth.userData
-      : getState().users.data.find((thisUser) => thisUser.id === id) ||
-        getState().users.user;
-
+      : getState().users.data.find((thisUser) => thisUser.id === id);
     const { logoUrl } = user;
     let deleteLogoTask;
     let uploadLogoTask;

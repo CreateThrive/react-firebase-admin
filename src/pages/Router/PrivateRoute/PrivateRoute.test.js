@@ -1,6 +1,5 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 import * as actions from 'state/actions/auth';
 import PrivateRoute from '.';
@@ -20,17 +19,17 @@ describe('<PrivateRoute /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = mountWithProviders(<PrivateRoute />)({
-      user: {}
+    const { component } = renderWithProviders(<PrivateRoute />)({
+      user: {},
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should redirect to /login when the user is not authenticated', () => {
-    const { component } = mountWithProviders(<PrivateRoute />)({
-      user: {}
+    renderWithProviders(<PrivateRoute />)({
+      user: {},
     });
-    expect(component.contains(<Redirect to={paths.LOGIN} />)).toEqual(true);
+    expect(window.location.pathname).toBe(paths.LOGIN);
   });
 });

@@ -15,10 +15,10 @@ describe('<Router /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(<Router />)({
-      auth: {}
+    const { component } = renderWithProviders(<Router />)({
+      auth: { userData: { id: 'testId' } },
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 });

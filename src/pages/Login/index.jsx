@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -17,10 +18,14 @@ import {
 } from 'state/actions/auth';
 import { useFormatMessage } from 'hooks';
 import { firebaseError, uiConfig } from 'utils';
-import errorMessage from 'components/ErrorMessage';
-import paths from '../Router/paths';
-
+import ErrorMessage from 'components/ErrorMessage';
+import paths from 'pages/Router/paths';
 import classes from './Login.module.scss';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+});
 
 const Login = () => {
   const { error, isAuth, loading, locale } = useSelector(
@@ -34,11 +39,6 @@ const Login = () => {
   );
 
   const dispatch = useDispatch();
-
-  const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
-  });
 
   const { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {},
@@ -98,6 +98,8 @@ const Login = () => {
 
   const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
 
+  const invalidPasswordMessage = useFormatMessage('Login.invalidPassword');
+
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -122,20 +124,16 @@ const Login = () => {
                       <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
-                          className={classNames(
-                            'input',
-                            {
-                              'is-danger': errors.email,
-                            },
-                            {
-                              'is-success': !errors.email && isEmailLink,
-                            }
-                          )}
+                          className={classNames('input', {
+                            'is-danger': errors.email,
+                          })}
                           name="email"
                           ref={register}
                         />
                       </div>
-                      {errors.email && errorMessage(invalidEmailMessage)}
+                      {errors.email && (
+                        <ErrorMessage text={invalidEmailMessage} />
+                      )}
                     </div>
                     <div className="field">
                       <p className="label">
@@ -149,10 +147,7 @@ const Login = () => {
                               'is-danger': errors.password,
                             },
                             {
-                              'is-success':
-                                isValidPassword &&
-                                !errors.password &&
-                                isEmailLink,
+                              'is-success': isEmailLink && isValidPassword,
                             }
                           )}
                           type="password"
@@ -160,11 +155,19 @@ const Login = () => {
                           ref={register}
                         />
                       </div>
-                      {isEmailLink &&
-                        (errors.password
-                          ? errorMessage(unsafePasswordMessage)
-                          : isValidPassword &&
-                            errorMessage(safePasswordMessage))}
+                      {isEmailLink ? (
+                        errors.password ? (
+                          <ErrorMessage text={unsafePasswordMessage} />
+                        ) : (
+                          isValidPassword && (
+                            <p className="is-success">{safePasswordMessage}</p>
+                          )
+                        )
+                      ) : (
+                        errors.password && (
+                          <ErrorMessage text={invalidPasswordMessage} />
+                        )
+                      )}
                     </div>
                     <br />
                     <div className="field is-grouped">
@@ -200,22 +203,26 @@ const Login = () => {
                       </p>
                     )}
                   </form>
-                  <hr />
-                  <div
-                    className={classNames(
-                      'field',
-                      'is-grouped',
-                      classes.socialButtons
-                    )}
-                  >
-                    <StyledFirebaseAuth
-                      uiConfig={uiConfig(
-                        onSignInSuccessHandler,
-                        onSignInFailHandler
-                      )}
-                      firebaseAuth={firebase.auth()}
-                    />
-                  </div>
+                  {!isEmailLink && (
+                    <>
+                      <hr />
+                      <div
+                        className={classNames(
+                          'field',
+                          'is-grouped',
+                          classes.socialButtons
+                        )}
+                      >
+                        <StyledFirebaseAuth
+                          uiConfig={uiConfig(
+                            onSignInSuccessHandler,
+                            onSignInFailHandler
+                          )}
+                          firebaseAuth={firebase.auth()}
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

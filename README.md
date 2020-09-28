@@ -92,7 +92,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 ### Unit Testing
 
 - [Jest](https://jestjs.io/) (★ 29.9k) as testing framework (see [docs](https://jestjs.io/docs/en/getting-started)).
-- [Enzyme](https://airbnb.io/enzyme/) (★ 18.5k) to test react components in Jest.
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) (★ 12.7k) to test react components in Jest.
 - [Redux-mock-store](https://github.com/dmitry-zaets/redux-mock-store) (★ 2.1k) to test redux actions, reducers and store state in Jest.
 
 ### Linting

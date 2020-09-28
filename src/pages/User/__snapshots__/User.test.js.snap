@@ -1,151 +1,442 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<User /> rendering should render without crashing 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "defaultFormats": Object {},
-      "defaultLocale": "en",
-      "defaultRichTextElements": undefined,
-      "formatDate": [Function],
-      "formatDateToParts": [Function],
-      "formatDisplayName": [Function],
-      "formatList": [Function],
-      "formatMessage": [Function],
-      "formatNumber": [Function],
-      "formatNumberToParts": [Function],
-      "formatPlural": [Function],
-      "formatRelativeTime": [Function],
-      "formatTime": [Function],
-      "formatTimeToParts": [Function],
-      "formats": Object {},
-      "formatters": Object {
-        "getDateTimeFormat": [Function],
-        "getDisplayNames": [Function],
-        "getListFormat": [Function],
-        "getMessageFormat": [Function],
-        "getNumberFormat": [Function],
-        "getPluralRules": [Function],
-        "getRelativeTimeFormat": [Function],
-      },
-      "locale": "en",
-      "messages": Object {
-        "Aside.dropdownMenu": "Dropdown Menu",
-        "Aside.home": "Home",
-        "Aside.submenu1": "Submenu 1",
-        "Aside.submenu2": "Submenu 2",
-        "Aside.users": "Users",
-        "ChangePassword.changePassword": "Change Password",
-        "ChangePassword.confirmPassword": "Confirm Password",
-        "ChangePassword.currentPassword": "Current Password",
-        "ChangePassword.insecurePassword": "Insecure password",
-        "ChangePassword.matchPassword": "Passwords match",
-        "ChangePassword.newPassword": "New Password",
-        "ChangePassword.notMatchPassword": "Passwords do not match",
-        "ChangePassword.safePassword": "Safe password",
-        "ChangePassword.samePassword": "The new password and the current one cannot be the same",
-        "ChangePassword.submits": "Submit",
-        "ErrorMessage.defaultMessage": "This field is required",
-        "Home.content": "Home content",
-        "Home.home": "Home",
-        "Login.email": "E-mail Address",
-        "Login.facebook": "Continue with Facebook",
-        "Login.forgotPassword": "Forgot Password?",
-        "Login.google": "Continue with Google",
-        "Login.invalidEmail": "Invalid email",
-        "Login.login": "Login",
-        "Login.microsoft": "Continue with Microsoft",
-        "Login.password": "Password",
-        "Login.safePassword": "Safe password",
-        "Login.setNewPassword": "Set your new password",
-        "Login.setPassword": "Set Password",
-        "Login.unsafePassword": "Unsafe password",
-        "NavBar.Language": "English",
-        "NavBar.logOut": "Log Out",
-        "NavBar.profile": "Profile",
-        "NotFound.404": "Error 404: page not found",
-        "NotFound.back": "Go Back",
-        "NotFound.url": "The requested URL {url} was not found",
-        "Profile.profile": "Profile",
-        "ResetPassword.back": "Back",
-        "ResetPassword.email": "E-mail Address",
-        "ResetPassword.emailRegistration": "E-mail used for registration",
-        "ResetPassword.recoverEmail": "We have sent you an email to {mail} so you can recover your account.",
-        "ResetPassword.recovery": "Password Recovery",
-        "ResetPassword.resetLink": "Send Reset Link",
-        "Section.content": "Section content",
-        "Section.section": "Section",
-        "Submenu.content": "Submenu content",
-        "Submenu.submenu": "Submenu",
-        "Table.perPage": " per page",
-        "User.editUser": "Edit User",
-        "User.newUser": "New User",
-        "UserForm.admin": "Admin",
-        "UserForm.created": "Created",
-        "UserForm.email": "E-mail",
-        "UserForm.goBack": "Go Back",
-        "UserForm.invalidEmail": "Invalid E-mail",
-        "UserForm.location": "Location",
-        "UserForm.logo": "Logo",
-        "UserForm.name": "Name",
-        "UserForm.pickAnotherFile": "Pick another file",
-        "UserForm.pickFile": "Pick a file",
-        "UserForm.submit": "Submit",
-        "UserForm.userInfo": "User Information",
-        "UserForm.userPreview": "User Preview",
-        "Users.admin": "Admin",
-        "Users.cancel": "Cancel",
-        "Users.confirm": "Confirm action",
-        "Users.created": "Created",
-        "Users.delete": "Delete",
-        "Users.email": "Email",
-        "Users.location": "Location",
-        "Users.name": "Name",
-        "Users.newUser": "New User",
-        "Users.permDelete": "This will permanently delete the user. Action can not be undone.",
-        "Users.search": "Search:",
-        "Users.users": "Users",
-        "auth/account-exists-with-different-credential": "Email on another sign in method",
-        "auth/cancelled-popup-request": "Too many pop ups, just one pop up is allowed",
-        "auth/email-already-exists": "Email already in use",
-        "auth/expired-action-code": "The invitation link has expired, get in touch with your administrator",
-        "auth/invalid-action-code": "The invitation link has expired, get in touch with your administrator",
-        "auth/invalid-email": "Email is invalid",
-        "auth/popup-blocked": "Pop up blocked by the browser, please enable pop ups for this page",
-        "auth/popup-closed-by-user": "Operation cancelled, pop up was closed",
-        "auth/too-many-requests": "Too many attempts made, try again later",
-        "auth/user-disabled": "User disabled",
-        "auth/wrong-password": "Invalid credentials",
-        "invalidEmail": "Invalid E-mail",
-        "storage/quota-exceeded": "Internal server error, get in touch with your administrator",
-        "storage/unauthenticated": "Unauthenticated, please authenticate and try again",
-        "storage/unauthorized": "Unauthorized, you are not authorized to perform this action",
-        "utils.default": "Unknown error, get in touch with your administrator",
-      },
-      "onError": [Function],
-      "textComponent": Symbol(react.fragment),
-      "timeZone": undefined,
-      "wrapRichTextChunksInFragment": undefined,
-    }
-  }
->
-  <BrowserRouter
-    keyLength={0}
+<DocumentFragment>
+  <section
+    class="hero is-hero-bar"
   >
-    <Provider
-      store={
-        Object {
-          "clearActions": [Function],
-          "dispatch": [Function],
-          "getActions": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-        }
-      }
+    <div
+      class="hero-body"
     >
-      <User />
-    </Provider>
-  </BrowserRouter>
-</ContextProvider>
+      <h1
+        class="title"
+      >
+        Edit User
+      </h1>
+    </div>
+  </section>
+  <section
+    class="section is-main-section"
+  >
+    <div
+      class="tile is-ancestor"
+    >
+      <div
+        class="tile is-parent"
+      >
+        <div
+          class="card tile is-child"
+        >
+          <header
+            class="card-header"
+          >
+            <p
+              class="card-header-title"
+            >
+              <span
+                class="icon"
+              >
+                <i
+                  class="mdi mdi-account-edit default"
+                />
+              </span>
+              User Information
+            </p>
+          </header>
+          <div
+            class="card-content"
+          >
+            <form>
+              <div
+                class="field is-horizontal"
+              >
+                <div
+                  class="field-label is-normal"
+                >
+                  <label
+                    class="label"
+                  >
+                    E-mail
+                  </label>
+                </div>
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="control"
+                    >
+                      <input
+                        class="input"
+                        name="email"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="field is-horizontal"
+              >
+                <div
+                  class="field-label is-normal"
+                >
+                  <label
+                    class="label"
+                  >
+                    Name
+                  </label>
+                </div>
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="control"
+                    >
+                      <input
+                        class="input"
+                        id="name"
+                        name="name"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="field is-horizontal"
+              >
+                <div
+                  class="field-label is-normal"
+                >
+                  <label
+                    class="label"
+                  >
+                    Location
+                  </label>
+                </div>
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="control"
+                    >
+                      <input
+                        class="input"
+                        name="location"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="field has-check is-horizontal"
+              >
+                <div
+                  class="field-label"
+                >
+                  <label
+                    class="label"
+                  >
+                    Admin
+                  </label>
+                </div>
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="field"
+                    >
+                      <div
+                        class="control"
+                      >
+                        <label
+                          class="b-checkbox checkbox"
+                        >
+                          <input
+                            name="isAdmin"
+                            type="checkbox"
+                          />
+                          <span
+                            class="check is-primary"
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="field is-horizontal"
+              >
+                <div
+                  class="field-label is-normal"
+                >
+                  <label
+                    class="label"
+                  >
+                    Created
+                  </label>
+                </div>
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class=""
+                          type="text"
+                          value="09-28-20"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div
+                class="field is-horizontal"
+              >
+                <div
+                  class="field-label is-normal"
+                >
+                  <label
+                    class="label"
+                  >
+                    Logo
+                  </label>
+                </div>
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="file has-name"
+                    >
+                      <label
+                        class="file-label"
+                      >
+                        <input
+                          accept="image/*"
+                          class="file-input"
+                          name="file"
+                          type="file"
+                        />
+                        <span
+                          class="file-cta"
+                        >
+                          <span
+                            class="file-icon"
+                          >
+                            <i
+                              class="mdi mdi-upload"
+                            />
+                          </span>
+                          <span
+                            class="file-label"
+                          >
+                            Pick a file
+                          </span>
+                        </span>
+                        <span
+                          class="file-name"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div
+                class="field is-horizontal"
+              >
+                <div
+                  class="field-label"
+                />
+                <div
+                  class="field-body"
+                >
+                  <div
+                    class="field"
+                  >
+                    <div
+                      class="field is-grouped"
+                    >
+                      <div
+                        class="control"
+                      >
+                        <button
+                          class="button is-primary undefined"
+                          type="submit"
+                        >
+                          <span>
+                            Submit
+                          </span>
+                        </button>
+                      </div>
+                      <a
+                        class="button"
+                        href="/users"
+                      >
+                        Go Back
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tile is-parent preview"
+      >
+        <div
+          class="card tile is-child"
+        >
+          <header
+            class="card-header"
+          >
+            <p
+              class="card-header-title"
+            >
+              <span
+                class="icon"
+              >
+                <i
+                  class="mdi mdi-account default"
+                />
+              </span>
+              User Preview
+            </p>
+          </header>
+          <div
+            class="card-content"
+          >
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+              >
+                E-mail
+              </label>
+              <div
+                class="control is-clearfix"
+              >
+                <input
+                  class="input is-static"
+                  data-testid="email"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+              >
+                Name
+              </label>
+              <div
+                class="control is-clearfix"
+              >
+                <input
+                  class="input is-static"
+                  data-testid="name"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+              >
+                Location
+              </label>
+              <div
+                class="control is-clearfix"
+              >
+                <input
+                  class="input is-static"
+                  data-testid="location"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+              >
+                Admin
+              </label>
+              <div
+                class="control is-clearfix"
+                data-testid="admin"
+              >
+                <span
+                  class="icon"
+                >
+                  <i
+                    class="mdi mdi-close"
+                  />
+                </span>
+              </div>
+            </div>
+            <div
+              class="field"
+            >
+              <label
+                class="label"
+              >
+                Created
+              </label>
+              <div
+                class="control is-clearfix"
+                data-testid="date"
+              >
+                <p
+                  class="date"
+                >
+                  Mon, Sep 28, 2020
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</DocumentFragment>
 `;

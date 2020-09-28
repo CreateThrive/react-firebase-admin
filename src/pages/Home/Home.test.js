@@ -15,10 +15,10 @@ describe('<Home /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const { component } = mountWithProviders(<Home />)({
-      auth: {}
+    const { component } = renderWithProviders(<Home />)({
+      auth: {},
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 });

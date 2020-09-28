@@ -1,12 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render } from '@testing-library/react';
 import Footer from '.';
 
 describe('<Footer /> rendering', () => {
   it('should render without crashing', () => {
-    const component = shallow(<Footer />);
+    const component = render(<Footer />);
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 });
