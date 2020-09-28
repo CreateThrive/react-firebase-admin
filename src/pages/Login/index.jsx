@@ -155,17 +155,18 @@ const Login = () => {
                           ref={register}
                         />
                       </div>
-                      {isEmailLink ? (
-                        errors.password ? (
-                          <ErrorMessage text={unsafePasswordMessage} />
-                        ) : (
-                          isValidPassword && (
-                            <p className="is-success">{safePasswordMessage}</p>
-                          )
-                        )
+                      {errors.password ? (
+                        <ErrorMessage
+                          text={
+                            isEmailLink
+                              ? unsafePasswordMessage
+                              : invalidPasswordMessage
+                          }
+                        />
                       ) : (
-                        errors.password && (
-                          <ErrorMessage text={invalidPasswordMessage} />
+                        isEmailLink &&
+                        isValidPassword && (
+                          <p className="is-success">{safePasswordMessage}</p>
                         )
                       )}
                     </div>
