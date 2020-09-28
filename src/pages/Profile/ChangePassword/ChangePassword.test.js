@@ -26,67 +26,69 @@ describe('<ChangePassword /> rendering', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('should display an error message when the current and new password are equal', () => {
+  it('should display an error message when the current and new password are equal', async () => {
     const { component } = renderWithProviders(<ChangePassword />)({
       auth: {
         userData: {},
       },
     });
 
-    fireEvent.input(component.container.querySelector('input[name=current]'), {
+    fireEvent.input(component.getByTestId('current'), {
       target: {
         value: 'oldpassword',
       },
     });
 
-    fireEvent.input(component.container.querySelector('input[name=new]'), {
+    fireEvent.input(component.getByTestId('new'), {
       target: {
         value: 'oldpassword',
       },
     });
 
-    expect(component.container.querySelector('.error')).toBeTruthy();
+    await (() =>
+      expect(
+        component.getByText(
+          'The new password and the current one cannot be the same'
+        )
+      ).toBeTruthy());
   });
 
-  it('should display a message informing the user that the new password is secure', () => {
+  it('should display a message informing the user that the new password is secure', async () => {
     const { component } = renderWithProviders(<ChangePassword />)({
       auth: {
         userData: {},
       },
     });
 
-    fireEvent.input(component.container.querySelector('input[name=new]'), {
+    fireEvent.input(component.getByTestId('new'), {
       target: {
         value: 'newSecurePassword',
       },
     });
 
-    expect(component.container.querySelector('p.is-success')).toBeTruthy();
+    await (() => expect(component.getByText('Safe password')).toBeTruthy());
   });
 
-  it('should display a message informing the user that the new and confirmation passwords match', () => {
+  it('should display a message informing the user that the new and confirmation passwords match', async () => {
     const { component } = renderWithProviders(<ChangePassword />)({
       auth: {
         userData: {},
       },
     });
 
-    fireEvent.input(component.container.querySelector('input[name=new]'), {
+    fireEvent.input(component.getByTestId('new'), {
       target: {
         value: 'newSecurePassword!',
       },
     });
 
-    fireEvent.input(
-      component.container.querySelector('input[name=confirmation]'),
-      {
-        target: {
-          value: 'newSecurePassword!',
-        },
-      }
-    );
+    fireEvent.input(component.getByTestId('confirmation'), {
+      target: {
+        value: 'newSecurePassword!',
+      },
+    });
 
-    expect(component.container.querySelector('p.is-success')).toBeTruthy();
+    await (() => expect(component.getByText('Passwords match')).toBeTruthy());
   });
 
   it('should display the button loading when loading', () => {
@@ -117,31 +119,25 @@ describe('<ChangePassword /> actions', () => {
       },
     });
 
-    fireEvent.input(component.container.querySelector('input[name=current]'), {
+    fireEvent.input(component.getByTestId('current'), {
       target: {
         value: 'oldpassword',
       },
     });
 
-    fireEvent.input(
-      component.container.querySelector('input[name=confirmation]'),
-      {
-        target: {
-          value: 'newpassword',
-        },
-      }
-    );
+    fireEvent.input(component.getByTestId('new'), {
+      target: {
+        value: 'newpassword',
+      },
+    });
 
-    fireEvent.input(
-      component.container.querySelector('input[name=confirmation]'),
-      {
-        target: {
-          value: 'newpassword',
-        },
-      }
-    );
+    fireEvent.input(component.getByTestId('confirmation'), {
+      target: {
+        value: 'newpassword',
+      },
+    });
 
-    fireEvent.submit(component.container.querySelector('form'));
+    fireEvent.click(component.getByRole('button'));
 
     await (() => expect(actions.changeUserPassword).toBeCalledTimes(1));
 

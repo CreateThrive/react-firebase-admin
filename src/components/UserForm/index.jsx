@@ -36,7 +36,7 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
       setValue('file', null);
     }
     return () => dispatch(usersCleanUp());
-  }, [dispatch, success]);
+  }, [dispatch, success, setValue]);
 
   const invalidEmailMessage = useFormatMessage('UserForm.invalidEmail');
 

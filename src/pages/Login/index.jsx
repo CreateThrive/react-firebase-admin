@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -155,17 +154,18 @@ const Login = () => {
                           ref={register}
                         />
                       </div>
-                      {isEmailLink ? (
-                        errors.password ? (
-                          <ErrorMessage text={unsafePasswordMessage} />
-                        ) : (
-                          isValidPassword && (
-                            <p className="is-success">{safePasswordMessage}</p>
-                          )
-                        )
+                      {errors.password ? (
+                        <ErrorMessage
+                          text={
+                            isEmailLink
+                              ? unsafePasswordMessage
+                              : invalidPasswordMessage
+                          }
+                        />
                       ) : (
-                        errors.password && (
-                          <ErrorMessage text={invalidPasswordMessage} />
+                        isEmailLink &&
+                        isValidPassword && (
+                          <p className="is-success">{safePasswordMessage}</p>
                         )
                       )}
                     </div>

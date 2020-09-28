@@ -35,6 +35,7 @@ const ChangePasswordCard = () => {
   const dispatch = useDispatch();
 
   const { register, handleSubmit, watch, setValue, errors } = useForm({
+    mode: 'onChange',
     defaultValues: {
       current: '',
       new: '',
@@ -53,13 +54,7 @@ const ChangePasswordCard = () => {
   }, [dispatch, changedPassword]);
 
   const newPassword = watch('new');
-  const currentPassword = watch('current');
   const confirmationPassword = watch('confirmation');
-
-  const isNewPasswordSecure = newPassword && newPassword.length >= 6;
-
-  const isCurrentPasswordInvalid =
-    currentPassword && currentPassword.length < 6;
 
   const invalidPasswordMessage = useFormatMessage(
     `ChangePassword.invalidPassword`
@@ -71,11 +66,6 @@ const ChangePasswordCard = () => {
     `ChangePassword.insecurePassword`
   );
 
-  const insecurePasswordError = <ErrorMessage text={insecurePasswordMessage} />;
-
-  const newPasswordsAreEqual =
-    newPassword && confirmationPassword && newPassword === confirmationPassword;
-
   const passwordsMatchMessagge = useFormatMessage(
     `ChangePassword.matchPassword`
   );
@@ -84,14 +74,7 @@ const ChangePasswordCard = () => {
     `ChangePassword.notMatchPassword`
   );
 
-  const notMatchPasswordError = <ErrorMessage text={notMatchPasswordMessage} />;
-
-  const currentAndNewPasswordsEqual =
-    newPassword && currentPassword === newPassword;
-
   const samePasswordMessage = useFormatMessage(`ChangePassword.samePassword`);
-
-  const samePasswordError = <ErrorMessage text={samePasswordMessage} />;
 
   const onSubmitHandler = ({ current, confirmation }) => {
     dispatch(changeUserPassword(current, confirmation));
@@ -119,18 +102,18 @@ const ChangePasswordCard = () => {
               <div className="field">
                 <div className="control">
                   <input
+                    data-testid="current"
                     className={classNames('input', {
-                      'is-danger': isCurrentPasswordInvalid,
+                      'is-danger': errors.current,
                     })}
                     type="password"
                     name="current"
                     ref={register}
                   />
                 </div>
-                {isCurrentPasswordInvalid ||
-                  (errors.current && (
-                    <ErrorMessage text={invalidPasswordMessage} />
-                  ))}
+                {errors.current && (
+                  <ErrorMessage text={invalidPasswordMessage} />
+                )}
               </div>
             </div>
           </div>
@@ -145,20 +128,29 @@ const ChangePasswordCard = () => {
               <div className="field">
                 <div className="control">
                   <input
+                    data-testid="new"
                     className={classNames(
                       `input`,
-                      { 'is-success': isNewPasswordSecure },
-                      { 'is-danger': newPassword && !isNewPasswordSecure }
+                      { 'is-success': newPassword && !errors.new },
+                      { 'is-danger': errors.new }
                     )}
                     type="password"
                     name="new"
                     ref={register}
                   />
                 </div>
-                {isNewPasswordSecure ? (
-                  <p className="is-success">{safePasswordMessage}</p>
+                {errors.new ? (
+                  <ErrorMessage
+                    text={
+                      newPassword.length < 6
+                        ? insecurePasswordMessage
+                        : samePasswordMessage
+                    }
+                  />
                 ) : (
-                  newPassword && insecurePasswordError
+                  newPassword && (
+                    <p className="is-success">{safePasswordMessage}</p>
+                  )
                 )}
               </div>
             </div>
@@ -174,12 +166,15 @@ const ChangePasswordCard = () => {
               <div className="field">
                 <div className="control">
                   <input
+                    data-testid="confirmation"
                     className={classNames(
                       `input`,
-                      { 'is-success': newPasswordsAreEqual },
                       {
-                        'is-danger':
-                          confirmationPassword && !newPasswordsAreEqual,
+                        'is-success':
+                          confirmationPassword && !errors.confirmation,
+                      },
+                      {
+                        'is-danger': errors.confirmation,
                       }
                     )}
                     type="password"
@@ -187,10 +182,12 @@ const ChangePasswordCard = () => {
                     ref={register}
                   />
                 </div>
-                {newPasswordsAreEqual ? (
-                  <p className="is-success">{passwordsMatchMessagge}</p>
+                {errors.confirmation ? (
+                  <ErrorMessage text={notMatchPasswordMessage} />
                 ) : (
-                  confirmationPassword && notMatchPasswordError
+                  confirmationPassword && (
+                    <p className="is-success">{passwordsMatchMessagge}</p>
+                  )
                 )}
               </div>
             </div>
@@ -207,7 +204,6 @@ const ChangePasswordCard = () => {
                     {useFormatMessage(`ChangePassword.submits`)}
                   </button>
                 </div>
-                {currentAndNewPasswordsEqual && samePasswordError}
               </div>
             </div>
           </div>

@@ -408,6 +408,7 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
                 >
                   <input
                     class="input"
+                    data-testid="current"
                     name="current"
                     type="password"
                   />
@@ -439,6 +440,7 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
                 >
                   <input
                     class="input"
+                    data-testid="new"
                     name="new"
                     type="password"
                   />
@@ -469,6 +471,7 @@ exports[`<Profile /> rendering should render without crashing 1`] = `
                 >
                   <input
                     class="input"
+                    data-testid="confirmation"
                     name="confirmation"
                     type="password"
                   />

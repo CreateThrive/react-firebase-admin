@@ -160,7 +160,6 @@ const Users = () => {
         delete clonedElem.id;
         delete clonedElem.isAdmin;
         delete clonedElem.logoUrl;
-        delete clonedElem.teams;
         return Object.values(clonedElem).some((field) =>
           field.toLowerCase().includes(search.toLowerCase())
         );
