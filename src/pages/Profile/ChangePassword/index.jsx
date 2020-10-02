@@ -51,7 +51,7 @@ const ChangePasswordCard = () => {
       setValue('confirmation', '');
     }
     return () => dispatch(authCleanUp());
-  }, [dispatch, changedPassword]);
+  }, [dispatch, changedPassword, setValue]);
 
   const newPassword = watch('new');
   const confirmationPassword = watch('confirmation');
