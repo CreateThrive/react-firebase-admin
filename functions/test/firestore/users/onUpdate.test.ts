@@ -1,9 +1,9 @@
 import { admin, test } from '../../util/config';
 import * as chai from 'chai';
-import onUpdate from '../../../src/db/users/onUpdate.function';
+import onUpdate from '../../../src/firestore/users/onUpdate.function';
 import 'mocha';
 
-describe('onUpdate Realtime Database', () => {
+describe('onUpdate Firestore', () => {
   let userRecord: any;
 
   before(async () => {
@@ -26,11 +26,11 @@ describe('onUpdate Realtime Database', () => {
   it("should update user's custom claims in auth", async () => {
     const wrapped = test.wrap(onUpdate);
 
-    const beforeSnap = test.database.makeDataSnapshot(
+    const beforeSnap = test.firestore.makeDocumentSnapshot(
       { email: 'user@example.com', isAdmin: false },
       `users/${userRecord.uid}`
     );
-    const afterSnap = test.database.makeDataSnapshot(
+    const afterSnap = test.firestore.makeDocumentSnapshot(
       { email: 'user@example.com', isAdmin: true },
       `users/${userRecord.uid}`
     );

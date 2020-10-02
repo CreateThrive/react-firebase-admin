@@ -4,6 +4,7 @@ import { toastr } from 'react-redux-toastr';
 import { firebaseError, FIREBASE_RESPONSE } from 'utils';
 import firebase from 'firebase.js';
 import { clearUsersDataLogout } from './users';
+import { createDocument, fetchDocument } from '../api';
 
 export const AUTH_SIGN_IN_INIT = createAction('AUTH_SIGN_IN_INIT');
 export const AUTH_SIGN_IN_FAIL = createAction('AUTH_SIGN_IN_FAIL');
@@ -102,9 +103,7 @@ export const fetchUserData = () => {
     let user;
 
     try {
-      user = (
-        await firebase.database().ref(`users/${uid}`).once('value')
-      ).val();
+      user = await fetchDocument('users', uid);
     } catch (error) {
       dispatch(logout());
       return dispatch(AUTH_FETCH_USER_DATA_FAIL({ error }));
@@ -260,16 +259,14 @@ export const authWithSocialMedia = (authResult) => {
     let userFromDb = {};
     if (isNewUser) {
       try {
-        await firebase.database().ref(`users/${uid}`).set(userData);
+        await createDocument('users', uid, userData);
       } catch (e) {
         const errorMessage = firebaseError(e.code, locale);
         return dispatch(AUTH_PROVIDER_FAIL({ e: errorMessage }));
       }
     } else {
       try {
-        userFromDb = (
-          await firebase.database().ref(`users/${uid}`).once('value')
-        ).val();
+        userFromDb = await fetchDocument('users', uid);
       } catch (error) {
         const errorMessage = firebaseError(error.code, locale);
         return dispatch(AUTH_PROVIDER_FAIL({ error: errorMessage }));
