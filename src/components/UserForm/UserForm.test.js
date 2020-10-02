@@ -1,13 +1,15 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
+import { fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import * as actions from 'state/actions/users';
 import UserForm from '.';
 
 describe('<UserForm /> rendering', () => {
-  const setUser = jest.fn();
-
   let userData;
+  const dispatchMock = jest.fn();
+
   beforeEach(() => {
     userData = {
       email: 'mkrukuy@gmail.com',
@@ -17,90 +19,79 @@ describe('<UserForm /> rendering', () => {
       file: null,
       id: 'test id',
       logoUrl: 'some logoUrl',
-      createdAt: new Date().toDateString(),
+      createdAt: '11/12/2020',
     };
+    jest
+      .spyOn(reactRedux, 'useDispatch')
+      .mockImplementation(() => dispatchMock);
+    jest.spyOn(actions, 'usersCleanUp').mockImplementation(jest.fn);
   });
 
   it('should render without crashing', () => {
     const user = { ...userData, createdAt: '11/21/2020' };
 
-    const { component } = shallowWithProviders(
-      <UserForm user={user} action={actions.createUser} setUser={setUser} />
+    const { component } = renderWithProviders(
+      <UserForm user={user} action={actions.createUser} />
     )({
       users: {},
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should display user name preview', () => {
-    const { component } = mountWithProviders(
-      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
+    const { component } = renderWithProviders(
+      <UserForm user={userData} action={actions.createUser} />
     )({
       users: {},
     });
 
-    expect(component.find('input.input.is-static').at(1).props().value).toEqual(
-      'Mateo'
-    );
+    expect(component.getByTestId('name')).toHaveAttribute('value', 'Mateo');
   });
 
   it('should display email preview if it is creating a new user', () => {
-    const { component } = mountWithProviders(
-      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
+    const { component } = renderWithProviders(
+      <UserForm user={userData} action={actions.createUser} />
     )({
       users: {},
     });
 
-    expect(
-      component.find('input.input.is-static').first().props().value
-    ).toEqual('mkrukuy@gmail.com');
+    expect(component.getByTestId('email')).toHaveAttribute(
+      'value',
+      'mkrukuy@gmail.com'
+    );
   });
 
   it('should display location preview', () => {
-    const { component } = mountWithProviders(
-      <UserForm
-        user={userData}
-        isEditing
-        action={actions.createUser}
-        setUser={setUser}
-      />
+    const { component } = renderWithProviders(
+      <UserForm user={userData} isEditing action={actions.createUser} />
     )({
       users: {},
     });
 
-    expect(component.find('input.input.is-static').at(2).props().value).toEqual(
+    expect(component.getByTestId('location')).toHaveAttribute(
+      'value',
       'Montevideo, Uruguay'
     );
   });
 
   it('should display admin preview', () => {
-    const { component } = mountWithProviders(
-      <UserForm
-        user={userData}
-        isEditing
-        action={actions.createUser}
-        setUser={setUser}
-      />
+    const { component } = renderWithProviders(
+      <UserForm user={userData} isEditing action={actions.createUser} />
     )({
       users: {},
     });
 
-    expect(component.exists('.icon')).toBeTruthy();
+    expect(component.getByTestId('admin')).toBeTruthy();
   });
 
   it('should display created preview', () => {
-    const { component } = mountWithProviders(
-      <UserForm
-        user={userData}
-        isEditing
-        action={actions.createUser}
-        setUser={setUser}
-      />
+    const { component } = renderWithProviders(
+      <UserForm user={userData} isEditing action={actions.createUser} />
     )({
       users: {},
     });
-    expect(component.find('p.date')).toBeTruthy();
+    expect(component.getByTestId('date')).toBeTruthy();
   });
 });
 
@@ -123,24 +114,26 @@ describe('<LoginForm /> actions', () => {
       logoUrl: 'some logoUrl',
       isAdmin: false,
       file: null,
-      createdAt: new Date().toDateString(),
+      createdAt: '11/12/2020',
     };
   });
 
-  it('should dispatch createUser action when creating a new user', () => {
-    const { component } = mountWithProviders(
+  it('should dispatch createUser action when creating a new user', async () => {
+    const { component } = renderWithProviders(
       <UserForm user={userData} action={actions.createUser} setUser={setUser} />
     )({
       users: {},
     });
 
-    component.find('form').simulate('submit');
+    fireEvent.submit(component.container.querySelector('form'));
 
-    expect(actions.createUser).toHaveBeenCalled();
+    await (() => expect(actions.createUser).toBeCalledTimes(1));
+
+    await (() => expect(actions.createUser).toBeCalledWith(userData));
   });
 
-  it('should dispatch modifyUser action when editing a user', () => {
-    const { component } = mountWithProviders(
+  it('should dispatch modifyUser action when editing a user', async () => {
+    const { component } = renderWithProviders(
       <UserForm
         user={userData}
         isEditing
@@ -151,8 +144,10 @@ describe('<LoginForm /> actions', () => {
       users: {},
     });
 
-    component.find('form').simulate('submit');
+    fireEvent.submit(component.container.querySelector('form'));
 
-    expect(actions.modifyUser).toHaveBeenCalled();
+    await (() => expect(actions.modifyUser).toBeCalledTimes(1));
+
+    await (() => expect(actions.modifyUser).toBeCalledWith(userData));
   });
 });

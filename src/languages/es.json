@@ -10,6 +10,10 @@
   "Login.facebook": "Continuar con Facebook",
   "Login.google": "Continuar con Google",
   "Login.microsoft": "Continuar con Microsoft",
+  "Login.safePassword": "Contraseña segura",
+  "Login.unsafePassword": "Contraseña insegura",
+  "Login.invalidEmail": "Email inválido",
+  "Login.invalidPassword": "Contraseña inválida",
   "NotFound.404": "Error 404: página no encontrada",
   "NotFound.url": "El URL {url} no fue encontrado",
   "NotFound.back": "Regresar",
@@ -24,6 +28,7 @@
   "ChangePassword.insecurePassword": "Contraseña Insegura",
   "ChangePassword.matchPassword": "Contraseñas coinciden",
   "ChangePassword.notMatchPassword": "Contraseñas no coinciden",
+  "ChangePassword.invalidPassword": "La contraseña debe tener al menos seis caracteres de largo",
   "Section.section": "Sección",
   "Section.content": "Contenido de la Sección",
   "ResetPassword.recovery": "Recuperar Contraseña",
@@ -71,7 +76,7 @@
   "UserForm.goBack": "Regresar",
   "UserForm.userPreview": "Vista previa del usuario",
   "auth/email-already-exists": "Email ya esta siendo usado",
-  "auth/invalid-email": "El Email inválido",
+  "auth/invalid-email": "Email inválido",
   "auth/wrong-password": "Credenciales inválidas",
   "auth/user-disabled": "Usuario deshabilitado",
   "auth/too-many-requests": "Demasiados intentos, intententelo más tarde",
@@ -85,7 +90,6 @@
   "auth/popup-closed-by-user": "Operacion cancelada, el pop up fue cerrado",
   "auth/cancelled-popup-request": "Demasiados pop ups, solamente un pop up es permitido",
   "utils.default": "Error desconocido, contáctese con su administrador",
-  "utils.safePassword": "Contraseña segura",
-  "utils.unsafePassword": "Contraseña insegura",
-  "utils.invalidEmail": "Email inválido"
+  "ErrorMessage.defaultMessage": "Este campo es requerido",
+  "invalidEmail": "E-mail inválido"
 }

@@ -3,15 +3,19 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
+import classNames from 'classnames';
+import { yupResolver } from '@hookform/resolvers';
 
 import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
-import { useChangeHandler, useFormatDate, useFormatMessage } from 'hooks';
-import { validateEmail } from 'utils';
-import './UserForm.scss';
-import DatePicker from '../DatePicker';
+import { useFormatDate, useFormatMessage } from 'hooks';
+import DatePicker from 'components/DatePicker';
+import ErrorMessage from 'components/ErrorMessage';
 
-const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
+import './UserForm.scss';
+
+const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
   const { loading, success } = useSelector(
     (state) => ({
       loading: state.users.loading,
@@ -22,52 +26,24 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
 
   const dispatch = useDispatch();
 
+  const { register, handleSubmit, errors, control, watch, setValue } = useForm({
+    defaultValues: { ...user },
+    resolver: yupResolver(schema),
+  });
+
   useEffect(() => {
     if (success) {
-      setUser((prevState) => ({ ...prevState, file: null }));
+      setValue('file', null);
     }
     return () => dispatch(usersCleanUp());
-  }, [dispatch, success]);
-
-  const onChangeHandler = useChangeHandler(setUser);
-
-  const onFileChangedHandler = (event) => {
-    const file = event.target.files[0];
-    setUser((prevState) => ({ ...prevState, file, logoUrl: null }));
-  };
-
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    dispatch(
-      action({ ...user, createdAt: user.createdAt, isEditing, isProfile })
-    );
-  };
-
-  let emailInput = {
-    modifier: null,
-    message: { modifier: null, content: null },
-  };
-
-  const invalidEmail = user.email && !validateEmail(user.email);
+  }, [dispatch, success, setValue]);
 
   const invalidEmailMessage = useFormatMessage('UserForm.invalidEmail');
 
-  if (invalidEmail) {
-    emailInput = {
-      modifier: 'is-danger',
-      message: {
-        modifier: 'is-danger',
-        content: invalidEmailMessage,
-      },
-    };
-  }
-
-  const canSubmit =
-    user.name && user.location && user.createdAt && !invalidEmail;
-
-  const imagePreviewUrl = !user.logoUrl
-    ? user.file && URL.createObjectURL(user.file)
-    : user.logoUrl;
+  const imagePreviewUrl =
+    watch('file') && watch('file')[0]
+      ? URL.createObjectURL(watch('file')[0])
+      : user.logoUrl;
 
   const goBackMessage = useFormatMessage('UserForm.goBack');
 
@@ -77,6 +53,7 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
   const emailMessage = useFormatMessage('UserForm.email');
 
   const adminMessage = useFormatMessage('UserForm.admin');
+
   return (
     <>
       <div className="tile is-ancestor">
@@ -91,7 +68,7 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
               </p>
             </header>
             <div className="card-content">
-              <form onSubmit={onSubmitHandler}>
+              <form onSubmit={handleSubmit(onSubmitHandler)}>
                 {isEditing ? (
                   <div className="field is-horizontal">
                     <div className="field-label is-normal">
@@ -104,39 +81,42 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                             type="text"
                             readOnly="readOnly"
                             className="input is-static"
-                            value={user.email}
+                            name="email"
+                            ref={register}
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="field is-horizontal">
-                    <div className="field-label is-normal">
-                      <label className="label">{emailMessage}</label>
-                    </div>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <input
-                            className={`input ${emailInput.modifier}`}
-                            type="email"
-                            required
-                            name="email"
-                            value={user.email}
-                            onChange={onChangeHandler}
-                          />
+                  <>
+                    <div className="field is-horizontal">
+                      <div className="field-label is-normal">
+                        <label className="label">{emailMessage}</label>
+                      </div>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <input
+                              className={classNames(`input`, {
+                                'is-danger': errors.email,
+                              })}
+                              ref={register}
+                              name="email"
+                            />
+                          </div>
                         </div>
-                        {emailInput.message.content && (
-                          <p
-                            className={`help is-${emailInput.message.modifier}`}
-                          >
-                            {emailInput.message.content}
-                          </p>
-                        )}
                       </div>
                     </div>
-                  </div>
+                    {errors.email && (
+                      <div className="field is-horizontal">
+                        <div className="field-label is-normal" />
+                        <div className="field-body">
+                          <ErrorMessage text={invalidEmailMessage} />
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 <div className="field is-horizontal">
@@ -149,19 +129,26 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                     <div className="field">
                       <div className="control">
                         <input
-                          id="name"
-                          className="input"
-                          type="text"
-                          required
                           name="name"
-                          value={user.name}
-                          onChange={onChangeHandler}
+                          id="name"
+                          className={classNames('input', {
+                            'is-danger': errors.name,
+                          })}
+                          ref={register}
+                          type="text"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-
+                {errors.name && (
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal" />
+                    <div className="field-body">
+                      <ErrorMessage />
+                    </div>
+                  </div>
+                )}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
@@ -174,16 +161,13 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                         <input
                           className="input"
                           type="text"
+                          ref={register}
                           name="location"
-                          required
-                          value={user.location}
-                          onChange={onChangeHandler}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-
                 {!isProfile && (
                   <div className="field has-check is-horizontal">
                     <div className="field-label">
@@ -197,8 +181,7 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                               <input
                                 type="checkbox"
                                 name="isAdmin"
-                                onChange={onChangeHandler}
-                                checked={user.isAdmin}
+                                ref={register}
                               />
                               <span className="check is-primary" />
                             </label>
@@ -217,10 +200,16 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                   </div>
                   <div className="field-body">
                     <div className="field">
-                      <DatePicker
+                      <Controller
+                        control={control}
                         name="createdAt"
-                        date={new Date(user.createdAt)}
-                        setState={setUser}
+                        render={({ onChange, name, value }) => (
+                          <DatePicker
+                            name={name}
+                            onChange={onChange}
+                            date={new Date(value)}
+                          />
+                        )}
                       />
                     </div>
                   </div>
@@ -241,21 +230,22 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                           <input
                             className="file-input"
                             type="file"
+                            name="file"
+                            ref={register}
                             accept="image/*"
-                            onChange={onFileChangedHandler}
                           />
                           <span className="file-cta">
                             <span className="file-icon">
                               <i className="mdi mdi-upload" />
                             </span>
                             <span className="file-label">
-                              {user.file
+                              {watch('file') && watch('file').file
                                 ? pickAnotherFileMessage
                                 : pickFileMessage}
                             </span>
                           </span>
                           <span className="file-name">
-                            {user.file && user.file.name}
+                            {watch('file') && watch('file')[0]?.name}
                           </span>
                         </label>
                       </div>
@@ -275,7 +265,6 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                             className={`button is-primary ${
                               loading && 'is-loading'
                             }`}
-                            disabled={!canSubmit}
                           >
                             <span>{useFormatMessage('UserForm.submit')}</span>
                           </button>
@@ -322,10 +311,11 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                   <label className="label">{emailMessage}</label>
                   <div className="control is-clearfix">
                     <input
+                      data-testid="email"
                       type="text"
                       readOnly="readOnly"
                       className="input is-static"
-                      value={user.email}
+                      value={watch('email')}
                     />
                   </div>
                 </div>
@@ -337,10 +327,11 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                 </label>
                 <div className="control is-clearfix">
                   <input
+                    data-testid="name"
                     type="text"
                     readOnly="readOnly"
                     className="input is-static"
-                    value={user.name}
+                    value={watch('name')}
                   />
                 </div>
               </div>
@@ -351,10 +342,11 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                 </label>
                 <div className="control is-clearfix">
                   <input
+                    data-testid="location"
                     type="text"
                     readOnly="readOnly"
                     className="input is-static"
-                    value={user.location}
+                    value={watch('location')}
                   />
                 </div>
               </div>
@@ -362,8 +354,8 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
               {!isProfile && (
                 <div className="field">
                   <label className="label">{adminMessage}</label>
-                  <div className="control is-clearfix">
-                    {user.isAdmin ? (
+                  <div className="control is-clearfix" data-testid="admin">
+                    {watch('isAdmin') ? (
                       <span className="icon">
                         <i className="mdi mdi-check" />
                       </span>
@@ -380,9 +372,9 @@ const UserForm = ({ isEditing, isProfile, user, setUser, action }) => {
                 <label className="label">
                   {useFormatMessage('UserForm.created')}
                 </label>
-                <div className="control is-clearfix">
+                <div className="control is-clearfix" data-testid="date">
                   <p className="date">
-                    {useFormatDate(user.createdAt, {
+                    {useFormatDate(watch('createdAt'), {
                       weekday: 'short',
                       year: 'numeric',
                       month: 'short',
@@ -409,8 +401,9 @@ UserForm.propTypes = {
     createdAt: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
-  setUser: PropTypes.func.isRequired,
-  action: PropTypes.func.isRequired,
+  onSubmitHandler: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  schema: PropTypes.object.isRequired,
   isEditing: PropTypes.bool,
   isProfile: PropTypes.bool,
 };

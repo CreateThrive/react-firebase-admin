@@ -90,12 +90,14 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [Format.js](https://formatjs.io/) (★ 11.7k) libraries for internationalization (see [docs](https://formatjs.io/docs/basic-internationalization-principles)).
 - [date-fns](https://date-fns.org/) (★ 22.3k) date utility library (see [docs](https://date-fns.org/docs/Getting-Started)).
 - [cross-env](https://github.com/kentcdodds/cross-env) (★ 4.9k) run scripts that set and use environment variables across platforms (see [docs](https://www.npmjs.com/package/cross-env)).
+- [React Hook Form](https://github.com/react-hook-form/react-hook-form) (★ 14.6k) Performant, flexible and extensible forms with easy to use validation.
+- [yup](https://github.com/jquense/yup) (★ 11k) schema builder for value parsing and validation.
 - [Inquirer](https://github.com/SBoudrias/Inquirer.js/) (★ 12.2k) A collection of common interactive command line user interfaces (see [docs](https://github.com/SBoudrias/Inquirer.js/#documentation)).
 
 ### Unit Testing
 
 - [Jest](https://jestjs.io/) (★ 29.9k) as testing framework (see [docs](https://jestjs.io/docs/en/getting-started)).
-- [Enzyme](https://airbnb.io/enzyme/) (★ 18.5k) to test react components in Jest.
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) (★ 12.7k) to test react components in Jest.
 - [Redux-mock-store](https://github.com/dmitry-zaets/redux-mock-store) (★ 2.1k) to test redux actions, reducers and store state in Jest.
 
 ### Linting

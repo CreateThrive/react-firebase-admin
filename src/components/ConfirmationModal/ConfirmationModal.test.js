@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 
 import ConfirmationModal from '.';
 
@@ -13,7 +13,7 @@ describe('<ConfirmationModal /> rendering', () => {
   });
 
   it('should render without crashing', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="test message"
@@ -25,11 +25,11 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should set the active modifier if the isActive prop is passed down', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="test message"
@@ -41,11 +41,13 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(component.exists('div.modal.is-active')).toBeTruthy();
+    expect(
+      component.container.querySelector('div.modal.is-active')
+    ).toBeTruthy();
   });
 
   it('should not set the active modifier if the isActive prop is not passed down', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         confirmButtonMessage="test message"
         onConfirmation={onConfirm}
@@ -56,11 +58,11 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(component.exists('div.modal.is-active')).toBeFalsy();
+    expect(component.container.querySelector('div.modal.is-active')).toBeNull();
   });
 
   it('should call onConfirm when the confirmation button is clicked', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="confirm test message"
@@ -72,13 +74,12 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    component.find('button[children="confirm test message"]').simulate('click');
-
+    fireEvent.click(component.getByText('confirm test message'));
     expect(onConfirm).toHaveBeenCalled();
   });
 
   it('should call onCancel when the cancel button is clicked', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="test message"
@@ -90,13 +91,13 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    component.find('button[children="cancel test message"]').simulate('click');
+    fireEvent.click(component.getByText('cancel test message'));
 
     expect(onCancel).toHaveBeenCalled();
   });
 
   it('should set the title of the modal', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="test message"
@@ -108,11 +109,11 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(component.exists('p[children="test title"]')).toBeTruthy();
+    expect(component.getByText('test title')).toBeTruthy();
   });
 
   it('should set the body of the modal', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="test message"
@@ -124,11 +125,11 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(component.exists('section[children="test body"]')).toBeTruthy();
+    expect(component.getByText('test body')).toBeTruthy();
   });
 
   it('should set the confirm button message', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="confirm test message"
@@ -140,13 +141,11 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(
-      component.exists('button[children="confirm test message"]')
-    ).toBeTruthy();
+    expect(component.getByText('confirm test message')).toBeTruthy();
   });
 
   it('should set the cancel button message', () => {
-    const component = shallow(
+    const component = render(
       <ConfirmationModal
         isActive
         confirmButtonMessage="test message"
@@ -158,8 +157,6 @@ describe('<ConfirmationModal /> rendering', () => {
       />
     );
 
-    expect(
-      component.exists('button[children="cancel test message"]')
-    ).toBeTruthy();
+    expect(component.getByText('cancel test message')).toBeTruthy();
   });
 });

@@ -1,28 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from 'yup';
 
-import { useChangeHandler, useFormatMessage } from 'hooks';
+import { useFormatMessage } from 'hooks';
 import { resetPassword, authCleanUp } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
+import ErrorMessage from 'components/ErrorMessage';
+
 import classes from './ResetPassword.module.scss';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+});
 
 const ResetPassword = () => {
   const { loading, error, restoredPassword, isAuth } = useSelector(
-    state => ({
+    (state) => ({
       loading: state.auth.loading,
       error: state.auth.error,
       restoredPassword: state.auth.restoredPassword,
-      isAuth: !!state.auth.userData.userId
+      isAuth: !!state.auth.userData.userId,
     }),
     shallowEqual
   );
 
   const dispatch = useDispatch();
 
-  const [resetPasswordData, setResetPasswordData] = useState('');
-
-  const onChangeHandler = useChangeHandler(setResetPasswordData);
+  const { register, handleSubmit, errors, watch } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     document.documentElement.classList.remove(
@@ -38,17 +48,14 @@ const ResetPassword = () => {
     };
   }, [dispatch]);
 
-  const onSubmitHandler = event => {
-    event.preventDefault();
-    dispatch(resetPassword(resetPasswordData.email));
+  const onSubmitHandler = ({ email }) => {
+    dispatch(resetPassword(email));
   };
-
-  const modifierLoading = loading && 'is-loading';
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
   const recoverEmailMessage = useFormatMessage('ResetPassword.recoverEmail', {
-    mail: resetPasswordData.email
+    mail: watch('email'),
   });
   const emailMessage = useFormatMessage('ResetPassword.email');
   const emailRegistrationMessage = useFormatMessage(
@@ -56,6 +63,8 @@ const ResetPassword = () => {
   );
   const resetLinkMessage = useFormatMessage('ResetPassword.resetLink');
   const backMessage = useFormatMessage('ResetPassword.back');
+
+  const invalidEmailMessage = useFormatMessage('invalidEmail');
 
   return (
     <section className="section hero is-fullheight is-error-section">
@@ -79,26 +88,30 @@ const ResetPassword = () => {
                       {recoverEmailMessage}
                     </p>
                   ) : (
-                    <form onSubmit={onSubmitHandler}>
+                    <form onSubmit={handleSubmit(onSubmitHandler)}>
                       <div className="field">
                         <p className="label">{emailMessage}</p>
                         <div className="control">
                           <input
-                            type="email"
-                            className="input"
-                            required
-                            value={resetPasswordData.email}
+                            className={classNames('input', {
+                              'is-danger': errors.email,
+                            })}
+                            ref={register}
                             name="email"
-                            onChange={onChangeHandler}
                           />
                         </div>
+                        {errors.email && (
+                          <ErrorMessage text={invalidEmailMessage} />
+                        )}
                         <p className="help">{emailRegistrationMessage}</p>
                       </div>
                       <hr />
                       <div className="field is-grouped">
                         <div className="control">
                           <button
-                            className={`button is-black ${modifierLoading}`}
+                            className={classNames(`button is-black`, {
+                              'is-loading': loading,
+                            })}
                             type="submit"
                           >
                             {resetLinkMessage}

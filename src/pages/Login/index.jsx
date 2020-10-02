@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { toastr } from 'react-redux-toastr';
 import { StyledFirebaseAuth } from 'react-firebaseui';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from 'yup';
 
 import firebase from 'firebase.js';
 import {
@@ -12,10 +15,16 @@ import {
   authCleanUp,
   authWithSocialMedia,
 } from 'state/actions/auth';
-import { useChangeHandler, useFormatMessage } from 'hooks';
-import { inputValidations, firebaseError, uiConfig } from 'utils';
-import paths from '../Router/paths';
+import { useFormatMessage } from 'hooks';
+import { firebaseError, uiConfig } from 'utils';
+import ErrorMessage from 'components/ErrorMessage';
+import paths from 'pages/Router/paths';
 import classes from './Login.module.scss';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+});
 
 const Login = () => {
   const { error, isAuth, loading, locale } = useSelector(
@@ -30,12 +39,10 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const [authData, setAuthData] = useState({
-    email: '',
-    password: '',
+  const { register, handleSubmit, errors, watch } = useForm({
+    defaultValues: {},
+    resolver: yupResolver(schema),
   });
-
-  const onChangeHandler = useChangeHandler(setAuthData);
 
   useEffect(() => {
     document.documentElement.classList.remove(
@@ -55,15 +62,11 @@ const Login = () => {
     .auth()
     .isSignInWithEmailLink(window.location.href);
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-
+  const onSubmitHandler = ({ email, password }) => {
     if (isEmailLink) {
-      dispatch(
-        setPassword(authData.email, authData.password, window.location.href)
-      );
+      dispatch(setPassword(email, password, window.location.href));
     } else {
-      dispatch(auth(authData.email, authData.password));
+      dispatch(auth(email, password));
     }
   };
 
@@ -72,23 +75,17 @@ const Login = () => {
   };
 
   const onSignInFailHandler = (signInEror) => {
-    const errorMessage = firebaseError(signInEror.code, locale);
-    toastr.error('', errorMessage);
+    const signInErrorMessage = firebaseError(signInEror.code, locale);
+    toastr.error('', signInErrorMessage);
   };
 
-  const inputs = isEmailLink
-    ? inputValidations(authData.email, authData.password, locale)
-    : {
-        email: {
-          modifier: null,
-          message: null,
-        },
-        password: {
-          modifier: null,
-          message: null,
-        },
-        canSubmit: false,
-      };
+  const isValidPassword = watch('password') && watch('password').length >= 6;
+
+  const invalidEmailMessage = useFormatMessage('Login.invalidEmail');
+
+  const safePasswordMessage = useFormatMessage('Login.safePassword');
+
+  const unsafePasswordMessage = useFormatMessage('Login.unsafePassword');
 
   const redirect = isAuth && <Redirect to={paths.ROOT} />;
 
@@ -99,6 +96,8 @@ const Login = () => {
   const setPasswordMessage = useFormatMessage('Login.setPassword');
 
   const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
+
+  const invalidPasswordMessage = useFormatMessage('Login.invalidPassword');
 
   return (
     <section className="section hero is-fullheight is-error-section">
@@ -119,25 +118,20 @@ const Login = () => {
                   </p>
                 </header>
                 <div className="card-content">
-                  <form onSubmit={onSubmitHandler}>
+                  <form onSubmit={handleSubmit(onSubmitHandler)}>
                     <div className="field">
                       <p className="label">{useFormatMessage('Login.email')}</p>
                       <div className="control is-clearfix">
                         <input
-                          className={classNames('input', inputs.email.modifier)}
-                          type="email"
+                          className={classNames('input', {
+                            'is-danger': errors.email,
+                          })}
                           name="email"
-                          required
-                          value={authData.email}
-                          onChange={onChangeHandler}
+                          ref={register}
                         />
                       </div>
-                      {inputs.email.message && (
-                        <p
-                          className={classNames('help', inputs.email.modifier)}
-                        >
-                          {inputs.email.message}
-                        </p>
+                      {errors.email && (
+                        <ErrorMessage text={invalidEmailMessage} />
                       )}
                     </div>
                     <div className="field">
@@ -148,24 +142,31 @@ const Login = () => {
                         <input
                           className={classNames(
                             'input',
-                            inputs.password.modifier
+                            {
+                              'is-danger': errors.password,
+                            },
+                            {
+                              'is-success': isEmailLink && isValidPassword,
+                            }
                           )}
                           type="password"
                           name="password"
-                          required
-                          value={authData.password}
-                          onChange={onChangeHandler}
+                          ref={register}
                         />
                       </div>
-                      {inputs.password.message && (
-                        <p
-                          className={classNames(
-                            'help',
-                            inputs.password.modifier
-                          )}
-                        >
-                          {inputs.password.message}
-                        </p>
+                      {errors.password ? (
+                        <ErrorMessage
+                          text={
+                            isEmailLink
+                              ? unsafePasswordMessage
+                              : invalidPasswordMessage
+                          }
+                        />
+                      ) : (
+                        isEmailLink &&
+                        isValidPassword && (
+                          <p className="is-success">{safePasswordMessage}</p>
+                        )
                       )}
                     </div>
                     <br />
@@ -176,7 +177,6 @@ const Login = () => {
                           className={classNames('button', 'is-black', {
                             'is-loading': loading,
                           })}
-                          disabled={isEmailLink ? !inputs.canSubmit : false}
                         >
                           {isEmailLink ? setPasswordMessage : loginMessage}
                         </button>
@@ -203,22 +203,26 @@ const Login = () => {
                       </p>
                     )}
                   </form>
-                  <hr />
-                  <div
-                    className={classNames(
-                      'field',
-                      'is-grouped',
-                      classes.socialButtons
-                    )}
-                  >
-                    <StyledFirebaseAuth
-                      uiConfig={uiConfig(
-                        onSignInSuccessHandler,
-                        onSignInFailHandler
-                      )}
-                      firebaseAuth={firebase.auth()}
-                    />
-                  </div>
+                  {!isEmailLink && (
+                    <>
+                      <hr />
+                      <div
+                        className={classNames(
+                          'field',
+                          'is-grouped',
+                          classes.socialButtons
+                        )}
+                      >
+                        <StyledFirebaseAuth
+                          uiConfig={uiConfig(
+                            onSignInSuccessHandler,
+                            onSignInFailHandler
+                          )}
+                          firebaseAuth={firebase.auth()}
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

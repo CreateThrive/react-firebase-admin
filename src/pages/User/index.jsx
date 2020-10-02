@@ -1,12 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
+import * as yup from 'yup';
 
 import UserForm from 'components/UserForm';
 import { createUser, modifyUser, fetchUsers } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import { useFormatMessage } from 'hooks';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  name: yup.string().required(),
+  isAdmin: yup.boolean().notRequired(),
+  location: yup.string().notRequired(),
+  createdAt: yup.string().required(),
+});
 
 const User = () => {
   const { id } = useParams();
@@ -22,18 +31,6 @@ const User = () => {
     shallowEqual
   );
 
-  const [user, setUser] = useState(
-    isEditing
-      ? userData
-      : {
-          name: '',
-          email: '',
-          location: '',
-          createdAt: new Date().toDateString(),
-          isAdmin: false,
-        }
-  );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,12 +38,8 @@ const User = () => {
       if (!userData) {
         dispatch(fetchUsers(id));
       }
-
-      if (userData && !user) {
-        setUser(userData);
-      }
     }
-  }, [isEditing, id, userData, user, dispatch]);
+  }, [isEditing, id, userData, dispatch]);
 
   const redirect = ((isEditing && error) || success) && (
     <Redirect to={paths.USERS} />
@@ -55,6 +48,21 @@ const User = () => {
   const editUserMessage = useFormatMessage('User.editUser');
 
   const newUserMessage = useFormatMessage('User.editUser');
+
+  const onSubmitHandler = (value) => {
+    const newUser = {
+      ...value,
+      file: value?.file[0] || null,
+      isEditing,
+      id,
+    };
+
+    if (isEditing) {
+      dispatch(modifyUser(newUser));
+    } else {
+      dispatch(createUser(newUser));
+    }
+  };
 
   return (
     <>
@@ -67,14 +75,24 @@ const User = () => {
         </div>
       </section>
       <section className="section is-main-section">
-        {isEditing && !user ? (
+        {isEditing && !userData ? (
           <ClipLoader />
         ) : (
           <UserForm
             isEditing={isEditing}
-            user={user}
-            setUser={setUser}
-            action={isEditing ? modifyUser : createUser}
+            user={
+              isEditing
+                ? userData
+                : {
+                    name: '',
+                    email: '',
+                    location: '',
+                    createdAt: new Date().toDateString(),
+                    isAdmin: false,
+                  }
+            }
+            onSubmitHandler={onSubmitHandler}
+            schema={schema}
           />
         )}
       </section>

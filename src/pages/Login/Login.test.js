@@ -1,35 +1,45 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import * as reactRedux from 'react-redux';
 
+import * as actions from 'state/actions/auth';
 import paths from '../Router/paths';
 import Login from '.';
 
 jest.mock('react-firebaseui');
 
 describe('<Login /> rendering', () => {
+  const dispatchMock = jest.fn();
+
+  beforeEach(() => {
+    jest
+      .spyOn(reactRedux, 'useDispatch')
+      .mockImplementation(() => dispatchMock);
+    jest.spyOn(actions, 'authCleanUp').mockImplementation(jest.fn);
+  });
+
   it('should render without crashing', () => {
-    const { component } = shallowWithProviders(<Login />)({
+    const { component } = renderWithProviders(<Login />)({
       auth: {
         userData: {},
       },
     });
 
-    expect(component).toMatchSnapshot();
+    expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('should display an error message when there is an error', () => {
-    const { component } = mountWithProviders(<Login />)({
+    const { component } = renderWithProviders(<Login />)({
       auth: {
         userData: {},
         error: 'sample error',
       },
     });
 
-    expect(component.find('.has-text-danger').length).toBe(1);
+    expect(component.container.querySelector('p.has-text-danger')).toBeTruthy();
   });
 
   it('should redirect to /home when the user is authenticated', () => {
-    const { component } = mountWithProviders(<Login />)({
+    renderWithProviders(<Login />)({
       auth: {
         userData: {
           id: 'some userId',
@@ -37,6 +47,6 @@ describe('<Login /> rendering', () => {
       },
     });
 
-    expect(component.contains(<Redirect to={paths.ROOT} />)).toEqual(true);
+    expect(window.location.pathname).toBe(paths.ROOT);
   });
 });

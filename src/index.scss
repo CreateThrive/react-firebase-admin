@@ -41,11 +41,19 @@ body {
   height: 26px !important;
 }
 
-
 .redux-toastr .toastr .rrt-middle-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-left: 75px;
   min-height: 70px;
+}
+
+.error {
+  color: red;
+}
+
+.error::before {
+  display: inline;
+  content: '⚠ ';
 }
