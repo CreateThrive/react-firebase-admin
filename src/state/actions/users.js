@@ -4,6 +4,13 @@ import { toastr } from 'react-redux-toastr';
 import { firebaseError } from 'utils';
 import firebase from 'firebase.js';
 import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
+import {
+  fetchCollection,
+  fetchDocument,
+  createDocument,
+  deleteDocument,
+  updateDocument,
+} from '../api';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
 export const USERS_FETCH_DATA_SUCCESS = createAction(
@@ -40,23 +47,20 @@ export const fetchUsers = (userId = '') => {
     dispatch(USERS_FETCH_DATA_INIT());
 
     if (userId) {
-      let userData;
+      let user;
       try {
-        userData = (
-          await firebase.database().ref(`users/${userId}`).once('value')
-        ).val();
+        user = await fetchDocument('users', userId);
       } catch (error) {
         toastr.error('', error);
         return dispatch(USERS_FETCH_DATA_FAIL({ error }));
       }
 
-      if (!userData) {
+      if (!user) {
         const errorMessage = 'User not available';
         toastr.error('', errorMessage);
         return dispatch(USERS_FETCH_DATA_FAIL({ error: errorMessage }));
       }
 
-      const user = { ...userData, id: userId };
       const users = getState().users.data;
       users.push(user);
 
@@ -72,22 +76,15 @@ export const fetchUsers = (userId = '') => {
     let users;
 
     try {
-      users = (await firebase.database().ref('users').once('value')).val();
+      users = await fetchCollection('users');
     } catch (error) {
       toastr.error('', error);
       return dispatch(USERS_FETCH_DATA_FAIL({ error }));
     }
 
-    const usersData = users
-      ? Object.entries(users).map(([key, value]) => ({
-          id: key,
-          ...value,
-        }))
-      : [];
-
     return dispatch(
       USERS_FETCH_DATA_SUCCESS({
-        data: usersData.filter((user) => user.id !== id),
+        data: users.filter((user) => user.id !== id),
       })
     );
   };
@@ -111,7 +108,7 @@ export const deleteUser = (id) => {
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
 
-    const deleteUserTask = firebase.database().ref(`users/${id}`).remove();
+    const deleteUserTask = deleteDocument('users', id);
 
     try {
       await Promise.all([deleteLogoTask, deleteUserTask]);
@@ -191,11 +188,9 @@ export const createUser = ({
       logoUrl = getLogoUrl(uid, file);
       uploadLogoTask = uploadLogo(uid, file);
     }
+    const userData = { name, email, location, logoUrl, createdAt, isAdmin };
 
-    const createUserDbTask = firebase
-      .database()
-      .ref(`users/${uid}`)
-      .set({ name, email, location, logoUrl, createdAt, isAdmin });
+    const createUserDbTask = createDocument('users', uid, userData);
 
     const actionCodeSettings = {
       url: process.env.REACT_APP_LOGIN_PAGE_URL,
@@ -261,17 +256,7 @@ export const modifyUser = ({
       isAdmin,
       logoUrl: logoUrl || newLogoUrl,
     };
-
-    const updateUserDbTask = firebase
-      .database()
-      .ref(`users/${id}`)
-      .update(userData);
-
-    const { uid } = firebase.auth().currentUser;
-
-    if (id === uid) {
-      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
-    }
+    const updateUserDbTask = updateDocument('users', id, userData);
 
     try {
       await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
@@ -283,6 +268,12 @@ export const modifyUser = ({
           error: errorMessage,
         })
       );
+    }
+
+    const { uid } = firebase.auth().currentUser;
+
+    if (id === uid) {
+      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
     }
 
     if (isProfile) {
