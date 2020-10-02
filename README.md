@@ -3,7 +3,7 @@
 ![ci](https://github.com/CreateThrive/react-firebase-admin/workflows/ci/badge.svg?branch=master)
 [![license: MIT](https://badgen.net/github/license/micromatch/micromatch)](https://github.com/CreateThrive/react-firebase-admin/blob/feature/badges-rename-workflows/LICENSE.md)
 
-Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a fully functional admin dashboard with authentication, authorization, realtime database, built-in CI/CD, file upload and more. We're using up to date industry standards and next-gen technologies like React (with hooks), redux, bulma, sass, webpack, routing and a serverless architecture.
+Boilerplate with React ⚛️ and Firebase 🔥designed to quickly spin up a fully functional admin dashboard with authentication, authorization, Realtime Database / Firestore, built-in CI/CD, file upload and more. We're using up to date industry standards and next-gen technologies like React (with hooks), redux, bulma, sass, webpack, routing and a serverless architecture.
 
 ![Boilerplate - Users page](https://imgur.com/7jIt6jh.png)
 
@@ -54,6 +54,7 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - Redux implementation
 - Firebase/Redux implementation
 - Authentication & authorization
+- Pick between Realtime Database and Firestore
 - Create/modify/delete users
 - Automatic email invitation to new users
 - Image uploading
@@ -138,6 +139,7 @@ You also need to be familiar with [HTML](https://developer.mozilla.org/en-US/doc
     <li><a href="https://docs.react-firebase.com/getting-started#react-frontend">React Frontend</a></li>
     <li><a href="https://docs.react-firebase.com/getting-started/cloud-functions">Cloud Functions</a></li>
     <li><a href="https://docs.react-firebase.com/getting-started/continuous-integration-deployment">CI/CD</a></li>
+    <li><a href="https://docs.react-firebase.com/features/database-interface">Database Selection</a></li>
     <li><a href="https://docs.react-firebase.com/features/internationalization">Internationalization</a></li>
     <li><a href="https://docs.react-firebase.com/features/file-upload">File Upload</a></li>
     <li><a href="https://docs.react-firebase.com/features/social-media-authentication">Social Media Authentication</a></li>
