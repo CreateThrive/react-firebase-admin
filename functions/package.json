@@ -9,15 +9,18 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "setup-firebase": "node setupProject.js",
-    "test": "mocha -r ts-node/register --recursive 'test/**/*.test.ts' --timeout 10000 --exit"
+    "test:base": "mocha -r ts-node/register --recursive 'test/**/*.test.ts' --timeout 10000 --exit",
+    "test:rules": "firebase emulators:exec --only database,firestore 'yarn test:base --grep rules'",
+    "test": "yarn test:base --grep rules --invert"
   },
   "engines": {
     "node": "10"
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@firebase/testing": "^0.20.11",
     "camelcase": "^6.0.0",
-    "firebase-admin": "^9.1.0",
+    "firebase-admin": "^9.3.0",
     "firebase-function-tools": "^1.1.3",
     "firebase-functions": "^3.9.1",
     "glob": "^7.1.6",
@@ -30,7 +33,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "firebase-functions-test": "^0.2.1",
-    "mocha": "^8.1.1",
+    "mocha": "^8.2.1",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.3",
     "typescript": "^3.9.7"

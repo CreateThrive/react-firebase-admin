@@ -115,7 +115,8 @@ React Firebase Admin is our in-house admin dashboard boilerplate, used in many o
 - [Firebase-function-tools](https://github.com/TarikHuber/react-most-wanted) (★ 780) a tool for naming and loading our Cloud Functions.
 - [Glob](https://github.com/isaacs/node-glob) (★ 6.2k) glob functionality for Node.js.
 - [Camelcase](https://github.com/sindresorhus/camelcase) (★ 423) convert a dash/dot/underscore/space separated string to camelCase.
-- [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 372) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
+- [Resize Image](https://github.com/firebase/extensions/tree/master/storage-resize-images) (★ 474) Firebase Extension to create resized versions of images uploaded to Cloud Storage.
+- [Firebase Testing](https://www.npmjs.com/package/@firebase/testing) (★ 3.1k) to test Firestore and Realtime database security rules.
 
 #### Unit Testing
 
@@ -141,6 +142,7 @@ You also need to be familiar with [HTML](https://developer.mozilla.org/en-US/doc
     <li><a href="https://docs.react-firebase.com/getting-started#react-frontend">React Frontend</a></li>
     <li><a href="https://docs.react-firebase.com/getting-started/cloud-functions">Cloud Functions</a></li>
     <li><a href="https://docs.react-firebase.com/getting-started/continuous-integration-deployment">CI/CD</a></li>
+    <li><a href="https://docs.react-firebase.com/getting-started/firebase-emulator">Firebase Emulator</a></li>
     <li><a href="https://docs.react-firebase.com/features/database-interface">Database Selection</a></li>
     <li><a href="https://docs.react-firebase.com/features/internationalization">Internationalization</a></li>
     <li><a href="https://docs.react-firebase.com/features/file-upload">File Upload</a></li>

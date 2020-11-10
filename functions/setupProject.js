@@ -68,21 +68,29 @@ const replaceDatabase = (oldDatabase, newDatabase) => {
     let newInit;
     let oldImport;
     let newImport;
+    let oldPort;
+    let newPort;
     if (oldDatabase === 'rtdb') {
       oldInit = 'firebase.database()';
       newInit = 'firebase.firestore()';
       oldImport = 'firebase/database';
       newImport = 'firebase/firestore';
+      oldPort = '9000';
+      newPort = '8080';
     } else {
       oldInit = 'firebase.firestore()';
       newInit = 'firebase.database()';
       oldImport = 'firebase/firestore';
       newImport = 'firebase/database';
+      newPort = '9000';
+      oldPort = '8080';
     }
 
     data = data.replace(oldInit, newInit);
 
     data = data.replace(oldImport, newImport);
+
+    data = data.replace(oldPort, newPort);
 
     fs.writeFile(importPath, data, 'utf8', (err) => {
       if (err) return console.log(err);
