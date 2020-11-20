@@ -1,8 +1,14 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
+import Router from 'react-router-dom';
 
 import * as actions from 'state/actions/users';
 import User from '.';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: () => ({ id: 'userId' }),
+}));
 
 describe('<User /> rendering', () => {
   const dispatchMock = jest.fn();
@@ -12,12 +18,26 @@ describe('<User /> rendering', () => {
       .spyOn(reactRedux, 'useDispatch')
       .mockImplementation(() => dispatchMock);
     jest.spyOn(actions, 'usersCleanUp').mockImplementation(jest.fn);
+    jest
+      .spyOn(Router, 'useParams')
+      .mockImplementation(() => ({ id: 'userId' }));
   });
 
   it('should render without crashing', () => {
     const { component } = renderWithProviders(<User />)({
       users: {
-        data: [],
+        data: [
+          {
+            email: 'test@gmail.com',
+            name: 'Test',
+            location: 'Montevideo, Uruguay',
+            isAdmin: false,
+            file: null,
+            id: 'userId',
+            logoUrl: 'some logoUrl',
+            createdAt: '11/12/2020',
+          },
+        ],
       },
     });
 
@@ -27,7 +47,18 @@ describe('<User /> rendering', () => {
   it('should not show the spinner when creating a user', () => {
     const { component } = renderWithProviders(<User />)({
       users: {
-        data: [],
+        data: [
+          {
+            email: 'test@gmail.com',
+            name: 'Test',
+            location: 'Montevideo, Uruguay',
+            isAdmin: false,
+            file: null,
+            id: 'userId',
+            logoUrl: 'some logoUrl',
+            createdAt: '11/12/2020',
+          },
+        ],
       },
     });
 
@@ -37,7 +68,18 @@ describe('<User /> rendering', () => {
   it('should render the UserForm component when creating a user', () => {
     const { component } = renderWithProviders(<User />)({
       users: {
-        data: [],
+        data: [
+          {
+            email: 'test@gmail.com',
+            name: 'Test',
+            location: 'Montevideo, Uruguay',
+            isAdmin: false,
+            file: null,
+            id: 'userId',
+            logoUrl: 'some logoUrl',
+            createdAt: '11/12/2020',
+          },
+        ],
       },
     });
 

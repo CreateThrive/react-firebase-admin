@@ -2,12 +2,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import classNames from 'classnames';
 import { yupResolver } from '@hookform/resolvers';
 
-import paths from 'pages/Router/paths';
 import { usersCleanUp } from 'state/actions/users';
 import { useFormatDate, useFormatMessage } from 'hooks';
 import DatePicker from 'components/DatePicker';
@@ -25,6 +24,8 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
   );
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const { register, handleSubmit, errors, control, watch, setValue } = useForm({
     defaultValues: { ...user },
@@ -270,9 +271,12 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                           </button>
                         </div>
                         {!isProfile && (
-                          <Link to={paths.USERS} className="button">
+                          <div
+                            onClick={() => history.goBack()}
+                            className="button"
+                          >
                             {goBackMessage}
-                          </Link>
+                          </div>
                         )}
                       </div>
                     </div>

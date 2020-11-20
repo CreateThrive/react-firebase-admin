@@ -65,6 +65,25 @@ exports[`<Aside /> rendering should render without crashing 1`] = `
             </span>
           </a>
         </li>
+        <li>
+          <a
+            class="has-icon"
+            href="/teams"
+          >
+            <span
+              class="icon"
+            >
+              <i
+                class="mdi mdi-account-group"
+              />
+            </span>
+            <span
+              class="menu-item-label"
+            >
+              Teams
+            </span>
+          </a>
+        </li>
         <li
           class=""
         >

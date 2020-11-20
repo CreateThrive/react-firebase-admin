@@ -15,6 +15,8 @@ import {
   USERS_MODIFY_USER_FAIL,
   USERS_CLEAN_UP,
   USERS_CLEAR_DATA_LOGOUT,
+  USERS_ADD_USER,
+  USERS_REMOVE_USER,
 } from 'state/actions/users';
 
 const initialState = {
@@ -113,6 +115,14 @@ export const usersReducer = createReducer(
     }),
     [USERS_CLEAR_DATA_LOGOUT]: () => ({
       ...initialState,
+    }),
+    [USERS_REMOVE_USER]: (state, payload) => ({
+      ...state,
+      data: state.data.filter((value) => value.id !== payload.userId),
+    }),
+    [USERS_ADD_USER]: (state, payload) => ({
+      ...state,
+      data: [...state.data, payload.user],
     }),
   },
   initialState

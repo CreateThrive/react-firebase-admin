@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MediaCard /> rendering should render without crashing 1`] = `
+<DocumentFragment>
+  <div
+    class="media"
+    data-testid="media"
+    style="margin-top: auto; margin-bottom: auto; padding-bottom: 1rem;"
+  >
+    <figure
+      class="media-left"
+    >
+      <p
+        class="image is-64x64"
+      >
+        <img
+          alt="Profile logo preview"
+          class="is-rounded"
+          src="some logoUrl"
+        />
+      </p>
+    </figure>
+    <div
+      class="media-content"
+    >
+      <div
+        class="content"
+      >
+        <p
+          class="media-meta"
+        >
+          <strong>
+            Mateo
+          </strong>
+           
+          <small
+            class="has-text-grey"
+          >
+            Thu, Nov 12, 2020
+          </small>
+        </p>
+        <p>
+          mkrukuy@gmail.com
+        </p>
+      </div>
+    </div>
+    <div
+      class="media-right"
+    >
+      <div
+        class="field is-grouped is-grouped-multiline"
+      >
+        <div
+          class="control"
+        >
+          <a
+            href="/users/testId"
+          >
+            <span
+              class="icon"
+            >
+              <i
+                class="mdi mdi-account-edit"
+              />
+            </span>
+          </a>
+        </div>
+        <div
+          class="control"
+        >
+          <span
+            class="icon has-text-danger"
+            data-testid="delete"
+            style="cursor: pointer;"
+          >
+            <i
+              class="mdi mdi-cancel"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

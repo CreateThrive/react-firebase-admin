@@ -6,6 +6,7 @@ import { reducer as toastrReducer } from 'react-redux-toastr';
 import { authReducer } from './auth';
 import { usersReducer } from './users';
 import { preferencesReducer } from './preferences';
+import { teamsReducer } from './teams';
 
 export default combineReducers({
   auth: persistReducer(
@@ -27,6 +28,14 @@ export default combineReducers({
       blacklist: ['error', 'loading'],
     },
     usersReducer
+  ),
+  teams: persistReducer(
+    {
+      key: 'teams',
+      storage,
+      blacklist: ['error', 'loading'],
+    },
+    teamsReducer
   ),
   toastr: toastrReducer,
 });

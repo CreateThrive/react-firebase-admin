@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     
     function isAuthenticated() {
-    	return request.auth != null && request.auth.token.email_verified == true;
+    	return request.auth != null;
     }
 
     function isAdmin() {
@@ -13,15 +13,36 @@ service cloud.firestore {
 
     match /users/{userId} {
       
-    function isIdentified() {
-      return request.auth.uid == userId;
-    }
+      function isReadingItself() {
+        return request.auth.uid == userId;
+      }
 
-      allow read: if isAuthenticated() && (isAdmin() || isIdentified());
+      function isTeamMember() {
+        let authUserData =  get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+        
+        return authUserData.teams.hasAny(resource.data.teams);
+      }
+
+      allow read: if isAuthenticated() && (isAdmin() || isReadingItself() || isTeamMember());
 
       allow write: if isAuthenticated() && isAdmin();
      
-      allow update: if isAuthenticated() && (isAdmin() || isIdentified());
+      allow update: if isAuthenticated() && (isAdmin() || isReadingItself());
+     
+      allow delete: if isAuthenticated() && isAdmin();
+    }
+
+    match /teams/{teamId} {
+
+      function isUserFromTeam(){
+        return teamId in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.teams;
+      }
+      
+      allow read: if isAuthenticated() && (isAdmin() || isUserFromTeam());
+
+      allow write: if isAuthenticated() && isAdmin();
+     
+      allow update: if isAuthenticated() && isAdmin();
      
       allow delete: if isAuthenticated() && isAdmin();
     }

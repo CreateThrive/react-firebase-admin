@@ -8,5 +8,6 @@ export default {
   RESET_PASSWORD: '/recover-password',
   SECTION: '/section',
   SUBMENU_1: '/submenu1',
-  SUBMENU_2: '/submenu2'
+  SUBMENU_2: '/submenu2',
+  TEAMS: '/teams',
 };

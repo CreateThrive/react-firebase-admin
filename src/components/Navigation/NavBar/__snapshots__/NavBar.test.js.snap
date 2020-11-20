@@ -100,7 +100,7 @@ exports[`<NavBar /> rendering should render without crashing 1`] = `
             >
               <img
                 alt="User profile"
-                src="user-default-log.svg"
+                src="user-default-log.jpg"
               />
             </div>
             <div

@@ -79,3 +79,44 @@ export const uiConfig = (onSignInSuccessHandler, onSignInFailHandler) => {
     ],
   };
 };
+
+export const deleteLogo = (oldLogo, role) => {
+  if (!oldLogo.includes('firebasestorage')) {
+    return null;
+  }
+  const logoPath = oldLogo
+    .split(`${role}%2F`)
+    .pop()
+    .split('?alt=media')
+    .shift();
+  return firebase.storage().ref(`${role}/${logoPath}`).delete();
+};
+
+export const getLogoUrl = (uid, file, role) => {
+  const fileExtension = file.name.split('.').pop();
+
+  const bucketUrl = `${process.env.REACT_APP_FIRE_BASE_STORAGE_API}`;
+
+  return `${bucketUrl}/o/${role}%2F${uid}_200x200.${fileExtension}?alt=media`;
+};
+
+export const uploadLogo = (uid, file, role) => {
+  const storageRef = firebase.storage().ref();
+
+  const fileExtension = file.name.split('.').pop();
+
+  const fileName = `${uid}.${fileExtension}`;
+
+  return storageRef.child(`${role}/${fileName}`).put(file);
+};
+
+export const openModal = (setModal, id) => {
+  setModal((prevState) => ({
+    id,
+    isOpen: !prevState.isOpen,
+  }));
+};
+
+export const closeModal = (setModal) => {
+  setModal({ id: null, isOpen: false });
+};

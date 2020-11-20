@@ -6,7 +6,7 @@ import 'mocha';
 
 chai.use(chaiAsPromised);
 
-describe('onDelete Firestore', () => {
+describe('onDelete user Firestore', () => {
   let userRecord: any;
 
   it('should delete the user from the authentication section', async () => {
