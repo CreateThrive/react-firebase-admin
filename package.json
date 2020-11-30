@@ -59,7 +59,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.2",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.2",
     "cross-env": "^7.0.2",
     "deep-freeze": "^0.0.1",
     "dotenv": "^8.2.0",
