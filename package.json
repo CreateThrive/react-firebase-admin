@@ -86,11 +86,6 @@
     "redux-mock-store": "^1.5.4",
     "sass-loader": "^9.0.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run precommit && lint-staged"
-    }
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
