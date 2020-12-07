@@ -1,3 +1,10 @@
+@import "../../sass/colors";
+
+
+.fullColor{
+    background: map-get($blue, default);
+    color: map-get($white, default);  
+}
 .errorMessage {
   margin: 0.7rem 0 0 0;
 }
@@ -7,3 +14,4 @@
 .icon {
   margin-right: 5px;
 }
+

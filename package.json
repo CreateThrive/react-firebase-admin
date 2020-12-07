@@ -1,7 +1,8 @@
 {
   "name": "react-firebase-admin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "copyright": "HPM & MM2",
   "dependencies": {
     "@hookform/resolvers": "^0.1.0",
     "bulma": "^0.9.0",
@@ -11,6 +12,7 @@
     "mutationobserver-shim": "^0.3.7",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-avatar": "^3.9.7",
     "react-datepicker": "^3.0.0",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
@@ -38,7 +40,10 @@
     "deploy": "npm run build && firebase deploy --only hosting",
     "precommit:react": "npm test",
     "precommit:functions": "cd functions/ && npm run build && npm test",
-    "precommit": "cross-env CI=true npm run precommit:react && npm run precommit:functions"
+    "precommit": "cross-env CI=true npm run precommit:react && npm run precommit:functions",
+    "css-build": "node-sass --omit-source-map-url src/sass/custom.scss src/assets/css/custom.css",
+    "css-watch": "npm run css-build -- --watch",
+    "scss-start": "npm run css-watch"
   },
   "eslintConfig": {
     "extends": "react-app"

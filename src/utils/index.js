@@ -3,8 +3,10 @@ import firebase from 'firebase.js';
 
 import english from 'languages/en';
 import spanish from 'languages/es';
+import dutch from 'languages/nl';
 import en from 'assets/en.png';
 import es from 'assets/es.png';
+import nl from 'assets/nl.png';
 
 export const FIREBASE_RESPONSE = {
   EMAIL_IN_USE: 'auth/email-already-exists',
@@ -23,6 +25,7 @@ export const FIREBASE_RESPONSE = {
 export const messages = {
   en: english,
   es: spanish,
+  nl: dutch,
 };
 
 const getIntlContext = (locale) => {
@@ -51,6 +54,7 @@ export const browserLocale = navigator.language.split(/[-_]/)[0];
 export const flags = {
   en,
   es,
+  nl,
 };
 
 export const uiConfig = (onSignInSuccessHandler, onSignInFailHandler) => {
@@ -64,18 +68,18 @@ export const uiConfig = (onSignInSuccessHandler, onSignInFailHandler) => {
     signInOptions: [
       {
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        fullLabel: 'Continue with Google',
+        fullLabel: 'Login met Google',
         scopes: [
           'https://www.googleapis.com/auth/user.addresses.read',
           'https://www.googleapis.com/auth/userinfo.email',
         ],
       },
-      {
-        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        fullLabel: 'Continue with Facebook',
-        scopes: ['email'],
-      },
-      { provider: 'microsoft.com', fullLabel: 'Continue with Microsoft' },
+      // {
+      //   provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      //   fullLabel: 'Continue with Facebook',
+      //   scopes: ['email'],
+      // },
+      // { provider: 'microsoft.com', fullLabel: 'Continue with Microsoft' },
     ],
   };
 };

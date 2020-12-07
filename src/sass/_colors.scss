@@ -1,0 +1,55 @@
+$white: (
+    default: hsla(240, 0%, 100%, 1),
+    light: hsla(0, 0%, 100%, 1),
+    dark: hsla(240, 0%, 71%, 1),
+    highlight: hsla(240, 0%, 90%, 1),
+    transparent: hsla(240, 0%, 100%, 0.5)
+);
+$black: (
+    default: hsla(220, 5%, 11%, 1),
+    light: hsla(220, 5%, 20%, 1),
+    dark: hsla(220, 5%, 0%, 1),
+);
+
+$gray: (
+    default: hsla(0, 0%, 23%, 1),
+    light: hsla(0, 0%, 37%, 1),
+    extraLight: rgb(230, 230, 230),
+    dark: hsla(0, 0%, 14%, 1),
+);
+
+$yellow: (
+    default: hsla(54, 100%, 41%, 1),
+    light: hsla(54, 100%, 47%, 1),
+    dark: hsla(54, 100%, 30%, 1),
+);
+
+$blue: (
+    default: hsla(214, 62%, 36%, 1),
+    light: hsla(214, 62%, 55%, 1),
+    dark: hsla(214, 62%, 24%, 1),
+);
+
+$lightBlue: (
+    default:hsla(214, 62%, 90%, 1),
+    light: hsla(214, 62%, 100%, 1),
+    dark: hsla(214, 62%, 80%, 1),
+);
+
+$dark-blue: (
+    default: hsla(214, 55%, 17%, 1),
+    light: hsla(214, 55%, 22%, 1),
+    dark: hsla(214, 55%, 10%, 1),
+);
+
+$red: (
+    default: hsla(0, 100%, 35%, 1),
+    light: hsla(0, 100%, 44%, 1),
+    dark: hsla(0, 100%, 20%, 1),
+);
+
+$green: (
+    default: hsla(125, 58%, 30%, 1),
+    light: hsla(125, 58%, 45%, 1),
+    dark: hsla(125, 58%, 20%, 1),
+);

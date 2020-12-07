@@ -27,7 +27,7 @@ const mockedStore = (initial = {}) =>
 const initStore = (initialState) =>
   mockedStore({
     ...initialState,
-    preferences: { locale: 'en' },
+    preferences: { locale: 'nl' },
   });
 
 // Use this to test mounted components w/ store connection
@@ -35,7 +35,7 @@ global.renderWithProviders = (children) => (initialState) => {
   const store = initStore(initialState);
   return {
     component: render(
-      <IntlProvider locale="en" messages={english}>
+      <IntlProvider locale="nl" messages={english}>
         <BrowserRouter keyLength={0}>
           <Provider store={store}>{children}</Provider>
         </BrowserRouter>

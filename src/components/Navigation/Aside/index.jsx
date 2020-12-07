@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { useFormatMessage } from 'hooks';
 import paths from 'pages/Router/paths';
@@ -11,10 +11,10 @@ import classes from './Aside.module.scss';
 
 export const SubMenu = ({ label, children }) => {
   const [active, setActive] = useState(false);
-
   return (
     <li className={classNames({ 'is-active': active })}>
-      <a
+      <button
+
         exact-active-class="is-active"
         className="has-icon has-dropdown-icon"
         onClick={() => setActive(!active)}
@@ -34,7 +34,7 @@ export const SubMenu = ({ label, children }) => {
             />
           </span>
         </div>
-      </a>
+      </button>
       <ul>{children}</ul>
     </li>
   );
@@ -57,13 +57,6 @@ const Aside = ({ handleMobileToggle }) => {
 
   return (
     <aside className="aside is-placed-left is-expanded">
-      <Link to={paths.ROOT} className="aside-tools">
-        <div className="aside-tools-label">
-          <span>
-            <b>React</b> Firebase
-          </span>
-        </div>
-      </Link>
       <div className="menu is-menu-main">
         <ul className="menu-list">
           <li>

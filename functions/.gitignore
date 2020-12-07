@@ -13,3 +13,4 @@ lib/
 env.json
 
 service-account-key.json
+serviceAccount.json

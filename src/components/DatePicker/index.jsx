@@ -4,12 +4,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
 import es from 'date-fns/locale/es';
 import en from 'date-fns/locale/en-US';
+import nl from 'date-fns/locale/nl';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import './DatePicker.scss';
 
 registerLocale('en', en);
 registerLocale('es', es);
+registerLocale('nl', nl);
 
 const dateFormat = (locale) => {
   switch (locale) {

@@ -1,7 +1,5 @@
 {
   "projects": {
-    "production": "react-firebase-admin-eeac2",
-    "staging": "react-firebase-admin-eeac2",
-    "default": "react-firebase-admin-eeac2"
+    "default": "videoned-mm2-hpm"
   }
 }

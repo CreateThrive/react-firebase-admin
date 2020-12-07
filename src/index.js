@@ -12,6 +12,7 @@ import Router from './pages/Router';
 import * as serviceWorker from './serviceWorker';
 
 import './assets/css/main.css';
+import './assets/css/custom.css';
 
 const { store, persistor } = configureStore({});
 

@@ -16,7 +16,7 @@ const LanguageWrapper = ({ children }) => {
   );
 
   if (!locale) {
-    locale = availableLocales.includes(browserLocale) ? browserLocale : 'en';
+    locale = availableLocales.includes(browserLocale) ? browserLocale : 'nl';
     dispatch(setUserLocale(locale));
   }
 

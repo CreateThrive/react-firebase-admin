@@ -1,0 +1,22 @@
+@charset "utf-8";
+@import "../../node_modules/bulma/bulma.sass";
+@import "./colors";
+@import "./navigation";
+
+button{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+
+.logoContainer{
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    height: 100%;
+    .logo{
+        height: 150px;
+        width: auto;
+    }
+  }

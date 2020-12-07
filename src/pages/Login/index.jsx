@@ -20,6 +20,7 @@ import { firebaseError, uiConfig } from 'utils';
 import ErrorMessage from 'components/ErrorMessage';
 import paths from 'pages/Router/paths';
 import classes from './Login.module.scss';
+import { ReactComponent as Logo } from 'assets/images/svg/VideoNed_Logo.svg';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -100,11 +101,19 @@ const Login = () => {
   const invalidPasswordMessage = useFormatMessage('Login.invalidPassword');
 
   return (
-    <section className="section hero is-fullheight is-error-section">
+    <section className={classNames(
+      'section hero is-fullheight is-error-section',
+      classes.fullColor
+    )}>
       {redirect}
       <div className="hero-body">
         <div className="container">
           <div className="columns is-centered">
+            <div className="column is-one-fifths">
+              <div className="logoContainer">
+                <Logo className="logo" />
+              </div>
+            </div>
             <div className="column is-two-fifths">
               <div className="card has-card-header-background">
                 <header className="card-header">
@@ -163,11 +172,11 @@ const Login = () => {
                           }
                         />
                       ) : (
-                        isEmailLink &&
-                        isValidPassword && (
-                          <p className="is-success">{safePasswordMessage}</p>
-                        )
-                      )}
+                          isEmailLink &&
+                          isValidPassword && (
+                            <p className="is-success">{safePasswordMessage}</p>
+                          )
+                        )}
                     </div>
                     <br />
                     <div className="field is-grouped">

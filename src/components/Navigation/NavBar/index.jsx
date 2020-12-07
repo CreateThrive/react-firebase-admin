@@ -8,8 +8,10 @@ import { setUserLocale } from 'state/actions/preferences';
 import { useFormatMessage } from 'hooks';
 import { logout } from 'state/actions/auth';
 import paths from 'pages/Router/paths';
-import defaultLogo from 'assets/user-default-log.svg';
 import Link from '../Link';
+import Avatar from 'react-avatar';
+import classes from './Navbar.module.scss';
+import { ReactComponent as Logo } from 'assets/images/svg/VideoNed_Logo.svg';
 
 const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   const [navMobileActive, setNavMobileActive] = useState(false);
@@ -42,10 +44,11 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
   return (
     <nav id="navbar-main" className="navbar is-fixed-top">
       <div className="navbar-brand">
-        <a
+        <button
           className="navbar-item is-hidden-desktop jb-aside-mobile-toggle"
           onClick={handleMobileToggle}
         >
+
           <span className="icon">
             <i
               className={classNames(
@@ -56,10 +59,13 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
               )}
             />
           </span>
-        </a>
+        </button>
+        <div className="logoContainer">
+          <Logo className="logo" />
+        </div>
       </div>
       <div className="navbar-brand is-right">
-        <a
+        <button
           className="navbar-item is-hidden-desktop jb-navbar-menu-toggle"
           data-target="navbar-menu"
           onClick={onMobileToggleHandler}
@@ -73,7 +79,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
               )}
             />
           </span>
-        </a>
+        </button>
       </div>
       <div
         className={classNames('navbar-menu', 'fadeIn', 'animated', 'faster', {
@@ -82,8 +88,8 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
         id="navbar-menu"
       >
         <div className="navbar-end">
-          <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
-            <a className="navbar-link is-arrowless">
+          <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable locales">
+            <button className="navbar-link is-arrowless">
               <div className="is-user-avatar">
                 <span>
                   <img id={locale} src={flags[locale]} alt={`${locale} flag`} />
@@ -92,10 +98,10 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
               <span className="icon">
                 <i className="mdi mdi-chevron-down" />
               </span>
-            </a>
+            </button>
             <div className="navbar-dropdown">
               {locales.map((local) => (
-                <a
+                <button
                   onClick={() => changeLocaleHandler(local)}
                   className="navbar-item"
                   id={local}
@@ -103,17 +109,17 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 >
                   <div className="is-user-avatar">
                     <span>
-                      <img src={flags[local]} alt={`${local} flag`} />
+                      <img src={flags[local]} alt={`Locale ${local}`} />
                     </span>
                   </div>
-                </a>
+                </button>
               ))}
             </div>
           </div>
           <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
-            <a className="navbar-link is-arrowless">
+            <button className="navbar-link is-arrowless">
               <div className="is-user-avatar">
-                <img src={logoUrl || defaultLogo} alt="User profile" />
+                <Avatar className={classes.avatar} name={userName} size="35px" round={true} src={logoUrl} />
               </div>
               <div className="is-user-name">
                 <span>{userName}</span>
@@ -121,7 +127,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
               <span className="icon">
                 <i className="mdi mdi-chevron-down" />
               </span>
-            </a>
+            </button>
             <div className="navbar-dropdown">
               <Link to={paths.PROFILE} onClick={onMobileToggleHandler}>
                 <span className="icon">
@@ -130,7 +136,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                 <span>{useFormatMessage('NavBar.profile')}</span>
               </Link>
               <hr className="navbar-divider" />
-              <a
+              <button
                 className="navbar-item"
                 id="logout"
                 onClick={onClickLogoutHandler}
@@ -139,7 +145,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
                   <i className="mdi mdi-logout" />
                 </span>
                 <span>{useFormatMessage('NavBar.logOut')}</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>

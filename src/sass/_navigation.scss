@@ -1,0 +1,68 @@
+.navbar{
+    background: map-get($blue, default);
+    color: map-get($white, default);
+    .navbar-item{
+        &.navbar-item.has-divider{
+            border-right: none;
+        }
+        color: inherit;
+        .navbar-link{
+            color: map-get($white, default);
+        }
+     
+
+        &:hover, &:focus, &:active{
+            color: map-get($black, default);
+            .navbar-link{
+                color: inherit;
+            }
+        }
+    }
+    .logoContainer{
+        padding: 0.8rem 1.5rem;
+        height: 50px;
+        .logo{
+            height: 2rem;
+            width: auto;
+        }
+    }
+    .locales{
+        display: none; // Hide multilangage feature
+    }   
+}
+
+
+@media screen and (max-width: 1023px){
+    .navbar{
+        background: map-get($blue, default);
+        color: map-get($white, default);
+       
+        .navbar-item{
+            color: map-get($black, default);
+            .navbar-link{
+                color: inherit;
+            }
+
+            &:hover, &:focus, &:active{
+                color: map-get($black, default);
+                .navbar-link{
+                    color: map-get($black, default);
+                }
+            }
+        }
+        .is-hidden-desktop{
+            color: inherit;
+            &:hover, &:focus, &:active{
+                color: inherit;
+                .navbar-link{
+                    color: inherit;
+                }
+            }
+        }
+        .logoContainer{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    }  
+}
