@@ -2,9 +2,18 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import * as yup from 'yup';
 
 import * as actions from 'state/actions/users';
 import UserForm from '.';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  name: yup.string().required(),
+  isAdmin: yup.boolean().notRequired(),
+  location: yup.string().notRequired(),
+  createdAt: yup.string().required(),
+});
 
 describe('<UserForm /> rendering', () => {
   let userData;
@@ -31,7 +40,11 @@ describe('<UserForm /> rendering', () => {
     const user = { ...userData, createdAt: '11/21/2020' };
 
     const { component } = renderWithProviders(
-      <UserForm user={user} action={actions.createUser} />
+      <UserForm
+        user={user}
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -41,7 +54,11 @@ describe('<UserForm /> rendering', () => {
 
   it('should display user name preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm
+        user={userData}
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -51,7 +68,11 @@ describe('<UserForm /> rendering', () => {
 
   it('should display email preview if it is creating a new user', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} action={actions.createUser} />
+      <UserForm
+        user={userData}
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -64,7 +85,12 @@ describe('<UserForm /> rendering', () => {
 
   it('should display location preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -77,7 +103,12 @@ describe('<UserForm /> rendering', () => {
 
   it('should display admin preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -87,7 +118,12 @@ describe('<UserForm /> rendering', () => {
 
   it('should display created preview', () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} isEditing action={actions.createUser} />
+      <UserForm
+        user={userData}
+        isEditing
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -97,7 +133,6 @@ describe('<UserForm /> rendering', () => {
 
 describe('<LoginForm /> actions', () => {
   const dispatchMock = jest.fn();
-  const setUser = jest.fn();
 
   let userData;
   beforeEach(() => {
@@ -120,7 +155,11 @@ describe('<LoginForm /> actions', () => {
 
   it('should dispatch createUser action when creating a new user', async () => {
     const { component } = renderWithProviders(
-      <UserForm user={userData} action={actions.createUser} setUser={setUser} />
+      <UserForm
+        user={userData}
+        onSubmitHandler={actions.createUser}
+        schema={schema}
+      />
     )({
       users: {},
     });
@@ -137,8 +176,8 @@ describe('<LoginForm /> actions', () => {
       <UserForm
         user={userData}
         isEditing
-        action={actions.modifyUser}
-        setUser={setUser}
+        onSubmitHandler={actions.modifyUser}
+        schema={schema}
       />
     )({
       users: {},
