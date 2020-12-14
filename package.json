@@ -27,7 +27,7 @@
     "redux-act": "^1.8.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "yup": "^0.32.5"
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",
