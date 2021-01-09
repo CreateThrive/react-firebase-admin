@@ -6,12 +6,15 @@ import User from '.';
 
 describe('<User /> rendering', () => {
   const dispatchMock = jest.fn();
+  const mockDate = new Date(1605668400000);
 
   beforeEach(() => {
     jest
       .spyOn(reactRedux, 'useDispatch')
       .mockImplementation(() => dispatchMock);
     jest.spyOn(actions, 'usersCleanUp').mockImplementation(jest.fn);
+    jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
+    Date.now = jest.fn(() => mockDate.getTime());
   });
 
   it('should render without crashing', () => {
