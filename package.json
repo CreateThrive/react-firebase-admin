@@ -12,7 +12,7 @@
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
-    "react-datepicker": "^3.3.0",
+    "react-datepicker": "^3.6.0",
     "react-dom": "^17.0.1",
     "react-firebaseui": "^4.1.0",
     "react-hook-form": "^6.12.2",
