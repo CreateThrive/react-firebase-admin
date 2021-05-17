@@ -15,7 +15,7 @@
     "react-datepicker": "^3.3.0",
     "react-dom": "^17.0.1",
     "react-firebaseui": "^4.1.0",
-    "react-hook-form": "^6.12.2",
+    "react-hook-form": "^7.6.0",
     "react-intl": "^5.10.6",
     "react-redux": "^7.2.2",
     "react-redux-toastr": "^7.6.5",
