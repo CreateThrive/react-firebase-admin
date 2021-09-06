@@ -17,7 +17,7 @@
     "react-firebaseui": "^4.1.0",
     "react-hook-form": "^6.12.2",
     "react-intl": "^5.10.6",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.5",
     "react-redux-toastr": "^7.6.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
