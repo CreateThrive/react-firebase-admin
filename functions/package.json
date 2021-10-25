@@ -29,7 +29,7 @@
     "@types/mocha": "^8.0.4",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "firebase-functions-test": "^0.2.3",
+    "firebase-functions-test": "^0.3.3",
     "mocha": "^8.2.1",
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
