@@ -55,7 +55,7 @@ export const authReducer = createReducer(
       ...initialState,
       loading: true
     }),
-    [AUTH_FETCH_USER_DATA_SUCCESS]: (state, payload) => ({
+    [AUTH_FETCH_USER_DATA_SUCCESS]:  (state, payload) => ({
       ...state,
       userData: {
         id: payload.id,

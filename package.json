@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^0.1.0",
+    "@reduxjs/toolkit": "^1.7.1",
     "bulma": "^0.9.1",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",

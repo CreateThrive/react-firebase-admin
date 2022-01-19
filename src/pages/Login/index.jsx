@@ -220,7 +220,7 @@ const Login = () => {
                           )}
                           firebaseAuth={firebase.auth()}
                         />
-                      </div>
+                      </div> 
                     </>
                   )}
                 </div>

@@ -1,29 +1,24 @@
-import { createStore, compose, applyMiddleware } from 'redux';
-import { persistStore } from 'redux-persist';
-import thunk from 'redux-thunk';
+import { configureStore } from "@reduxjs/toolkit";
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
 
-import rootReducer from './reducers';
-import { verifyAuth } from './actions/auth';
+import rootReducer from "./reducers";
 
-export const configureStore = initialState => {
-  const middlewares = [];
 
-  const composeEnhancers =
-    (process.env.NODE_ENV === 'development'
-      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-      : null) || compose;
+const reducers = combineReducers({
+  rootReducer
+});
 
-  middlewares.push(applyMiddleware(thunk));
-
-  const store = createStore(
-    rootReducer,
-    initialState,
-    composeEnhancers(...middlewares)
-  );
-
-  store.dispatch(verifyAuth());
-
-  const persistor = persistStore(store);
-
-  return { store, persistor };
+const persistConfig = {
+  key: 'root',
+  storage,
 };
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export default store;

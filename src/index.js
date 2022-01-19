@@ -2,18 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 import ReduxToastr from 'react-redux-toastr';
 
 import LanguageWrapper from 'components/LanguageWrapper';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
-import { configureStore } from './state/store';
+import store from './state/store';
 import './index.scss';
 import Router from './pages/Router';
 import * as serviceWorker from './serviceWorker';
 
 import './assets/css/main.css';
 
-const { store, persistor } = configureStore({});
+const persistor = persistStore(store);
 
 const app = (
   <Provider store={store}>
