@@ -1,4 +1,4 @@
-import { createAction } from 'redux-act';
+import { createAction } from '@reduxjs/toolkit';
 import { toastr } from 'react-redux-toastr';
 
 import { firebaseError, FIREBASE_RESPONSE } from 'utils';

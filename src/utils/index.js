@@ -1,8 +1,8 @@
 import { createIntl, createIntlCache } from 'react-intl';
 import firebase from 'firebase.js';
 
-import english from 'languages/en.json';
-import spanish from 'languages/es.json';
+import english from 'languages/en';
+import spanish from 'languages/es';
 import en from 'assets/en.png';
 import es from 'assets/es.png';
 

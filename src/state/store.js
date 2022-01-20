@@ -1,24 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import storage from 'redux-persist/lib/storage';
-import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
 
-import rootReducer from "./reducers";
+import rootReducer from './reducers';
+import { verifyAuth } from './actions/auth';
 
+export const store = configureStore({
+  reducer: rootReducer,
 
-const reducers = combineReducers({
-  rootReducer
 });
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, reducers);
-
-const store = configureStore({
-  reducer: persistedReducer,
-});
-
-export default store;
+store.dispatch(verifyAuth());
+export const persistor = persistStore(store);
