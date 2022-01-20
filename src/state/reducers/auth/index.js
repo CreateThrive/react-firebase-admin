@@ -44,93 +44,96 @@ export const authReducer = createReducer(
   {
     [AUTH_SIGN_IN_INIT]: () => ({
       ...initialState,
-      loading: true
+      loading: true,
     }),
     [AUTH_SIGN_IN_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload.error,
     }),
     [AUTH_FETCH_USER_DATA_INIT]: () => ({
       ...initialState,
-      loading: true
+      loading: true,
     }),
-    [AUTH_FETCH_USER_DATA_SUCCESS]: (state, payload) => ({
+    [AUTH_FETCH_USER_DATA_SUCCESS]: (
+      state,
+      { id, isAdmin, email, name, location, logoUrl, createdAt }
+    ) => ({
       ...state,
       userData: {
-        id: payload.id,
-        isAdmin: payload.isAdmin,
-        email: payload.email,
-        name: payload.name,
-        location: payload.location,
-        logoUrl: payload.logoUrl,
-        createdAt: payload.createdAt
+        id,
+        isAdmin,
+        email,
+        name,
+        location,
+        logoUrl,
+        createdAt,
       },
       loading: false,
-      error: null
+      error: null,
     }),
     [AUTH_FETCH_USER_DATA_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload.error,
     }),
     [AUTH_LOGOUT_INIT]: () => ({ ...initialState }),
-    [AUTH_LOGOUT_SUCCESS]: state => ({ ...state }),
-    [AUTH_RESTORE_SESSION_INIT]: state => ({ ...state, restoring: true }),
-    [AUTH_RESTORE_SESSION_SUCCESS]: state => ({
+    [AUTH_LOGOUT_SUCCESS]: (state) => ({ ...state }),
+    [AUTH_RESTORE_SESSION_INIT]: (state) => ({ ...state, restoring: true }),
+    [AUTH_RESTORE_SESSION_SUCCESS]: (state) => ({
       ...state,
       restoring: false,
-      restoringError: null
+      restoringError: null,
     }),
-    [AUTH_RESTORE_SESSION_FAIL]: state => ({
+    [AUTH_RESTORE_SESSION_FAIL]: (state) => ({
       ...state,
       restoring: false,
-      restoringError: true
+      restoringError: true,
     }),
-    [AUTH_SET_PASSWORD_INIT]: state => ({ ...state, loading: true }),
-    [AUTH_SET_PASSWORD_SUCCESS]: state => ({
+    [AUTH_SET_PASSWORD_INIT]: (state) => ({ ...state, loading: true }),
+    [AUTH_SET_PASSWORD_SUCCESS]: (state) => ({
       ...state,
       loading: false,
-      error: null
+      error: null,
     }),
     [AUTH_SET_PASSWORD_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload.error,
     }),
     [AUTH_RESET_PASSWORD_INIT]: () => ({
       ...initialState,
-      loading: true
+      loading: true,
     }),
-    [AUTH_RESET_PASSWORD_SUCCESS]: state => ({
+    [AUTH_RESET_PASSWORD_SUCCESS]: (state) => ({
       ...state,
       loading: false,
       error: null,
-      restoredPassword: true
+      restoredPassword: true,
     }),
     [AUTH_RESET_PASSWORD_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload.error,
     }),
-    [AUTH_CLEAN_UP]: state => ({
+    [AUTH_CLEAN_UP]: (state) => ({
       ...state,
       error: null,
-      changedPassword: false
+      changedPassword: false,
     }),
-    [AUTH_CHANGE_PASSWORD_INIT]: state => ({
+    [AUTH_CHANGE_PASSWORD_INIT]: (state) => ({
       ...state,
-      loading: true
+      loading: true,
     }),
-    [AUTH_CHANGE_PASSWORD_SUCCESS]: state => ({
+    [AUTH_CHANGE_PASSWORD_SUCCESS]: (state) => ({
       ...state,
       loading: false,
-      changedPassword: true
+      changedPassword: true,
     }),
     [AUTH_CHANGE_PASSWORD_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
-      error: payload.error
+      error: payload.error,
     }),
     [AUTH_UPDATE_USER_DATA]: (state, payload) => ({
       ...state,
@@ -141,32 +144,35 @@ export const authReducer = createReducer(
         name: payload.name,
         location: payload.location,
         logoUrl: payload.logoUrl || state.userData.logoUrl,
-        createdAt: payload.createdAt
-      }
+        createdAt: payload.createdAt,
+      },
     }),
-    [AUTH_PROVIDER_INIT]: state => ({
+    [AUTH_PROVIDER_INIT]: (state) => ({
       ...state,
-      loading: true
+      loading: true,
     }),
-    [AUTH_PROVIDER_SUCCESS]: (state, payload) => ({
+    [AUTH_PROVIDER_SUCCESS]: (
+      state,
+      { id, isAdmin, email, name, location, logoUrl, createdAt }
+    ) => ({
       ...state,
       userData: {
-        id: payload.id,
-        isAdmin: payload.isAdmin,
-        email: payload.email,
-        name: payload.name,
-        location: payload.location,
-        logoUrl: payload.logoUrl,
-        createdAt: payload.createdAt
+        id,
+        isAdmin,
+        email,
+        name,
+        location,
+        logoUrl,
+        createdAt,
       },
       error: null,
-      loading: false
+      loading: false,
     }),
     [AUTH_PROVIDER_FAIL]: (state, payload) => ({
       ...state,
       loading: false,
-      error: payload.error
-    })
+      error: payload.error,
+    }),
   },
   initialState
 );

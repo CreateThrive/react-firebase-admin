@@ -31,9 +31,9 @@ export const usersReducer = createReducer(
       ...initialState,
       loading: true,
     }),
-    [USERS_FETCH_DATA_SUCCESS]: (state, payload) => ({
+    [USERS_FETCH_DATA_SUCCESS]: (state, { data }) => ({
       ...state,
-      data: payload.data,
+      data,
       loading: false,
       error: null,
     }),
