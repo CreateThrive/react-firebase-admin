@@ -8,6 +8,7 @@ import configureStore from 'redux-mock-store';
 import { IntlProvider } from 'react-intl';
 import english from 'languages/en';
 import 'mutationobserver-shim';
+import thunk from 'redux-thunk';
 
 global.MutationObserver = window.MutationObserver;
 
@@ -21,7 +22,7 @@ global.reducerTester = (reducer) => (currentState, action, expectedState) => {
 
 const mockedStore = (initial = {}) =>
   configureStore([
-    /* place middlewares here */
+    thunk
   ])(initial);
 
 const initStore = (initialState) =>
