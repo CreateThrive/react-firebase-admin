@@ -6,9 +6,12 @@ const initialState = {
   locale: null,
 };
 
-export const preferencesReducer = createReducer(initialState, (builder) => {
-  builder.addCase(PREFERENCES_SET_LOCALE, (state, payload) => ({
-    ...state,
-    locale: payload.locale,
-  }));
-});
+export const preferencesReducer = createReducer(
+    initialState,
+  {
+    [PREFERENCES_SET_LOCALE]: (state, payload) => ({
+      ...state,
+      locale: payload.locale,
+    }),
+  }
+);

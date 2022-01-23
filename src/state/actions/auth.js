@@ -134,7 +134,10 @@ export const checkUserData = () => {
 
 export const auth = (email, password) => {
   return async (dispatch, getState) => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     dispatch(AUTH_SIGN_IN_INIT());
+   
     const { locale } = getState().preferences;
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
