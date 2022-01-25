@@ -62,6 +62,7 @@ export const authReducer = createReducer(initialState, {
     state.loading = false;
     state.error = payload.error;
   },
+  
   [AUTH_LOGOUT_INIT]: () => ({}),
   [AUTH_LOGOUT_SUCCESS]: () => ({}),
   [AUTH_RESTORE_SESSION_INIT]: (state) => {
