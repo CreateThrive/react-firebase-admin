@@ -26,6 +26,7 @@ const initialState = {
   deleted: false,
 };
 
+
 export const usersReducer = createReducer(initialState, {
   [USERS_FETCH_DATA_INIT]: (state) => {
     state.loading = true;
