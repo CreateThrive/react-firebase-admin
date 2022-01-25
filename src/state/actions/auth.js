@@ -96,14 +96,16 @@ export const verifyAuth = () => {
 
 export const fetchUserData = () => {
   return async (dispatch) => {
+  
     dispatch(AUTH_FETCH_USER_DATA_INIT());
 
     const { uid } = firebase.auth().currentUser;
-
+    console.log(uid);
     let user;
 
     try {
       user = await fetchDocument('users', uid);
+      console.log(user);
     } catch (error) {
       dispatch(logout());
       return dispatch(AUTH_FETCH_USER_DATA_FAIL({ error }));
@@ -115,8 +117,9 @@ export const fetchUserData = () => {
 
     return dispatch(
       AUTH_FETCH_USER_DATA_SUCCESS({
-        id: uid,
+        user: { id: uid,
         ...user,
+        }
       })
     );
   };
@@ -134,8 +137,7 @@ export const checkUserData = () => {
 
 export const auth = (email, password) => {
   return async (dispatch, getState) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
+    
     dispatch(AUTH_SIGN_IN_INIT());
    
     const { locale } = getState().preferences;
