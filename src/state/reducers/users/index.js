@@ -30,45 +30,45 @@ export const usersReducer = createReducer(initialState, {
   [USERS_FETCH_DATA_INIT]: (state) => {
     state.loading = true;
   },
-  [USERS_FETCH_DATA_SUCCESS]: (state, payload) => {
+  [USERS_FETCH_DATA_SUCCESS]: (state, { payload}) => {
     state.data = payload.data;
     state.loading = false;
     state.error = null;
   },
-  [USERS_FETCH_DATA_FAIL]: (state, payload) => {
+  [USERS_FETCH_DATA_FAIL]: (state, { payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
   [USERS_DELETE_USER_INIT]: (state) => {
     state.loading = true;
   },
-  [USERS_DELETE_USER_SUCCESS]: (state, payload) => {
+  [USERS_DELETE_USER_SUCCESS]: (state, { payload}) => {
     state.data = state.data.filter((elem) => elem.id !== payload.id);
     state.loading = false;
     state.error = null;
     state.deleted = true;
   },
-  [USERS_DELETE_USER_FAIL]: (state, payload) => {
+  [USERS_DELETE_USER_FAIL]: (state, { payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
   [USERS_CREATE_USER_INIT]: (state) => {
     state.loading = true;
   },
-  [USERS_CREATE_USER_SUCCESS]: (state, payload) => {
+  [USERS_CREATE_USER_SUCCESS]: (state, { payload}) => {
     state.data = state.data.concat(payload.user);
     state.loading = false;
     state.error = null;
     state.success = true;
   },
-  [USERS_CREATE_USER_FAIL]: (state, payload) => {
+  [USERS_CREATE_USER_FAIL]: (state, { payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
   [USERS_MODIFY_USER_INIT]: (state) => {
     state.loading = true;
   },
-  [USERS_MODIFY_USER_SUCCESS]: (state, payload) => {
+  [USERS_MODIFY_USER_SUCCESS]: (state, { payload}) => {
     state.data = !state.data
       ? []
       : state.data.map((elem) => {
@@ -88,7 +88,7 @@ export const usersReducer = createReducer(initialState, {
     state.error = null;
     state.success = true;
   },
-  [USERS_MODIFY_USER_FAIL]: (state, payload) => {
+  [USERS_MODIFY_USER_FAIL]: (state, { payload}) => {
     state.loading = false;
     state.error = payload.error;
   },

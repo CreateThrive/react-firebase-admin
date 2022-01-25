@@ -10,7 +10,7 @@ const initialState = {
 export const preferencesReducer = createReducer(
     initialState,
   {
-    [PREFERENCES_SET_LOCALE]: (state, payload) => {
+    [PREFERENCES_SET_LOCALE]: (state, {payload}) => {
       state.locale = payload.locale;
     },
   }

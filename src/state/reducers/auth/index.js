@@ -45,7 +45,7 @@ export const authReducer = createReducer(initialState, {
   [AUTH_SIGN_IN_INIT]: (state) => {
     state.loading = true;
   },
-  [AUTH_SIGN_IN_FAIL]: (state, payload) => {
+  [AUTH_SIGN_IN_FAIL]: (state, {payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
@@ -58,11 +58,12 @@ export const authReducer = createReducer(initialState, {
     state.loading = false;
     state.error = null;
   },
-  [AUTH_FETCH_USER_DATA_FAIL]: (state, payload) => {
+  [AUTH_FETCH_USER_DATA_FAIL]: (state, {payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
-  
+
+
   [AUTH_LOGOUT_INIT]: () => ({}),
   [AUTH_LOGOUT_SUCCESS]: () => ({}),
   [AUTH_RESTORE_SESSION_INIT]: (state) => {
@@ -83,7 +84,7 @@ export const authReducer = createReducer(initialState, {
     state.loading = false;
     state.error = null;
   },
-  [AUTH_SET_PASSWORD_FAIL]: (state, payload) => {
+  [AUTH_SET_PASSWORD_FAIL]: (state, {payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
@@ -95,7 +96,7 @@ export const authReducer = createReducer(initialState, {
     state.error = null ;
     state.restoredPassword = true ;
   },
-  [AUTH_RESET_PASSWORD_FAIL]: (state, payload) => {
+  [AUTH_RESET_PASSWORD_FAIL]: (state, {payload}) => {
     state.loading = false ;
     state.error = payload.error;
   },
@@ -110,22 +111,23 @@ export const authReducer = createReducer(initialState, {
     state.loading = false;
     state.changedPassword = true;
   },
-  [AUTH_CHANGE_PASSWORD_FAIL]: (state, payload) => {
+  [AUTH_CHANGE_PASSWORD_FAIL]: (state, {payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
-  [AUTH_UPDATE_USER_DATA]: (state, payload) => {
-    state.userData = payload;
+  [AUTH_UPDATE_USER_DATA]: (state, {payload}) => {
+     const { user } = payload;
+    state.userData = user;
   },
   [AUTH_PROVIDER_INIT]: (state) => {
     state.loading = true;
   },
-  [AUTH_PROVIDER_SUCCESS]: (state, payload) => {
+  [AUTH_PROVIDER_SUCCESS]: (state, {payload}) => {
     state.userData = payload;
     state.error = null;
     state.loading = false;
   },
-  [AUTH_PROVIDER_FAIL]: (state, payload) => {
+  [AUTH_PROVIDER_FAIL]: (state, {payload}) => {
     state.loading = false;
     state.error = payload.error;
   },
