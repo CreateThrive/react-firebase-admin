@@ -203,13 +203,16 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                       <Controller
                         control={control}
                         name="createdAt"
-                        render={({ onChange, name, value }) => (
-                          <DatePicker
-                            name={name}
-                            onChange={onChange}
-                            date={new Date(value)}
-                          />
-                        )}
+                        render={({ onChange, name, value }) => {
+    
+                          return (
+                            <DatePicker
+                              name={name}
+                              onChange={onChange}
+                              date={new Date(value)}
+                            />
+                          );
+                        }}
                       />
                     </div>
                   </div>

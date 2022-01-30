@@ -42,6 +42,8 @@ export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
 
 export const fetchUsers = (userId = '') => {
   return async (dispatch, getState) => {
+    // eslint-disable-next-line no-debugger
+    
     dispatch(checkUserData());
 
     dispatch(USERS_FETCH_DATA_INIT());
@@ -162,7 +164,6 @@ export const createUser = ({
   return async (dispatch, getState) => {
     dispatch(USERS_CREATE_USER_INIT());
     const { locale } = getState().preferences;
-
     let response;
     try {
       const createUserAuth = firebase

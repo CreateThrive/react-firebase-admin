@@ -37,7 +37,7 @@ const DatePickerStyled = ({ date, onChange }) => {
     <DatePicker
       locale={locale}
       dateFormat={dateFormat(locale)}
-      selected={date}
+      selected={!Number.isNaN(date.getTime()) ? date : new Date()}
       onChange={onDateChangedHandler}
     />
   );

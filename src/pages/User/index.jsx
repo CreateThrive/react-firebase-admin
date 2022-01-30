@@ -30,10 +30,11 @@ const User = () => {
     }),
     shallowEqual
   );
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
+    
     if (isEditing) {
       if (!userData) {
         dispatch(fetchUsers(id));
@@ -75,7 +76,7 @@ const User = () => {
         </div>
       </section>
       <section className="section is-main-section">
-        {isEditing && !userData ? (
+        {isEditing && !userData && Array.isArray(userData) && userData.length >= 1 ? (
           <ClipLoader />
         ) : (
           <UserForm

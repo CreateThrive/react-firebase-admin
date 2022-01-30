@@ -14,7 +14,6 @@ import * as serviceWorker from './serviceWorker';
 import './assets/css/main.css';
 
 
-
 const app = (
   <Provider store={store}>
     <LanguageWrapper>

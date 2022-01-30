@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 import '@testing-library/jest-dom';
 
 import * as actions from 'state/actions/auth';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent,waitFor } from '@testing-library/react';
 import ResetPassword from '.';
 
 describe('<ResetPassword /> rendering', () => {
@@ -86,10 +86,10 @@ describe('<ResetPassword /> actions', () => {
 
     fireEvent.submit(component.container.querySelector('form'));
 
-    await (() => expect(actions.resetPassword).toBeCalledTimes(1));
+    await waitFor((() => expect(actions.resetPassword).toBeCalledTimes(1)));
 
-    await (() =>
-      expect(actions.resetPassword).toBeCalledWith('test@gmail.com'));
+    await waitFor((() =>
+      expect(actions.resetPassword).toBeCalledWith('test@gmail.com')));
   });
 
   it('should dispatch resetPasswordCleanUp action when the component is unmounted', () => {
