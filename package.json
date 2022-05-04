@@ -35,7 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "setup-admin-dashboard": "npm install && npm build && firebase deploy",
+    "setup-admin-dashboard": "npm install && npm run build && firebase deploy",
     "deploy": "npm run build && firebase deploy --only hosting",
     "precommit:react": "npm test",
     "precommit:functions": "cd functions/ && npm run build && npm test",
