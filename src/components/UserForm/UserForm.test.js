@@ -1,6 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import * as yup from 'yup';
 
@@ -166,9 +166,9 @@ describe('<LoginForm /> actions', () => {
 
     fireEvent.submit(component.container.querySelector('form'));
 
-    await (() => expect(actions.createUser).toBeCalledTimes(1));
+    await waitFor(() =>(() => expect(actions.createUser).toBeCalledTimes(1)));
 
-    await (() => expect(actions.createUser).toBeCalledWith(userData));
+    await waitFor(() =>(() => expect(actions.createUser).toBeCalledWith(userData)));
   });
 
   it('should dispatch modifyUser action when editing a user', async () => {
@@ -185,8 +185,8 @@ describe('<LoginForm /> actions', () => {
 
     fireEvent.submit(component.container.querySelector('form'));
 
-    await (() => expect(actions.modifyUser).toBeCalledTimes(1));
+    await waitFor(() =>(() => expect(actions.modifyUser).toBeCalledTimes(1)));
 
-    await (() => expect(actions.modifyUser).toBeCalledWith(userData));
+    await waitFor(() =>(() => expect(actions.modifyUser).toBeCalledWith(userData)));
   });
 });

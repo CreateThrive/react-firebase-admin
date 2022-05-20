@@ -1,8 +1,8 @@
 import { createIntl, createIntlCache } from 'react-intl';
 import firebase from 'firebase.js';
 
-import english from 'languages/en';
-import spanish from 'languages/es';
+import english from 'languages/en.json';
+import spanish from 'languages/es.json';
 import en from 'assets/en.png';
 import es from 'assets/es.png';
 
@@ -40,7 +40,7 @@ export const firebaseError = (error, locale) => {
   const intl = getIntlContext(locale);
   return intl.formatMessage({
     id: error,
-    defaultMessage: messages[locale]['utils.default'],
+    defaultMessage: messages[locale] && messages[locale]['utils.default'],
   });
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import * as actions from 'state/actions/auth';
@@ -45,12 +45,13 @@ describe('<ChangePassword /> rendering', () => {
       },
     });
 
-    await (() =>
+    await waitFor(() =>
       expect(
         component.getByText(
           'The new password and the current one cannot be the same'
         )
-      ).toBeTruthy());
+      ).toBeTruthy()
+    );
   });
 
   it('should display a message informing the user that the new password is secure', async () => {
@@ -66,7 +67,9 @@ describe('<ChangePassword /> rendering', () => {
       },
     });
 
-    await (() => expect(component.getByText('Safe password')).toBeTruthy());
+    await waitFor(() =>
+      expect(component.getByText('Safe password')).toBeTruthy()
+    );
   });
 
   it('should display a message informing the user that the new and confirmation passwords match', async () => {
@@ -88,7 +91,9 @@ describe('<ChangePassword /> rendering', () => {
       },
     });
 
-    await (() => expect(component.getByText('Passwords match')).toBeTruthy());
+    await waitFor(() =>
+      expect(component.getByText('Passwords match')).toBeTruthy()
+    );
   });
 
   it('should display the button loading when loading', () => {
@@ -139,12 +144,13 @@ describe('<ChangePassword /> actions', () => {
 
     fireEvent.click(component.getByRole('button'));
 
-    await (() => expect(actions.changeUserPassword).toBeCalledTimes(1));
+    await waitFor(() => expect(actions.changeUserPassword).toBeCalledTimes(1));
 
-    await (() =>
+    await waitFor(() =>
       expect(actions.changeUserPassword).toBeCalledWith(
         'oldpassword',
         'newpassword'
-      ));
+      )
+    );
   });
 });

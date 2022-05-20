@@ -80,6 +80,8 @@ describe('Auth reducer', () => {
   });
 
   it('should set the state with the corresponding payload, loading to false and error to null when AUTH_FETCH_USER_DATA_SUCCESS actions is fired', () => {
+    
+
     const payload = {
       id: 'some user id',
       isAdmin: false

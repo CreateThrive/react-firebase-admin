@@ -13,6 +13,7 @@
         "extensions": [".js", ".jsx"]
       }
     ],
+    "react/destructuring-assignment": 0,
     "react/prop-types": 0,
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],

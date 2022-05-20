@@ -6,22 +6,26 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { IntlProvider } from 'react-intl';
-import english from 'languages/en';
+import english from 'languages/en.json';
 import 'mutationobserver-shim';
+import thunk from 'redux-thunk';
 
 global.MutationObserver = window.MutationObserver;
 
 global.reducerTester = (reducer) => (currentState, action, expectedState) => {
+
   if (currentState && typeof currentState === 'object') {
     deepFreeze(currentState);
   }
   const newState = reducer(currentState, action);
+
   return expect(newState).toEqual(expectedState);
+
 };
 
 const mockedStore = (initial = {}) =>
   configureStore([
-    /* place middlewares here */
+    thunk
   ])(initial);
 
 const initStore = (initialState) =>

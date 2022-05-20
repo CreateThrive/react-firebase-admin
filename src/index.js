@@ -6,14 +6,13 @@ import ReduxToastr from 'react-redux-toastr';
 
 import LanguageWrapper from 'components/LanguageWrapper';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
-import { configureStore } from './state/store';
+import { store , persistor } from './state/store';
 import './index.scss';
 import Router from './pages/Router';
 import * as serviceWorker from './serviceWorker';
 
 import './assets/css/main.css';
 
-const { store, persistor } = configureStore({});
 
 const app = (
   <Provider store={store}>
